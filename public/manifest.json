@@ -1,0 +1,22 @@
+{
+  "name": "MeuPortalFit - Coach Brasileira nos EUA",
+  "short_name": "MeuPortalFit",
+  "description": "App completo com receitas, mercado e avaliação gratuita para brasileiras nos EUA",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF7F1",
+  "theme_color": "#1B6B57",
+  "orientation": "portrait",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["health", "lifestyle", "food"],
+  "lang": "pt-BR",
+  "dir": "ltr"
+}
