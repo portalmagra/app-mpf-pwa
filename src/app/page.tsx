@@ -53,8 +53,25 @@ export default function Home() {
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) {
-      // Se não há prompt disponível, mostrar instruções
-      alert('Para instalar o app:\n\n📱 iPhone: Toque no botão Compartilhar e selecione "Adicionar à Tela Inicial"\n\n🤖 Android: Procure pelo ícone de instalação na barra de endereços ou menu do navegador')
+      // Detectar dispositivo e mostrar instruções específicas
+      const userAgent = navigator.userAgent.toLowerCase()
+      const isIOS = /iphone|ipad|ipod/.test(userAgent)
+      const isAndroid = /android/.test(userAgent)
+      const isMac = /macintosh|mac os x/.test(userAgent)
+      
+      let instructions = ''
+      
+      if (isIOS) {
+        instructions = '📱 iPhone/iPad:\n\n1. Toque no botão "Compartilhar" (quadrado com seta)\n2. Role para baixo e toque em "Adicionar à Tela Inicial"\n3. Toque em "Adicionar" no canto superior direito'
+      } else if (isAndroid) {
+        instructions = '🤖 Android:\n\n1. Procure pelo ícone de instalação na barra de endereços\n2. Ou vá no menu do navegador (3 pontos) → "Instalar app"\n3. Toque em "Instalar"'
+      } else if (isMac) {
+        instructions = '💻 Mac:\n\n1. No Safari: Menu "Compartilhar" → "Adicionar à Tela Inicial"\n2. No Chrome: Ícone de instalação na barra de endereços\n3. No Edge: Menu (3 pontos) → "Aplicativos" → "Instalar"'
+      } else {
+        instructions = '💻 Computador:\n\n1. Chrome/Edge: Procure pelo ícone de instalação na barra de endereços\n2. Firefox: Menu (3 linhas) → "Instalar"\n3. Safari: Menu "Compartilhar" → "Adicionar à Tela Inicial"'
+      }
+      
+      alert(`Para instalar o app:\n\n${instructions}`)
       return
     }
 

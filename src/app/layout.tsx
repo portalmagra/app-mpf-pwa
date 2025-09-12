@@ -59,6 +59,10 @@ export default function RootLayout({
         <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="application-name" content="MeuPortalFit" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-TileColor" content="#22c55e" />
+        <meta name="msapplication-tap-highlight" content="no" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
