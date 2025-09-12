@@ -176,19 +176,19 @@ function getMockResult(answers: number[], userGoals: string, userName: string) {
       amazonProducts: [
         {
           name: "Complexo B Premium para Energia",
-          link: "https://amzn.to/3x8K9mP?tag=meuportalfit-20",
+          url: "https://amzn.to/3x8K9mP?tag=meuportalfit-20",
           price: "$24.99",
           description: "Essencial para energia e foco durante a adaptação"
         },
         {
           name: "Ashwagandha - Adaptógeno Natural",
-          link: "https://amzn.to/3x8K9mQ?tag=meuportalfit-20", 
+          url: "https://amzn.to/3x8K9mQ?tag=meuportalfit-20", 
           price: "$19.99",
           description: "Reduz estresse e melhora energia naturalmente"
         },
         {
           name: "Melatonina para Regular o Sono",
-          link: "https://amzn.to/3x8K9mR?tag=meuportalfit-20",
+          url: "https://amzn.to/3x8K9mR?tag=meuportalfit-20",
           price: "$15.99",
           description: "Ajuda a regular o ciclo de sono nos EUA"
         }
@@ -199,66 +199,110 @@ function getMockResult(answers: number[], userGoals: string, userName: string) {
     established: {
       title: `Perfeito ${userName}! Brasileira Estabelecida - Otimização da Vida`,
       description: "Você já se adaptou, agora vamos otimizar sua saúde e performance.",
-      plan: [
-        "✅ Foque na otimização metabólica e gestão sustentável de peso",
-        "✅ Implemente rotina diária de gestão de estresse",
-        "✅ Priorize melhoria da qualidade do sono",
-        "✅ Considere protocolo de suplementação direcionado",
-        "✅ Planejamento nutricional e controle de porções"
+      personalizedRecommendations: [
+        "Foque na otimização metabólica e gestão sustentável de peso",
+        "Implemente rotina diária de gestão de estresse",
+        "Priorize melhoria da qualidade do sono",
+        "Considere protocolo de suplementação direcionado"
+      ],
+      priorityAreas: [
+        "Otimização metabólica e performance",
+        "Gestão sustentável de peso",
+        "Qualidade do sono e recuperação"
+      ],
+      riskFactors: [
+        "Estresse crônico pode impactar metabolismo",
+        "Má qualidade do sono afeta performance geral"
+      ],
+      newHabits: [
+        "Inclua proteína whey isolada na sua rotina - Essencial para otimização muscular",
+        "Experimente magnésio glicinato - Melhora qualidade do sono e reduz estresse",
+        "Priorize ômega 3 premium - Suporte completo para saúde mental e física",
+        "Crie rotina de gestão de estresse - Fundamental para performance",
+        "Implemente controle de porções - Importante para gestão de peso"
+      ],
+      nextSteps: [
+        "Comece com suplementação básica para otimização",
+        "Implemente rotina de exercícios consistente",
+        "Monitore progresso mensalmente",
+        "Considere coaching personalizado para próximo nível"
       ],
       amazonProducts: [
         {
           name: "Proteína Whey Isolada Premium",
-          link: "https://amzn.to/3x8K9mS",
+          url: "https://amzn.to/3x8K9mS?tag=meuportalfit-20",
           price: "$39.99",
           description: "Proteína de alta qualidade para otimização muscular"
         },
         {
           name: "Magnésio Glicinato para Relaxamento",
-          link: "https://amzn.to/3x8K9mT",
+          url: "https://amzn.to/3x8K9mT?tag=meuportalfit-20",
           price: "$22.99",
           description: "Melhora qualidade do sono e reduz estresse"
         },
         {
           name: "Ômega 3 Premium para Saúde Cerebral",
-          link: "https://amzn.to/3x8K9mU",
+          url: "https://amzn.to/3x8K9mU?tag=meuportalfit-20",
           price: "$29.99",
           description: "Suporte completo para saúde mental e física"
         }
       ],
-      encouragement: `${userName}, você já conquistou tanto! Agora é hora de elevar sua performance ao próximo nível! 💪🇧🇷`
+      encouragement: `${userName}, você já conquistou tanto! Agora é hora de elevar sua performance ao próximo nível! 💪🇧🇷`,
+      promise: "Receba receitas brasileiras adaptadas para os EUA e dicas exclusivas de otimização!"
     },
     veteran: {
       title: `Impressionante ${userName}! Brasileira Experiente - Mastery Total`,
       description: "Você é uma veterana! Vamos focar em mastery e otimização avançada.",
-      plan: [
-        "✅ Protocolo avançado de biohacking e otimização",
-        "✅ Gestão avançada de estresse e performance",
-        "✅ Otimização de sono e recuperação",
-        "✅ Suplementação estratégica e personalizada",
-        "✅ Planejamento nutricional de alta performance"
+      personalizedRecommendations: [
+        "Protocolo avançado de biohacking e otimização",
+        "Gestão avançada de estresse e performance",
+        "Otimização de sono e recuperação",
+        "Suplementação estratégica e personalizada"
+      ],
+      priorityAreas: [
+        "Biohacking e otimização avançada",
+        "Performance e mastery",
+        "Recuperação e longevidade"
+      ],
+      riskFactors: [
+        "Over-training pode levar a burnout",
+        "Suplementação excessiva pode ser contraproducente"
+      ],
+      newHabits: [
+        "Inclua creatina monohidratada premium - Para performance e força máxima",
+        "Experimente L-tirosina - Neurotransmissor para foco e energia mental",
+        "Priorize ZMA para recuperação - Mineral essencial para recuperação otimizada",
+        "Implemente protocolo de biohacking - Para mastery total",
+        "Crie rotina de recuperação avançada - Fundamental para longevidade"
+      ],
+      nextSteps: [
+        "Implemente protocolo avançado de suplementação",
+        "Monitore biomarkers para otimização",
+        "Considere coaching de elite para mastery",
+        "Planeje estratégia de longevidade"
       ],
       amazonProducts: [
         {
           name: "Creatina Monohidratada Premium",
-          link: "https://amzn.to/3x8K9mV",
+          url: "https://amzn.to/3x8K9mV?tag=meuportalfit-20",
           price: "$34.99",
           description: "Para performance e força máxima"
         },
         {
           name: "L-Tirosina para Foco e Energia",
-          link: "https://amzn.to/3x8K9mW",
+          url: "https://amzn.to/3x8K9mW?tag=meuportalfit-20",
           price: "$18.99",
           description: "Neurotransmissor para foco e energia mental"
         },
         {
           name: "ZMA para Recuperação e Sono",
-          link: "https://amzn.to/3x8K9mX",
+          url: "https://amzn.to/3x8K9mX?tag=meuportalfit-20",
           price: "$24.99",
           description: "Mineral essencial para recuperação otimizada"
         }
       ],
-      encouragement: `${userName}, você é uma inspiração! Sua experiência é seu maior ativo. Vamos maximizar seu potencial! 🚀🇧🇷`
+      encouragement: `${userName}, você é uma inspiração! Sua experiência é seu maior ativo. Vamos maximizar seu potencial! 🚀🇧🇷`,
+      promise: "Receba receitas brasileiras adaptadas para os EUA e dicas exclusivas de mastery!"
     }
   };
 

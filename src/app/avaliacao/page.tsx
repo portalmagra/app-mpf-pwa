@@ -609,20 +609,20 @@ export default function AvaliacaoPage() {
                   Veja sua apresentação interativa ou baixe o PDF personalizado com análise completa, hábitos, produtos Amazon e receitas exclusivas
                 </p>
                 
-                {/* Botão Principal - Apresentação */}
-                <button 
-                  onClick={() => viewPresentation()}
-                  className="w-full bg-white text-brand-green px-6 py-4 rounded-lg font-bold hover:shadow-lg transition-all transform hover:scale-105 text-lg mb-3"
-                >
-                  🎨 Ver Minha Apresentação
-                </button>
-                
-                {/* Botão Secundário - PDF */}
+                {/* Botão Principal - PDF */}
                 <button 
                   onClick={() => generatePDF()}
-                  className="w-full bg-white bg-opacity-20 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all mb-2"
+                  className="w-full bg-white text-brand-green px-6 py-4 rounded-lg font-bold hover:shadow-lg transition-all transform hover:scale-105 text-lg mb-3"
                 >
                   📄 Baixar PDF Completo
+                </button>
+                
+                {/* Botão Secundário - Apresentação */}
+                <button 
+                  onClick={() => viewPresentation()}
+                  className="w-full bg-white bg-opacity-20 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all mb-2"
+                >
+                  🎨 Ver Minha Apresentação
                 </button>
                 
                 {/* Botão Terciário - WhatsApp */}

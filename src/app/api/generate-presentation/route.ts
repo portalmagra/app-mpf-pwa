@@ -1,8 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Função para detectar gênero baseado no nome
+function detectGender(name: string): 'brasileiro' | 'brasileira' {
+  const femaleNames = ['ana', 'maria', 'julia', 'sofia', 'isabella', 'laura', 'valentina', 'giovanna', 'alice', 'luiza', 'helena', 'beatriz', 'lara', 'mariana', 'gabriela', 'rafaela', 'carolina', 'camila', 'fernanda', 'patricia', 'adriana', 'cristina', 'sandra', 'denise', 'monica', 'silvia', 'regina', 'rosana', 'eliane', 'marcia', 'vera', 'claudia', 'rosemary', 'fatima', 'maria', 'josé', 'antonio', 'francisco', 'carlos', 'paulo', 'pedro', 'lucas', 'luiz', 'marcos', 'luis', 'gabriel', 'rafael', 'daniel', 'marcelo', 'bruno', 'eduardo', 'felipe', 'renan', 'rodrigo', 'manuel', 'leonardo', 'nelson', 'fernando', 'andre', 'roberto', 'joão', 'thiago', 'fábio', 'ricardo', 'heitor', 'arthur', 'bernardo', 'davi', 'theo', 'murilo', 'benjamin', 'samuel', 'enzo', 'joaquim', 'noah', 'lorenzo', 'isaac', 'miguel', 'guilherme', 'gustavo', 'arthur', 'caio', 'vinicius', 'joão', 'henrique', 'ryan', 'felippe', 'diego', 'alexandre', 'igor', 'matheus', 'lucas', 'rafael', 'gabriel', 'joão', 'arthur', 'bernardo', 'heitor', 'davi', 'lorenzo', 'theo', 'pedro', 'murilo', 'benjamin', 'samuel', 'enzo', 'joaquim', 'noah', 'isaac', 'miguel', 'guilherme', 'gustavo', 'caio', 'vinicius', 'henrique', 'ryan', 'felippe', 'diego', 'alexandre', 'igor', 'matheus'];
+  
+  const firstName = name.toLowerCase().split(' ')[0];
+  return femaleNames.includes(firstName) ? 'brasileira' : 'brasileiro';
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { userName, result } = await request.json();
+    
+    const gender = detectGender(userName);
 
     // Template HTML profissional baseado no Gamma
     const htmlTemplate = `
@@ -81,8 +91,16 @@ export async function POST(request: NextRequest) {
         .main-title {
             font-size: 48px;
             font-weight: 800;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             line-height: 1.2;
+        }
+        
+        .subtitle-personalized {
+            font-size: 24px;
+            font-weight: 600;
+            color: #16a34a;
+            margin-bottom: 20px;
+            text-align: center;
         }
         
         .user-title {
@@ -424,7 +442,8 @@ export async function POST(request: NextRequest) {
                 <div class="logo">MeuPortalFit</div>
                 <div class="subtitle">🇧🇷 Para Brasileiros nos Estados Unidos 🇺🇸</div>
                 
-                <h1 class="main-title">🎉 ${result.title}</h1>
+                <h1 class="main-title">🎉 Olá, ${userName}!</h1>
+                <h2 class="subtitle-personalized">Seu plano personalizado está pronto, ${gender}!</h2>
                 <h2 class="user-title">Plano Personalizado para ${userName}</h2>
                 <p class="description">${result.description}</p>
                 
@@ -454,7 +473,7 @@ export async function POST(request: NextRequest) {
                 
                 ${result.encouragement ? `
                     <div class="encouragement">
-                        "${result.encouragement}"
+                        "${result.encouragement.replace('Você é uma inspiração!', `${userName}, você é uma inspiração!`)}"
                     </div>
                 ` : ''}
             </div>
@@ -462,7 +481,7 @@ export async function POST(request: NextRequest) {
             <!-- SLIDE 2: ANÁLISE COMPLETA -->
             <div class="slide slide-content">
                 <div class="section">
-                    <h3 class="section-title">📊 Sua Análise Personalizada Completa</h3>
+                    <h3 class="section-title">📊 Análise Personalizada Completa para ${userName}</h3>
                     
                     ${result.personalizedRecommendations ? `
                         <div class="recommendations">
@@ -497,7 +516,7 @@ export async function POST(request: NextRequest) {
             <!-- SLIDE 3: HÁBITOS E PRODUTOS -->
             <div class="slide slide-content">
                 <div class="section">
-                    <h3 class="section-title">✅ Seu Plano de Ação + Produtos</h3>
+                    <h3 class="section-title">✅ Plano de Ação Personalizado para ${userName}</h3>
                     
                     ${result.newHabits ? `
                         <div class="recommendations">
@@ -558,7 +577,7 @@ export async function POST(request: NextRequest) {
                 
                 ${result.encouragement ? `
                     <div class="encouragement">
-                        "${result.encouragement}"
+                        "${result.encouragement.replace('Você é uma inspiração!', `${userName}, você é uma inspiração!`)}"
                     </div>
                 ` : ''}
             </div>
