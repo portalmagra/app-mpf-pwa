@@ -340,35 +340,55 @@ export default function Home() {
     const content = document.createElement('div')
     content.style.cssText = `
       background: white;
-      border-radius: 16px;
-      padding: 30px 25px;
+      border-radius: 20px;
+      padding: 35px 30px;
       max-width: 350px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
     `
     
     content.innerHTML = `
       <div style="margin-bottom: 25px;">
-        <div style="width: 50px; height: 50px; background: #22c55e; border-radius: 12px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;">
-          <span style="color: white; font-size: 20px; font-weight: bold;">M</span>
+        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #22c55e, #16a34a); border-radius: 15px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+          <span style="color: white; font-size: 24px; font-weight: bold;">M</span>
         </div>
-        <h2 style="margin: 0 0 15px 0; color: #1f2937; font-size: 20px; font-weight: 600;">Instalar App</h2>
-        <p style="margin: 0; color: #4b5563; font-size: 15px; line-height: 1.4;">Procure pelo ícone de instalação na barra de endereços do seu navegador</p>
+        <h2 style="margin: 0 0 15px 0; color: #1f2937; font-size: 22px; font-weight: 700;">Autorizar Instalação</h2>
+        <p style="margin: 0 0 20px 0; color: #4b5563; font-size: 16px; line-height: 1.5;">Clique em "Autorizar" para que possamos instalar o app MeuPortalFit no seu dispositivo automaticamente.</p>
+        
+        <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 12px; padding: 15px; margin: 20px 0;">
+          <p style="margin: 0; color: #166534; font-size: 14px; font-weight: 600;">🔒 Instalação Segura e Rápida</p>
+        </div>
       </div>
       
-      <button onclick="this.parentElement.parentElement.remove()" style="
-        width: 100%;
-        background: #22c55e;
-        color: white;
-        border: none;
-        padding: 15px 20px;
-        border-radius: 10px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-      ">
-        OK, entendi!
-      </button>
+      <div style="display: flex; gap: 10px;">
+        <button onclick="this.parentElement.parentElement.remove()" style="
+          flex: 1;
+          background: #f3f4f6;
+          color: #374151;
+          border: none;
+          padding: 14px 16px;
+          border-radius: 10px;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+        ">
+          Cancelar
+        </button>
+        <button onclick="handleAuthorizeInstall(); this.parentElement.parentElement.remove()" style="
+          flex: 1;
+          background: linear-gradient(135deg, #22c55e, #16a34a);
+          color: white;
+          border: none;
+          padding: 14px 16px;
+          border-radius: 10px;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        ">
+          ✅ Autorizar
+        </button>
+      </div>
     `
     
     modal.appendChild(content)
@@ -379,6 +399,98 @@ export default function Home() {
         modal.remove()
       }
     })
+  }
+
+  const handleAuthorizeInstall = () => {
+    // Simular processo de autorização
+    const authModal = document.createElement('div')
+    authModal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 10001;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    `
+    
+    authModal.innerHTML = `
+      <div style="
+        background: white;
+        border-radius: 20px;
+        padding: 35px 30px;
+        max-width: 350px;
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      ">
+        <div style="
+          width: 60px;
+          height: 60px;
+          background: linear-gradient(135deg, #22c55e, #16a34a);
+          border-radius: 50%;
+          margin: 0 auto 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 24px;
+          color: white;
+          animation: pulse 2s infinite;
+        ">✓</div>
+        
+        <h2 style="
+          font-size: 22px;
+          font-weight: 700;
+          color: #1f2937;
+          margin: 0 0 15px 0;
+        ">Autorização Confirmada!</h2>
+        
+        <p style="
+          color: #4b5563;
+          font-size: 16px;
+          line-height: 1.5;
+          margin: 0 0 25px 0;
+        ">Agora procure pelo ícone de instalação na barra de endereços e clique nele para completar a instalação.</p>
+        
+        <div style="background: #fef3c7; border: 2px solid #f59e0b; border-radius: 12px; padding: 15px; margin: 20px 0;">
+          <p style="margin: 0; color: #92400e; font-size: 14px; font-weight: 600;">💡 Dica: O ícone aparece como um "+" ou "⬇" na barra de endereços</p>
+        </div>
+        
+        <button onclick="this.parentElement.parentElement.remove()" style="
+          background: linear-gradient(135deg, #22c55e, #16a34a);
+          color: white;
+          border: none;
+          border-radius: 12px;
+          padding: 15px 30px;
+          font-size: 16px;
+          font-weight: 600;
+          cursor: pointer;
+          width: 100%;
+          transition: all 0.3s ease;
+        " onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+          Entendi!
+        </button>
+      </div>
+      <style>
+        @keyframes pulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.1); }
+          100% { transform: scale(1); }
+        }
+      </style>
+    `
+    
+    document.body.appendChild(authModal)
+    
+    // Auto-remove após 8 segundos
+    setTimeout(() => {
+      if (authModal.parentElement) {
+        authModal.remove()
+      }
+    }, 8000)
   }
 
 
