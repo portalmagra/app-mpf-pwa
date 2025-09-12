@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 
 // Sistema de traduções
 const translations = {
@@ -56,7 +57,7 @@ const translations = {
 }
 
 function ResultadosContent() {
-  const [analysisResults, setAnalysisResults] = useState<any>(null)
+  const [analysisResults, setAnalysisResults] = useState<unknown>(null)
   const [loading, setLoading] = useState(true)
   const [language, setLanguage] = useState('pt')
   const searchParams = useSearchParams()
@@ -972,7 +973,7 @@ function ResultadosContent() {
                   {/* Análise Detalhada Baseada nas Respostas */}
                   {(() => {
                     const answers = searchParams.get('answers')
-                    let detailedAnalysis = []
+                    const detailedAnalysis = []
                     
                     if (answers) {
                       try {
@@ -1131,7 +1132,7 @@ function ResultadosContent() {
                   
                   {(() => {
                     const answers = searchParams.get('answers')
-                    let insights = []
+                    const insights = []
                     
                     if (answers) {
                       try {
@@ -1895,7 +1896,7 @@ function ResultadosContent() {
                     🖨️ Salvar/Imprimir
                   </button>
 
-                  <a href="/" style={{ textDecoration: 'none' }}>
+                  <Link href="/" style={{ textDecoration: 'none' }}>
                     <button style={{
                       display: 'flex',
                       alignItems: 'center',
@@ -1981,7 +1982,7 @@ function ResultadosContent() {
                 lineHeight: '1.4',
                 fontStyle: 'italic'
               }}>
-                "A avaliação me ajudou a entender exatamente o que comprar na Amazon sem gastar à toa. Em 3 semanas, minha energia melhorou 80%!"
+                &ldquo;A avaliação me ajudou a entender exatamente o que comprar na Amazon sem gastar à toa. Em 3 semanas, minha energia melhorou 80%!&rdquo;
               </p>
             </div>
             
@@ -2023,7 +2024,7 @@ function ResultadosContent() {
                 lineHeight: '1.4',
                 fontStyle: 'italic'
               }}>
-                "Finalmente entendi o que meu corpo precisa aqui nos EUA. Os produtos recomendados são perfeitos para o clima e rotina americana."
+                &ldquo;Finalmente entendi o que meu corpo precisa aqui nos EUA. Os produtos recomendados são perfeitos para o clima e rotina americana.&rdquo;
               </p>
             </div>
             
@@ -2065,7 +2066,7 @@ function ResultadosContent() {
                 lineHeight: '1.4',
                 fontStyle: 'italic'
               }}>
-                "A coach brasileira me deu dicas que só quem vive aqui entende. Valeu cada centavo dos $10!"
+                &ldquo;A coach brasileira me deu dicas que só quem vive aqui entende. Valeu cada centavo dos $10!&rdquo;
               </p>
             </div>
           </div>

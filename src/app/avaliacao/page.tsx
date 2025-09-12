@@ -109,7 +109,7 @@ const quizQuestions: QuizQuestion[] = [
   }
 ];
 
-const quizResults: Record<string, QuizResult> = {
+/* const quizResults: Record<string, QuizResult> = {
   newcomer: {
     title: "Brasileira Recém-Chegada - Adaptação Inteligente",
     description: "Você não está sozinha! Vamos te ajudar a se adaptar aos EUA com saúde e bem-estar.",
@@ -206,7 +206,7 @@ const quizResults: Record<string, QuizResult> = {
     ],
     encouragement: "Você é uma inspiração! Sua experiência é seu maior ativo. Vamos maximizar seu potencial! 🚀🇧🇷"
   }
-};
+}; */
 
 export default function AvaliacaoPage() {
   const [currentQuestion, setCurrentQuestion] = useState(0);

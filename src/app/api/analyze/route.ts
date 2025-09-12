@@ -104,8 +104,8 @@ function generateSmartSearchTerms(analysis: string): string[] {
 async function searchProductsSmart(
   analysis: string,
   targetCount: number = 6
-): Promise<any[]> {
-  let allProducts: any[] = []
+): Promise<unknown[]> {
+    const allProducts: unknown[] = []
   let searchAttempts = 0
   const maxAttempts = 20
   

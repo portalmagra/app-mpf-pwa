@@ -218,7 +218,7 @@ async function searchAmazonAPI(
     });
 
     // Filtrar por qualidade
-    let filteredProducts = products.filter((p: AmazonProduct) => p.rating >= (options.minRating || 4.0));
+    const filteredProducts = products.filter((p: AmazonProduct) => p.rating >= (options.minRating || 4.0));
     
     // Priorizar bestsellers e Amazon's Choice
     if (options.preferBestSellers || options.preferAmazonChoice) {
@@ -644,7 +644,7 @@ export async function searchCategoryProducts(
   };
   
   const queries = categoryQueries[category] || [];
-  let products: AmazonProduct[] = [];
+  const products: AmazonProduct[] = [];
   
   for (const query of queries) {
     if (products.length >= maxResults) break;
