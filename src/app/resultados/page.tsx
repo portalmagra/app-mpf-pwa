@@ -969,7 +969,7 @@ function ResultadosContent() {
                   border: '1px solid #e0f2e9'
                 }}>
                   <strong style={{ color: '#1e293b' }}>📊 Resumo da Sua Avaliação:</strong><br/>
-                  {analysisResults?.analise || analysisResults?.analysis}
+                  {(analysisResults as any)?.analise || (analysisResults as any)?.analysis}
                   
                   {/* Análise Detalhada Baseada nas Respostas */}
                   {(() => {
