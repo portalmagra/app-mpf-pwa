@@ -534,7 +534,10 @@ export async function POST(request: NextRequest) {
         <!-- Footer -->
         <div class="footer">
             <div class="footer-title">MeuPortalFit - Saúde dos Brasileiros nos EUA</div>
-            <div class="footer-subtitle">app.meuportalfit.com | WhatsApp: (786) 253-5032</div>
+            <div class="footer-subtitle">
+                <a href="https://app.meuportalfit.com" style="color: #22c55e; text-decoration: none;">app.meuportalfit.com</a> | 
+                <a href="https://wa.me/17862535032" style="color: #22c55e; text-decoration: none;">WhatsApp: (786) 253-5032</a>
+            </div>
         </div>
     </div>
 </body>

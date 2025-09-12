@@ -249,56 +249,15 @@ export default function AvaliacaoPage() {
     console.log('Current answers:', answers);
     console.log('Current userGoals:', userGoals);
     
-    try {
-      // Chamar API para análise personalizada
-      const response = await fetch('/api/analyze', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          answers,
-          userGoals,
-          userName
-        }),
-      });
-
-      const data = await response.json();
-      
-      if (data.success) {
-        console.log('API Response:', data);
-        setResult(data.result);
-        setShowResult(true);
-        setShowGoalsInput(false);
-        
-        // Mostrar se é mock ou análise real
-        if (data.isMock) {
-          console.log('Using mock data - configure OPENAI_API_KEY for real analysis');
-        } else {
-          console.log('Using OpenAI analysis');
-        }
-      } else {
-        throw new Error('API failed');
-      }
-    } catch (error) {
-      console.error('Error calling analyze API:', error);
-      
-      // Fallback para resultado mock em caso de erro
-      const timeInUSA = answers[1];
-      let resultType: string;
-      
-      if (timeInUSA === 1) {
-        resultType = 'newcomer';
-      } else if (timeInUSA === 2 || timeInUSA === 3) {
-        resultType = 'established';
-      } else {
-        resultType = 'veteran';
-      }
-      
-      setResult(quizResults[resultType]);
-      setShowResult(true);
-      setShowGoalsInput(false);
-    }
+    // Criar URL com parâmetros para a página de resultados
+    const answersParam = encodeURIComponent(JSON.stringify(answers));
+    const goalsParam = encodeURIComponent(userGoals);
+    const nameParam = encodeURIComponent(userName);
+    
+    const resultsUrl = `/resultados?answers=${answersParam}&comments=${goalsParam}&language=pt&userName=${nameParam}`;
+    
+    // Redirecionar para a página de resultados
+    window.location.href = resultsUrl;
   };
 
   const handleGoalsSubmit = () => {
