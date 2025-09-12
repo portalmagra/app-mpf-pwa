@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     };
 
     // Função para adicionar texto com estilo
-    const addText = (text: string, fontSize: number, color: number[] = colors.text, isBold: boolean = false, align: string = 'left') => {
+    const addText = (text: string, fontSize: number, color: number[] = colors.text, isBold: boolean = false, align: 'left' | 'center' | 'right' = 'left') => {
       doc.setFontSize(fontSize);
       doc.setTextColor(color[0], color[1], color[2]);
       if (isBold) {
@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
     };
 
     // Função para adicionar card de produto
-    const addProductCard = (product: { name: string; price: string; description: string; url: string }) => {
+    const addProductCard = (product: { name: string; price: string; description: string; url: string }, index: number) => {
       if (yPosition > pageHeight - 60) {
         doc.addPage();
         yPosition = 20;
@@ -135,7 +135,7 @@ export async function POST(request: NextRequest) {
 
     // Função para adicionar lista com estilo
     const addStyledList = (items: string[], bullet: string = '✅', color: number[] = colors.text) => {
-      items.forEach((item, index) => {
+      items.forEach((item) => {
         if (yPosition > pageHeight - 30) {
           doc.addPage();
           yPosition = 20;
@@ -300,7 +300,7 @@ export async function POST(request: NextRequest) {
     if (result.amazonProducts && result.amazonProducts.length > 0) {
       addSectionTitle('🛒 Produtos Recomendados', '');
       
-      result.amazonProducts.forEach((product: { name: string; price: string; description: string; url: string }) => {
+      result.amazonProducts.forEach((product: { name: string; price: string; description: string; url: string }, index: number) => {
         addProductCard(product, index);
       });
       
