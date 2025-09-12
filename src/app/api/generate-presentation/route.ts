@@ -521,7 +521,7 @@ export async function POST(request: NextRequest) {
                     
                     ${result.amazonProducts && result.amazonProducts.length > 0 ? `
                         <div class="products-grid">
-                            ${result.amazonProducts.map((product: any) => `
+                            ${result.amazonProducts.map((product: { name: string; price: string; description?: string; url: string }) => `
                                 <div class="product-card">
                                     <div class="product-name">${product.name}</div>
                                     <div class="product-price">${product.price}</div>
