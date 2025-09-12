@@ -175,7 +175,8 @@ async function searchProductsSmart(
   }
   
   // Ordenar por rating (melhores primeiro)
-  allProducts.sort((a, b) => (b.rating || 4.0) - (a.rating || 4.0))
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  allProducts.sort((a: any, b: any) => (b.rating || 4.0) - (a.rating || 4.0))
   
   // Retornar apenas a quantidade desejada
   return allProducts.slice(0, targetCount)
