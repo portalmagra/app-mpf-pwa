@@ -355,6 +355,13 @@ export default function AvaliacaoPage() {
       // Track presentation view
       console.log('Presentation view initiated:', { userName, timestamp: new Date().toISOString() });
       
+      // Mostrar loading
+      const button = document.querySelector('[data-button="view-presentation"]') as HTMLButtonElement;
+      if (button) {
+        button.disabled = true;
+        button.textContent = '⏳ Carregando...';
+      }
+      
       // Chamar API para gerar apresentação
       const response = await fetch('/api/generate-presentation', {
         method: 'POST',
@@ -367,8 +374,13 @@ export default function AvaliacaoPage() {
         }),
       });
 
+      console.log('API Response status:', response.status);
+
       if (response.ok) {
         const html = await response.text();
+        console.log('HTML received, length:', html.length);
+        
+        // Tentar abrir em nova aba
         const newWindow = window.open('', '_blank');
         if (newWindow) {
           newWindow.document.write(html);
@@ -376,16 +388,24 @@ export default function AvaliacaoPage() {
           
           // Track successful view
           console.log('Presentation view completed successfully');
+        } else {
+          // Se não conseguir abrir nova aba, mostrar alerta
+          alert('Por favor, permita pop-ups para este site para ver sua apresentação.');
         }
       } else {
-        // Fallback: enviar via WhatsApp
-        console.log('Presentation generation failed, falling back to WhatsApp');
-        sendViaWhatsApp();
+        console.error('API Error:', response.status, response.statusText);
+        alert('Erro ao carregar apresentação. Tente novamente.');
       }
     } catch (error) {
       console.error('Error generating presentation:', error);
-      // Fallback: enviar via WhatsApp
-      sendViaWhatsApp();
+      alert('Erro ao carregar apresentação. Verifique sua conexão.');
+    } finally {
+      // Restaurar botão
+      const button = document.querySelector('[data-button="view-presentation"]') as HTMLButtonElement;
+      if (button) {
+        button.disabled = false;
+        button.textContent = '📊 Ver Meus Resultados';
+      }
     }
   };
 
@@ -567,20 +587,19 @@ export default function AvaliacaoPage() {
           <div className="max-w-sm mx-auto">
             {/* Header Celebrativo */}
             <div className="text-center mb-6">
-              <div className="w-20 h-20 bg-gradient-to-br from-brand-green via-brand-green to-brand-blue rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                <span className="text-4xl">🎉</span>
-              </div>
-              
-              {/* Mensagem de Parabéns - Compacta */}
+              {/* Mensagem de Parabéns - Ultra Compacta */}
               <div className="bg-gradient-to-r from-brand-greenSoft to-brand-blueSoft rounded-xl p-3 mb-4">
                 <div className="flex items-center justify-center space-x-2">
-                  <span className="text-2xl">🎊</span>
-                  <h2 className="text-lg font-bold text-brand-text">Parabéns, {userName}!</h2>
-                  <span className="text-2xl">🎊</span>
+                  <div className="w-12 h-12 bg-gradient-to-br from-brand-green via-brand-green to-brand-blue rounded-full flex items-center justify-center animate-pulse">
+                    <span className="text-xl">🎉</span>
+                  </div>
+                  <div>
+                    <h2 className="text-lg font-bold text-brand-text">Parabéns, {userName}!</h2>
+                    <p className="text-brand-text2 text-xs">
+                      Você completou sua avaliação personalizada! Seu plano está pronto.
+                    </p>
+                  </div>
                 </div>
-                <p className="text-brand-text2 text-xs text-center mt-1">
-                  Avaliação completa! Seu plano está pronto.
-                </p>
               </div>
 
               {/* Social Proof */}
@@ -601,6 +620,44 @@ export default function AvaliacaoPage() {
                 <p className="text-green-100 text-xs mt-1">75% do seu plano personalizado está pronto</p>
               </div>
 
+              {/* Preview do Conteúdo - Movido para cima */}
+              <div className="bg-white rounded-xl p-4 mb-6 shadow-soft">
+                <h3 className="font-bold text-lg text-brand-text mb-3 text-center">📋 O que você vai receber no seu PDF:</h3>
+                
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="flex items-center space-x-2">
+                    <span className="text-green-500">✅</span>
+                    <span className="text-brand-text2">Recomendações Personalizadas</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-blue-500">⭐</span>
+                    <span className="text-brand-text2">Áreas de Prioridade</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-yellow-500">⚠️</span>
+                    <span className="text-brand-text2">Fatores de Risco</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-green-500">✔</span>
+                    <span className="text-brand-text2">Checklist de Hábitos</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-red-500">🚀</span>
+                    <span className="text-brand-text2">Próximos Passos</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <span className="text-blue-500">🛒</span>
+                    <span className="text-brand-text2">Produtos Amazon</span>
+                  </div>
+                </div>
+                
+                <div className="mt-4 p-3 bg-gradient-to-r from-brand-greenSoft to-brand-blueSoft rounded-lg text-center">
+                  <p className="text-brand-text text-sm font-semibold">
+                    + Receitas exclusivas e dicas de adaptação cultural! 🇧🇷
+                  </p>
+                </div>
+              </div>
+
               {/* CTA Principal Melhorado */}
               <div className="bg-gradient-to-r from-brand-green to-brand-blue rounded-xl p-4 mb-6 relative overflow-hidden">
                 {/* Urgência */}
@@ -615,6 +672,7 @@ export default function AvaliacaoPage() {
                 
                 {/* Botão Principal - Ver Resultados */}
                 <button 
+                  data-button="view-presentation"
                   onClick={() => viewPresentation()}
                   className="w-full bg-white text-brand-green px-6 py-4 rounded-lg font-bold hover:shadow-lg transition-all transform hover:scale-105 text-lg mb-3"
                 >
@@ -637,43 +695,6 @@ export default function AvaliacaoPage() {
               </div>
             </div>
 
-            {/* Preview do Conteúdo */}
-            <div className="bg-white rounded-xl p-4 mb-6 shadow-soft">
-              <h3 className="font-bold text-lg text-brand-text mb-3 text-center">📋 O que você vai receber no seu PDF:</h3>
-              
-              <div className="grid grid-cols-2 gap-3 text-sm">
-                <div className="flex items-center space-x-2">
-                  <span className="text-green-500">✅</span>
-                  <span className="text-brand-text2">Recomendações Personalizadas</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-blue-500">⭐</span>
-                  <span className="text-brand-text2">Áreas de Prioridade</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-yellow-500">⚠️</span>
-                  <span className="text-brand-text2">Fatores de Risco</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-green-500">✔</span>
-                  <span className="text-brand-text2">Checklist de Hábitos</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-red-500">🚀</span>
-                  <span className="text-brand-text2">Próximos Passos</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span className="text-blue-500">🛒</span>
-                  <span className="text-brand-text2">Produtos Amazon</span>
-                </div>
-              </div>
-              
-              <div className="mt-4 p-3 bg-gradient-to-r from-brand-greenSoft to-brand-blueSoft rounded-lg text-center">
-                <p className="text-brand-text text-sm font-semibold">
-                  + Receitas exclusivas e dicas de adaptação cultural! 🇧🇷
-                </p>
-              </div>
-            </div>
 
 
             {/* Mensagem de Encorajamento */}
