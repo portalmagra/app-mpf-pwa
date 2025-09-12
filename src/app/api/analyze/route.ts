@@ -354,7 +354,8 @@ export async function POST(request: NextRequest) {
     let recommendedProducts = await searchProductsSmart(analysis, 6)
     
     // Enriquecer produtos com informações adicionais
-    recommendedProducts = recommendedProducts.map((product, index) => ({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    recommendedProducts = recommendedProducts.map((product: any, index) => ({
       name: product.name,
       description: generateProductDescription(product.name, language),
       asin: product.asin,
