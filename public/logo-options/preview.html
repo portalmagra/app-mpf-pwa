@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opções de Logo - MeuPortalFit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #FEFEFE;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #1F2937;
+            margin-bottom: 30px;
+        }
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .logo-item {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .logo-item h3 {
+            color: #1F2937;
+            margin-bottom: 15px;
+        }
+        .logo-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .description {
+            color: #6B7280;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        .download-btn {
+            background: linear-gradient(135deg, #10B981, #3B82F6);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .download-btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Logos Finais - MeuPortalFit</h1>
+        <p style="text-align: center; color: #6B7280; margin-bottom: 40px;">
+            Versões finais: Logo completo (3 opções), M separado e MeuPortalFit separado
+        </p>
+        
+        <div class="logo-grid">
+            <div class="logo-item">
+                <h3>Logo Completo 1 - Cinza</h3>
+                <img src="logo-completo-1.svg" alt="Logo Completo 1">
+                <div class="description">M (esquerda) + MeuPortalFit (cima) + 🇧🇷 BRASIL + 🇺🇸 EUA (texto cinza)</div>
+                <button class="download-btn" onclick="downloadSVG('logo-completo-1.svg')">Download SVG</button>
+            </div>
+            
+            <div class="logo-item">
+                <h3>Logo Completo 2 - Preto</h3>
+                <img src="logo-completo-2.svg" alt="Logo Completo 2">
+                <div class="description">M (esquerda) + MeuPortalFit (cima) + 🇧🇷 BRASIL + 🇺🇸 EUA (texto preto)</div>
+                <button class="download-btn" onclick="downloadSVG('logo-completo-2.svg')">Download SVG</button>
+            </div>
+            
+            <div class="logo-item">
+                <h3>Logo Completo 3 - Cinza Escuro</h3>
+                <img src="logo-completo-3.svg" alt="Logo Completo 3">
+                <div class="description">M (esquerda) + MeuPortalFit (cima) + 🇧🇷 BRASIL + 🇺🇸 EUA (texto cinza escuro)</div>
+                <button class="download-btn" onclick="downloadSVG('logo-completo-3.svg')">Download SVG</button>
+            </div>
+            
+            <div class="logo-item">
+                <h3>M Separado</h3>
+                <img src="logo-m.svg" alt="Logo M">
+                <div class="description">Apenas o ícone M com degradê verde-azul</div>
+                <button class="download-btn" onclick="downloadSVG('logo-m.svg')">Download SVG</button>
+            </div>
+            
+            <div class="logo-item">
+                <h3>MeuPortalFit Separado</h3>
+                <img src="logo-texto.svg" alt="Logo Texto">
+                <div class="description">Apenas o texto MeuPortalFit com degradê verde-azul</div>
+                <button class="download-btn" onclick="downloadSVG('logo-texto.svg')">Download SVG</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function downloadSVG(filename) {
+            const link = document.createElement('a');
+            link.href = filename;
+            link.download = filename;
+            link.click();
+        }
+    </script>
+</body>
+</html>

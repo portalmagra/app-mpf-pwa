@@ -7,20 +7,27 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {
-        brand: {
-          green: '#1B6B57',
-          greenDark: '#155E4D',
-          greenSoft: '#EAF5EF',
-          amber: '#F59E0B',
-          amberSoft: '#FEF3C7',
-          cream: '#FBF7F1',
-          text: '#1F2937',
-          text2: '#6B7280',
-          border: '#E5E7EB',
-          success: '#16A34A',
+        colors: {
+          brand: {
+            green: '#10b981',
+            greenDark: '#059669',
+            greenSoft: '#f0fdf4',
+            blue: '#3b82f6',
+            blueDark: '#1d4ed8',
+            blueSoft: '#eff6ff',
+            blueLight: '#60a5fa',
+            purple: '#7c3aed',
+            purpleDark: '#6d28d9',
+            amber: '#f59e0b',
+            amberDark: '#d97706',
+            amberSoft: '#fef3c7',
+            cream: '#f8fafc',
+            text: '#1f2937',
+            text2: '#6b7280',
+            border: '#e5e7eb',
+            success: '#10b981',
+          },
         },
-      },
       borderRadius: { 
         xl2: '1.25rem' 
       },
