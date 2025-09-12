@@ -136,7 +136,7 @@ export async function POST(request: NextRequest) {
         addText(product.name, 12, colors.green, true);
         addText(product.description || '', 10, colors.gray);
         addText(`Preço: ${product.price}`, 10, colors.amber, true);
-        addText(`Link: ${product.link}`, 8, colors.blue);
+        addText(`Link: ${product.url}`, 8, colors.blue);
         yPosition += 10;
       });
     }
