@@ -311,8 +311,8 @@ export default function AvaliacaoPage() {
       // Track PDF download
       console.log('PDF Download initiated:', { userName, timestamp: new Date().toISOString() });
       
-      // Abrir a apresentação bonita em nova aba para impressão/salvamento como PDF
-      const response = await fetch('/api/generate-presentation', {
+      // Abrir a apresentação baseada na página original em nova aba para impressão/salvamento como PDF
+      const response = await fetch('/api/generate-presentation-original', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
