@@ -1,4 +1,79 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+
+interface BeforeInstallPromptEvent extends Event {
+  readonly platforms: string[]
+  readonly userChoice: Promise<{
+    outcome: 'accepted' | 'dismissed'
+    platform: string
+  }>
+  prompt(): Promise<void>
+}
+
 export default function Home() {
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null)
+  const [isInstalled, setIsInstalled] = useState(false)
+
+  useEffect(() => {
+    // Detectar evento de instalação
+    const handleBeforeInstallPrompt = (e: Event) => {
+      e.preventDefault()
+      setDeferredPrompt(e as BeforeInstallPromptEvent)
+    }
+
+    // Detectar se já está instalado
+    const handleAppInstalled = () => {
+      console.log('🎉 PWA foi instalada!')
+      setIsInstalled(true)
+      setDeferredPrompt(null)
+    }
+
+    // Verificar se já está instalado (modo standalone)
+    const checkIfInstalled = () => {
+      if (window.matchMedia('(display-mode: standalone)').matches) {
+        setIsInstalled(true)
+        setDeferredPrompt(null)
+      }
+    }
+
+    // Adicionar event listeners
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+    window.addEventListener('appinstalled', handleAppInstalled)
+    
+    // Verificar se já está instalado
+    checkIfInstalled()
+
+    // Cleanup
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
+      window.removeEventListener('appinstalled', handleAppInstalled)
+    }
+  }, [])
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) {
+      // Se não há prompt disponível, mostrar instruções
+      alert('Para instalar o app:\n\n📱 iPhone: Toque no botão Compartilhar e selecione "Adicionar à Tela Inicial"\n\n🤖 Android: Procure pelo ícone de instalação na barra de endereços ou menu do navegador')
+      return
+    }
+
+    try {
+      // Mostrar prompt de instalação
+      await deferredPrompt.prompt()
+      
+      // Aguardar resposta do usuário
+      const { outcome } = await deferredPrompt.userChoice
+      
+      console.log(`👤 Usuário ${outcome === 'accepted' ? 'aceitou' : 'rejeitou'} a instalação`)
+      
+      // Limpar o prompt
+      setDeferredPrompt(null)
+    } catch (error) {
+      console.error('❌ Erro ao instalar PWA:', error)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-brand-cream pb-16">
       {/* Header */}
@@ -11,8 +86,12 @@ export default function Home() {
               </div>
               <h1 className="text-lg font-bold text-brand-text">MeuPortalFit</h1>
             </div>
-            <button className="bg-gradient-to-r from-brand-amber to-brand-amberDark text-white px-5 py-3 rounded-xl text-sm font-bold hover:shadow-xl transition-all transform hover:scale-110 border-2 border-brand-amber">
-              📱 Instalar Agora
+            <button 
+              id="install-button"
+              className="bg-gradient-to-r from-brand-amber to-brand-amberDark text-white px-5 py-3 rounded-xl text-sm font-bold hover:shadow-xl transition-all transform hover:scale-110 border-2 border-brand-amber"
+              onClick={handleInstallClick}
+            >
+              {isInstalled ? '✅ Instalado' : '📱 Instalar Agora'}
             </button>
           </div>
         </div>
