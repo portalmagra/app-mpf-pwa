@@ -479,26 +479,26 @@ function ResultadosContent() {
               <div class="subtitle">Personalizada para brasileiros nos EUA</div>
             </div>
             
-            ${analysisResults?.acolhimento ? `
+            ${(analysisResults as any)?.acolhimento ? `
             <div class="section">
               <div class="acolhimento">
-                ${analysisResults.acolhimento}
+                ${(analysisResults as any).acolhimento}
               </div>
             </div>
             ` : ''}
             
-            ${analysisResults?.analise || analysisResults?.analysis ? `
+            ${(analysisResults as any)?.analise || (analysisResults as any)?.analysis ? `
             <div class="section">
               <div class="section-title">🧠 Análise Personalizada Detalhada</div>
               <div class="analise">
                 <strong style="color: #1e293b;">📊 Resumo da Sua Avaliação:</strong><br/>
-                ${analysisResults.analise || analysisResults.analysis}
+                ${(analysisResults as any).analise || (analysisResults as any).analysis}
               </div>
               
-              ${analysisResults?.contexto_cultural ? `
+              ${(analysisResults as any)?.contexto_cultural ? `
               <div class="contexto-cultural">
                 <strong style="color: #92400e;">🌍 Contexto Cultural:</strong><br/>
-                ${analysisResults.contexto_cultural}
+                ${(analysisResults as any).contexto_cultural}
               </div>
               ` : ''}
               
@@ -536,10 +536,10 @@ function ResultadosContent() {
             </div>
             ` : ''}
             
-            ${analysisResults?.habitos && analysisResults.habitos.length > 0 ? `
+            ${(analysisResults as any)?.habitos && (analysisResults as any).habitos.length > 0 ? `
             <div class="section">
               <div class="section-title">✅ Checklist de Hábitos para Você</div>
-              ${analysisResults.habitos.map((habito: string) => `
+              ${(analysisResults as any).habitos.map((habito: string) => `
                 <div class="habito">
                   <div class="check">✓</div>
                   <div class="habito-text">${habito}</div>
@@ -551,8 +551,8 @@ function ResultadosContent() {
             <div class="section">
               <div class="section-title">🛍️ Produtos Selecionados para Você</div>
               
-              ${analysisResults?.produtos && analysisResults.produtos.length > 0 ? `
-              ${analysisResults.produtos.map((produto: unknown) => `
+              ${(analysisResults as any)?.produtos && (analysisResults as any).produtos.length > 0 ? `
+              ${(analysisResults as any).produtos.map((produto: unknown) => `
                 <div class="produto">
                   <div class="produto-nome">${produto.name}</div>
                   <div class="produto-desc">${produto.description}</div>
@@ -1291,7 +1291,7 @@ function ResultadosContent() {
               </div>
 
               {/* Checklist de Hábitos */}
-              {analysisResults?.habitos && analysisResults.habitos.length > 0 && (
+              {(analysisResults as any)?.habitos && (analysisResults as any).habitos.length > 0 && (
                 <div style={{
                   backgroundColor: 'white',
                   padding: '1.5rem',
@@ -1314,7 +1314,7 @@ function ResultadosContent() {
                     flexDirection: 'column',
                     gap: '1rem'
                   }}>
-                    {analysisResults.habitos.map((habito: string, index: number) => {
+                    {(analysisResults as any).habitos.map((habito: string, index: number) => {
                       // Processar o texto para destacar o negrito
                       const processedHabit = habito.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
                       
@@ -1388,14 +1388,14 @@ function ResultadosContent() {
                 </h3>
                 
                 {/* Produtos da API */}
-                {analysisResults?.produtos && analysisResults.produtos.length > 0 && (
+                {(analysisResults as any)?.produtos && (analysisResults as any).produtos.length > 0 && (
                   <div style={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
                     gap: '1.5rem',
                     marginBottom: '2rem'
                   }}>
-                    {analysisResults.produtos.map((product: unknown, index: number) => (
+                    {(analysisResults as any).produtos.map((product: unknown, index: number) => (
                       <div key={index} style={{
                         border: '2px solid #e0f2e9',
                         borderRadius: '16px',
@@ -1668,7 +1668,7 @@ function ResultadosContent() {
                     borderRadius: '8px',
                     border: '1px solid #e0f2e9'
                   }}>
-                    {analysisResults.timeline}
+                    {(analysisResults as any).timeline}
                   </div>
                 )}
 
@@ -1685,7 +1685,7 @@ function ResultadosContent() {
                     textAlign: 'center',
                     fontWeight: '500'
                   }}>
-                    💝 <strong style={{ fontSize: '1.2rem' }}>{analysisResults.proximo_passo}</strong>
+                    💝 <strong style={{ fontSize: '1.2rem' }}>{(analysisResults as any).proximo_passo}</strong>
                   </div>
                 )}
 
