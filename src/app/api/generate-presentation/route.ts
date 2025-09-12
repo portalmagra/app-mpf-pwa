@@ -615,7 +615,7 @@ export async function POST(request: NextRequest) {
                 <div class="viral-section">
                     <h3 class="viral-title">💝 Compartilhe com uma Amiga Brasileira!</h3>
                     <p class="viral-description">Ajude outra brasileira nos EUA a transformar sua vida • Link direto para instalação • Experiência completa</p>
-                    <a href="https://wa.me/17862535032?text=Olha que legal! Encontrei um app brasileiro incrível para quem vive nos EUA 🇧🇷🇺🇸%0A%0A✨ Avaliação gratuita com IA%0A🍽️ Receitas brasileiras%0A🛒 Produtos Amazon curados%0A👩‍💻 Coach brasileira especializada%0A%0ABaixe agora: https://app.meuportalfit.com%0A%0A#BrasileirasNosEUA #MeuPortalFit" class="viral-button" target="_blank">Compartilhar Agora</a>
+                    <a href="https://wa.me/17862535032?text=Olha que legal! Encontrei um app brasileiro incrível para quem vive nos Estados Unidos 🇧🇷🇺🇸%0A%0A✨ Você pode fazer sua avaliação gratuita por inteligência artificial - avaliação de bem-estar por inteligência artificial gratuita%0A🍽️ Receitas brasileiras%0A🛒 Produtos para comprar direto na Amazon - produtos já selecionados que compra direto na Amazon%0A👩‍💻 E se quiser tem uma Coach brasileira especializada para ajudar%0A%0ABaixe agora: https://app.meuportalfit.com%0A%0A#BrasileirasNosEUA #MeuPortalFit" class="viral-button" target="_blank">Compartilhar Agora</a>
                 </div>
             </div>
             

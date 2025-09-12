@@ -741,12 +741,12 @@ export default function AvaliacaoPage() {
               </p>
               <button 
                 onClick={() => {
-                  const shareMessage = `Olha que legal! Encontrei um app brasileiro incrível para quem vive nos EUA 🇧🇷🇺🇸 
+                  const shareMessage = `Olha que legal! Encontrei um app brasileiro incrível para quem vive nos Estados Unidos 🇧🇷🇺🇸 
 
-✨ Avaliação gratuita com IA
+✨ Você pode fazer sua avaliação gratuita por inteligência artificial - avaliação de bem-estar por inteligência artificial gratuita
 🍽️ Receitas brasileiras 
-🛒 Produtos Amazon curados
-👩‍💻 Coach brasileira especializada
+🛒 Produtos para comprar direto na Amazon - produtos já selecionados que compra direto na Amazon
+👩‍💻 E se quiser tem uma Coach brasileira especializada para ajudar
 
 Baixe agora: https://app.meuportalfit.com
 
