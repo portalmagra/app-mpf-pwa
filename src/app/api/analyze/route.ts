@@ -161,7 +161,8 @@ async function searchProductsSmart(
         
         if (results && results.length > 0) {
           const newProducts = results.filter(product => 
-            !allProducts.some(existing => existing.asin === product.asin)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            !allProducts.some((existing: any) => existing.asin === product.asin)
           )
           
           allProducts.push(...newProducts)
