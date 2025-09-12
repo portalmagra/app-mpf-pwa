@@ -326,7 +326,14 @@ function selectProductsForProfile(profile: {
 }
 
 // Função para buscar produtos reais da Amazon baseado no perfil
-async function getRealAmazonProducts(profile: any) {
+async function getRealAmazonProducts(profile: {
+  timeInUSA: number
+  lifestyle: number
+  mainGoal: number
+  previousAttempts: number
+  timeForResults: number
+  willingnessToChange: number
+}) {
   try {
     const keywords = [];
     
@@ -349,7 +356,16 @@ async function getRealAmazonProducts(profile: any) {
     ]);
 
     // Converter para formato esperado
-    return products.map((product: any) => ({
+    return products.map((product: {
+      ASIN: string
+      ItemInfo?: {
+        Title?: { DisplayValue: string }
+        Features?: { DisplayValues: string[] }
+      }
+      Offers?: {
+        Listings?: Array<{ Price?: { DisplayAmount: string } }>
+      }
+    }) => ({
       name: product.ItemInfo?.Title?.DisplayValue || 'Produto Amazon',
       price: product.Offers?.Listings?.[0]?.Price?.DisplayAmount || '$19.99',
       description: product.ItemInfo?.Features?.DisplayValues?.[0] || 'Produto recomendado para brasileiras nos EUA',

@@ -2,11 +2,7 @@
 // Usando fetch direto para evitar problemas de compatibilidade
 
 // Configuração da API da Amazon
-const accessKey = process.env.AMAZON_ACCESS_KEY_ID!
-const secretKey = process.env.AMAZON_SECRET_ACCESS_KEY!
 const partnerTag = process.env.AMAZON_ASSOCIATE_TAG!
-const marketplace = process.env.AMAZON_MARKETPLACE!
-const region = process.env.AMAZON_REGION!
 
 // Função para buscar produtos por categoria usando API REST
 export async function searchProductsByCategory(category: string, keywords: string[]) {
@@ -52,7 +48,7 @@ export async function getProductsByASIN(asins: string[]) {
 }
 
 // Função para criar URLs de produtos Amazon com tag de afiliado
-export function createAmazonProductUrl(asin: string, title?: string): string {
+export function createAmazonProductUrl(asin: string): string {
   const baseUrl = `https://amazon.com/dp/${asin}`
   const tag = `?tag=${partnerTag}`
   return `${baseUrl}${tag}`

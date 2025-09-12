@@ -21,6 +21,13 @@ export interface UserEvaluation {
   updated_at: string
 }
 
+export interface AmazonProduct {
+  name: string
+  price: string
+  description: string
+  url: string
+}
+
 export interface AnalysisResult {
   id: string
   evaluation_id: string
@@ -29,7 +36,7 @@ export interface AnalysisResult {
   risk_factors: string[]
   new_habits: string[]
   next_steps: string[]
-  amazon_products: any[]
+  amazon_products: AmazonProduct[]
   encouragement: string
   promise: string
   created_at: string
