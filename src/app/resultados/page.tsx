@@ -1658,7 +1658,7 @@ function ResultadosContent() {
                   🚀 Próximos Passos
                 </h3>
                 
-                {analysisResults?.timeline && (
+                {(analysisResults as any)?.timeline && (
                   <div style={{
                     fontSize: '1rem',
                     color: '#374151',
