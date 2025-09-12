@@ -553,7 +553,7 @@ function ResultadosContent() {
               <div class="section-title">🛍️ Produtos Selecionados para Você</div>
               
               ${(analysisResults as any)?.produtos && (analysisResults as any).produtos.length > 0 ? `
-              ${(analysisResults as any).produtos.map((produto: unknown) => `
+              ${(analysisResults as any).produtos.map((produto: any) => `
                 <div class="produto">
                   <div class="produto-nome">${produto.name}</div>
                   <div class="produto-desc">${produto.description}</div>
