@@ -1673,7 +1673,7 @@ function ResultadosContent() {
                   </div>
                 )}
 
-                {analysisResults?.proximo_passo && (
+                {(analysisResults as any)?.proximo_passo && (
                   <div style={{
                     fontSize: '1.1rem',
                     color: '#059669',
