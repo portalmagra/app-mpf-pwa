@@ -112,7 +112,7 @@ Responda em JSON com esta estrutura:
   "amazonProducts": [
     {
       "name": "Nome do produto",
-      "link": "https://amazon.com/dp/PRODUTO?tag=meuportalfit-20",
+      "link": "https://amazon.com/dp/PRODUTO?tag=portalsolutio-20",
       "price": "$XX.XX",
       "description": "Por que este produto é ideal para você"
     }
@@ -157,13 +157,13 @@ function selectProductsForProfile(profile: {
     energy: [
       {
         name: "Complexo B Premium para Energia",
-        url: "https://amzn.to/3x8K9mP?tag=meuportalfit-20",
+        url: "https://amzn.to/3x8K9mP?tag=portalsolutio-20",
         price: "$24.99",
         description: "Essencial para energia e foco durante a adaptação"
       },
       {
         name: "Ashwagandha - Adaptógeno Natural",
-        url: "https://amzn.to/3x8K9mQ?tag=meuportalfit-20",
+        url: "https://amzn.to/3x8K9mQ?tag=portalsolutio-20",
         price: "$19.99",
         description: "Reduz estresse e melhora energia naturalmente"
       }
@@ -172,13 +172,13 @@ function selectProductsForProfile(profile: {
     sleep: [
       {
         name: "Melatonina para Regular o Sono",
-        url: "https://amzn.to/3x8K9mR?tag=meuportalfit-20",
+        url: "https://amzn.to/3x8K9mR?tag=portalsolutio-20",
         price: "$15.99",
         description: "Ajuda a regular o ciclo de sono nos EUA"
       },
       {
         name: "Magnésio para Relaxamento",
-        url: "https://amzn.to/3x8K9mS?tag=meuportalfit-20",
+        url: "https://amzn.to/3x8K9mS?tag=portalsolutio-20",
         price: "$22.99",
         description: "Promove relaxamento e qualidade do sono"
       }
@@ -187,13 +187,13 @@ function selectProductsForProfile(profile: {
     weightLoss: [
       {
         name: "Proteína Whey Isolada",
-        url: "https://amzn.to/3x8K9mT?tag=meuportalfit-20",
+        url: "https://amzn.to/3x8K9mT?tag=portalsolutio-20",
         price: "$34.99",
         description: "Apoia perda de peso e ganho de massa muscular"
       },
       {
         name: "Óleo de Coco Orgânico",
-        url: "https://amzn.to/3x8K9mU?tag=meuportalfit-20",
+        url: "https://amzn.to/3x8K9mU?tag=portalsolutio-20",
         price: "$18.99",
         description: "Acelera metabolismo e queima de gordura"
       }
@@ -202,13 +202,13 @@ function selectProductsForProfile(profile: {
     muscleGain: [
       {
         name: "Creatina Monohidratada",
-        url: "https://amzn.to/3x8K9mV?tag=meuportalfit-20",
+        url: "https://amzn.to/3x8K9mV?tag=portalsolutio-20",
         price: "$28.99",
         description: "Aumenta força e massa muscular"
       },
       {
         name: "BCAA para Recuperação",
-        url: "https://amzn.to/3x8K9mW?tag=meuportalfit-20",
+        url: "https://amzn.to/3x8K9mW?tag=portalsolutio-20",
         price: "$25.99",
         description: "Melhora recuperação e crescimento muscular"
       }
@@ -217,13 +217,13 @@ function selectProductsForProfile(profile: {
     wellness: [
       {
         name: "Multivitamínico Completo",
-        url: "https://amzn.to/3x8K9mX?tag=meuportalfit-20",
+        url: "https://amzn.to/3x8K9mX?tag=portalsolutio-20",
         price: "$29.99",
         description: "Suporte nutricional completo para brasileiras nos EUA"
       },
       {
         name: "Ômega 3 Premium",
-        url: "https://amzn.to/3x8K9mY?tag=meuportalfit-20",
+        url: "https://amzn.to/3x8K9mY?tag=portalsolutio-20",
         price: "$32.99",
         description: "Suporte para saúde cardiovascular e cerebral"
       }
