@@ -571,11 +571,15 @@ export default function AvaliacaoPage() {
                 <span className="text-4xl">🎉</span>
               </div>
               
-              {/* Mensagem de Parabéns */}
-              <div className="bg-gradient-to-r from-brand-greenSoft to-brand-blueSoft rounded-xl p-4 mb-4">
-                <h2 className="text-xl font-bold text-brand-text mb-2">🎊 Parabéns, {userName}! 🎊</h2>
-                <p className="text-brand-text2 text-sm">
-                  Você completou sua avaliação personalizada! Seu plano está pronto.
+              {/* Mensagem de Parabéns - Compacta */}
+              <div className="bg-gradient-to-r from-brand-greenSoft to-brand-blueSoft rounded-xl p-3 mb-4">
+                <div className="flex items-center justify-center space-x-2">
+                  <span className="text-2xl">🎊</span>
+                  <h2 className="text-lg font-bold text-brand-text">Parabéns, {userName}!</h2>
+                  <span className="text-2xl">🎊</span>
+                </div>
+                <p className="text-brand-text2 text-xs text-center mt-1">
+                  Avaliação completa! Seu plano está pronto.
                 </p>
               </div>
 
@@ -609,31 +613,21 @@ export default function AvaliacaoPage() {
                   Veja sua apresentação interativa ou baixe o PDF personalizado com análise completa, hábitos, produtos Amazon e receitas exclusivas
                 </p>
                 
-                {/* Botão Principal - PDF */}
-                <button 
-                  onClick={() => generatePDF()}
-                  className="w-full bg-white text-brand-green px-6 py-4 rounded-lg font-bold hover:shadow-lg transition-all transform hover:scale-105 text-lg mb-3"
-                >
-                  📄 Baixar PDF Completo
-                </button>
-                
-                {/* Botão Secundário - Resultados */}
+                {/* Botão Principal - Ver Resultados */}
                 <button 
                   onClick={() => viewPresentation()}
-                  className="w-full bg-white bg-opacity-20 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all mb-2"
+                  className="w-full bg-white text-brand-green px-6 py-4 rounded-lg font-bold hover:shadow-lg transition-all transform hover:scale-105 text-lg mb-3"
                 >
                   📊 Ver Meus Resultados
                 </button>
                 
-                {/* Botão Terciário - WhatsApp */}
-                <div className="text-center">
-                  <button 
-                    onClick={() => sendViaWhatsApp()}
-                    className="text-green-100 text-sm underline hover:text-white transition-all"
-                  >
-                    📲 Ou receber via WhatsApp
-                  </button>
-                </div>
+                {/* Botão Secundário - PDF */}
+                <button 
+                  onClick={() => generatePDF()}
+                  className="w-full bg-white bg-opacity-20 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all mb-2"
+                >
+                  📄 Baixar PDF Completo
+                </button>
                 
                 <div className="mt-3 p-2 bg-white bg-opacity-20 rounded-lg">
                   <p className="text-green-100 text-xs text-center">
