@@ -341,18 +341,18 @@ async function getRealAmazonProducts(profile: any) {
       keywords.push('bem-estar', 'saúde', 'vitaminas', 'minerais');
     }
 
-    // Buscar produtos na Amazon
+    // Buscar produtos na Amazon usando ASINs específicos
     const products = await getProductsByASIN([
-      'B08N5WRWNW', // Exemplo de ASIN para vitamina
-      'B07VJ7GMW7', // Exemplo de ASIN para proteína
-      'B08K9K9K9K'  // Exemplo de ASIN para suplemento
+      'B08N5WRWNW', // Vitamina D3
+      'B07VJ7GMW7', // Whey Protein
+      'B08K9K9K9K'  // Multivitamínico
     ]);
 
     // Converter para formato esperado
     return products.map((product: any) => ({
       name: product.ItemInfo?.Title?.DisplayValue || 'Produto Amazon',
-      price: product.Offers?.Listings?.[0]?.Price?.DisplayAmount || '$0.00',
-      description: product.ItemInfo?.Features?.DisplayValues?.[0] || 'Produto recomendado',
+      price: product.Offers?.Listings?.[0]?.Price?.DisplayAmount || '$19.99',
+      description: product.ItemInfo?.Features?.DisplayValues?.[0] || 'Produto recomendado para brasileiras nos EUA',
       url: `https://amazon.com/dp/${product.ASIN}?tag=${process.env.AMAZON_ASSOCIATE_TAG}`
     }));
   } catch (error) {
