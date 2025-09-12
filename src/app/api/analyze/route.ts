@@ -57,12 +57,24 @@ Respostas do quiz:
 5. Tempo para resultados: ${answers[5] === 1 ? '1-2 semanas' : answers[5] === 2 ? '1 mês' : answers[5] === 3 ? '3 meses' : '6+ meses'}
 6. Disposição para mudar: ${answers[6] === 1 ? 'Mudar hábitos alimentares' : answers[6] === 2 ? 'Adicionar exercícios' : answers[6] === 3 ? 'Suplementação inteligente' : 'Tudo junto'}
 
-Crie uma análise completa com estrutura profissional:
+Crie uma análise PERSONALIZADA e ÚNICA baseada no perfil específico. Evite mensagens genéricas como "entendo perfeitamente os desafios de se adaptar aos EUA".
 
-1. ACOLHIMENTO: Mensagem acolhedora que mostra que entendeu o perfil
+Seja específica sobre:
+- O tempo que ela está nos EUA e os desafios específicos dessa fase
+- Seu estilo de vida atual e como isso afeta seus objetivos  
+- Suas tentativas anteriores e o que isso revela sobre sua jornada
+- Sua disposição para mudança e como trabalhar com isso
+
+IMPORTANTE: 
+- Use o nome ${userName} na mensagem de acolhimento
+- Seja específica sobre adaptação cultural baseada no tempo nos EUA
+- Mencione desafios específicos do estilo de vida dela
+- Crie mensagens de encorajamento únicas baseadas no perfil
+
+1. ACOLHIMENTO: Mensagem acolhedora PERSONALIZADA que mostra que entendeu o perfil específico
 2. RECOMENDAÇÕES PERSONALIZADAS: 4 recomendações específicas baseadas no perfil
-3. PRIORIDADES: 1-2 áreas de foco principal
-4. FATORES DE RISCO: 2-3 alertas importantes para o perfil
+3. PRIORIDADES: 1-2 áreas de foco principal específicas para ela
+4. FATORES DE RISCO: 2-3 alertas importantes para o perfil específico
 5. NOVOS HÁBITOS: 5 hábitos específicos para implementar
 6. PRÓXIMOS PASSOS: 4 ações concretas para começar
 7. PRODUTOS AMAZON: 3 produtos com links reais e tag de afiliado

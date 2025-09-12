@@ -726,11 +726,6 @@ export async function POST(request: NextRequest) {
                     <a href="https://app.meuportalfit.com" class="cta-button" style="color: #10b981;">Ver Receitas</a>
                 </div>
                 
-                <div class="cta-section" style="background: linear-gradient(135deg, #7c3aed, #6d28d9);">
-                    <h3 class="cta-title">👥 Comunidade de Brasileiras nos EUA</h3>
-                    <p class="cta-description">+1.247 brasileiras já transformaram suas vidas • Grupo exclusivo WhatsApp • Dicas diárias • Suporte emocional</p>
-                    <a href="https://wa.me/${WHATSAPP_CONFIG.OFFICIAL_NUMBER}?text=${encodeURIComponent(WHATSAPP_CONFIG.MESSAGES.PLAN)}" class="cta-button" style="color: #7c3aed;">Entrar Agora</a>
-                </div>
                 
                 ${result.encouragement ? `
                     <div class="encouragement">
