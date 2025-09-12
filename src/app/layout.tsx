@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import PWAInstaller from "@/components/PWAInstaller";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,13 +14,30 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MeuPortalFit - Coach Brasileira nos EUA",
-  description: "App completo com receitas, mercado e avaliação gratuita para brasileiras nos EUA",
+  title: "MeuPortalFit - Saúde dos Brasileiros nos EUA",
+  description: "Avaliação gratuita de bem-estar personalizada para brasileiros nos Estados Unidos",
   manifest: "/manifest.json",
+  themeColor: "#22c55e",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
     title: "MeuPortalFit",
+  },
+  icons: {
+    icon: [
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" }
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
+    ]
+  },
+  openGraph: {
+    title: "MeuPortalFit - Saúde dos Brasileiros nos EUA",
+    description: "Avaliação gratuita de bem-estar personalizada para brasileiros nos Estados Unidos",
+    type: "website",
+    locale: "pt_BR",
   },
 };
 
@@ -32,16 +50,21 @@ export default function RootLayout({
     <html lang="pt-BR">
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#1B6B57" />
+        <meta name="theme-color" content="#22c55e" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="MeuPortalFit" />
-        <link rel="apple-touch-icon" href="/icon.svg" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="application-name" content="MeuPortalFit" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <PWAInstaller />
       </body>
     </html>
   );
