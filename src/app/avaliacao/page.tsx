@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { WHATSAPP_CONFIG, getWhatsAppUrl } from '@/config/whatsapp';
 
 interface QuizQuestion {
@@ -408,6 +409,11 @@ export default function AvaliacaoPage() {
                 </div>
                 <h1 className="text-lg font-bold text-brand-text">MeuPortalFit</h1>
               </div>
+              <Link href="/">
+                <button className="bg-brand-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-greenDark transition-colors">
+                  🏠 Início
+                </button>
+              </Link>
             </div>
           </div>
         </header>
@@ -474,6 +480,11 @@ export default function AvaliacaoPage() {
                 </div>
                 <h1 className="text-lg font-bold text-brand-text">MeuPortalFit</h1>
               </div>
+              <Link href="/">
+                <button className="bg-brand-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-greenDark transition-colors">
+                  🏠 Início
+                </button>
+              </Link>
             </div>
           </div>
         </header>
