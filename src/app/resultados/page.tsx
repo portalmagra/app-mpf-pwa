@@ -1913,7 +1913,7 @@ function ResultadosContent() {
                     }}>
                       🏠 Voltar ao Início
                     </button>
-                  </a>
+                  </Link>
                 </div>
               </div>
             </>
