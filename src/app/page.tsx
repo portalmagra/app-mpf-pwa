@@ -52,43 +52,102 @@ export default function Home() {
   }, [])
 
   const handleInstallClick = async () => {
-    if (!deferredPrompt) {
-      // Detectar dispositivo e mostrar instruções específicas
-      const userAgent = navigator.userAgent.toLowerCase()
-      const isIOS = /iphone|ipad|ipod/.test(userAgent)
-      const isAndroid = /android/.test(userAgent)
-      const isMac = /macintosh|mac os x/.test(userAgent)
-      
-      let instructions = ''
-      
-      if (isIOS) {
-        instructions = '📱 iPhone/iPad:\n\n1. Toque no botão "Compartilhar" (quadrado com seta)\n2. Role para baixo e toque em "Adicionar à Tela Inicial"\n3. Toque em "Adicionar" no canto superior direito'
-      } else if (isAndroid) {
-        instructions = '🤖 Android:\n\n1. Procure pelo ícone de instalação na barra de endereços\n2. Ou vá no menu do navegador (3 pontos) → "Instalar app"\n3. Toque em "Instalar"'
-      } else if (isMac) {
-        instructions = '💻 Mac:\n\n1. No Safari: Menu "Compartilhar" → "Adicionar à Tela Inicial"\n2. No Chrome: Ícone de instalação na barra de endereços\n3. No Edge: Menu (3 pontos) → "Aplicativos" → "Instalar"'
-      } else {
-        instructions = '💻 Computador:\n\n1. Chrome/Edge: Procure pelo ícone de instalação na barra de endereços\n2. Firefox: Menu (3 linhas) → "Instalar"\n3. Safari: Menu "Compartilhar" → "Adicionar à Tela Inicial"'
+    // Tentar instalação automática primeiro
+    if (deferredPrompt) {
+      try {
+        await deferredPrompt.prompt()
+        const { outcome } = await deferredPrompt.userChoice
+        console.log(`👤 Usuário ${outcome === 'accepted' ? 'aceitou' : 'rejeitou'} a instalação`)
+        setDeferredPrompt(null)
+        return
+      } catch (error) {
+        console.error('❌ Erro ao instalar PWA:', error)
       }
-      
-      alert(`Para instalar o app:\n\n${instructions}`)
-      return
     }
 
-    try {
-      // Mostrar prompt de instalação
-      await deferredPrompt.prompt()
-      
-      // Aguardar resposta do usuário
-      const { outcome } = await deferredPrompt.userChoice
-      
-      console.log(`👤 Usuário ${outcome === 'accepted' ? 'aceitou' : 'rejeitou'} a instalação`)
-      
-      // Limpar o prompt
-      setDeferredPrompt(null)
-    } catch (error) {
-      console.error('❌ Erro ao instalar PWA:', error)
+    // Se não funcionou, mostrar modal com instruções visuais
+    const modal = document.createElement('div')
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    `
+    
+    const content = document.createElement('div')
+    content.style.cssText = `
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 400px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    `
+    
+    const userAgent = navigator.userAgent.toLowerCase()
+    const isIOS = /iphone|ipad|ipod/.test(userAgent)
+    const isAndroid = /android/.test(userAgent)
+    
+    let title = '📱 Instalar App'
+    let steps = []
+    
+    if (isIOS) {
+      title = '📱 iPhone/iPad'
+      steps = [
+        '1. Toque no botão "Compartilhar" (quadrado com seta para cima)',
+        '2. Role para baixo e encontre "Adicionar à Tela Inicial"',
+        '3. Toque em "Adicionar" no canto superior direito'
+      ]
+    } else if (isAndroid) {
+      title = '🤖 Android'
+      steps = [
+        '1. Procure pelo ícone de instalação na barra de endereços',
+        '2. Ou vá no menu do navegador (3 pontos) → "Instalar app"',
+        '3. Toque em "Instalar"'
+      ]
+    } else {
+      title = '💻 Computador'
+      steps = [
+        '1. Procure pelo ícone de instalação na barra de endereços',
+        '2. Ou vá no menu do navegador → "Instalar"',
+        '3. Clique em "Instalar"'
+      ]
     }
+    
+    content.innerHTML = `
+      <h2 style="margin: 0 0 20px 0; color: #22c55e; font-size: 24px;">${title}</h2>
+      <div style="margin: 20px 0;">
+        ${steps.map(step => `<p style="margin: 10px 0; color: #333; font-size: 16px;">${step}</p>`).join('')}
+      </div>
+      <button onclick="this.parentElement.parentElement.remove()" style="
+        background: #22c55e;
+        color: white;
+        border: none;
+        padding: 15px 30px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        margin-top: 20px;
+      ">Entendi!</button>
+    `
+    
+    modal.appendChild(content)
+    document.body.appendChild(modal)
+    
+    // Fechar ao clicar fora
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.remove()
+      }
+    })
   }
 
   return (
