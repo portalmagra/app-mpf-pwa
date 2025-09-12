@@ -325,19 +325,25 @@ export default function AvaliacaoPage() {
 
       if (response.ok) {
         const htmlContent = await response.text();
-        const newWindow = window.open('', '_blank');
+        
+        // Criar blob e abrir diretamente
+        const blob = new Blob([htmlContent], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        
+        // Abrir em nova aba sem pop-up blocker
+        const newWindow = window.open(url, '_blank');
         if (newWindow) {
-          newWindow.document.write(htmlContent);
-          newWindow.document.close();
-          
           // Aguardar carregamento e mostrar instruções de impressão
           setTimeout(() => {
             newWindow.print();
           }, 1000);
+          
+          // Track successful download
+          console.log('PDF Download completed successfully');
+        } else {
+          // Fallback: redirecionar na mesma aba
+          window.location.href = url;
         }
-        
-        // Track successful download
-        console.log('PDF Download completed successfully');
       } else {
         // Fallback: enviar via WhatsApp
         console.log('PDF generation failed, falling back to WhatsApp');
@@ -380,17 +386,18 @@ export default function AvaliacaoPage() {
         const html = await response.text();
         console.log('HTML received, length:', html.length);
         
-        // Tentar abrir em nova aba
-        const newWindow = window.open('', '_blank');
+        // Criar blob e abrir diretamente
+        const blob = new Blob([html], { type: 'text/html' });
+        const url = URL.createObjectURL(blob);
+        
+        // Abrir em nova aba sem pop-up blocker
+        const newWindow = window.open(url, '_blank');
         if (newWindow) {
-          newWindow.document.write(html);
-          newWindow.document.close();
-          
           // Track successful view
           console.log('Presentation view completed successfully');
         } else {
-          // Se não conseguir abrir nova aba, mostrar alerta
-          alert('Por favor, permita pop-ups para este site para ver sua apresentação.');
+          // Fallback: redirecionar na mesma aba
+          window.location.href = url;
         }
       } else {
         console.error('API Error:', response.status, response.statusText);
@@ -587,16 +594,16 @@ export default function AvaliacaoPage() {
           <div className="max-w-sm mx-auto">
             {/* Header Celebrativo */}
             <div className="text-center mb-6">
-              {/* Mensagem de Parabéns - Ultra Compacta */}
-              <div className="bg-gradient-to-r from-brand-greenSoft to-brand-blueSoft rounded-xl p-3 mb-4">
-                <div className="flex items-center justify-center space-x-2">
-                  <div className="w-12 h-12 bg-gradient-to-br from-brand-green via-brand-green to-brand-blue rounded-full flex items-center justify-center animate-pulse">
-                    <span className="text-xl">🎉</span>
+              {/* Mensagem de Parabéns - Simplificada */}
+              <div className="bg-gradient-to-r from-brand-greenSoft to-brand-blueSoft rounded-xl p-4 mb-4">
+                <div className="flex items-center justify-center space-x-3">
+                  <div className="w-16 h-16 bg-gradient-to-br from-brand-green via-brand-green to-brand-blue rounded-full flex items-center justify-center animate-pulse">
+                    <span className="text-2xl">🎉</span>
                   </div>
-                  <div>
-                    <h2 className="text-lg font-bold text-brand-text">Parabéns, {userName}!</h2>
-                    <p className="text-brand-text2 text-xs">
-                      Você completou sua avaliação personalizada! Seu plano está pronto.
+                  <div className="text-center">
+                    <h2 className="text-xl font-bold text-brand-text mb-1">Parabéns, {userName}!</h2>
+                    <p className="text-brand-text2 text-sm">
+                      Você completou sua avaliação personalizada!
                     </p>
                   </div>
                 </div>
@@ -667,7 +674,7 @@ export default function AvaliacaoPage() {
                 
                 <h3 className="font-bold text-white mb-2 text-xl">📥 Seu Plano Completo Está Pronto!</h3>
                 <p className="text-green-100 text-sm mb-4">
-                  Veja sua apresentação interativa ou baixe o PDF personalizado com análise completa, hábitos, produtos Amazon e receitas exclusivas
+                  Veja sua análise personalizada completa com recomendações, hábitos e produtos Amazon
                 </p>
                 
                 {/* Botão Principal - Ver Resultados */}
@@ -689,7 +696,7 @@ export default function AvaliacaoPage() {
                 
                 <div className="mt-3 p-2 bg-white bg-opacity-20 rounded-lg">
                   <p className="text-green-100 text-xs text-center">
-                    ✨ Apresentação interativa + PDF profissional + Receitas brasileiras + Dicas de adaptação
+                    ✨ Análise personalizada + Produtos Amazon + Receitas brasileiras
                   </p>
                 </div>
               </div>
