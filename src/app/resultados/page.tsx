@@ -552,7 +552,7 @@ function ResultadosContent() {
               <div class="section-title">🛍️ Produtos Selecionados para Você</div>
               
               ${analysisResults?.produtos && analysisResults.produtos.length > 0 ? `
-              ${analysisResults.produtos.map((produto: any) => `
+              ${analysisResults.produtos.map((produto: unknown) => `
                 <div class="produto">
                   <div class="produto-nome">${produto.name}</div>
                   <div class="produto-desc">${produto.description}</div>
@@ -1395,7 +1395,7 @@ function ResultadosContent() {
                     gap: '1.5rem',
                     marginBottom: '2rem'
                   }}>
-                    {analysisResults.produtos.map((product: any, index: number) => (
+                    {analysisResults.produtos.map((product: unknown, index: number) => (
                       <div key={index} style={{
                         border: '2px solid #e0f2e9',
                         borderRadius: '16px',

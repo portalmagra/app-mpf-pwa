@@ -322,7 +322,7 @@ export async function POST(request: NextRequest) {
       analysis = completion.choices[0]?.message?.content || ''
       console.log('✅ Análise personalizada gerada com sucesso')
       
-    } catch (openaiError) {
+    } catch (/* openaiError */) {
       console.warn('⚠️ OpenAI falhou, usando análise de fallback')
       
       // Análise de fallback baseada nas respostas
