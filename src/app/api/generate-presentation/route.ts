@@ -63,16 +63,45 @@ export async function POST(request: NextRequest) {
         }
         
         .slide-cover {
-            background: linear-gradient(135deg, #f0fdf4, #eff6ff);
+            background: linear-gradient(135deg, #ffffff, #f8fafc);
             color: #1f2937;
+            border-bottom: 3px solid #22c55e;
         }
         
         .slide-content {
             background: white;
+            border-left: 4px solid #22c55e;
+            border-right: 4px solid #3b82f6;
         }
         
         .slide-offers {
             background: linear-gradient(135deg, #f0fdf4, #eff6ff);
+        }
+        
+        .header-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .logo-container {
+            text-align: center;
+        }
+        
+        .greeting-section {
+            text-align: center;
+            max-width: 600px;
+        }
+        
+        .description-card {
+            background: linear-gradient(135deg, #f0fdf4, #eff6ff);
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid #e5e7eb;
+            margin-top: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
         
         .logo {
@@ -223,52 +252,75 @@ export async function POST(request: NextRequest) {
         
         .product-card {
             background: white;
-            border-radius: 16px;
-            padding: 24px;
+            border-radius: 20px;
+            padding: 28px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-            border: 1px solid #e5e7eb;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid #f3f4f6;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #22c55e, #3b82f6);
         }
         
         .product-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+            border-color: #22c55e;
         }
         
         .product-name {
-            font-size: 18px;
-            font-weight: 700;
-            color: #10b981;
-            margin-bottom: 8px;
+            font-size: 20px;
+            font-weight: 800;
+            color: #1f2937;
+            margin-bottom: 12px;
+            line-height: 1.3;
         }
         
         .product-price {
-            font-size: 24px;
-            font-weight: 800;
-            color: #f59e0b;
-            margin-bottom: 12px;
+            font-size: 28px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
         }
         
         .product-description {
             color: #6b7280;
-            font-size: 14px;
-            margin-bottom: 16px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            line-height: 1.5;
         }
         
         .amazon-btn {
-            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            background: linear-gradient(135deg, #ff9500, #ff6b00);
             color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
+            padding: 16px 32px;
+            border-radius: 12px;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
+            font-weight: 700;
+            font-size: 16px;
             display: inline-block;
-            transition: transform 0.2s ease;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(255, 149, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
         
         .amazon-btn:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(255, 149, 0, 0.4);
+            background: linear-gradient(135deg, #ff6b00, #e55a00);
         }
         
         .cta-section {
@@ -534,12 +586,20 @@ export async function POST(request: NextRequest) {
             <div class="slide slide-cover">
                 <div class="urgency-badge">⚡ 24h</div>
                 
-                <div class="logo">MeuPortalFit</div>
-                <div class="subtitle">🇧🇷 Para Brasileiros nos Estados Unidos 🇺🇸</div>
-                
-                <h1 class="main-title">🎉 Olá, ${userName}!</h1>
-                <h2 class="subtitle-personalized">Seu plano personalizado está pronto, ${gender}!</h2>
-                <p class="description">${result.description}</p>
+                <div class="header-section">
+                    <div class="logo-container">
+                        <div class="logo">MeuPortalFit</div>
+                        <div class="subtitle">🇧🇷 Para Brasileiros nos Estados Unidos 🇺🇸</div>
+                    </div>
+                    
+                    <div class="greeting-section">
+                        <h1 class="main-title">🎉 Olá, ${userName}!</h1>
+                        <h2 class="subtitle-personalized">Seu plano personalizado está pronto, ${gender}!</h2>
+                        <div class="description-card">
+                            <p class="description">${result.description}</p>
+                        </div>
+                    </div>
+                </div>
                 
                 
                 <!-- VALOR IMEDIATO -->
