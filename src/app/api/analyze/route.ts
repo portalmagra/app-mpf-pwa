@@ -126,6 +126,7 @@ async function searchProductsSmart(
       if (results && results.length > 0) {
         // Filtrar apenas produtos únicos (por ASIN)
         const newProducts = results.filter(product => 
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           !allProducts.some((existing: any) => existing.asin === product.asin)
         )
         
