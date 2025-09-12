@@ -217,7 +217,7 @@ export default function AvaliacaoPage() {
   const [showGoalsInput, setShowGoalsInput] = useState(false);
   const [userName, setUserName] = useState('');
   const [showNameInput, setShowNameInput] = useState(true);
-  const [userAge, setUserAge] = useState('');
+  // const [userAge, setUserAge] = useState('');
 
   const handleNameSubmit = () => {
     if (userName.trim()) {
@@ -658,7 +658,7 @@ export default function AvaliacaoPage() {
                 </div>
                 <div>
                   <p className="text-brand-text text-sm italic mb-2">
-                    "O plano me ajudou a me adaptar aos EUA sem perder minha identidade brasileira. Recomendo!"
+                    &ldquo;O plano me ajudou a me adaptar aos EUA sem perder minha identidade brasileira. Recomendo!&rdquo;
                   </p>
                   <p className="text-brand-text2 text-xs font-semibold">- Maria, São Paulo → Miami</p>
                 </div>

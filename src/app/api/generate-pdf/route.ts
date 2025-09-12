@@ -3,7 +3,7 @@ import jsPDF from 'jspdf';
 
 export async function POST(request: NextRequest) {
   try {
-    const { userName, userGoals, answers, result } = await request.json();
+    const { userName, result } = await request.json();
 
     // Criar PDF
     const doc = new jsPDF();
@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
     if (result.amazonProducts && result.amazonProducts.length > 0) {
       addSectionTitle('Produtos Recomendados', '🛒');
       
-      result.amazonProducts.forEach((product: any) => {
+      result.amazonProducts.forEach((product: { name: string; price: string; description: string; url: string }) => {
         if (yPosition > pageHeight - 50) {
           doc.addPage();
           yPosition = 20;
