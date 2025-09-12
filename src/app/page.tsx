@@ -65,8 +65,100 @@ export default function Home() {
       }
     }
 
-    // Se não funcionou, mostrar modal profissional
-    showInstallModal()
+    // Para iOS Safari - mostrar modal de permissão
+    const userAgent = navigator.userAgent.toLowerCase()
+    const isIOS = /iphone|ipad|ipod/.test(userAgent)
+    const isSafari = /safari/.test(userAgent) && !/chrome/.test(userAgent)
+    
+    if (isIOS && isSafari) {
+      showIOSInstallModal()
+    } else {
+      showInstallModal()
+    }
+  }
+
+  const showIOSInstallModal = () => {
+    const modal = document.createElement('div')
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    `
+    
+    const content = document.createElement('div')
+    content.style.cssText = `
+      background: white;
+      border-radius: 20px;
+      padding: 35px 30px;
+      max-width: 320px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    `
+    
+    content.innerHTML = `
+      <div style="margin-bottom: 25px;">
+        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #22c55e, #16a34a); border-radius: 16px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+          <span style="color: white; font-size: 24px; font-weight: bold;">M</span>
+        </div>
+        <h2 style="margin: 0 0 15px 0; color: #1f2937; font-size: 22px; font-weight: 700;">Instalar MeuPortalFit</h2>
+        <p style="margin: 0 0 20px 0; color: #4b5563; font-size: 16px; line-height: 1.5;">Quer ter acesso rápido ao seu app de saúde?</p>
+        
+        <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 12px; padding: 20px; margin: 20px 0;">
+          <h3 style="margin: 0 0 10px 0; color: #1f2937; font-size: 16px; font-weight: 600;">Como instalar:</h3>
+          <p style="margin: 5px 0; color: #374151; font-size: 14px;">1. Toque no botão "Compartilhar" (quadrado com seta)</p>
+          <p style="margin: 5px 0; color: #374151; font-size: 14px;">2. Role para baixo e toque em "Adicionar à Tela Inicial"</p>
+          <p style="margin: 5px 0; color: #374151; font-size: 14px;">3. Toque em "Adicionar"</p>
+        </div>
+      </div>
+      
+      <div style="display: flex; gap: 10px;">
+        <button onclick="this.parentElement.parentElement.remove()" style="
+          flex: 1;
+          background: #f3f4f6;
+          color: #374151;
+          border: none;
+          padding: 14px 16px;
+          border-radius: 10px;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+        ">
+          Depois
+        </button>
+        <button onclick="this.parentElement.parentElement.remove()" style="
+          flex: 1;
+          background: linear-gradient(135deg, #22c55e, #16a34a);
+          color: white;
+          border: none;
+          padding: 14px 16px;
+          border-radius: 10px;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+        ">
+          Instalar
+        </button>
+      </div>
+    `
+    
+    modal.appendChild(content)
+    document.body.appendChild(modal)
+    
+    // Fechar ao clicar fora
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.remove()
+      }
+    })
   }
 
   const showInstallModal = () => {
@@ -95,27 +187,13 @@ export default function Home() {
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     `
     
-    const userAgent = navigator.userAgent.toLowerCase()
-    const isIOS = /iphone|ipad|ipod/.test(userAgent)
-    
-    let title = 'Instalar App'
-    let instruction = ''
-    
-    if (isIOS) {
-      title = 'Adicionar à Tela Inicial'
-      instruction = 'Toque no botão "Compartilhar" (quadrado com seta) e depois em "Adicionar à Tela Inicial"'
-    } else {
-      title = 'Instalar App'
-      instruction = 'Procure pelo ícone de instalação na barra de endereços do seu navegador'
-    }
-    
     content.innerHTML = `
       <div style="margin-bottom: 25px;">
         <div style="width: 50px; height: 50px; background: #22c55e; border-radius: 12px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;">
           <span style="color: white; font-size: 20px; font-weight: bold;">M</span>
         </div>
-        <h2 style="margin: 0 0 15px 0; color: #1f2937; font-size: 20px; font-weight: 600;">${title}</h2>
-        <p style="margin: 0; color: #4b5563; font-size: 15px; line-height: 1.4;">${instruction}</p>
+        <h2 style="margin: 0 0 15px 0; color: #1f2937; font-size: 20px; font-weight: 600;">Instalar App</h2>
+        <p style="margin: 0; color: #4b5563; font-size: 15px; line-height: 1.4;">Procure pelo ícone de instalação na barra de endereços do seu navegador</p>
       </div>
       
       <button onclick="this.parentElement.parentElement.remove()" style="
