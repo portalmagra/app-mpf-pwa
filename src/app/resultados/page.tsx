@@ -764,7 +764,7 @@ function ResultadosContent() {
       {/* Results Section */}
       <section style={{ background: 'white', padding: '1.5rem 0' }}>
         <div style={{ maxWidth: '800px', margin: '0 auto', padding: '0 1rem' }}>
-          {analysisResults && (
+          {(analysisResults as any) && (
             <>
 
 
