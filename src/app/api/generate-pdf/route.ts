@@ -95,7 +95,7 @@ export async function POST(request: NextRequest) {
     };
 
     // Função para adicionar card de produto
-    const addProductCard = (product: any, index: number) => {
+    const addProductCard = (product: { name: string; price: string; description: string; url: string }) => {
       if (yPosition > pageHeight - 60) {
         doc.addPage();
         yPosition = 20;
@@ -300,7 +300,7 @@ export async function POST(request: NextRequest) {
     if (result.amazonProducts && result.amazonProducts.length > 0) {
       addSectionTitle('🛒 Produtos Recomendados', '');
       
-      result.amazonProducts.forEach((product: any, index: number) => {
+      result.amazonProducts.forEach((product: { name: string; price: string; description: string; url: string }) => {
         addProductCard(product, index);
       });
       
