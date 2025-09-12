@@ -134,7 +134,7 @@ async function searchProductsSmart(
         console.log(`✅ Found ${newProducts.length} unique products (total: ${allProducts.length})`)
       }
     } catch (error) {
-      console.warn(`⚠️ Search error for "${term}":`, error.message)
+      console.warn(`⚠️ Search error for "${term}":`, error instanceof Error ? error.message : String(error))
     }
   }
   
