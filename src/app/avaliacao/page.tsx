@@ -350,6 +350,45 @@ export default function AvaliacaoPage() {
     }
   };
 
+  const viewPresentation = async () => {
+    try {
+      // Track presentation view
+      console.log('Presentation view initiated:', { userName, timestamp: new Date().toISOString() });
+      
+      // Chamar API para gerar apresentação
+      const response = await fetch('/api/generate-presentation', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userName,
+          result
+        }),
+      });
+
+      if (response.ok) {
+        const html = await response.text();
+        const newWindow = window.open('', '_blank');
+        if (newWindow) {
+          newWindow.document.write(html);
+          newWindow.document.close();
+          
+          // Track successful view
+          console.log('Presentation view completed successfully');
+        }
+      } else {
+        // Fallback: enviar via WhatsApp
+        console.log('Presentation generation failed, falling back to WhatsApp');
+        sendViaWhatsApp();
+      }
+    } catch (error) {
+      console.error('Error generating presentation:', error);
+      // Fallback: enviar via WhatsApp
+      sendViaWhatsApp();
+    }
+  };
+
   const sendViaWhatsApp = () => {
     // Track WhatsApp redirect
     console.log('WhatsApp redirect initiated:', { userName, timestamp: new Date().toISOString() });
@@ -567,18 +606,26 @@ export default function AvaliacaoPage() {
                 
                 <h3 className="font-bold text-white mb-2 text-xl">📥 Seu Plano Completo Está Pronto!</h3>
                 <p className="text-green-100 text-sm mb-4">
-                  Baixe seu PDF personalizado com análise completa, hábitos, produtos Amazon e receitas exclusivas
+                  Veja sua apresentação interativa ou baixe o PDF personalizado com análise completa, hábitos, produtos Amazon e receitas exclusivas
                 </p>
                 
-                {/* Botão Principal - PDF */}
+                {/* Botão Principal - Apresentação */}
                 <button 
-                  onClick={() => generatePDF()}
+                  onClick={() => viewPresentation()}
                   className="w-full bg-white text-brand-green px-6 py-4 rounded-lg font-bold hover:shadow-lg transition-all transform hover:scale-105 text-lg mb-3"
                 >
-                  📄 Baixar Meu PDF Completo
+                  🎨 Ver Minha Apresentação
                 </button>
                 
-                {/* Botão Secundário - WhatsApp */}
+                {/* Botão Secundário - PDF */}
+                <button 
+                  onClick={() => generatePDF()}
+                  className="w-full bg-white bg-opacity-20 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all mb-2"
+                >
+                  📄 Baixar PDF Completo
+                </button>
+                
+                {/* Botão Terciário - WhatsApp */}
                 <div className="text-center">
                   <button 
                     onClick={() => sendViaWhatsApp()}
@@ -590,7 +637,7 @@ export default function AvaliacaoPage() {
                 
                 <div className="mt-3 p-2 bg-white bg-opacity-20 rounded-lg">
                   <p className="text-green-100 text-xs text-center">
-                    ✨ PDF profissional com template exclusivo + Receitas brasileiras + Dicas de adaptação
+                    ✨ Apresentação interativa + PDF profissional + Receitas brasileiras + Dicas de adaptação
                   </p>
                 </div>
               </div>
