@@ -1396,7 +1396,7 @@ function ResultadosContent() {
                     gap: '1.5rem',
                     marginBottom: '2rem'
                   }}>
-                    {(analysisResults as any).produtos.map((product: unknown, index: number) => (
+                    {(analysisResults as any).produtos.map((product: any, index: number) => (
                       <div key={index} style={{
                         border: '2px solid #e0f2e9',
                         borderRadius: '16px',
