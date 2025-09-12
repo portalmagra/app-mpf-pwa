@@ -669,7 +669,7 @@ export default function AvaliacaoPage() {
             <div className="bg-gradient-to-r from-brand-blue to-brand-blueDark rounded-xl p-4 text-center">
               <h3 className="font-bold text-white mb-2 text-lg">Quer aprofundar seu plano?</h3>
               <p className="text-green-100 text-sm mb-4">
-                Converse com uma Coach Brasileira especializada em adaptação nos EUA
+                Converse com uma Coach Brasileira especializada
               </p>
               
               <a 
@@ -690,11 +690,22 @@ export default function AvaliacaoPage() {
             <div className="bg-gradient-to-r from-brand-amber to-brand-amberDark rounded-xl p-4 text-center mt-6">
               <h3 className="font-bold text-white mb-2">💝 Compartilhe com uma amiga brasileira!</h3>
               <p className="text-amber-100 text-sm mb-3">
-                Ajude outra brasileira nos EUA a transformar sua vida
+                Ajude outra brasileira nos Estados Unidos a transformar sua vida
               </p>
               <button 
                 onClick={() => {
-                  const whatsappUrl = getWhatsAppUrl(WHATSAPP_CONFIG.MESSAGES.SHARE, '');
+                  const shareMessage = `Olha que legal! Encontrei um app brasileiro incrível para quem vive nos EUA 🇧🇷🇺🇸 
+
+✨ Avaliação gratuita com IA
+🍽️ Receitas brasileiras 
+🛒 Produtos Amazon curados
+👩‍💻 Coach brasileira especializada
+
+Baixe agora: https://app.meuportalfit.com
+
+#BrasileirasNosEUA #MeuPortalFit`;
+                  
+                  const whatsappUrl = getWhatsAppUrl(WHATSAPP_CONFIG.MESSAGES.SHARE, shareMessage);
                   window.open(whatsappUrl, '_blank');
                 }}
                 className="bg-white text-brand-amber px-6 py-2 rounded-lg font-semibold hover:shadow-lg transition-all"
