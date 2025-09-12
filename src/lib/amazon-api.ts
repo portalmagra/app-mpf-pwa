@@ -194,7 +194,7 @@ async function searchAmazonAPI(
     console.log(`📦 Found ${data.SearchResult.Items.length} products`);
 
     // Processar e filtrar produtos
-    const products = data.SearchResult.Items.map((item: unknown) => {
+    const products = data.SearchResult.Items.map((item: any) => {
       const asin = item.ASIN;
       let url = item.DetailPageURL || `https://www.amazon.com/dp/${asin}`;
       
