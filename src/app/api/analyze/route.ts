@@ -130,9 +130,140 @@ Responda em JSON com esta estrutura:
   return JSON.parse(response || '{}');
 }
 
+// Função para selecionar produtos baseados no perfil específico
+function selectProductsForProfile(profile: {
+  timeInUSA: number;
+  lifestyle: number;
+  mainGoal: number;
+  previousAttempts: number;
+  timeForResults: number;
+  willingnessToChange: number;
+}) {
+  // Base de produtos disponíveis
+  const productDatabase = {
+    // Produtos para energia e adaptação
+    energy: [
+      {
+        name: "Complexo B Premium para Energia",
+        url: "https://amzn.to/3x8K9mP?tag=meuportalfit-20",
+        price: "$24.99",
+        description: "Essencial para energia e foco durante a adaptação"
+      },
+      {
+        name: "Ashwagandha - Adaptógeno Natural",
+        url: "https://amzn.to/3x8K9mQ?tag=meuportalfit-20",
+        price: "$19.99",
+        description: "Reduz estresse e melhora energia naturalmente"
+      }
+    ],
+    // Produtos para sono
+    sleep: [
+      {
+        name: "Melatonina para Regular o Sono",
+        url: "https://amzn.to/3x8K9mR?tag=meuportalfit-20",
+        price: "$15.99",
+        description: "Ajuda a regular o ciclo de sono nos EUA"
+      },
+      {
+        name: "Magnésio para Relaxamento",
+        url: "https://amzn.to/3x8K9mS?tag=meuportalfit-20",
+        price: "$22.99",
+        description: "Promove relaxamento e qualidade do sono"
+      }
+    ],
+    // Produtos para perda de peso
+    weightLoss: [
+      {
+        name: "Proteína Whey Isolada",
+        url: "https://amzn.to/3x8K9mT?tag=meuportalfit-20",
+        price: "$34.99",
+        description: "Apoia perda de peso e ganho de massa muscular"
+      },
+      {
+        name: "Óleo de Coco Orgânico",
+        url: "https://amzn.to/3x8K9mU?tag=meuportalfit-20",
+        price: "$18.99",
+        description: "Acelera metabolismo e queima de gordura"
+      }
+    ],
+    // Produtos para ganho de massa
+    muscleGain: [
+      {
+        name: "Creatina Monohidratada",
+        url: "https://amzn.to/3x8K9mV?tag=meuportalfit-20",
+        price: "$28.99",
+        description: "Aumenta força e massa muscular"
+      },
+      {
+        name: "BCAA para Recuperação",
+        url: "https://amzn.to/3x8K9mW?tag=meuportalfit-20",
+        price: "$25.99",
+        description: "Melhora recuperação e crescimento muscular"
+      }
+    ],
+    // Produtos para bem-estar geral
+    wellness: [
+      {
+        name: "Multivitamínico Completo",
+        url: "https://amzn.to/3x8K9mX?tag=meuportalfit-20",
+        price: "$29.99",
+        description: "Suporte nutricional completo para brasileiras nos EUA"
+      },
+      {
+        name: "Ômega 3 Premium",
+        url: "https://amzn.to/3x8K9mY?tag=meuportalfit-20",
+        price: "$32.99",
+        description: "Suporte para saúde cardiovascular e cerebral"
+      }
+    ]
+  };
+
+  let selectedProducts = [];
+
+  // Lógica de seleção baseada no perfil
+  if (profile.timeInUSA === 1) {
+    // Recém-chegada: foco em adaptação e energia
+    selectedProducts.push(productDatabase.energy[0]);
+    selectedProducts.push(productDatabase.sleep[0]);
+    selectedProducts.push(productDatabase.wellness[0]);
+  } else if (profile.mainGoal === 1) {
+    // Objetivo: Perder peso
+    selectedProducts.push(productDatabase.weightLoss[0]);
+    selectedProducts.push(productDatabase.energy[1]);
+    selectedProducts.push(productDatabase.wellness[1]);
+  } else if (profile.mainGoal === 2) {
+    // Objetivo: Ganhar massa muscular
+    selectedProducts.push(productDatabase.muscleGain[0]);
+    selectedProducts.push(productDatabase.muscleGain[1]);
+    selectedProducts.push(productDatabase.weightLoss[0]);
+  } else if (profile.lifestyle === 1) {
+    // Vida agitada: foco em energia e estresse
+    selectedProducts.push(productDatabase.energy[0]);
+    selectedProducts.push(productDatabase.energy[1]);
+    selectedProducts.push(productDatabase.sleep[1]);
+  } else if (profile.willingnessToChange === 3) {
+    // Disposta a suplementação: produtos mais avançados
+    selectedProducts.push(productDatabase.wellness[0]);
+    selectedProducts.push(productDatabase.wellness[1]);
+    selectedProducts.push(productDatabase.energy[1]);
+  } else {
+    // Perfil equilibrado: produtos gerais
+    selectedProducts.push(productDatabase.wellness[0]);
+    selectedProducts.push(productDatabase.sleep[0]);
+    selectedProducts.push(productDatabase.energy[0]);
+  }
+
+  return selectedProducts;
+}
+
 function getMockResult(answers: number[], userGoals: string, userName: string) {
-  // Lógica baseada nas respostas (como estava antes)
+  // Lógica personalizada baseada nas respostas específicas
   const timeInUSA = answers[1];
+  const lifestyle = answers[2];
+  const mainGoal = answers[3];
+  const previousAttempts = answers[4];
+  const timeForResults = answers[5];
+  const willingnessToChange = answers[6];
   
   let resultType: string;
   if (timeInUSA === 1) {
@@ -142,6 +273,16 @@ function getMockResult(answers: number[], userGoals: string, userName: string) {
   } else {
     resultType = 'veteran';
   }
+
+  // Seleção de produtos baseada no perfil específico
+  const selectedProducts = selectProductsForProfile({
+    timeInUSA,
+    lifestyle,
+    mainGoal,
+    previousAttempts,
+    timeForResults,
+    willingnessToChange
+  });
 
   const mockResults = {
     newcomer: {
@@ -173,26 +314,7 @@ function getMockResult(answers: number[], userGoals: string, userName: string) {
         "Acompanhe progresso semanalmente para ajustar abordagem",
         "Considere plano abrangente de 30 dias para melhoria sistemática"
       ],
-      amazonProducts: [
-        {
-          name: "Complexo B Premium para Energia",
-          url: "https://amzn.to/3x8K9mP?tag=meuportalfit-20",
-          price: "$24.99",
-          description: "Essencial para energia e foco durante a adaptação"
-        },
-        {
-          name: "Ashwagandha - Adaptógeno Natural",
-          url: "https://amzn.to/3x8K9mQ?tag=meuportalfit-20", 
-          price: "$19.99",
-          description: "Reduz estresse e melhora energia naturalmente"
-        },
-        {
-          name: "Melatonina para Regular o Sono",
-          url: "https://amzn.to/3x8K9mR?tag=meuportalfit-20",
-          price: "$15.99",
-          description: "Ajuda a regular o ciclo de sono nos EUA"
-        }
-      ],
+      amazonProducts: selectedProducts,
       encouragement: `${userName}, você está fazendo o melhor por si mesma! Cada pequeno passo conta. 🇧🇷✨`,
       promise: "Receba receitas brasileiras adaptadas para os EUA e dicas exclusivas de adaptação cultural!"
     },
@@ -227,26 +349,7 @@ function getMockResult(answers: number[], userGoals: string, userName: string) {
         "Monitore progresso mensalmente",
         "Considere coaching personalizado para próximo nível"
       ],
-      amazonProducts: [
-        {
-          name: "Proteína Whey Isolada Premium",
-          url: "https://amzn.to/3x8K9mS?tag=meuportalfit-20",
-          price: "$39.99",
-          description: "Proteína de alta qualidade para otimização muscular"
-        },
-        {
-          name: "Magnésio Glicinato para Relaxamento",
-          url: "https://amzn.to/3x8K9mT?tag=meuportalfit-20",
-          price: "$22.99",
-          description: "Melhora qualidade do sono e reduz estresse"
-        },
-        {
-          name: "Ômega 3 Premium para Saúde Cerebral",
-          url: "https://amzn.to/3x8K9mU?tag=meuportalfit-20",
-          price: "$29.99",
-          description: "Suporte completo para saúde mental e física"
-        }
-      ],
+      amazonProducts: selectedProducts,
       encouragement: `${userName}, você já conquistou tanto! Agora é hora de elevar sua performance ao próximo nível! 💪🇧🇷`,
       promise: "Receba receitas brasileiras adaptadas para os EUA e dicas exclusivas de otimização!"
     },
@@ -281,26 +384,7 @@ function getMockResult(answers: number[], userGoals: string, userName: string) {
         "Considere coaching de elite para mastery",
         "Planeje estratégia de longevidade"
       ],
-      amazonProducts: [
-        {
-          name: "Creatina Monohidratada Premium",
-          url: "https://amzn.to/3x8K9mV?tag=meuportalfit-20",
-          price: "$34.99",
-          description: "Para performance e força máxima"
-        },
-        {
-          name: "L-Tirosina para Foco e Energia",
-          url: "https://amzn.to/3x8K9mW?tag=meuportalfit-20",
-          price: "$18.99",
-          description: "Neurotransmissor para foco e energia mental"
-        },
-        {
-          name: "ZMA para Recuperação e Sono",
-          url: "https://amzn.to/3x8K9mX?tag=meuportalfit-20",
-          price: "$24.99",
-          description: "Mineral essencial para recuperação otimizada"
-        }
-      ],
+      amazonProducts: selectedProducts,
       encouragement: `${userName}, você é uma inspiração! Sua experiência é seu maior ativo. Vamos maximizar seu potencial! 🚀🇧🇷`,
       promise: "Receba receitas brasileiras adaptadas para os EUA e dicas exclusivas de mastery!"
     }
