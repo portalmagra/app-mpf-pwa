@@ -218,7 +218,7 @@ function selectProductsForProfile(profile: {
     ]
   };
 
-  let selectedProducts = [];
+  const selectedProducts = [];
 
   // Lógica de seleção baseada no perfil
   if (profile.timeInUSA === 1) {
