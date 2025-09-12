@@ -5,27 +5,59 @@ export async function POST(request: NextRequest) {
   try {
     const { userName, result } = await request.json();
 
-    // Criar PDF
-    const doc = new jsPDF();
+    // Criar PDF com orientação landscape para design mais impactante
+    const doc = new jsPDF('landscape', 'mm', 'a4');
     
     // Configurações
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
     let yPosition = 20;
-    const margin = 20;
+    const margin = 15;
     const contentWidth = pageWidth - (margin * 2);
 
-    // Cores (aproximadas para PDF)
+    // Cores atualizadas com gradientes e paleta brasileira
     const colors = {
-      green: [22, 107, 57], // brand-green
-      blue: [59, 130, 246], // brand-blue
-      amber: [245, 158, 11], // brand-amber
-      gray: [107, 114, 128], // brand-text2
-      darkGray: [31, 41, 55] // brand-text
+      // Gradientes principais
+      green: [16, 185, 129], // #10b981 - brand-green
+      greenDark: [5, 150, 105], // #059669 - brand-greenDark
+      greenSoft: [240, 253, 244], // #f0fdf4 - brand-greenSoft
+      blue: [59, 130, 246], // #3b82f6 - brand-blue
+      blueDark: [29, 78, 216], // #1d4ed8 - brand-blueDark
+      blueSoft: [239, 246, 255], // #eff6ff - brand-blueSoft
+      blueLight: [96, 165, 250], // #60a5fa - brand-blueLight
+      amber: [245, 158, 11], // #f59e0b - brand-amber
+      amberDark: [217, 119, 6], // #d97706 - brand-amberDark
+      amberSoft: [254, 243, 199], // #fef3c7 - brand-amberSoft
+      purple: [124, 58, 237], // #7c3aed - brand-purple
+      purpleDark: [109, 40, 217], // #6d28d9 - brand-purpleDark
+      // Neutros
+      cream: [248, 250, 252], // #f8fafc - brand-cream
+      text: [31, 41, 55], // #1f2937 - brand-text
+      text2: [107, 114, 128], // #6b7280 - brand-text2
+      border: [229, 231, 235], // #e5e7eb - brand-border
+      success: [16, 185, 129], // #10b981 - brand-success
+      white: [255, 255, 255],
+      black: [0, 0, 0]
     };
 
-    // Função para adicionar texto com quebra de linha
-    const addText = (text: string, fontSize: number, color: number[] = colors.darkGray, isBold: boolean = false) => {
+    // Função para criar gradiente (simulado com múltiplas linhas)
+    const addGradientBackground = (x: number, y: number, width: number, height: number, color1: number[], color2: number[]) => {
+      const steps = 20;
+      const stepHeight = height / steps;
+      
+      for (let i = 0; i < steps; i++) {
+        const ratio = i / (steps - 1);
+        const r = Math.round(color1[0] + (color2[0] - color1[0]) * ratio);
+        const g = Math.round(color1[1] + (color2[1] - color1[1]) * ratio);
+        const b = Math.round(color1[2] + (color2[2] - color1[2]) * ratio);
+        
+        doc.setFillColor(r, g, b);
+        doc.rect(x, y + (i * stepHeight), width, stepHeight + 0.5, 'F');
+      }
+    };
+
+    // Função para adicionar texto com estilo
+    const addText = (text: string, fontSize: number, color: number[] = colors.text, isBold: boolean = false, align: string = 'left') => {
       doc.setFontSize(fontSize);
       doc.setTextColor(color[0], color[1], color[2]);
       if (isBold) {
@@ -35,186 +67,347 @@ export async function POST(request: NextRequest) {
       }
       
       const lines = doc.splitTextToSize(text, contentWidth);
-      doc.text(lines, margin, yPosition);
+      const xPos = align === 'center' ? pageWidth / 2 : margin;
+      doc.text(lines, xPos, yPosition, { align });
       yPosition += lines.length * (fontSize * 0.4) + 5;
     };
 
-    // Função para adicionar título de seção
-    const addSectionTitle = (title: string, icon: string) => {
-      if (yPosition > pageHeight - 40) {
+    // Função para adicionar título de seção com estilo
+    const addSectionTitle = (title: string, icon: string, bgColor: number[] = colors.greenSoft) => {
+      if (yPosition > pageHeight - 50) {
+        doc.addPage();
+        yPosition = 20;
+      }
+      
+      yPosition += 15;
+      
+      // Background da seção
+      doc.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
+      doc.roundedRect(margin, yPosition - 8, contentWidth, 25, 3, 3, 'F');
+      
+      // Título com ícone
+      doc.setFontSize(16);
+      doc.setTextColor(colors.green[0], colors.green[1], colors.green[2]);
+      doc.setFont('helvetica', 'bold');
+      doc.text(`${icon} ${title}`, margin + 10, yPosition + 5);
+      
+      yPosition += 20;
+    };
+
+    // Função para adicionar card de produto
+    const addProductCard = (product: any, index: number) => {
+      if (yPosition > pageHeight - 60) {
+        doc.addPage();
+        yPosition = 20;
+      }
+      
+      const cardWidth = contentWidth / 2 - 5;
+      const cardHeight = 40;
+      const xPos = margin + (index % 2) * (cardWidth + 10);
+      
+      // Background do card
+      doc.setFillColor(colors.white[0], colors.white[1], colors.white[2]);
+      doc.setDrawColor(colors.border[0], colors.border[1], colors.border[2]);
+      doc.roundedRect(xPos, yPosition, cardWidth, cardHeight, 5, 5, 'FD');
+      
+      // Título do produto
+      doc.setFontSize(12);
+      doc.setTextColor(colors.green[0], colors.green[1], colors.green[2]);
+      doc.setFont('helvetica', 'bold');
+      doc.text(product.name, xPos + 8, yPosition + 8);
+      
+      // Preço destacado
+      doc.setFontSize(14);
+      doc.setTextColor(colors.amber[0], colors.amber[1], colors.amber[2]);
+      doc.setFont('helvetica', 'bold');
+      doc.text(product.price, xPos + 8, yPosition + 20);
+      
+      // Link Amazon
+      doc.setFontSize(8);
+      doc.setTextColor(colors.blue[0], colors.blue[1], colors.blue[2]);
+      doc.setFont('helvetica', 'normal');
+      doc.text('🛒 Comprar na Amazon', xPos + 8, yPosition + 32);
+      
+      if (index % 2 === 1) {
+        yPosition += cardHeight + 10;
+      }
+    };
+
+    // Função para adicionar lista com estilo
+    const addStyledList = (items: string[], bullet: string = '✅', color: number[] = colors.text) => {
+      items.forEach((item, index) => {
+        if (yPosition > pageHeight - 30) {
+          doc.addPage();
+          yPosition = 20;
+        }
+        
+        // Ícone colorido
+        doc.setFontSize(12);
+        doc.setTextColor(colors.green[0], colors.green[1], colors.green[2]);
+        doc.text(bullet, margin, yPosition);
+        
+        // Texto
+        doc.setTextColor(color[0], color[1], color[2]);
+        doc.text(item, margin + 15, yPosition);
+        
+        yPosition += 8;
+      });
+    };
+
+    // Função para adicionar call-to-action destacado
+    const addCTA = (title: string, description: string, buttonText: string, bgColor: number[] = colors.blue) => {
+      if (yPosition > pageHeight - 50) {
         doc.addPage();
         yPosition = 20;
       }
       
       yPosition += 10;
-      addText(`${icon} ${title}`, 14, colors.green, true);
-      yPosition += 5;
+      
+      // Background do CTA
+      doc.setFillColor(bgColor[0], bgColor[1], bgColor[2]);
+      doc.roundedRect(margin, yPosition, contentWidth, 35, 8, 8, 'F');
+      
+      // Título
+      doc.setFontSize(16);
+      doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
+      doc.setFont('helvetica', 'bold');
+      doc.text(title, margin + 15, yPosition + 12);
+      
+      // Descrição
+      doc.setFontSize(10);
+      doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
+      doc.setFont('helvetica', 'normal');
+      doc.text(description, margin + 15, yPosition + 20);
+      
+      // Botão simulado
+      doc.setFillColor(colors.white[0], colors.white[1], colors.white[2]);
+      doc.roundedRect(margin + contentWidth - 80, yPosition + 8, 70, 18, 3, 3, 'F');
+      
+      doc.setFontSize(10);
+      doc.setTextColor(bgColor[0], bgColor[1], bgColor[2]);
+      doc.setFont('helvetica', 'bold');
+      doc.text(buttonText, margin + contentWidth - 45, yPosition + 19, { align: 'center' });
+      
+      yPosition += 40;
     };
 
-    // Função para adicionar lista
-    const addList = (items: string[], bullet: string = '•') => {
-      items.forEach(item => {
-        if (yPosition > pageHeight - 30) {
-          doc.addPage();
-          yPosition = 20;
-        }
-        addText(`${bullet} ${item}`, 10, colors.darkGray);
-      });
-    };
-
-    // Header profissional
-    doc.setFillColor(colors.green[0], colors.green[1], colors.green[2]);
-    doc.rect(0, 0, pageWidth, 35, 'F');
+    // ===== PÁGINA 1: COVER ESPETACULAR =====
     
-    // Logo/Title
-    doc.setFontSize(18);
-    doc.setTextColor(255, 255, 255);
+    // Background com gradiente brasileiro
+    addGradientBackground(0, 0, pageWidth, pageHeight, colors.green, colors.blue);
+    
+    // Logo/Header centralizado
+    doc.setFontSize(28);
+    doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
     doc.setFont('helvetica', 'bold');
-    doc.text('MeuPortalFit', margin, 20);
+    doc.text('MeuPortalFit', pageWidth / 2, 40, { align: 'center' });
     
     // Subtitle
-    doc.setFontSize(10);
-    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(14);
+    doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
     doc.setFont('helvetica', 'normal');
-    doc.text('Saúde dos Brasileiros nos EUA', margin, 28);
+    doc.text('🇧🇷 Para Brasileiros nos Estados Unidos 🇺🇸', pageWidth / 2, 50, { align: 'center' });
     
-    yPosition = 45;
-
-    // Título principal
-    addText(result.title, 18, colors.green, true);
-    yPosition += 10;
-
+    // Título principal com destaque
+    doc.setFontSize(24);
+    doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`🎉 ${result.title}`, pageWidth / 2, 80, { align: 'center' });
+    
+    // Nome personalizado
+    doc.setFontSize(20);
+    doc.setTextColor(colors.amberSoft[0], colors.amberSoft[1], colors.amberSoft[2]);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Plano Personalizado para ${userName}`, pageWidth / 2, 100, { align: 'center' });
+    
     // Descrição
-    addText(result.description, 12, colors.gray);
-    yPosition += 15;
+    doc.setFontSize(12);
+    doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
+    doc.setFont('helvetica', 'normal');
+    doc.text(result.description, pageWidth / 2, 120, { align: 'center' });
+    
+    // QR Code simulado (placeholder)
+    doc.setFillColor(colors.white[0], colors.white[1], colors.white[2]);
+    doc.roundedRect(pageWidth / 2 - 30, 140, 60, 60, 5, 5, 'F');
+    
+    doc.setFontSize(8);
+    doc.setTextColor(colors.green[0], colors.green[1], colors.green[2]);
+    doc.text('📱 Instalar App', pageWidth / 2, 200, { align: 'center' });
+    doc.text('app.meuportalfit.com', pageWidth / 2, 205, { align: 'center' });
+    
+    // ===== PÁGINA 2: ANÁLISE PERSONALIZADA =====
+    doc.addPage();
+    yPosition = 20;
+    
+    // Header da página
+    addGradientBackground(0, 0, pageWidth, 30, colors.green, colors.blue);
+    doc.setFontSize(18);
+    doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
+    doc.setFont('helvetica', 'bold');
+    doc.text('📊 Sua Análise Personalizada', pageWidth / 2, 20, { align: 'center' });
+    
+    yPosition = 40;
 
     // Recomendações Personalizadas
     if (result.personalizedRecommendations) {
-      addSectionTitle('Recomendações Personalizadas', '🎯');
-      addList(result.personalizedRecommendations, '✅');
+      addSectionTitle('🎯 Recomendações Personalizadas', '');
+      addStyledList(result.personalizedRecommendations, '✨', colors.text);
       yPosition += 10;
     }
 
     // Áreas de Prioridade
     if (result.priorityAreas) {
-      addSectionTitle('Áreas de Prioridade', '⭐');
-      addList(result.priorityAreas, '→');
+      addSectionTitle('⭐ Áreas de Prioridade', '');
+      addStyledList(result.priorityAreas, '🎯', colors.blue);
       yPosition += 10;
     }
 
     // Fatores de Risco
     if (result.riskFactors) {
-      addSectionTitle('Fatores de Risco', '⚠️');
-      addList(result.riskFactors, '!');
+      addSectionTitle('⚠️ Fatores de Risco', '');
+      addStyledList(result.riskFactors, '🔍', colors.amber);
       yPosition += 10;
     }
 
+    // ===== PÁGINA 3: HÁBITOS E PRODUTOS =====
+    doc.addPage();
+    yPosition = 20;
+    
+    // Header da página
+    addGradientBackground(0, 0, pageWidth, 30, colors.blue, colors.purple);
+    doc.setFontSize(18);
+    doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
+    doc.setFont('helvetica', 'bold');
+    doc.text('✅ Seu Plano de Ação', pageWidth / 2, 20, { align: 'center' });
+    
+    yPosition = 40;
+
     // Novos Hábitos
     if (result.newHabits) {
-      addSectionTitle('Checklist de Hábitos para Você', '✔');
-      addList(result.newHabits, '✅');
+      addSectionTitle('✔ Checklist de Hábitos para Você', '');
+      addStyledList(result.newHabits, '✅', colors.green);
       yPosition += 10;
     }
 
     // Próximos Passos
     if (result.nextSteps) {
-      addSectionTitle('Próximos Passos', '🚀');
-      addList(result.nextSteps, '→');
+      addSectionTitle('🚀 Próximos Passos', '');
+      addStyledList(result.nextSteps, '→', colors.blue);
       yPosition += 10;
     }
 
-    // Produtos Amazon
+    // Produtos Amazon em cards
     if (result.amazonProducts && result.amazonProducts.length > 0) {
-      addSectionTitle('Produtos Recomendados', '🛒');
+      addSectionTitle('🛒 Produtos Recomendados', '');
       
-      result.amazonProducts.forEach((product: { name: string; price: string; description: string; url: string }) => {
-        if (yPosition > pageHeight - 50) {
-          doc.addPage();
-          yPosition = 20;
-        }
-        
-        addText(product.name, 12, colors.green, true);
-        addText(product.description || '', 10, colors.gray);
-        addText(`Preço: ${product.price}`, 10, colors.amber, true);
-        addText(`Link: ${product.url}`, 8, colors.blue);
-        yPosition += 10;
+      result.amazonProducts.forEach((product: any, index: number) => {
+        addProductCard(product, index);
       });
+      
+      yPosition += 20;
     }
+
+    // ===== PÁGINA 4: OFERTAS E CALL-TO-ACTIONS =====
+    doc.addPage();
+    yPosition = 20;
+    
+    // Header da página
+    addGradientBackground(0, 0, pageWidth, 30, colors.purple, colors.amber);
+    doc.setFontSize(18);
+    doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
+    doc.setFont('helvetica', 'bold');
+    doc.text('🎁 Ofertas Exclusivas para Você!', pageWidth / 2, 20, { align: 'center' });
+    
+    yPosition = 40;
+
+    // CTA Coach Brasileira
+    addCTA(
+      '👩‍💻 Coach Brasileira Especializada',
+      'Converse com uma Coach Brasileira especializada • Análise personalizada • Plano de 30 dias • Suporte via WhatsApp',
+      'Falar Agora',
+      colors.blue
+    );
+
+    // CTA Receitas
+    addCTA(
+      '🍽️ Receitas Brasileiras Exclusivas',
+      'Receba receitas adaptadas para os EUA • Feijoada light • Pão de açúcar saudável • Brigadeiro fit',
+      'Ver Receitas',
+      colors.green
+    );
+
+    // CTA Comunidade
+    addCTA(
+      '👥 Comunidade de Brasileiras nos EUA',
+      'Conecte-se com outras brasileiras • Grupo exclusivo WhatsApp • Dicas diárias • Suporte emocional',
+      'Entrar Agora',
+      colors.purple
+    );
 
     // Mensagem de Encorajamento
     if (result.encouragement) {
-      if (yPosition > pageHeight - 30) {
-        doc.addPage();
-        yPosition = 20;
-      }
-      
-      yPosition += 10;
-      addText('💪 Mensagem de Encorajamento', 14, colors.green, true);
-      addText(result.encouragement, 12, colors.gray);
+      addSectionTitle('💪 Mensagem de Encorajamento', '');
+      addText(result.encouragement, 14, colors.text, true, 'center');
+      yPosition += 20;
     }
 
     // Promessa de Receitas
     if (result.promise) {
-      if (yPosition > pageHeight - 30) {
-        doc.addPage();
-        yPosition = 20;
-      }
-      
-      yPosition += 10;
-      addText('🍽️ Receitas Exclusivas!', 14, colors.amber, true);
-      addText(result.promise, 12, colors.gray);
+      addSectionTitle('🍽️ Receitas Exclusivas!', '');
+      addText(result.promise, 12, colors.text, false, 'center');
+      yPosition += 20;
     }
 
-    // Promoções Extras
-    if (yPosition > pageHeight - 80) {
-      doc.addPage();
-      yPosition = 20;
-    }
+    // ===== PÁGINA 5: INSTALAÇÃO E CONTATO =====
+    doc.addPage();
+    yPosition = 20;
     
-    yPosition += 15;
-    addSectionTitle('🎁 Ofertas Exclusivas para Você!', '');
+    // Header da página
+    addGradientBackground(0, 0, pageWidth, 30, colors.amber, colors.green);
+    doc.setFontSize(18);
+    doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
+    doc.setFont('helvetica', 'bold');
+    doc.text('📱 Instale Nosso App Agora!', pageWidth / 2, 20, { align: 'center' });
     
-    // Oferta Coach
-    addText('👩‍💻 Coach Brasileira Especializada', 12, colors.blue, true);
-    addText('Converse com uma Coach Brasileira especializada em adaptação nos EUA', 10, colors.gray);
-    addText('• Análise personalizada do seu caso', 9, colors.darkGray);
-    addText('• Plano de 30 dias customizado', 9, colors.darkGray);
-    addText('• Suporte via WhatsApp', 9, colors.darkGray);
-    addText('• Resposta em até 2 horas', 9, colors.darkGray);
-    addText('WhatsApp: (786) 253-5032', 10, colors.amber, true);
-    yPosition += 10;
+    yPosition = 40;
+
+    // Instruções de instalação
+    addSectionTitle('🚀 Como Instalar o App', '');
     
-    // Oferta Receitas
-    addText('🍽️ Receitas Brasileiras Exclusivas', 12, colors.green, true);
-    addText('Receba receitas adaptadas para os EUA com ingredientes locais', 10, colors.gray);
-    addText('• Feijoada light com ingredientes americanos', 9, colors.darkGray);
-    addText('• Pão de açúcar saudável', 9, colors.darkGray);
-    addText('• Brigadeiro fit com proteína', 9, colors.darkGray);
-    addText('• Dicas de onde comprar ingredientes brasileiros', 9, colors.darkGray);
-    yPosition += 10;
+    const installSteps = [
+      '1. Acesse: app.meuportalfit.com',
+      '2. Clique em "Instalar App" no seu celular',
+      '3. Adicione à tela inicial',
+      '4. Acesse receitas, produtos e Coach 24/7'
+    ];
     
-    // Oferta Comunidade
-    addText('👥 Comunidade de Brasileiras nos EUA', 12, colors.blue, true);
-    addText('Conecte-se com outras brasileiras na mesma jornada', 10, colors.gray);
-    addText('• Grupo exclusivo no WhatsApp', 9, colors.darkGray);
-    addText('• Dicas diárias de adaptação', 9, colors.darkGray);
-    addText('• Suporte emocional e prático', 9, colors.darkGray);
-    addText('• Eventos e encontros virtuais', 9, colors.darkGray);
-    yPosition += 10;
+    addStyledList(installSteps, '📱', colors.blue);
+
+    // Contatos
+    addSectionTitle('📞 Entre em Contato', '');
     
-    // Call to Action Final
-    addText('🚀 Próximos Passos:', 12, colors.green, true);
-    addText('1. Implemente os hábitos do seu plano', 10, colors.darkGray);
-    addText('2. Entre em contato com nossa Coach', 10, colors.darkGray);
-    addText('3. Junte-se à nossa comunidade', 10, colors.darkGray);
-    addText('4. Compartilhe com outras brasileiras', 10, colors.darkGray);
+    const contacts = [
+      'WhatsApp: (786) 253-5032',
+      'Website: app.meuportalfit.com',
+      'Email: contato@meuportalfit.com',
+      'Horário: 9h às 18h (EST)'
+    ];
     
-    // Footer
-    const footerY = pageHeight - 20;
-    doc.setFontSize(8);
-    doc.setTextColor(colors.gray[0], colors.gray[1], colors.gray[2]);
-    doc.text('MeuPortalFit - Saúde dos Brasileiros nos EUA', margin, footerY);
-    doc.text('www.meuportalfit.com | WhatsApp: (786) 253-5032', pageWidth - margin - 80, footerY);
+    addStyledList(contacts, '📞', colors.green);
+
+    // Footer final
+    yPosition = pageHeight - 40;
+    addGradientBackground(0, yPosition, pageWidth, 40, colors.green, colors.blue);
+    
+    doc.setFontSize(12);
+    doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
+    doc.setFont('helvetica', 'bold');
+    doc.text('MeuPortalFit - Saúde dos Brasileiros nos EUA', pageWidth / 2, yPosition + 15, { align: 'center' });
+    
+    doc.setFontSize(10);
+    doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
+    doc.setFont('helvetica', 'normal');
+    doc.text('app.meuportalfit.com | WhatsApp: (786) 253-5032', pageWidth / 2, yPosition + 25, { align: 'center' });
 
     // Gerar PDF
     const pdfBuffer = doc.output('arraybuffer');
