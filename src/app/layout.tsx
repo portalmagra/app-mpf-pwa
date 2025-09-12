@@ -26,11 +26,14 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icon-512.png", sizes: "512x512", type: "image/png" }
+      { url: "/logo-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/logo-512x512.png", sizes: "512x512", type: "image/png" },
+      { url: "/logo-128x128.png", sizes: "128x128", type: "image/png" },
+      { url: "/logo-64x64.png", sizes: "64x64", type: "image/png" },
+      { url: "/logo-32x32.png", sizes: "32x32", type: "image/png" }
     ],
     apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
+      { url: "/logo-192x192.png", sizes: "180x180", type: "image/png" }
     ]
   },
   openGraph: {

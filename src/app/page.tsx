@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Logo from '@/components/Logo'
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[]
@@ -350,7 +351,9 @@ export default function Home() {
     content.innerHTML = `
       <div style="margin-bottom: 25px;">
         <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #22c55e, #16a34a); border-radius: 15px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
-          <span style="color: white; font-size: 24px; font-weight: bold;">M</span>
+          <svg width="32" height="32" viewBox="0 0 20 20" style="color: white;">
+            <path d="M10,3 C10,3 6,7 6,10 C6,12 8,14 10,14 C12,14 14,12 14,10 C14,7 10,3 10,3 Z" fill="currentColor"/>
+          </svg>
         </div>
         <h2 style="margin: 0 0 15px 0; color: #1f2937; font-size: 22px; font-weight: 700;">Autorizar Instalação</h2>
         <p style="margin: 0 0 20px 0; color: #4b5563; font-size: 16px; line-height: 1.5;">Clique em "Autorizar" para que possamos instalar o app MeuPortalFit no seu dispositivo automaticamente.</p>
@@ -439,7 +442,11 @@ export default function Home() {
           font-size: 24px;
           color: white;
           animation: pulse 2s infinite;
-        ">✓</div>
+        ">
+          <svg width="32" height="32" viewBox="0 0 20 20" style="color: white;">
+            <path d="M8.5,14.5 L16,7 L14.5,5.5 L8.5,11.5 L5.5,8.5 L4,10 L8.5,14.5 Z" fill="currentColor"/>
+          </svg>
+        </div>
         
         <h2 style="
           font-size: 22px;
@@ -500,12 +507,7 @@ export default function Home() {
       <header className="bg-white shadow-soft sticky top-0 z-50">
         <div className="max-w-sm mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-brand-green via-brand-green to-brand-blue rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">M</span>
-              </div>
-              <h1 className="text-lg font-bold text-brand-text">MeuPortalFit</h1>
-            </div>
+                     <Logo variant="horizontal" size="md" />
             <button 
               id="install-button"
               className="bg-gradient-to-r from-brand-amber to-brand-amberDark text-white px-5 py-3 rounded-xl text-sm font-bold hover:shadow-xl transition-all transform hover:scale-110 border-2 border-brand-amber"

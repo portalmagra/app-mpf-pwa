@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Logo from '@/components/Logo';
 import { WHATSAPP_CONFIG, getWhatsAppUrl } from '@/config/whatsapp';
 
 interface QuizQuestion {
@@ -403,12 +404,7 @@ export default function AvaliacaoPage() {
         <header className="bg-white shadow-soft sticky top-0 z-50">
           <div className="max-w-sm mx-auto px-4 py-3">
             <div className="flex justify-between items-center">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-gradient-to-br from-brand-green via-brand-green to-brand-blue rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">M</span>
-                </div>
-                <h1 className="text-lg font-bold text-brand-text">MeuPortalFit</h1>
-              </div>
+              <Logo variant="horizontal" size="md" />
               <Link href="/">
                 <button className="bg-brand-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-greenDark transition-colors">
                   🏠 Início
@@ -474,12 +470,7 @@ export default function AvaliacaoPage() {
         <header className="bg-white shadow-soft sticky top-0 z-50">
           <div className="max-w-sm mx-auto px-4 py-3">
             <div className="flex justify-between items-center">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-gradient-to-br from-brand-green via-brand-green to-brand-blue rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">M</span>
-                </div>
-                <h1 className="text-lg font-bold text-brand-text">MeuPortalFit</h1>
-              </div>
+              <Logo variant="horizontal" size="md" />
               <Link href="/">
                 <button className="bg-brand-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-greenDark transition-colors">
                   🏠 Início
@@ -543,12 +534,7 @@ export default function AvaliacaoPage() {
         <header className="bg-white shadow-soft sticky top-0 z-50">
           <div className="max-w-sm mx-auto px-4 py-3">
             <div className="flex justify-between items-center">
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-gradient-to-br from-brand-green via-brand-green to-brand-blue rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-sm">M</span>
-                </div>
-                <h1 className="text-lg font-bold text-brand-text">MeuPortalFit</h1>
-              </div>
+              <Logo variant="horizontal" size="md" />
               <button 
                 onClick={resetQuiz}
                 className="bg-brand-green text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-brand-greenDark transition-all"
@@ -764,12 +750,7 @@ Baixe agora: https://app.meuportalfit.com
       <header className="bg-white shadow-soft sticky top-0 z-50">
         <div className="max-w-sm mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-gradient-to-br from-brand-green via-brand-green to-brand-blue rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">M</span>
-              </div>
-              <h1 className="text-lg font-bold text-brand-text">MeuPortalFit</h1>
-            </div>
+            <Logo variant="horizontal" size="md" />
             <div className="text-sm text-brand-text2">
               {currentQuestion + 1}/{quizQuestions.length}
             </div>

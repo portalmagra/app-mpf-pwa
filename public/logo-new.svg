@@ -1,0 +1,52 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#22C55E;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#16A34A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="heartGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FEF3C7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="leafGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10B981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="url(#bgGradient)" stroke="#FFFFFF" stroke-width="4"/>
+  
+  <!-- Heart icon (main element) -->
+  <g transform="translate(100, 85)">
+    <path d="M-15,-5 C-15,-15 -5,-20 0,-15 C5,-20 15,-15 15,-5 C15,5 0,15 0,15 C0,15 -15,5 -15,-5 Z" 
+          fill="url(#heartGradient)" 
+          stroke="#FFFFFF" 
+          stroke-width="2"/>
+  </g>
+  
+  <!-- Leaf accent -->
+  <g transform="translate(130, 70) rotate(45)">
+    <path d="M0,-8 C-3,-12 -8,-10 -8,-5 C-8,0 -3,3 0,0 C3,3 8,0 8,-5 C8,-10 3,-12 0,-8 Z" 
+          fill="url(#leafGradient)" 
+          stroke="#FFFFFF" 
+          stroke-width="1.5"/>
+  </g>
+  
+  <!-- Energy lines -->
+  <g stroke="#FFFFFF" stroke-width="2" fill="none" opacity="0.8">
+    <path d="M60,100 Q70,90 80,100" stroke-dasharray="5,3"/>
+    <path d="M120,100 Q130,90 140,100" stroke-dasharray="5,3"/>
+    <path d="M100,60 Q90,70 100,80" stroke-dasharray="5,3"/>
+    <path d="M100,120 Q90,130 100,140" stroke-dasharray="5,3"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="100" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFFFFF">
+    MeuPortalFit
+  </text>
+  <text x="100" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#FEF3C7">
+    Wellness para Brasileiros
+  </text>
+</svg>
