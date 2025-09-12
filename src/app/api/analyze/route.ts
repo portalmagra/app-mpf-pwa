@@ -169,7 +169,7 @@ async function searchProductsSmart(
           console.log(`✅ Added ${newProducts.length} generic products (total: ${allProducts.length})`)
         }
       } catch (error) {
-        console.warn(`⚠️ Generic search error:`, error.message)
+        console.warn(`⚠️ Generic search error:`, error instanceof Error ? error.message : String(error))
       }
     }
   }
