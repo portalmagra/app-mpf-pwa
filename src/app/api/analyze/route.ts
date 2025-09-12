@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
+import { supabaseAdmin } from '@/lib/supabase';
+import { getProductsByASIN } from '@/lib/amazon-api';
 
-// Configuração do OpenAI (você precisará adicionar OPENAI_API_KEY no .env.local)
+// Configuração do OpenAI
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY || 'demo-key',
 });
@@ -10,22 +12,77 @@ export async function POST(request: NextRequest) {
   try {
     const { answers, userGoals, userName } = await request.json();
 
+    // Salvar avaliação no banco de dados
+    const { data: evaluation, error: evalError } = await supabaseAdmin
+      .from('user_evaluations')
+      .insert({
+        user_name: userName,
+        user_age: answers.age || 'not_specified',
+        answers: answers,
+        comments: userGoals,
+        language: 'pt'
+      })
+      .select()
+      .single();
+
+    if (evalError) {
+      console.error('Erro ao salvar avaliação:', evalError);
+    }
+
     // Se não há API key configurada, retorna resultado mock
     if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === 'demo-key') {
+      const mockResult = await getMockResult(answers, userGoals, userName);
+      
+      // Salvar resultado mock no banco
+      if (evaluation) {
+        await supabaseAdmin
+          .from('analysis_results')
+          .insert({
+            evaluation_id: evaluation.id,
+            personalized_recommendations: mockResult.personalizedRecommendations,
+            priority_areas: mockResult.priorityAreas,
+            risk_factors: mockResult.riskFactors,
+            new_habits: mockResult.newHabits,
+            next_steps: mockResult.nextSteps,
+            amazon_products: mockResult.amazonProducts,
+            encouragement: mockResult.encouragement,
+            promise: mockResult.promise
+          });
+      }
+
       return NextResponse.json({
         success: true,
-        result: getMockResult(answers, userGoals, userName),
-        isMock: true
+        result: mockResult,
+        isMock: true,
+        evaluationId: evaluation?.id
       });
     }
 
     // Análise com OpenAI
     const analysis = await analyzeWithOpenAI(answers, userGoals, userName);
     
+    // Salvar resultado da análise no banco
+    if (evaluation) {
+      await supabaseAdmin
+        .from('analysis_results')
+        .insert({
+          evaluation_id: evaluation.id,
+          personalized_recommendations: analysis.personalizedRecommendations,
+          priority_areas: analysis.priorityAreas,
+          risk_factors: analysis.riskFactors,
+          new_habits: analysis.newHabits,
+          next_steps: analysis.nextSteps,
+          amazon_products: analysis.amazonProducts,
+          encouragement: analysis.encouragement,
+          promise: analysis.promise
+        });
+    }
+    
     return NextResponse.json({
       success: true,
       result: analysis,
-      isMock: false
+      isMock: false,
+      evaluationId: evaluation?.id
     });
 
   } catch (error) {
@@ -35,7 +92,7 @@ export async function POST(request: NextRequest) {
     const { answers, userGoals, userName } = await request.json();
     return NextResponse.json({
       success: true,
-      result: getMockResult(answers, userGoals, userName),
+      result: await getMockResult(answers, userGoals, userName),
       isMock: true,
       error: 'OpenAI analysis failed, using mock data'
     });
@@ -268,7 +325,43 @@ function selectProductsForProfile(profile: {
   return selectedProducts;
 }
 
-function getMockResult(answers: number[], userGoals: string, userName: string) {
+// Função para buscar produtos reais da Amazon baseado no perfil
+async function getRealAmazonProducts(profile: any) {
+  try {
+    const keywords = [];
+    
+    // Definir palavras-chave baseadas no perfil
+    if (profile.timeInUSA === 1) {
+      keywords.push('vitaminas', 'energia', 'adaptação', 'stress');
+    } else if (profile.mainGoal === 1) {
+      keywords.push('emagrecimento', 'queima gordura', 'metabolismo');
+    } else if (profile.mainGoal === 2) {
+      keywords.push('proteína', 'massa muscular', 'whey protein');
+    } else if (profile.mainGoal === 3) {
+      keywords.push('bem-estar', 'saúde', 'vitaminas', 'minerais');
+    }
+
+    // Buscar produtos na Amazon
+    const products = await getProductsByASIN([
+      'B08N5WRWNW', // Exemplo de ASIN para vitamina
+      'B07VJ7GMW7', // Exemplo de ASIN para proteína
+      'B08K9K9K9K'  // Exemplo de ASIN para suplemento
+    ]);
+
+    // Converter para formato esperado
+    return products.map((product: any) => ({
+      name: product.ItemInfo?.Title?.DisplayValue || 'Produto Amazon',
+      price: product.Offers?.Listings?.[0]?.Price?.DisplayAmount || '$0.00',
+      description: product.ItemInfo?.Features?.DisplayValues?.[0] || 'Produto recomendado',
+      url: `https://amazon.com/dp/${product.ASIN}?tag=${process.env.AMAZON_ASSOCIATE_TAG}`
+    }));
+  } catch (error) {
+    console.error('Erro ao buscar produtos Amazon:', error);
+    return [];
+  }
+}
+
+async function getMockResult(answers: number[], userGoals: string, userName: string) {
   // Lógica personalizada baseada nas respostas específicas
   const timeInUSA = answers[1];
   const lifestyle = answers[2];
@@ -286,15 +379,38 @@ function getMockResult(answers: number[], userGoals: string, userName: string) {
     resultType = 'veteran';
   }
 
-  // Seleção de produtos baseada no perfil específico
-  const selectedProducts = selectProductsForProfile({
-    timeInUSA,
-    lifestyle,
-    mainGoal,
-    previousAttempts,
-    timeForResults,
-    willingnessToChange
-  });
+  // Tentar buscar produtos reais da Amazon, senão usar mock
+  let selectedProducts;
+  try {
+    selectedProducts = await getRealAmazonProducts({
+      timeInUSA,
+      lifestyle,
+      mainGoal,
+      previousAttempts,
+      timeForResults,
+      willingnessToChange
+    });
+    if (selectedProducts.length === 0) {
+      selectedProducts = selectProductsForProfile({
+        timeInUSA,
+        lifestyle,
+        mainGoal,
+        previousAttempts,
+        timeForResults,
+        willingnessToChange
+      });
+    }
+  } catch (error) {
+    console.error('Erro ao buscar produtos reais, usando mock:', error);
+    selectedProducts = selectProductsForProfile({
+      timeInUSA,
+      lifestyle,
+      mainGoal,
+      previousAttempts,
+      timeForResults,
+      willingnessToChange
+    });
+  }
 
   const mockResults = {
     newcomer: {
