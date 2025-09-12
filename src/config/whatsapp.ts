@@ -2,6 +2,7 @@
 export const WHATSAPP_CONFIG = {
   OFFICIAL_NUMBER: '17862535032',
   BASE_URL: 'https://wa.me/',
+  GROUP_LINK: 'https://chat.whatsapp.com/LqjNDHfumq0JG7Kb2W0Ygd',
   
   // Mensagens padrão
   MESSAGES: {

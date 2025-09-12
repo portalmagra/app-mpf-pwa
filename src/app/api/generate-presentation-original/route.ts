@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { WHATSAPP_CONFIG } from '@/config/whatsapp';
 
 // Função para detectar gênero baseado no nome
 function detectGender(name: string): 'brasileiro' | 'brasileira' {
-  const femaleNames = ['ana', 'maria', 'julia', 'sofia', 'isabella', 'laura', 'valentina', 'giovanna', 'alice', 'luiza', 'helena', 'beatriz', 'lara', 'mariana', 'gabriela', 'rafaela', 'carolina', 'camila', 'fernanda', 'patricia', 'adriana', 'cristina', 'sandra', 'denise', 'monica', 'silvia', 'regina', 'rosana', 'eliane', 'marcia', 'vera', 'claudia', 'rosemary', 'fatima', 'claudia', 'rosemary', 'fatima', 'maria', 'josé', 'antonio', 'francisco', 'carlos', 'paulo', 'pedro', 'lucas', 'luiz', 'marcos', 'luis', 'gabriel', 'rafael', 'daniel', 'marcelo', 'bruno', 'eduardo', 'felipe', 'renan', 'rodrigo', 'manuel', 'leonardo', 'nelson', 'fernando', 'andre', 'roberto', 'joão', 'thiago', 'fábio', 'ricardo', 'heitor', 'arthur', 'bernardo', 'davi', 'theo', 'murilo', 'benjamin', 'samuel', 'enzo', 'joaquim', 'noah', 'lorenzo', 'isaac', 'miguel', 'guilherme', 'gustavo', 'arthur', 'caio', 'vinicius', 'joão', 'henrique', 'ryan', 'felippe', 'diego', 'alexandre', 'igor', 'matheus'];
+  const femaleNames = ['ana', 'maria', 'julia', 'sofia', 'isabella', 'laura', 'valentina', 'giovanna', 'alice', 'luiza', 'helena', 'beatriz', 'lara', 'mariana', 'gabriela', 'rafaela', 'carolina', 'camila', 'fernanda', 'patricia', 'adriana', 'cristina', 'sandra', 'denise', 'monica', 'silvia', 'regina', 'rosana', 'eliane', 'marcia', 'vera', 'claudia', 'rosemary', 'fatima'];
   
   const firstName = name.toLowerCase().split(' ')[0];
   return femaleNames.includes(firstName) ? 'brasileira' : 'brasileiro';
@@ -525,8 +526,8 @@ export async function POST(request: NextRequest) {
             <h2 class="cta-title">🎯 Próximos Passos</h2>
             <p class="cta-description">Continue sua jornada de transformação com nossos recursos exclusivos</p>
             <div class="cta-buttons">
-                <a href="https://wa.me/17862535032?text=Olá! Quero conversar sobre meu plano personalizado do MeuPortalFit." class="cta-btn" target="_blank">💬 Falar com Coach</a>
-                <a href="https://wa.me/17862535032?text=Olá! Quero entrar no grupo de brasileiras nos EUA para receber dicas de saúde e bem-estar." class="cta-btn" target="_blank">👥 Entrar no Grupo</a>
+                <a href="https://wa.me/${WHATSAPP_CONFIG.OFFICIAL_NUMBER}?text=${encodeURIComponent(WHATSAPP_CONFIG.MESSAGES.COACH)}" class="cta-btn" target="_blank">💬 Falar com Coach</a>
+                <a href="${WHATSAPP_CONFIG.GROUP_LINK}" class="cta-btn" target="_blank">👥 Entrar no Grupo</a>
             </div>
         </div>
 

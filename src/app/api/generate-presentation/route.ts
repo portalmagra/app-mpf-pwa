@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { WHATSAPP_CONFIG } from '@/config/whatsapp';
 
 // Função para detectar gênero baseado no nome
 function detectGender(name: string): 'brasileiro' | 'brasileira' {
@@ -716,7 +717,7 @@ export async function POST(request: NextRequest) {
                 <div class="cta-section">
                     <h3 class="cta-title">👩‍💻 Coach Brasileira Especializada</h3>
                     <p class="cta-description">Análise personalizada • Plano de 30 dias customizado • Suporte via WhatsApp • Resposta em até 2 horas</p>
-                    <a href="https://wa.me/17862535032" class="cta-button" target="_blank">Falar Agora</a>
+                    <a href="https://wa.me/${WHATSAPP_CONFIG.OFFICIAL_NUMBER}?text=${encodeURIComponent(WHATSAPP_CONFIG.MESSAGES.COACH)}" class="cta-button" target="_blank">Falar Agora</a>
                 </div>
                 
                 <div class="cta-section" style="background: linear-gradient(135deg, #10b981, #059669);">
@@ -728,7 +729,7 @@ export async function POST(request: NextRequest) {
                 <div class="cta-section" style="background: linear-gradient(135deg, #7c3aed, #6d28d9);">
                     <h3 class="cta-title">👥 Comunidade de Brasileiras nos EUA</h3>
                     <p class="cta-description">+1.247 brasileiras já transformaram suas vidas • Grupo exclusivo WhatsApp • Dicas diárias • Suporte emocional</p>
-                    <a href="https://wa.me/17862535032" class="cta-button" style="color: #7c3aed;">Entrar Agora</a>
+                    <a href="https://wa.me/${WHATSAPP_CONFIG.OFFICIAL_NUMBER}?text=${encodeURIComponent(WHATSAPP_CONFIG.MESSAGES.PLAN)}" class="cta-button" style="color: #7c3aed;">Entrar Agora</a>
                 </div>
                 
                 ${result.encouragement ? `
@@ -745,13 +746,13 @@ export async function POST(request: NextRequest) {
                     <h3 class="community-title">👥 Comunidade de Brasileiras nos EUA</h3>
                     <p class="community-description">Receba dicas e receitas para sua saúde e bem-estar via WhatsApp</p>
                     <p class="community-subtitle">Entre no nosso grupo exclusivo</p>
-                    <a href="https://wa.me/17862535032?text=Olá! Quero entrar no grupo de brasileiras nos EUA para receber dicas de saúde e bem-estar." class="community-button" target="_blank">Entrar no Grupo</a>
+                    <a href="${WHATSAPP_CONFIG.GROUP_LINK}" class="community-button" target="_blank">Entrar no Grupo</a>
                 </div>
                 
                 <div class="viral-section">
                     <h3 class="viral-title">💝 Compartilhe com uma Amiga Brasileira!</h3>
                     <p class="viral-description">Ajude outra brasileira nos EUA a transformar sua vida</p>
-                    <a href="https://wa.me/17862535032?text=Olha que legal! Encontrei um app brasileiro incrível para quem vive nos Estados Unidos 🇧🇷🇺🇸%0A%0A✨ Você pode fazer sua avaliação gratuita por inteligência artificial - avaliação de bem-estar por inteligência artificial gratuita%0A🍽️ Receitas brasileiras%0A🛒 Produtos para comprar direto na Amazon - produtos já selecionados que compra direto na Amazon%0A👩‍💻 E se quiser tem uma Coach brasileira especializada para ajudar%0A%0ABaixe agora: https://app.meuportalfit.com%0A%0A#BrasileirasNosEUA #MeuPortalFit" class="viral-button" target="_blank">Compartilhar Agora</a>
+                    <a href="https://wa.me/${WHATSAPP_CONFIG.OFFICIAL_NUMBER}?text=${encodeURIComponent(WHATSAPP_CONFIG.MESSAGES.SHARE)}" class="viral-button" target="_blank">Compartilhar Agora</a>
                 </div>
             </div>
             
