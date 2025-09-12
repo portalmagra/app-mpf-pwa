@@ -395,7 +395,8 @@ return NextResponse.json({
     totalProducts: recommendedProducts.length,
     totalSavings: Math.round(totalSavings),
     averageRating: recommendedProducts.length > 0 
-      ? recommendedProducts.reduce((sum, p) => sum + p.rating, 0) / recommendedProducts.length
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      ? recommendedProducts.reduce((sum: number, p: any) => sum + p.rating, 0) / recommendedProducts.length
       : 0  // <-- ESTA É A MUDANÇA IMPORTANTE
   }
 })
