@@ -372,7 +372,8 @@ export async function POST(request: NextRequest) {
     console.log(`✅ Total de ${recommendedProducts.length} produtos processados`)
     
     // Calcular resumo
-const totalSavings = recommendedProducts.reduce((sum, product) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+const totalSavings = recommendedProducts.reduce((sum: number, product: any) => {
   const price = parseFloat(product.price.replace('$', '').replace(',', ''))
   return sum + (price * product.savings / 100)
 }, 0)
