@@ -194,7 +194,7 @@ export async function POST(request: NextRequest) {
     yPosition += 10;
     
     // Oferta Comunidade
-    addText('👥 Comunidade de Brasileiras nos EUA', 12, colors.purple, true);
+    addText('👥 Comunidade de Brasileiras nos EUA', 12, colors.blue, true);
     addText('Conecte-se com outras brasileiras na mesma jornada', 10, colors.gray);
     addText('• Grupo exclusivo no WhatsApp', 9, colors.darkGray);
     addText('• Dicas diárias de adaptação', 9, colors.darkGray);
