@@ -63,8 +63,8 @@ export async function POST(request: NextRequest) {
         }
         
         .slide-cover {
-            background: linear-gradient(135deg, #10b981, #3b82f6);
-            color: white;
+            background: linear-gradient(135deg, #f0fdf4, #eff6ff);
+            color: #1f2937;
         }
         
         .slide-content {
@@ -107,7 +107,7 @@ export async function POST(request: NextRequest) {
             font-size: 28px;
             font-weight: 600;
             margin-bottom: 30px;
-            color: #fef3c7;
+            color: #16a34a;
         }
         
         .description {
@@ -181,20 +181,37 @@ export async function POST(request: NextRequest) {
         }
         
         .focus-areas {
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .focus-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #16a34a;
+            margin-bottom: 15px;
+        }
+        
+        .focus-chips {
             display: flex;
             flex-wrap: wrap;
             gap: 12px;
-            margin: 20px 0;
+            justify-content: center;
         }
         
         .focus-chip {
-            background: linear-gradient(135deg, #eef2ff, #f0fdf4);
-            color: #374151;
-            padding: 8px 16px;
-            border-radius: 20px;
+            background: linear-gradient(135deg, #22c55e, #3b82f6);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
             font-size: 14px;
             font-weight: 500;
-            border: 1px solid #d1d5db;
+            box-shadow: 0 4px 8px rgba(34, 197, 94, 0.2);
+            transition: transform 0.2s ease;
+        }
+        
+        .focus-chip:hover {
+            transform: translateY(-2px);
         }
         
         .products-grid {
@@ -305,16 +322,49 @@ export async function POST(request: NextRequest) {
         
         .social-proof {
             background: linear-gradient(135deg, #f0fdf4, #eef2ff);
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
+            padding: 25px;
+            border-radius: 16px;
+            margin: 25px 0;
             text-align: center;
+            border: 2px solid #22c55e;
+            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.1);
         }
         
         .social-proof-text {
-            color: #10b981;
-            font-weight: 600;
+            color: #16a34a;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        
+        .priority-recommendations {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .priority-item {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-left: 4px solid #22c55e;
+        }
+        
+        .priority-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+        
+        .priority-text {
             font-size: 16px;
+            font-weight: 500;
+            color: #1f2937;
+            line-height: 1.4;
         }
         
         .encouragement {
@@ -361,6 +411,51 @@ export async function POST(request: NextRequest) {
         
         .whatsapp-link:hover {
             transform: translateY(-2px);
+        }
+        
+        .community-section {
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            padding: 30px;
+            border-radius: 16px;
+            margin: 30px 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .community-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .community-description {
+            font-size: 16px;
+            color: #f3e8ff;
+            margin-bottom: 10px;
+        }
+        
+        .community-subtitle {
+            font-size: 14px;
+            color: #e9d5ff;
+            margin-bottom: 20px;
+        }
+        
+        .community-button {
+            background: white;
+            color: #7c3aed;
+            padding: 15px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .community-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
         }
         
         .viral-section {
@@ -444,30 +539,31 @@ export async function POST(request: NextRequest) {
                 
                 <h1 class="main-title">🎉 Olá, ${userName}!</h1>
                 <h2 class="subtitle-personalized">Seu plano personalizado está pronto, ${gender}!</h2>
-                <h2 class="user-title">Plano Personalizado para ${userName}</h2>
                 <p class="description">${result.description}</p>
                 
-                <div class="qr-code">📱</div>
-                <div class="install-text">Instalar App • app.meuportalfit.com</div>
                 
                 <!-- VALOR IMEDIATO -->
                 <div class="social-proof">
                     <div class="social-proof-text">🎯 Suas Recomendações Prioritárias:</div>
                 </div>
                 
-                <div class="recommendations">
+                <div class="priority-recommendations">
                     ${result.personalizedRecommendations ? result.personalizedRecommendations.slice(0, 3).map((rec: string) => `
-                        <div class="recommendation-item">
-                            <h4>✨ ${rec}</h4>
+                        <div class="priority-item">
+                            <div class="priority-icon">✨</div>
+                            <div class="priority-text">${rec}</div>
                         </div>
                     `).join('') : ''}
                 </div>
                 
                 ${result.priorityAreas ? `
                     <div class="focus-areas">
-                        ${result.priorityAreas.slice(0, 4).map((area: string) => `
-                            <div class="focus-chip">⭐ ${area}</div>
-                        `).join('')}
+                        <h4 class="focus-title">🎯 Áreas de Foco:</h4>
+                        <div class="focus-chips">
+                            ${result.priorityAreas.slice(0, 4).map((area: string) => `
+                                <div class="focus-chip">${area}</div>
+                            `).join('')}
+                        </div>
                     </div>
                 ` : ''}
                 
@@ -481,7 +577,7 @@ export async function POST(request: NextRequest) {
             <!-- SLIDE 2: ANÁLISE COMPLETA -->
             <div class="slide slide-content">
                 <div class="section">
-                    <h3 class="section-title">📊 Análise Personalizada Completa para ${userName}</h3>
+                    <h3 class="section-title">📊 Análise Personalizada Completa</h3>
                     
                     ${result.personalizedRecommendations ? `
                         <div class="recommendations">
@@ -516,7 +612,7 @@ export async function POST(request: NextRequest) {
             <!-- SLIDE 3: HÁBITOS E PRODUTOS -->
             <div class="slide slide-content">
                 <div class="section">
-                    <h3 class="section-title">✅ Plano de Ação Personalizado para ${userName}</h3>
+                    <h3 class="section-title">✅ Plano de Ação Personalizado</h3>
                     
                     ${result.newHabits ? `
                         <div class="recommendations">
@@ -582,39 +678,19 @@ export async function POST(request: NextRequest) {
                 ` : ''}
             </div>
             
-            <!-- SLIDE 5: INSTALAÇÃO E VIRALIZAÇÃO -->
+            <!-- SLIDE 5: COMUNIDADE E COMPARTILHAMENTO -->
             <div class="slide slide-content">
-                <div class="section">
-                    <h3 class="section-title">📱 Instale Nosso App + Compartilhe!</h3>
-                    
-                    <div class="recommendations">
-                        <div class="recommendation-item">
-                            <h4>📱 1. Acesse: app.meuportalfit.com</h4>
-                        </div>
-                        <div class="recommendation-item">
-                            <h4>📱 2. Clique em "Instalar App" no seu celular</h4>
-                        </div>
-                        <div class="recommendation-item">
-                            <h4>📱 3. Adicione à tela inicial</h4>
-                        </div>
-                        <div class="recommendation-item">
-                            <h4>📱 4. Acesse receitas, produtos e Coach 24/7</h4>
-                        </div>
-                    </div>
-                    
-                    <div class="recommendations">
-                        <div class="recommendation-item">
-                            <h4>📞 WhatsApp: (786) 253-5032</h4>
-                        </div>
-                        <div class="recommendation-item">
-                            <h4>🌐 Website: app.meuportalfit.com</h4>
-                        </div>
-                    </div>
+                
+                <div class="community-section">
+                    <h3 class="community-title">👥 Comunidade de Brasileiras nos EUA</h3>
+                    <p class="community-description">Receba dicas e receitas para sua saúde e bem-estar via WhatsApp</p>
+                    <p class="community-subtitle">Entre no nosso grupo exclusivo</p>
+                    <a href="https://wa.me/17862535032?text=Olá! Quero entrar no grupo de brasileiras nos EUA para receber dicas de saúde e bem-estar." class="community-button" target="_blank">Entrar no Grupo</a>
                 </div>
                 
                 <div class="viral-section">
                     <h3 class="viral-title">💝 Compartilhe com uma Amiga Brasileira!</h3>
-                    <p class="viral-description">Ajude outra brasileira nos EUA a transformar sua vida • Link direto para instalação • Experiência completa</p>
+                    <p class="viral-description">Ajude outra brasileira nos EUA a transformar sua vida</p>
                     <a href="https://wa.me/17862535032?text=Olha que legal! Encontrei um app brasileiro incrível para quem vive nos Estados Unidos 🇧🇷🇺🇸%0A%0A✨ Você pode fazer sua avaliação gratuita por inteligência artificial - avaliação de bem-estar por inteligência artificial gratuita%0A🍽️ Receitas brasileiras%0A🛒 Produtos para comprar direto na Amazon - produtos já selecionados que compra direto na Amazon%0A👩‍💻 E se quiser tem uma Coach brasileira especializada para ajudar%0A%0ABaixe agora: https://app.meuportalfit.com%0A%0A#BrasileirasNosEUA #MeuPortalFit" class="viral-button" target="_blank">Compartilhar Agora</a>
                 </div>
             </div>

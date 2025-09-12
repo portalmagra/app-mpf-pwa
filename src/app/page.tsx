@@ -56,8 +56,8 @@ export default function Home() {
                 <span className="text-3xl">🍲</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-lg">Receitas</h3>
-                  <p className="text-sm text-brand-text2">3 Receitas rápidas com gostinho brasileiro 🇧🇷</p>
-                  <p className="text-xs text-brand-text2 mt-1">Fáceis, práticas e saudáveis</p>
+                  <p className="text-sm text-brand-text2">Ingredientes adaptados para os Estados Unidos</p>
+                  <p className="text-xs text-brand-text2 mt-1">Com ingredientes que você encontra nos EUA</p>
                 </div>
                 <span className="text-xs bg-gradient-to-r from-brand-green to-brand-blue text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
@@ -84,10 +84,10 @@ export default function Home() {
         <div className="max-w-sm mx-auto">
           <button className="w-full bg-gradient-to-r from-brand-green via-brand-blue to-brand-blueDark text-white rounded-lg p-2.5 shadow-md hover:shadow-lg transition-all transform hover:scale-105">
             <div className="flex items-center justify-center gap-2">
-              <span className="text-lg">👩‍💻</span>
+              <span className="text-lg">📊</span>
               <div className="text-center">
-                <p className="font-semibold text-sm">Converse com uma Coach Brasileira</p>
-                <p className="text-xs text-blue-100">Receba dicas exclusivas no WhatsApp</p>
+                <p className="font-semibold text-sm">Análise Personalizada</p>
+                <p className="text-xs text-blue-100">Fale Conosco</p>
               </div>
             </div>
           </button>
