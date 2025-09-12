@@ -311,30 +311,30 @@ export default function AvaliacaoPage() {
       // Track PDF download
       console.log('PDF Download initiated:', { userName, timestamp: new Date().toISOString() });
       
-      // Chamar API para gerar PDF
-      const response = await fetch('/api/generate-pdf', {
+      // Abrir a apresentação bonita em nova aba para impressão/salvamento como PDF
+      const response = await fetch('/api/generate-presentation', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           userName,
-          userGoals,
-          answers,
           result
         }),
       });
 
       if (response.ok) {
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `MeuPlanoPersonalizado-${userName}.pdf`;
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
+        const htmlContent = await response.text();
+        const newWindow = window.open('', '_blank');
+        if (newWindow) {
+          newWindow.document.write(htmlContent);
+          newWindow.document.close();
+          
+          // Aguardar carregamento e mostrar instruções de impressão
+          setTimeout(() => {
+            newWindow.print();
+          }, 1000);
+        }
         
         // Track successful download
         console.log('PDF Download completed successfully');
@@ -617,12 +617,12 @@ export default function AvaliacaoPage() {
                   📄 Baixar PDF Completo
                 </button>
                 
-                {/* Botão Secundário - Apresentação */}
+                {/* Botão Secundário - Resultados */}
                 <button 
                   onClick={() => viewPresentation()}
                   className="w-full bg-white bg-opacity-20 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all mb-2"
                 >
-                  🎨 Ver Minha Apresentação
+                  📊 Ver Meus Resultados
                 </button>
                 
                 {/* Botão Terciário - WhatsApp */}
