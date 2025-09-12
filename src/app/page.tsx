@@ -52,8 +52,22 @@ export default function Home() {
   }, [])
 
   const handleInstallClick = async () => {
-    // Tentar instalação automática primeiro
-    if (deferredPrompt) {
+    // Detectar ambiente atual
+    const userAgent = navigator.userAgent.toLowerCase()
+    const isIOS = /iphone|ipad|ipod/.test(userAgent)
+    const isAndroid = /android/.test(userAgent)
+    const isSafari = /safari/.test(userAgent) && !/chrome/.test(userAgent)
+    const isChrome = /chrome/.test(userAgent)
+    const isInStandaloneMode = window.matchMedia('(display-mode: standalone)').matches
+
+    // Se já está instalado, mostrar mensagem
+    if (isInStandaloneMode) {
+      showAlreadyInstalledModal()
+      return
+    }
+
+    // Para Android Chrome - tentar instalação automática
+    if (isAndroid && isChrome && deferredPrompt) {
       try {
         await deferredPrompt.prompt()
         const { outcome } = await deferredPrompt.userChoice
@@ -65,16 +79,80 @@ export default function Home() {
       }
     }
 
-    // Para iOS Safari - mostrar modal de permissão
-    const userAgent = navigator.userAgent.toLowerCase()
-    const isIOS = /iphone|ipad|ipod/.test(userAgent)
-    const isSafari = /safari/.test(userAgent) && !/chrome/.test(userAgent)
-    
+    // Para iOS Safari - mostrar modal específico
     if (isIOS && isSafari) {
       showIOSInstallModal()
-    } else {
-      showInstallModal()
+      return
     }
+
+    // Para iOS Chrome - orientar para Safari
+    if (isIOS && isChrome) {
+      showIOSChromeModal()
+      return
+    }
+
+    // Para outros navegadores - modal genérico
+    showGenericInstallModal()
+  }
+
+  const showAlreadyInstalledModal = () => {
+    const modal = document.createElement('div')
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    `
+    
+    const content = document.createElement('div')
+    content.style.cssText = `
+      background: white;
+      border-radius: 16px;
+      padding: 30px 25px;
+      max-width: 300px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    `
+    
+    content.innerHTML = `
+      <div style="margin-bottom: 20px;">
+        <div style="width: 50px; height: 50px; background: #22c55e; border-radius: 12px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;">
+          <span style="color: white; font-size: 20px;">✓</span>
+        </div>
+        <h2 style="margin: 0 0 10px 0; color: #1f2937; font-size: 18px; font-weight: 600;">App Instalado!</h2>
+        <p style="margin: 0; color: #4b5563; font-size: 14px;">O MeuPortalFit já está instalado no seu dispositivo.</p>
+      </div>
+      
+      <button onclick="this.parentElement.parentElement.remove()" style="
+        width: 100%;
+        background: #22c55e;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        cursor: pointer;
+      ">
+        OK
+      </button>
+    `
+    
+    modal.appendChild(content)
+    document.body.appendChild(modal)
+    
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.remove()
+      }
+    })
   }
 
   const showIOSInstallModal = () => {
@@ -109,7 +187,7 @@ export default function Home() {
           <span style="color: white; font-size: 24px; font-weight: bold;">M</span>
         </div>
         <h2 style="margin: 0 0 15px 0; color: #1f2937; font-size: 22px; font-weight: 700;">Instalar MeuPortalFit</h2>
-        <p style="margin: 0 0 20px 0; color: #4b5563; font-size: 16px; line-height: 1.5;">Quer ter acesso rápido ao seu app de saúde?</p>
+        <p style="margin: 0 0 20px 0; color: #4b5563; font-size: 16px; line-height: 1.5;">Adicione à sua tela inicial para acesso rápido!</p>
         
         <div style="background: #f0fdf4; border: 2px solid #22c55e; border-radius: 12px; padding: 20px; margin: 20px 0;">
           <h3 style="margin: 0 0 10px 0; color: #1f2937; font-size: 16px; font-weight: 600;">Como instalar:</h3>
@@ -145,7 +223,7 @@ export default function Home() {
           cursor: pointer;
           box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
         ">
-          Instalar
+          Entendi!
         </button>
       </div>
     `
@@ -153,7 +231,6 @@ export default function Home() {
     modal.appendChild(content)
     document.body.appendChild(modal)
     
-    // Fechar ao clicar fora
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.remove()
@@ -161,7 +238,90 @@ export default function Home() {
     })
   }
 
-  const showInstallModal = () => {
+  const showIOSChromeModal = () => {
+    const modal = document.createElement('div')
+    modal.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    `
+    
+    const content = document.createElement('div')
+    content.style.cssText = `
+      background: white;
+      border-radius: 20px;
+      padding: 35px 30px;
+      max-width: 320px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    `
+    
+    content.innerHTML = `
+      <div style="margin-bottom: 25px;">
+        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 16px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
+          <span style="color: white; font-size: 24px; font-weight: bold;">🌐</span>
+        </div>
+        <h2 style="margin: 0 0 15px 0; color: #1f2937; font-size: 22px; font-weight: 700;">Use o Safari</h2>
+        <p style="margin: 0 0 20px 0; color: #4b5563; font-size: 16px; line-height: 1.5;">Para instalar o app, você precisa usar o Safari.</p>
+        
+        <div style="background: #eff6ff; border: 2px solid #3b82f6; border-radius: 12px; padding: 20px; margin: 20px 0;">
+          <h3 style="margin: 0 0 10px 0; color: #1f2937; font-size: 16px; font-weight: 600;">Como fazer:</h3>
+          <p style="margin: 5px 0; color: #374151; font-size: 14px;">1. Abra este link no Safari</p>
+          <p style="margin: 5px 0; color: #374151; font-size: 14px;">2. Toque em "Compartilhar"</p>
+          <p style="margin: 5px 0; color: #374151; font-size: 14px;">3. Selecione "Adicionar à Tela Inicial"</p>
+        </div>
+      </div>
+      
+      <div style="display: flex; gap: 10px;">
+        <button onclick="this.parentElement.parentElement.remove()" style="
+          flex: 1;
+          background: #f3f4f6;
+          color: #374151;
+          border: none;
+          padding: 14px 16px;
+          border-radius: 10px;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+        ">
+          Depois
+        </button>
+        <button onclick="window.open(window.location.href, '_blank'); this.parentElement.parentElement.remove();" style="
+          flex: 1;
+          background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+          color: white;
+          border: none;
+          padding: 14px 16px;
+          border-radius: 10px;
+          font-size: 15px;
+          font-weight: 600;
+          cursor: pointer;
+          box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        ">
+          Abrir no Safari
+        </button>
+      </div>
+    `
+    
+    modal.appendChild(content)
+    document.body.appendChild(modal)
+    
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.remove()
+      }
+    })
+  }
+
+  const showGenericInstallModal = () => {
     const modal = document.createElement('div')
     modal.style.cssText = `
       position: fixed;
@@ -214,13 +374,13 @@ export default function Home() {
     modal.appendChild(content)
     document.body.appendChild(modal)
     
-    // Fechar ao clicar fora
     modal.addEventListener('click', (e) => {
       if (e.target === modal) {
         modal.remove()
       }
     })
   }
+
 
   return (
     <div className="min-h-screen bg-brand-cream pb-16">
