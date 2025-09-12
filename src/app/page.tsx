@@ -77,98 +77,60 @@ export default function Home() {
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.7);
+      background: rgba(0,0,0,0.8);
       z-index: 10000;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      backdrop-filter: blur(5px);
     `
     
     const content = document.createElement('div')
     content.style.cssText = `
       background: white;
-      border-radius: 24px;
-      padding: 40px 30px;
-      max-width: 400px;
+      border-radius: 16px;
+      padding: 30px 25px;
+      max-width: 350px;
       text-align: center;
-      box-shadow: 0 25px 50px rgba(0,0,0,0.25);
-      border: 1px solid rgba(34, 197, 94, 0.2);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     `
     
     const userAgent = navigator.userAgent.toLowerCase()
     const isIOS = /iphone|ipad|ipod/.test(userAgent)
     
-    let title = '📱 Instalar MeuPortalFit'
-    let description = 'Quer ter acesso rápido ao seu app de saúde?'
-    let steps = []
+    let title = 'Instalar App'
+    let instruction = ''
     
     if (isIOS) {
-      title = '📱 Instalar no iPhone/iPad'
-      description = 'Adicione o MeuPortalFit à sua tela inicial para acesso rápido!'
-      steps = [
-        '1. Toque no botão "Compartilhar" (quadrado com seta para cima)',
-        '2. Role para baixo e encontre "Adicionar à Tela Inicial"',
-        '3. Toque em "Adicionar" no canto superior direito'
-      ]
+      title = 'Adicionar à Tela Inicial'
+      instruction = 'Toque no botão "Compartilhar" (quadrado com seta) e depois em "Adicionar à Tela Inicial"'
     } else {
-      title = '💻 Instalar no Computador'
-      description = 'Instale o MeuPortalFit como um app nativo no seu computador!'
-      steps = [
-        '1. Procure pelo ícone de instalação na barra de endereços',
-        '2. Ou vá no menu do navegador → "Instalar"',
-        '3. Clique em "Instalar" quando aparecer o prompt'
-      ]
+      title = 'Instalar App'
+      instruction = 'Procure pelo ícone de instalação na barra de endereços do seu navegador'
     }
     
     content.innerHTML = `
-      <div style="margin-bottom: 20px;">
-        <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #22c55e, #3b82f6); border-radius: 16px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;">
-          <span style="color: white; font-size: 24px; font-weight: bold;">M</span>
+      <div style="margin-bottom: 25px;">
+        <div style="width: 50px; height: 50px; background: #22c55e; border-radius: 12px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;">
+          <span style="color: white; font-size: 20px; font-weight: bold;">M</span>
         </div>
-        <h2 style="margin: 0 0 10px 0; color: #1f2937; font-size: 22px; font-weight: 700;">${title}</h2>
-        <p style="margin: 0 0 25px 0; color: #6b7280; font-size: 16px; line-height: 1.5;">${description}</p>
+        <h2 style="margin: 0 0 15px 0; color: #1f2937; font-size: 20px; font-weight: 600;">${title}</h2>
+        <p style="margin: 0; color: #4b5563; font-size: 15px; line-height: 1.4;">${instruction}</p>
       </div>
       
-      <div style="background: #f8fafc; border-radius: 12px; padding: 20px; margin: 20px 0; border-left: 4px solid #22c55e;">
-        <h3 style="margin: 0 0 15px 0; color: #1f2937; font-size: 16px; font-weight: 600;">Como instalar:</h3>
-        <div style="text-align: left;">
-          ${steps.map(step => `<p style="margin: 8px 0; color: #374151; font-size: 14px; line-height: 1.4;">${step}</p>`).join('')}
-        </div>
-      </div>
-      
-      <div style="display: flex; gap: 12px; margin-top: 25px;">
-        <button onclick="this.parentElement.parentElement.parentElement.remove()" style="
-          flex: 1;
-          background: #f3f4f6;
-          color: #374151;
-          border: none;
-          padding: 14px 20px;
-          border-radius: 12px;
-          font-size: 15px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s ease;
-        " onmouseover="this.style.background='#e5e7eb'" onmouseout="this.style.background='#f3f4f6'">
-          Talvez depois
-        </button>
-        <button onclick="this.parentElement.parentElement.parentElement.remove(); window.location.reload();" style="
-          flex: 1;
-          background: linear-gradient(135deg, #22c55e, #16a34a);
-          color: white;
-          border: none;
-          padding: 14px 20px;
-          border-radius: 12px;
-          font-size: 15px;
-          font-weight: 600;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
-        " onmouseover="this.style.transform='translateY(-1px)'; this.style.boxShadow='0 6px 16px rgba(34, 197, 94, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(34, 197, 94, 0.3)'">
-          Entendi!
-        </button>
-      </div>
+      <button onclick="this.parentElement.parentElement.remove()" style="
+        width: 100%;
+        background: #22c55e;
+        color: white;
+        border: none;
+        padding: 15px 20px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+      ">
+        OK, entendi!
+      </button>
     `
     
     modal.appendChild(content)
@@ -180,15 +142,6 @@ export default function Home() {
         modal.remove()
       }
     })
-    
-    // Adicionar animação de entrada
-    content.style.opacity = '0'
-    content.style.transform = 'scale(0.9) translateY(20px)'
-    setTimeout(() => {
-      content.style.transition = 'all 0.3s ease'
-      content.style.opacity = '1'
-      content.style.transform = 'scale(1) translateY(0)'
-    }, 10)
   }
 
   return (
