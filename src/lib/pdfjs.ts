@@ -1,16 +1,17 @@
-// Configuração do PDF.js para extração de imagens
-import * as pdfjsLib from 'pdfjs-dist'
-
-// Configurar worker do PDF.js
-if (typeof window !== 'undefined') {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`
-}
-
-export { pdfjsLib }
-
-// Função utilitária para extrair imagem do PDF
+// PDF.js só funciona no lado do cliente
 export async function extractImageFromPDF(pdfUrl: string, pageNumber: number = 1, scale: number = 2.0): Promise<string> {
+  // Verificar se estamos no lado do cliente
+  if (typeof window === 'undefined') {
+    throw new Error('PDF extraction only works on the client side')
+  }
+
   try {
+    // Importar PDF.js dinamicamente apenas no cliente
+    const pdfjsLib = await import('pdfjs-dist')
+    
+    // Configurar worker do PDF.js
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`
+    
     // Carregar o PDF
     const pdf = await pdfjsLib.getDocument(pdfUrl).promise
     
