@@ -103,10 +103,7 @@ export default function Home() {
                 <span className="text-4xl">🍽️</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-xl">Receitas</h3>
-                  <p className="text-sm text-brand-text2">Ingredientes adaptados para os Estados Unidos</p>
-                  <p className="text-xs text-brand-textLight mt-1">
-                    Com ingredientes que você encontra nos EUA
-                  </p>
+                  <p className="text-sm text-brand-text2">Ingredientes que tem nos Estados Unidos</p>
                 </div>
                 <span className="text-xs bg-brand-green text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
@@ -118,10 +115,7 @@ export default function Home() {
                 <span className="text-4xl">📋</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-xl">Protocolos Nutricionais</h3>
-                  <p className="text-sm text-brand-text2">Planos completos de 7, 14 e 30 dias</p>
-                  <p className="text-xs text-brand-textLight mt-1">
-                    Protocolos personalizados para seus objetivos
-                  </p>
+                  <p className="text-sm text-brand-text2">Protocolos completos de 7, 14 e 30 dias</p>
                 </div>
                 <span className="text-xs bg-brand-greenLight text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
@@ -133,7 +127,7 @@ export default function Home() {
                 <span className="text-4xl">🧠</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-xl">Avaliação de Bem-estar por IA</h3>
-                  <p className="text-sm text-white/90">Descubra seu plano ideal em 60 segundos ⏱️</p>
+                  <p className="text-sm text-white/90">Por inteligência artificial 60 segundos</p>
                 </div>
                 <span className="text-xs bg-white/20 px-3 py-1 rounded-full font-semibold">Fazer</span>
               </div>
@@ -145,7 +139,7 @@ export default function Home() {
                 <span className="text-3xl">👩‍⚕️</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-lg">Avaliação Personalizada</h3>
-                  <p className="text-sm text-brand-text2">Coaching individual com nutricionista brasileira</p>
+                  <p className="text-sm text-brand-text2">Coach de bem-estar brasileira</p>
                 </div>
                 <span className="text-xs bg-brand-greenLight text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
@@ -158,9 +152,6 @@ export default function Home() {
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-xl">Mercado</h3>
                   <p className="text-sm text-brand-text2">Produtos selecionados Amazon</p>
-                  <p className="text-xs text-brand-textLight mt-1">
-                    Produtos recomendados para brasileiros nos EUA
-                  </p>
                 </div>
                 <span className="text-xs bg-brand-greenLight text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
