@@ -25,9 +25,10 @@ const getRecipeImageUrl = (nome: string): string => {
     .filter(word => word.length > 2) // Remove palavras muito curtas
     .join(',')
   
-  // Usar Unsplash Source API para gerar imagens
+  // Usar Picsum Photos para imagens placeholder mais confiáveis
   const searchTerm = keywords || 'healthy food'
-  return `https://source.unsplash.com/400x300/?${encodeURIComponent(searchTerm)}`
+  const seed = nome.split('').reduce((a, b) => a + b.charCodeAt(0), 0)
+  return `https://picsum.photos/seed/${seed}/400/300`
 }
 
 export default function ReceitasPage() {
@@ -207,10 +208,13 @@ export default function ReceitasPage() {
         )}
 
         {/* CTA Final */}
-        <div className="mt-8 bg-gradient-to-r from-brand-green to-brand-blue rounded-xl p-6 text-center text-white">
-          <h3 className="font-bold text-lg mb-2">
-            🎯 Protocolos Nutricionais Completos
-          </h3>
+        <div className="mt-8 bg-brand-green rounded-xl p-6 text-center text-white">
+          <div className="flex items-center justify-center mb-3">
+            <span className="text-2xl mr-2">🎯</span>
+            <h3 className="font-bold text-lg">
+              Protocolos Nutricionais Completos
+            </h3>
+          </div>
           <p className="text-sm mb-4 opacity-90">
             Planos de 7, 14 ou 30 dias com receitas, cardápios e acompanhamento personalizado
           </p>
