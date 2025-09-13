@@ -84,12 +84,9 @@ export default function Home() {
       <section className="px-4 py-6 text-center">
         <div className="max-w-sm mx-auto">
           <h2 className="text-2xl font-bold text-brand-text mb-2">
-            Saúde dos brasileiros nos
-            <span className="text-brand-green block">Estados Unidos</span>
+            Para brasileiros nos
+            <span className="text-brand-green block">EUA</span>
           </h2>
-          <p className="text-brand-text2 text-sm">
-            App para brasileiras que querem viver melhor nos EUA
-          </p>
         </div>
       </section>
 
@@ -126,7 +123,7 @@ export default function Home() {
               <div className="flex items-center space-x-4">
                 <span className="text-4xl">🧠</span>
                 <div className="flex-1 text-left">
-                  <h3 className="font-bold text-xl">Avaliação de Bem-estar por IA</h3>
+                  <h3 className="font-bold text-xl">Avaliação de Bem-estar</h3>
                   <p className="text-sm text-white/90">Com inteligência artificial</p>
                 </div>
                 <span className="text-xs bg-white/20 px-3 py-1 rounded-full font-semibold">Fazer</span>
