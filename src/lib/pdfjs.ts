@@ -34,7 +34,8 @@ export async function extractImageFromPDF(pdfUrl: string, pageNumber: number = 1
     // Renderizar a página no canvas
     await page.render({
       canvasContext: context,
-      viewport: viewport
+      viewport: viewport,
+      canvas: canvas
     }).promise
     
     // Converter canvas para blob e criar URL
