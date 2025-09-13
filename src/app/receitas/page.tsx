@@ -75,44 +75,89 @@ export default function ReceitasPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Mock data para demonstração
-    const mockReceitas: Receita[] = [
-      {
-        id: 1,
-        nome: "Smoothie Verde Detox",
-        descricao: "Bebida refrescante rica em clorofila e antioxidantes para desintoxicar o organismo",
-        tipo: "gratuita",
-        preco: 0,
-        link_pdf: "https://drive.google.com/file/d/abc123",
-        status: "ativa",
-        data_criacao: "2024-01-15"
-      },
-      {
-        id: 2,
-        nome: "Bowl Energético com Quinoa",
-        descricao: "Refeição completa e nutritiva perfeita para dar energia durante o dia",
-        tipo: "paga",
-        preco: 1.99,
-        link_pdf: "https://drive.google.com/file/d/def456",
-        status: "ativa",
-        data_criacao: "2024-01-16"
-      },
-      {
-        id: 3,
-        nome: "Sopa Anti-inflamatória",
-        descricao: "Sopa reconfortante com ingredientes que combatem inflamações",
-        tipo: "paga",
-        preco: 2.99,
-        link_pdf: "https://drive.google.com/file/d/ghi789",
-        status: "ativa",
-        data_criacao: "2024-01-17"
+    // Carregar receitas do localStorage ou usar dados padrão
+    const loadRecipes = () => {
+      if (typeof window !== 'undefined') {
+        const savedRecipes = localStorage.getItem('mpf-recipes')
+        if (savedRecipes) {
+          try {
+            const adminRecipes = JSON.parse(savedRecipes)
+            // Converter formato da admin para formato da página de receitas
+            const convertedRecipes: Receita[] = adminRecipes
+              .filter((recipe: any) => recipe.status === 'active')
+              .map((recipe: any) => ({
+                id: recipe.id,
+                nome: recipe.name,
+                descricao: recipe.description,
+                tipo: recipe.price === 0 ? 'gratuita' : 'paga',
+                preco: recipe.price,
+                link_pdf: recipe.pdfLink,
+                status: recipe.status === 'active' ? 'ativa' : 'inativa',
+                data_criacao: new Date().toISOString().split('T')[0],
+                imagem: recipe.imageUrl
+              }))
+            
+            setReceitas(convertedRecipes)
+            setLoading(false)
+            return
+          } catch (error) {
+            console.error('Erro ao carregar receitas do localStorage:', error)
+          }
+        }
       }
-    ]
+      
+      // Se não houver dados salvos, usar dados padrão
+      const mockReceitas: Receita[] = [
+        {
+          id: 1,
+          nome: "Smoothie Verde Detox",
+          descricao: "Bebida refrescante rica em clorofila e antioxidantes para desintoxicar o organismo",
+          tipo: "gratuita",
+          preco: 0,
+          link_pdf: "https://drive.google.com/file/d/abc123",
+          status: "ativa",
+          data_criacao: "2024-01-15"
+        },
+        {
+          id: 2,
+          nome: "Bowl Energético com Quinoa",
+          descricao: "Refeição completa e nutritiva perfeita para dar energia durante o dia",
+          tipo: "paga",
+          preco: 1.99,
+          link_pdf: "https://drive.google.com/file/d/def456",
+          status: "ativa",
+          data_criacao: "2024-01-16"
+        },
+        {
+          id: 3,
+          nome: "Sopa Anti-inflamatória",
+          descricao: "Sopa reconfortante com ingredientes que combatem inflamações",
+          tipo: "paga",
+          preco: 2.99,
+          link_pdf: "https://drive.google.com/file/d/ghi789",
+          status: "ativa",
+          data_criacao: "2024-01-17"
+        }
+      ]
+      
+      setTimeout(() => {
+        setReceitas(mockReceitas)
+        setLoading(false)
+      }, 1000)
+    }
+
+    loadRecipes()
+
+    // Listener para mudanças no localStorage
+    const handleStorageChange = () => {
+      loadRecipes()
+    }
+
+    window.addEventListener('storage', handleStorageChange)
     
-    setTimeout(() => {
-      setReceitas(mockReceitas)
-      setLoading(false)
-    }, 1000)
+    return () => {
+      window.removeEventListener('storage', handleStorageChange)
+    }
   }, [])
 
   const handleComprarReceita = (receita: Receita) => {

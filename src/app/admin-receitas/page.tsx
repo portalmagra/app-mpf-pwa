@@ -7,7 +7,8 @@ import PDFImageExtractor from '@/components/PDFImageExtractor'
 import Logo from '@/components/Logo'
 
 export default function AdminReceitas() {
-  const [recipes, setRecipes] = useState([
+  // Dados padrão das receitas
+  const defaultRecipes = [
     {
       id: 1,
       name: 'Smoothie Bowl de Açaí',
@@ -38,7 +39,16 @@ export default function AdminReceitas() {
       status: 'active',
       accessLink: 'https://app.meuportalfit.com/receita/3'
     }
-  ])
+  ]
+
+  // Carregar receitas do localStorage ou usar dados padrão
+  const [recipes, setRecipes] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const savedRecipes = localStorage.getItem('mpf-recipes')
+      return savedRecipes ? JSON.parse(savedRecipes) : defaultRecipes
+    }
+    return defaultRecipes
+  })
 
   const [newRecipe, setNewRecipe] = useState({
     name: '',
@@ -74,7 +84,14 @@ export default function AdminReceitas() {
         accessLink
       }
       
-      setRecipes([...recipes, recipe])
+      const updatedRecipes = [...recipes, recipe]
+      setRecipes(updatedRecipes)
+      
+      // Salvar no localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('mpf-recipes', JSON.stringify(updatedRecipes))
+      }
+      
       setNewRecipe({
         name: '',
         description: '',
@@ -89,11 +106,17 @@ export default function AdminReceitas() {
   }
 
   const toggleRecipeStatus = (id: number) => {
-    setRecipes(recipes.map(recipe => 
+    const updatedRecipes = recipes.map(recipe => 
       recipe.id === id 
         ? { ...recipe, status: recipe.status === 'active' ? 'inactive' : 'active' }
         : recipe
-    ))
+    )
+    setRecipes(updatedRecipes)
+    
+    // Salvar no localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('mpf-recipes', JSON.stringify(updatedRecipes))
+    }
   }
 
   const copyAccessLink = (link: string) => {
