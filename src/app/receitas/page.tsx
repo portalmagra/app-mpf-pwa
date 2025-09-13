@@ -203,11 +203,22 @@ export default function ReceitasPage() {
           <div className="space-y-4">
             {receitas.map((receita) => (
               <div key={receita.id} className="bg-white rounded-xl shadow-soft overflow-hidden">
-                {/* Emoji da Receita */}
-                <div className={`relative h-48 w-full ${getRecipeBgColor(getRecipeEmoji(receita.nome))} flex items-center justify-center`}>
-                  <span className="text-8xl drop-shadow-lg">
-                    {getRecipeEmoji(receita.nome)}
-                  </span>
+                {/* Imagem ou Emoji da Receita */}
+                <div className="relative h-48 w-full overflow-hidden">
+                  {receita.imagem ? (
+                    <img
+                      src={receita.imagem}
+                      alt={receita.nome}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className={`w-full h-full ${getRecipeBgColor(getRecipeEmoji(receita.nome))} flex items-center justify-center`}>
+                      <span className="text-8xl drop-shadow-lg">
+                        {getRecipeEmoji(receita.nome)}
+                      </span>
+                    </div>
+                  )}
                   {receita.tipo === 'gratuita' && (
                     <span className="absolute top-3 right-3 bg-brand-green text-white px-3 py-1 rounded-lg text-xs font-medium">
                       GRÁTIS
