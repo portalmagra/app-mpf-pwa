@@ -16,19 +16,58 @@ interface Receita {
   imagem?: string
 }
 
-// Função para gerar URL de imagem baseada no nome da receita
-const getRecipeImageUrl = (nome: string): string => {
-  // Mapear palavras-chave da receita para termos de busca de imagem
-  const keywords = nome.toLowerCase()
-    .replace(/[^\w\s]/g, '') // Remove caracteres especiais
-    .split(' ')
-    .filter(word => word.length > 2) // Remove palavras muito curtas
-    .join(',')
+// Função para gerar emoji baseado no nome da receita
+const getRecipeEmoji = (nome: string): string => {
+  const nomeLower = nome.toLowerCase()
   
-  // Usar Picsum Photos para imagens placeholder mais confiáveis
-  const searchTerm = keywords || 'healthy food'
-  const seed = nome.split('').reduce((a, b) => a + b.charCodeAt(0), 0)
-  return `https://picsum.photos/seed/${seed}/400/300`
+  // Mapear palavras-chave para emojis específicos
+  if (nomeLower.includes('smoothie') || nomeLower.includes('bebida') || nomeLower.includes('suco')) {
+    return '🥤'
+  }
+  if (nomeLower.includes('sopa') || nomeLower.includes('caldo')) {
+    return '🍲'
+  }
+  if (nomeLower.includes('salada') || nomeLower.includes('verde')) {
+    return '🥗'
+  }
+  if (nomeLower.includes('bowl') || nomeLower.includes('tigela')) {
+    return '🍽️'
+  }
+  if (nomeLower.includes('pão') || nomeLower.includes('bread')) {
+    return '🍞'
+  }
+  if (nomeLower.includes('doce') || nomeLower.includes('açúcar') || nomeLower.includes('sweet')) {
+    return '🍰'
+  }
+  if (nomeLower.includes('quinoa') || nomeLower.includes('grão')) {
+    return '🌾'
+  }
+  if (nomeLower.includes('shot') || nomeLower.includes('energético')) {
+    return '⚡'
+  }
+  if (nomeLower.includes('anti-inflamatória') || nomeLower.includes('detox')) {
+    return '🌿'
+  }
+  
+  // Emoji padrão para comida saudável
+  return '🥗'
+}
+
+// Função para gerar cor de fundo baseada no emoji
+const getRecipeBgColor = (emoji: string): string => {
+  const colorMap: { [key: string]: string } = {
+    '🥤': 'bg-gradient-to-br from-green-400 to-green-600',
+    '🍲': 'bg-gradient-to-br from-orange-400 to-orange-600', 
+    '🥗': 'bg-gradient-to-br from-green-300 to-green-500',
+    '🍽️': 'bg-gradient-to-br from-amber-400 to-amber-600',
+    '🍞': 'bg-gradient-to-br from-yellow-400 to-yellow-600',
+    '🍰': 'bg-gradient-to-br from-pink-400 to-pink-600',
+    '🌾': 'bg-gradient-to-br from-yellow-500 to-yellow-700',
+    '⚡': 'bg-gradient-to-br from-yellow-300 to-yellow-500',
+    '🌿': 'bg-gradient-to-br from-green-500 to-green-700'
+  }
+  
+  return colorMap[emoji] || 'bg-gradient-to-br from-green-400 to-green-600'
 }
 
 export default function ReceitasPage() {
@@ -149,7 +188,9 @@ export default function ReceitasPage() {
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
               <div key={i} className="bg-white rounded-xl shadow-soft overflow-hidden animate-pulse">
-                <div className="h-48 bg-gray-200"></div>
+                <div className="h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                  <div className="w-20 h-20 bg-gray-300 rounded-full"></div>
+                </div>
                 <div className="p-4">
                   <div className="h-5 bg-gray-200 rounded mb-2"></div>
                   <div className="h-3 bg-gray-200 rounded mb-4"></div>
@@ -162,14 +203,11 @@ export default function ReceitasPage() {
           <div className="space-y-4">
             {receitas.map((receita) => (
               <div key={receita.id} className="bg-white rounded-xl shadow-soft overflow-hidden">
-                {/* Imagem da Receita */}
-                <div className="relative h-48 w-full">
-                  <img
-                    src={getRecipeImageUrl(receita.nome)}
-                    alt={receita.nome}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+                {/* Emoji da Receita */}
+                <div className={`relative h-48 w-full ${getRecipeBgColor(getRecipeEmoji(receita.nome))} flex items-center justify-center`}>
+                  <span className="text-8xl drop-shadow-lg">
+                    {getRecipeEmoji(receita.nome)}
+                  </span>
                   {receita.tipo === 'gratuita' && (
                     <span className="absolute top-3 right-3 bg-brand-green text-white px-3 py-1 rounded-lg text-xs font-medium">
                       GRÁTIS
