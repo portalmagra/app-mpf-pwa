@@ -44,6 +44,7 @@ export default function AdminReceitas() {
     type: 'doces',
     price: 0,
     pdfLink: '',
+    imageUrl: '',
     status: 'active'
   })
 
@@ -199,6 +200,19 @@ export default function AdminReceitas() {
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-brand-green focus:outline-none"
                   placeholder="https://drive.google.com/file/d/..."
                 />
+              </div>
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-gray-700 mb-2">URL da Imagem (opcional)</label>
+                <input
+                  type="url"
+                  value={newRecipe.imageUrl}
+                  onChange={(e) => setNewRecipe({...newRecipe, imageUrl: e.target.value})}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-brand-green focus:outline-none"
+                  placeholder="https://exemplo.com/imagem.jpg (deixe vazio para imagem automática)"
+                />
+                <p className="text-xs text-gray-500 mt-1">
+                  Se deixar vazio, será gerada automaticamente baseada no nome da receita
+                </p>
               </div>
             </div>
             <div className="mt-6 flex justify-end">

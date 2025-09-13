@@ -13,6 +13,21 @@ interface Receita {
   link_pdf: string
   status: 'ativa' | 'inativa'
   data_criacao: string
+  imagem?: string
+}
+
+// Função para gerar URL de imagem baseada no nome da receita
+const getRecipeImageUrl = (nome: string): string => {
+  // Mapear palavras-chave da receita para termos de busca de imagem
+  const keywords = nome.toLowerCase()
+    .replace(/[^\w\s]/g, '') // Remove caracteres especiais
+    .split(' ')
+    .filter(word => word.length > 2) // Remove palavras muito curtas
+    .join(',')
+  
+  // Usar Unsplash Source API para gerar imagens
+  const searchTerm = keywords || 'healthy food'
+  return `https://source.unsplash.com/400x300/?${encodeURIComponent(searchTerm)}`
 }
 
 export default function ReceitasPage() {
@@ -132,49 +147,52 @@ export default function ReceitasPage() {
         {loading ? (
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-xl p-4 shadow-soft animate-pulse">
-                <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                <div className="h-3 bg-gray-200 rounded mb-4"></div>
-                <div className="h-8 bg-gray-200 rounded"></div>
+              <div key={i} className="bg-white rounded-xl shadow-soft overflow-hidden animate-pulse">
+                <div className="h-48 bg-gray-200"></div>
+                <div className="p-4">
+                  <div className="h-5 bg-gray-200 rounded mb-2"></div>
+                  <div className="h-3 bg-gray-200 rounded mb-4"></div>
+                  <div className="h-10 bg-gray-200 rounded"></div>
+                </div>
               </div>
             ))}
           </div>
         ) : (
           <div className="space-y-4">
             {receitas.map((receita) => (
-              <div key={receita.id} className="bg-white rounded-xl p-4 shadow-soft">
-                <div className="flex justify-between items-start mb-3">
-                  <div className="flex-1">
-                    <h3 className="font-bold text-brand-text text-lg mb-1">
-                      {receita.nome}
-                    </h3>
-                    <p className="text-brand-textLight text-sm leading-relaxed">
-                      {receita.descricao}
-                    </p>
-                  </div>
+              <div key={receita.id} className="bg-white rounded-xl shadow-soft overflow-hidden">
+                {/* Imagem da Receita */}
+                <div className="relative h-48 w-full">
+                  <img
+                    src={getRecipeImageUrl(receita.nome)}
+                    alt={receita.nome}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
                   {receita.tipo === 'gratuita' && (
-                    <span className="bg-brand-green text-white px-2 py-1 rounded-lg text-xs font-medium ml-2">
+                    <span className="absolute top-3 right-3 bg-brand-green text-white px-3 py-1 rounded-lg text-xs font-medium">
                       GRÁTIS
                     </span>
                   )}
+                  {receita.tipo === 'paga' && (
+                    <span className="absolute top-3 right-3 bg-brand-amber text-white px-3 py-1 rounded-lg text-xs font-medium">
+                      ${receita.preco.toFixed(2)}
+                    </span>
+                  )}
                 </div>
+                
+                {/* Conteúdo da Receita */}
+                <div className="p-4">
+                  <h3 className="font-bold text-brand-text text-lg mb-2">
+                    {receita.nome}
+                  </h3>
+                  <p className="text-brand-textLight text-sm leading-relaxed mb-4">
+                    {receita.descricao}
+                  </p>
 
-                <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-2">
-                    {receita.tipo === 'paga' ? (
-                      <span className="text-brand-green font-bold text-lg">
-                        ${receita.preco.toFixed(2)}
-                      </span>
-                    ) : (
-                      <span className="text-brand-green font-bold text-lg">
-                        Gratuita
-                      </span>
-                    )}
-                  </div>
-                  
                   <button
                     onClick={() => handleAcessarReceita(receita)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    className={`w-full py-3 rounded-lg text-sm font-medium transition-colors ${
                       receita.tipo === 'gratuita'
                         ? 'bg-brand-green text-white hover:bg-brand-greenDark'
                         : 'bg-brand-amber text-white hover:bg-brand-amberDark'
