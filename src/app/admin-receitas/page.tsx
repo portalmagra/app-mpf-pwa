@@ -272,7 +272,7 @@ export default function AdminReceitas() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {recipes.map(recipe => (
+                {recipes.map((recipe: { id: number; name: string; description: string; price: number; pdfLink: string; imageUrl?: string; status: string }) => (
                   <tr key={recipe.id}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
