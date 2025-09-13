@@ -84,8 +84,8 @@ export default function ReceitasPage() {
             const adminRecipes = JSON.parse(savedRecipes)
             // Converter formato da admin para formato da página de receitas
             const convertedRecipes: Receita[] = adminRecipes
-              .filter((recipe: any) => recipe.status === 'active')
-              .map((recipe: any) => ({
+              .filter((recipe: { status: string }) => recipe.status === 'active')
+              .map((recipe: { id: number; name: string; description: string; price: number; pdfLink: string; status: string; imageUrl?: string }) => ({
                 id: recipe.id,
                 nome: recipe.name,
                 descricao: recipe.description,
