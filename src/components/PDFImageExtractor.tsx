@@ -103,7 +103,7 @@ export default function PDFImageExtractor({ pdfUrl, onImageExtracted, className 
       <div className="bg-green-50 p-4 rounded-lg">
         <h4 className="font-medium text-green-900 mb-2">✨ Extração Automática:</h4>
         <ul className="text-sm text-green-800 space-y-1">
-          <li>• Clique em "Extrair Imagem do PDF"</li>
+          <li>• Clique em &quot;Extrair Imagem do PDF&quot;</li>
           <li>• A primeira página será convertida em imagem</li>
           <li>• A imagem será salva automaticamente</li>
           <li>• Funciona com qualquer PDF válido</li>

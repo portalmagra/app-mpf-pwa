@@ -12,12 +12,12 @@ export default function Logo({ size = 'md', variant = 'icon', className = '' }: 
     xl: 'w-16 h-16'
   }
 
-  const iconSizes = {
-    sm: 16,
-    md: 20,
-    lg: 32,
-    xl: 40
-  }
+  // const iconSizes = {
+  //   sm: 16,
+  //   md: 20,
+  //   lg: 32,
+  //   xl: 40
+  // }
 
   // const iconSize = iconSizes[size] // Not used in current implementation
 
