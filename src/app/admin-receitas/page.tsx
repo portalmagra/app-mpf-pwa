@@ -81,6 +81,7 @@ export default function AdminReceitas() {
         type: 'doces',
         price: 0,
         pdfLink: '',
+        imageUrl: '',
         status: 'active'
       })
       setShowForm(false)
