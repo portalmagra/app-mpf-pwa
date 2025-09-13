@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import ImageUpload from '@/components/ImageUpload'
+import PDFImageExtractor from '@/components/PDFImageExtractor'
 import Logo from '@/components/Logo'
 
 export default function AdminReceitas() {
@@ -208,6 +209,16 @@ export default function AdminReceitas() {
               currentImage={newRecipe.imageUrl}
             />
           </div>
+
+          {/* Extrator de PDF */}
+          {newRecipe.pdfLink && (
+            <div className="md:col-span-2">
+              <PDFImageExtractor
+                pdfUrl={newRecipe.pdfLink}
+                onImageExtracted={(imageUrl) => setNewRecipe({...newRecipe, imageUrl})}
+              />
+            </div>
+          )}
             </div>
             <div className="mt-6 flex justify-end">
               <button
