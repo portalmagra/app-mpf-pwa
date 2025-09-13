@@ -19,7 +19,7 @@ export default function Logo({ size = 'md', variant = 'icon', className = '' }: 
     xl: 40
   }
 
-  const iconSize = iconSizes[size]
+  // const iconSize = iconSizes[size] // Not used in current implementation
 
   if (variant === 'horizontal') {
     return (

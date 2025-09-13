@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import Logo from '@/components/Logo'
 
 export default function AdminReceitas() {
@@ -104,9 +105,9 @@ export default function AdminReceitas() {
           <div className="flex items-center justify-between">
             <Logo variant="horizontal" size="md" />
             <div className="flex items-center space-x-4">
-              <a href="/" className="text-sm text-gray-600 hover:text-brand-green transition-colors">
+              <Link href="/" className="text-sm text-gray-600 hover:text-brand-green transition-colors">
                 ← Voltar ao App
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -290,7 +291,7 @@ export default function AdminReceitas() {
           <div className="text-blue-700 space-y-2">
             <p>• <strong>PDFs:</strong> Armazene os PDFs no Google Drive e cole o link aqui</p>
             <p>• <strong>Links Únicos:</strong> Cada receita gera automaticamente um link único</p>
-            <p>• <strong>Status:</strong> Use "Inativo" para pausar vendas temporariamente</p>
+            <p>• <strong>Status:</strong> Use &quot;Inativo&quot; para pausar vendas temporariamente</p>
             <p>• <strong>Preços:</strong> R$ 0 = receita gratuita</p>
           </div>
         </div>
