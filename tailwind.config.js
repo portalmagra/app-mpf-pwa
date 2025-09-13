@@ -9,23 +9,35 @@ module.exports = {
     extend: {
         colors: {
           brand: {
-            green: '#10b981',
-            greenDark: '#059669',
-            greenSoft: '#f0fdf4',
-            blue: '#3b82f6',
-            blueDark: '#1d4ed8',
-            blueSoft: '#eff6ff',
-            blueLight: '#60a5fa',
-            purple: '#7c3aed',
-            purpleDark: '#6d28d9',
-            amber: '#f59e0b',
-            amberDark: '#d97706',
-            amberSoft: '#fef3c7',
-            cream: '#f8fafc',
-            text: '#1f2937',
-            text2: '#6b7280',
-            border: '#e5e7eb',
-            success: '#10b981',
+            // Verde principal - cor vibrante da imagem
+            green: '#438951',
+            greenDark: '#2d5a35',
+            greenLight: '#6B8E6B',
+            greenSoft: '#E8F5E8',
+            
+            // Tons neutros da imagem
+            neutral: '#F5F3F0',
+            neutralDark: '#E8E5E0',
+            neutralLight: '#F8F9FA',
+            
+            // Cinzas suaves da imagem
+            gray: '#6B8E6B',
+            grayLight: '#9CA3AF',
+            grayDark: '#495057',
+            graySoft: '#F8F9FA',
+            
+            // Cores neutras para textos
+            text: '#212529',
+            text2: '#6B8E6B',
+            textLight: '#9CA3AF',
+            border: '#E8F5E8',
+            borderLight: '#F5F3F0',
+            
+            // Cores de status harmoniosas
+            success: '#438951',
+            warning: '#6B8E6B',
+            error: '#dc3545',
+            info: '#6B8E6B',
           },
         },
       borderRadius: { 
