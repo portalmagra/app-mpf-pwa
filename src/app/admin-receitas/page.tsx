@@ -106,7 +106,7 @@ export default function AdminReceitas() {
   }
 
   const toggleRecipeStatus = (id: number) => {
-    const updatedRecipes = recipes.map((recipe: { id: number; status: string; [key: string]: any }) => 
+    const updatedRecipes = recipes.map((recipe: { id: number; status: string; name: string; description: string; price: number; pdfLink: string; imageUrl?: string }) => 
       recipe.id === id 
         ? { ...recipe, status: recipe.status === 'active' ? 'inactive' : 'active' }
         : recipe
