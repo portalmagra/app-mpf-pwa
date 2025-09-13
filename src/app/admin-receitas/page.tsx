@@ -75,7 +75,7 @@ export default function AdminReceitas() {
 
   const handleAddRecipe = () => {
     if (newRecipe.name && newRecipe.description && newRecipe.pdfLink) {
-      const id = Math.max(...recipes.map(r => r.id)) + 1
+      const id = Math.max(...recipes.map((r: { id: number }) => r.id)) + 1
       const accessLink = `https://app.meuportalfit.com/receita/${id}`
       
       const recipe = {
