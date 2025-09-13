@@ -103,7 +103,7 @@ export default function Home() {
                 <span className="text-4xl">🍽️</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-xl">Receitas</h3>
-                  <p className="text-sm text-brand-text2">Ingredientes que tem nos Estados Unidos</p>
+                  <p className="text-sm text-brand-text2">Ingredientes que tem nos EUA</p>
                 </div>
                 <span className="text-xs bg-brand-green text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
@@ -115,7 +115,7 @@ export default function Home() {
                 <span className="text-4xl">📋</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-xl">Protocolos Nutricionais</h3>
-                  <p className="text-sm text-brand-text2">Protocolos completos de 7, 14 e 30 dias</p>
+                  <p className="text-sm text-brand-text2">Protocolos de 7, 14 e 30 dias</p>
                 </div>
                 <span className="text-xs bg-brand-greenLight text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
@@ -127,7 +127,7 @@ export default function Home() {
                 <span className="text-4xl">🧠</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-xl">Avaliação de Bem-estar por IA</h3>
-                  <p className="text-sm text-white/90">Por inteligência artificial 60 segundos</p>
+                  <p className="text-sm text-white/90">Com inteligência artificial</p>
                 </div>
                 <span className="text-xs bg-white/20 px-3 py-1 rounded-full font-semibold">Fazer</span>
               </div>
