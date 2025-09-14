@@ -1,4 +1,23 @@
-// PDF.js só funciona no lado do cliente
+// Gerar miniatura do PDF usando Google Drive Viewer
+export function generatePDFThumbnail(pdfUrl: string): string {
+  // Converter URL do Google Drive para formato de visualização
+  let viewerUrl = pdfUrl
+  
+  // Se for URL do Google Drive, converter para formato de visualização
+  if (pdfUrl.includes('drive.google.com')) {
+    // Extrair o ID do arquivo
+    const fileIdMatch = pdfUrl.match(/\/file\/d\/([a-zA-Z0-9-_]+)/)
+    if (fileIdMatch) {
+      const fileId = fileIdMatch[1]
+      // Usar Google Drive Viewer para gerar miniatura
+      viewerUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w400-h600`
+    }
+  }
+  
+  return viewerUrl
+}
+
+// Função alternativa usando PDF.js (mantida como backup)
 export async function extractImageFromPDF(pdfUrl: string, pageNumber: number = 1, scale: number = 2.0): Promise<string> {
   // Verificar se estamos no lado do cliente
   if (typeof window === 'undefined') {
