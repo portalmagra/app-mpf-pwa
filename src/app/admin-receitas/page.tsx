@@ -61,6 +61,7 @@ export default function AdminReceitas() {
   })
 
   const [showForm, setShowForm] = useState(false)
+  const [editingRecipe, setEditingRecipe] = useState<number | null>(null)
 
   const recipeTypes = [
     { id: 'doces', name: 'Doces', icon: '🍰' },
@@ -124,6 +125,75 @@ export default function AdminReceitas() {
     alert('Link copiado para a área de transferência!')
   }
 
+  const handleEditRecipe = (recipe: { id: number; name: string; description: string; type: string; price: number; pdfLink: string; imageUrl?: string; status: string }) => {
+    setNewRecipe({
+      name: recipe.name,
+      description: recipe.description,
+      type: recipe.type,
+      price: recipe.price,
+      pdfLink: recipe.pdfLink,
+      imageUrl: recipe.imageUrl || '',
+      status: recipe.status
+    })
+    setEditingRecipe(recipe.id)
+    setShowForm(true)
+  }
+
+  const handleUpdateRecipe = () => {
+    if (editingRecipe && newRecipe.name && newRecipe.description && newRecipe.pdfLink) {
+      const updatedRecipes = recipes.map((recipe: { id: number; name: string; description: string; type: string; price: number; pdfLink: string; imageUrl?: string; status: string; accessLink: string }) => 
+        recipe.id === editingRecipe 
+          ? { ...recipe, ...newRecipe }
+          : recipe
+      )
+      setRecipes(updatedRecipes)
+      
+      // Salvar no localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('mpf-recipes', JSON.stringify(updatedRecipes))
+      }
+      
+      // Reset form
+      setNewRecipe({
+        name: '',
+        description: '',
+        type: 'doces',
+        price: 0,
+        pdfLink: '',
+        imageUrl: '',
+        status: 'active'
+      })
+      setEditingRecipe(null)
+      setShowForm(false)
+    }
+  }
+
+  const handleDeleteRecipe = (id: number) => {
+    if (confirm('Tem certeza que deseja excluir esta receita?')) {
+      const updatedRecipes = recipes.filter((recipe: { id: number }) => recipe.id !== id)
+      setRecipes(updatedRecipes)
+      
+      // Salvar no localStorage
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('mpf-recipes', JSON.stringify(updatedRecipes))
+      }
+    }
+  }
+
+  const handleCancelEdit = () => {
+    setNewRecipe({
+      name: '',
+      description: '',
+      type: 'doces',
+      price: 0,
+      pdfLink: '',
+      imageUrl: '',
+      status: 'active'
+    })
+    setEditingRecipe(null)
+    setShowForm(false)
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
@@ -160,7 +230,9 @@ export default function AdminReceitas() {
         {/* Add Recipe Form */}
         {showForm && (
           <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-            <h2 className="text-xl font-bold text-gray-800 mb-4">Nova Receita</h2>
+            <h2 className="text-xl font-bold text-gray-800 mb-4">
+              {editingRecipe ? 'Editar Receita' : 'Nova Receita'}
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Nome da Receita</label>
@@ -244,12 +316,18 @@ export default function AdminReceitas() {
             </div>
           )}
             </div>
-            <div className="mt-6 flex justify-end">
+            <div className="mt-6 flex justify-end space-x-3">
               <button
-                onClick={handleAddRecipe}
+                onClick={handleCancelEdit}
+                className="bg-gray-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-600 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={editingRecipe ? handleUpdateRecipe : handleAddRecipe}
                 className="bg-brand-green text-white px-6 py-3 rounded-lg font-medium hover:bg-brand-greenDark transition-colors"
               >
-                Salvar Receita
+                {editingRecipe ? 'Atualizar Receita' : 'Salvar Receita'}
               </button>
             </div>
           </div>
@@ -304,20 +382,32 @@ export default function AdminReceitas() {
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                       <div className="flex space-x-2">
                         <button
+                          onClick={() => handleEditRecipe(recipe)}
+                          className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded text-xs hover:bg-yellow-200"
+                        >
+                          ✏️ Editar
+                        </button>
+                        <button
+                          onClick={() => handleDeleteRecipe(recipe.id)}
+                          className="px-3 py-1 bg-red-100 text-red-700 rounded text-xs hover:bg-red-200"
+                        >
+                          🗑️ Excluir
+                        </button>
+                        <button
                           onClick={() => toggleRecipeStatus(recipe.id)}
                           className={`px-3 py-1 rounded text-xs ${
                             recipe.status === 'active'
-                              ? 'bg-red-100 text-red-700 hover:bg-red-200'
+                              ? 'bg-orange-100 text-orange-700 hover:bg-orange-200'
                               : 'bg-green-100 text-green-700 hover:bg-green-200'
                           }`}
                         >
-                          {recipe.status === 'active' ? 'Desativar' : 'Ativar'}
+                          {recipe.status === 'active' ? '⏸️ Pausar' : '▶️ Ativar'}
                         </button>
                         <button
                           onClick={() => copyAccessLink(recipe.accessLink)}
                           className="px-3 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200"
                         >
-                          Copiar Link
+                          📋 Link
                         </button>
                       </div>
                     </td>
