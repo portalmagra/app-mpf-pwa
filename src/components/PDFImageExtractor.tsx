@@ -18,14 +18,10 @@ export default function PDFImageExtractor({ pdfUrl, onImageExtracted, className 
     if (pdfUrl) {
       const thumbnail = generatePDFThumbnail(pdfUrl)
       setThumbnailUrl(thumbnail)
+      // Aplicar automaticamente a miniatura
+      onImageExtracted(thumbnail)
     }
-  }, [pdfUrl])
-
-  const handleUseThumbnail = () => {
-    if (thumbnailUrl) {
-      onImageExtracted(thumbnailUrl)
-    }
-  }
+  }, [pdfUrl, onImageExtracted])
 
   const handleManualImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const url = e.target.value
@@ -52,17 +48,9 @@ export default function PDFImageExtractor({ pdfUrl, onImageExtracted, className 
               onError={() => setThumbnailUrl(null)}
             />
             <div className="absolute top-2 left-2 bg-green-500 text-white px-2 py-1 rounded text-xs">
-              ✅ Automática
+              ✅ Aplicada Automaticamente
             </div>
           </div>
-          
-          <button
-            type="button"
-            onClick={handleUseThumbnail}
-            className="w-full py-2 px-4 bg-green-500 text-white rounded-lg text-sm font-medium hover:bg-green-600 transition-colors"
-          >
-            ✅ Usar Esta Miniatura
-          </button>
         </div>
       )}
 
@@ -103,9 +91,9 @@ export default function PDFImageExtractor({ pdfUrl, onImageExtracted, className 
       <div className="bg-green-50 p-4 rounded-lg">
         <h4 className="font-medium text-green-900 mb-2">✨ Como Funciona:</h4>
         <ul className="text-sm text-green-800 space-y-1">
-          <li>• <strong>Automático:</strong> Miniatura aparece automaticamente do PDF</li>
-          <li>• <strong>Manual:</strong> Cole uma URL de imagem se preferir</li>
-          <li>• <strong>Simples:</strong> Um clique para aplicar a imagem</li>
+          <li>• <strong>Automático:</strong> Miniatura é aplicada automaticamente do PDF</li>
+          <li>• <strong>Manual:</strong> Cole uma URL de imagem se preferir outra</li>
+          <li>• <strong>Instantâneo:</strong> Sem necessidade de clicar em botões</li>
         </ul>
       </div>
     </div>
