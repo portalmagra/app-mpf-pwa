@@ -1,5 +1,5 @@
-const CACHE_NAME = 'meuportalfit-v1.0.2';
-const STATIC_CACHE_NAME = 'meuportalfit-static-v1.0.2';
+const CACHE_NAME = 'meuportalfit-v1.0.3';
+const STATIC_CACHE_NAME = 'meuportalfit-static-v1.0.3';
 const urlsToCache = [
   '/',
   '/avaliacao',
@@ -35,14 +35,13 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME && cacheName !== STATIC_CACHE_NAME) {
-            console.log('🗑️ Service Worker: Removendo cache antigo:', cacheName);
-            return caches.delete(cacheName);
-          }
+          // Limpar TODOS os caches antigos para forçar atualização no mobile
+          console.log('🗑️ Service Worker: Removendo cache:', cacheName);
+          return caches.delete(cacheName);
         })
       );
     }).then(() => {
-      console.log('✅ Service Worker: Ativado com sucesso');
+      console.log('✅ Service Worker: Ativado com sucesso - cache limpo');
       return self.clients.claim();
     })
   );
@@ -74,16 +73,17 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Para páginas HTML: Network First com fallback para cache
+  // Para páginas HTML: SEMPRE buscar na rede primeiro (mobile-first)
   if (request.headers.get('accept')?.includes('text/html')) {
     event.respondWith(
       fetch(request, {
-        // Forçar atualização para mobile
-        cache: 'no-cache',
+        // Forçar atualização agressiva para mobile
+        cache: 'no-store',
         headers: {
           'Cache-Control': 'no-cache, no-store, must-revalidate',
           'Pragma': 'no-cache',
-          'Expires': '0'
+          'Expires': '0',
+          'If-Modified-Since': '0'
         }
       })
         .then((response) => {
@@ -97,7 +97,7 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => {
-          // Se falhou, busca no cache
+          // Se falhou, busca no cache como último recurso
           return caches.match(request).then((response) => {
             if (response) {
               return response;

@@ -135,14 +135,43 @@ export default function PWAInstaller() {
       waitingWorker.postMessage({ type: 'SKIP_WAITING' })
       setWaitingWorker(null)
       setShowUpdateNotification(false)
-      // Recarregar a página após a atualização
-      window.location.reload()
+      
+      // Limpar cache do navegador antes de recarregar
+      if ('caches' in window) {
+        caches.keys().then((cacheNames) => {
+          cacheNames.forEach((cacheName) => {
+            caches.delete(cacheName)
+          })
+        })
+      }
+      
+      // Recarregar com cache busting
+      setTimeout(() => {
+        window.location.reload()
+      }, 100)
     }
   }
 
   const handleDismissUpdate = () => {
     setShowUpdateNotification(false)
     setWaitingWorker(null)
+  }
+
+  const forceRefresh = () => {
+    // Limpar todos os caches
+    if ('caches' in window) {
+      caches.keys().then((cacheNames) => {
+        cacheNames.forEach((cacheName) => {
+          caches.delete(cacheName)
+        })
+      })
+    }
+    
+    // Limpar localStorage se necessário
+    if (typeof window !== 'undefined') {
+      // Não limpar tudo, apenas forçar reload
+      window.location.reload()
+    }
   }
 
   return (
@@ -175,6 +204,12 @@ export default function PWAInstaller() {
               className="bg-white text-blue-600 px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-50 transition-colors"
             >
               Atualizar Agora
+            </button>
+            <button
+              onClick={forceRefresh}
+              className="bg-blue-500 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-400 transition-colors"
+            >
+              Refresh Manual
             </button>
             <button
               onClick={handleDismissUpdate}
