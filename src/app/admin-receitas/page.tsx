@@ -1,10 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import ImageUpload from '@/components/ImageUpload'
 import PDFImageExtractor from '@/components/PDFImageExtractor'
 import Logo from '@/components/Logo'
+import { recipeService, Recipe } from '@/lib/supabase'
 
 export default function AdminReceitas() {
   // Dados padrão das receitas
@@ -41,14 +42,9 @@ export default function AdminReceitas() {
     }
   ]
 
-  // Carregar receitas do localStorage ou usar dados padrão
-  const [recipes, setRecipes] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const savedRecipes = localStorage.getItem('mpf-recipes')
-      return savedRecipes ? JSON.parse(savedRecipes) : defaultRecipes
-    }
-    return defaultRecipes
-  })
+  // Estado das receitas
+  const [recipes, setRecipes] = useState<Recipe[]>([])
+  const [loading, setLoading] = useState(true)
 
   const [newRecipe, setNewRecipe] = useState({
     name: '',
@@ -64,6 +60,27 @@ export default function AdminReceitas() {
   const [showForm, setShowForm] = useState(false)
   const [editingRecipe, setEditingRecipe] = useState<number | null>(null)
 
+  // Carregar receitas do Supabase
+  useEffect(() => {
+    const loadRecipes = async () => {
+      try {
+        console.log('🔄 Carregando receitas do Supabase (Admin)...')
+        const supabaseRecipes = await recipeService.getAllRecipes()
+        console.log('📦 Receitas carregadas do Supabase (Admin):', supabaseRecipes)
+        
+        setRecipes(supabaseRecipes)
+        setLoading(false)
+      } catch (error) {
+        console.error('❌ Erro ao carregar receitas do Supabase (Admin):', error)
+        // Fallback para dados padrão
+        setRecipes(defaultRecipes)
+        setLoading(false)
+      }
+    }
+
+    loadRecipes()
+  }, [])
+
   const recipeTypes = [
     { id: 'doces', name: 'Doces', icon: '🍰' },
     { id: 'salgadas', name: 'Salgadas', icon: '🥗' },
@@ -75,61 +92,80 @@ export default function AdminReceitas() {
     { id: 'sucos', name: 'Sucos', icon: '🥤' }
   ]
 
-  const handleAddRecipe = () => {
+  const handleAddRecipe = async () => {
     console.log('Tentando salvar receita:', newRecipe)
     
     if (newRecipe.name && newRecipe.pdfLink) {
-      const id = Math.max(...recipes.map((r: { id: number }) => r.id)) + 1
-      const accessLink = `https://app.meuportalfit.com/receita/${id}`
+      const accessLink = `https://app.meuportalfit.com/receita/${Date.now()}`
       
-      const recipe = {
-        id,
-        ...newRecipe,
-        accessLink
+      const recipeData = {
+        name: newRecipe.name,
+        description: newRecipe.description,
+        type: newRecipe.type,
+        price: newRecipe.price,
+        pdf_link: newRecipe.pdfLink,
+        image_url: newRecipe.imageUrl,
+        status: newRecipe.status as 'active' | 'inactive',
+        access_link: accessLink
       }
       
-      console.log('Nova receita criada:', recipe)
+      console.log('Dados da receita para Supabase:', recipeData)
       
-      const updatedRecipes = [...recipes, recipe]
-      setRecipes(updatedRecipes)
-      
-      // Salvar no localStorage
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('mpf-recipes', JSON.stringify(updatedRecipes))
-        console.log('Receita salva no localStorage')
+      try {
+        const savedRecipe = await recipeService.createRecipe(recipeData)
+        
+        if (savedRecipe) {
+          console.log('✅ Receita salva no Supabase:', savedRecipe)
+          
+          // Atualizar lista local
+          setRecipes(prev => [savedRecipe, ...prev])
+          
+          // Reset form
+          setNewRecipe({
+            name: '',
+            description: '',
+            type: 'doces',
+            price: 0,
+            pdfLink: '',
+            imageUrl: '',
+            status: 'active',
+            isFree: true
+          })
+          setEditingRecipe(null)
+          setShowForm(false)
+          
+          alert('Receita salva com sucesso!')
+        } else {
+          alert('Erro ao salvar receita. Tente novamente.')
+        }
+      } catch (error) {
+        console.error('❌ Erro ao salvar receita:', error)
+        alert('Erro ao salvar receita. Tente novamente.')
       }
-      
-      // Reset form
-      setNewRecipe({
-        name: '',
-        description: '',
-        type: 'doces',
-        price: 0,
-        pdfLink: '',
-        imageUrl: '',
-        status: 'active',
-        isFree: true
-      })
-      setEditingRecipe(null)
-      setShowForm(false)
-      
-      alert('Receita salva com sucesso!')
     } else {
       alert('Por favor, preencha todos os campos obrigatórios (Nome e Link do PDF)')
     }
   }
 
-  const toggleRecipeStatus = (id: number) => {
-    const updatedRecipes = recipes.map((recipe: { id: number; status: string; name: string; description: string; price: number; pdfLink: string; imageUrl?: string }) => 
-      recipe.id === id 
-        ? { ...recipe, status: recipe.status === 'active' ? 'inactive' : 'active' }
-        : recipe
-    )
-    setRecipes(updatedRecipes)
-    
-    // Salvar no localStorage
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('mpf-recipes', JSON.stringify(updatedRecipes))
+  const toggleRecipeStatus = async (id: number) => {
+    try {
+      const updatedRecipe = await recipeService.toggleRecipeStatus(id)
+      
+      if (updatedRecipe) {
+        console.log('✅ Status da receita atualizado:', updatedRecipe)
+        
+        // Atualizar lista local
+        setRecipes(prev => 
+          prev.map(recipe => 
+            recipe.id === id ? updatedRecipe : recipe
+          )
+        )
+      } else {
+        alert('Erro ao atualizar status da receita.')
+      }
+    } catch (error) {
+      console.error('❌ Erro ao atualizar status da receita:', error)
+      alert('Erro ao atualizar status da receita.')
     }
   }
 

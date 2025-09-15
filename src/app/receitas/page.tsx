@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
+import { recipeService, Recipe } from '@/lib/supabase'
 
 interface Receita {
   id: number
@@ -78,93 +79,70 @@ export default function ReceitasPage() {
   const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
-    // Carregar receitas do localStorage ou usar dados padrão
-    const loadRecipes = () => {
-      if (typeof window !== 'undefined') {
-        const savedRecipes = localStorage.getItem('mpf-recipes')
-        if (savedRecipes) {
-          try {
-            const adminRecipes = JSON.parse(savedRecipes)
-            console.log('Receitas carregadas do localStorage:', adminRecipes)
-            
-            // Converter formato da admin para formato da página de receitas
-            const convertedRecipes: Receita[] = adminRecipes
-              .filter((recipe: { status: string }) => recipe.status === 'active')
-              .map((recipe: { id: number; name: string; description: string; price: number; pdfLink: string; status: string; imageUrl?: string }) => ({
-                id: recipe.id,
-                nome: recipe.name,
-                descricao: recipe.description || '', // Permitir descrição vazia
-                tipo: recipe.price === 0 ? 'gratuita' : 'paga',
-                preco: recipe.price,
-                link_pdf: recipe.pdfLink,
-                status: recipe.status === 'active' ? 'ativa' : 'inativa',
-                data_criacao: new Date().toISOString().split('T')[0],
-                imagem: recipe.imageUrl
-              }))
-            
-            console.log('Receitas convertidas:', convertedRecipes)
-            setReceitas(convertedRecipes)
-            setFilteredReceitas(convertedRecipes)
-            setLoading(false)
-            return
-          } catch (error) {
-            console.error('Erro ao carregar receitas do localStorage:', error)
+    // Carregar receitas do Supabase
+    const loadRecipes = async () => {
+      try {
+        console.log('🔄 Carregando receitas do Supabase...')
+        const supabaseRecipes = await recipeService.getActiveRecipes()
+        console.log('📦 Receitas carregadas do Supabase:', supabaseRecipes)
+        
+        // Converter formato do Supabase para formato da página de receitas
+        const convertedRecipes: Receita[] = supabaseRecipes.map((recipe: Recipe) => ({
+          id: recipe.id,
+          nome: recipe.name,
+          descricao: recipe.description || '',
+          tipo: recipe.price === 0 ? 'gratuita' : 'paga',
+          preco: recipe.price,
+          link_pdf: recipe.pdf_link,
+          status: recipe.status === 'active' ? 'ativa' : 'inativa',
+          data_criacao: recipe.created_at.split('T')[0],
+          imagem: recipe.image_url
+        }))
+        
+        console.log('✅ Receitas convertidas:', convertedRecipes)
+        setReceitas(convertedRecipes)
+        setFilteredReceitas(convertedRecipes)
+        setLoading(false)
+      } catch (error) {
+        console.error('❌ Erro ao carregar receitas do Supabase:', error)
+        
+        // Fallback para dados padrão em caso de erro
+        const mockReceitas: Receita[] = [
+          {
+            id: 1,
+            nome: "Shot de Curcuma",
+            descricao: "Shot anti-inflamatório com curcuma, limão e pimenta-do-reino",
+            tipo: "gratuita",
+            preco: 0,
+            link_pdf: "https://drive.google.com/file/d/curcuma-shot/view",
+            status: "ativa",
+            data_criacao: "2024-01-15"
+          },
+          {
+            id: 2,
+            nome: "Smoothie Verde Detox",
+            descricao: "Bebida refrescante rica em clorofila e antioxidantes para desintoxicar o organismo",
+            tipo: "gratuita",
+            preco: 0,
+            link_pdf: "https://drive.google.com/file/d/smoothie-verde/view",
+            status: "ativa",
+            data_criacao: "2024-01-16"
           }
-        }
-      }
-      
-      // Se não houver dados salvos, usar dados padrão
-      const mockReceitas: Receita[] = [
-        {
-          id: 1,
-          nome: "Smoothie Verde Detox",
-          descricao: "Bebida refrescante rica em clorofila e antioxidantes para desintoxicar o organismo",
-          tipo: "gratuita",
-          preco: 0,
-          link_pdf: "https://drive.google.com/file/d/abc123",
-          status: "ativa",
-          data_criacao: "2024-01-15"
-        },
-        {
-          id: 2,
-          nome: "Bowl Energético com Quinoa",
-          descricao: "Refeição completa e nutritiva perfeita para dar energia durante o dia",
-          tipo: "paga",
-          preco: 1.99,
-          link_pdf: "https://drive.google.com/file/d/def456",
-          status: "ativa",
-          data_criacao: "2024-01-16"
-        },
-        {
-          id: 3,
-          nome: "Sopa Anti-inflamatória",
-          descricao: "Sopa reconfortante com ingredientes que combatem inflamações",
-          tipo: "paga",
-          preco: 2.99,
-          link_pdf: "https://drive.google.com/file/d/ghi789",
-          status: "ativa",
-          data_criacao: "2024-01-17"
-        }
-      ]
-      
-      setTimeout(() => {
+        ]
+        
         setReceitas(mockReceitas)
         setFilteredReceitas(mockReceitas)
         setLoading(false)
-      }, 1000)
+      }
     }
 
     loadRecipes()
 
-    // Listener para mudanças no localStorage
-    const handleStorageChange = () => {
-      loadRecipes()
-    }
-
-    window.addEventListener('storage', handleStorageChange)
+    // Verificar atualizações a cada 30 segundos
+    const interval = setInterval(loadRecipes, 30000)
     
     return () => {
-      window.removeEventListener('storage', handleStorageChange)
+      clearInterval(interval)
     }
   }, [])
 
