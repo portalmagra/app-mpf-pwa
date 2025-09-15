@@ -23,6 +23,46 @@ export default function AvaliacaoPersonalizada() {
         </div>
       </header>
 
+      {/* Video Section - PRIMEIRA SEÇÃO */}
+      <section className="px-4 py-8 bg-white">
+        <div className="max-w-sm mx-auto text-center">
+          <h2 className="text-xl font-bold text-brand-text mb-6">
+            🎥 Veja Como Funciona
+          </h2>
+          
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[9/16]">
+            {/* Vídeo Player */}
+            <video
+              controls
+              className="w-full h-full object-cover"
+              poster="/images/coach-video-poster.jpg"
+            >
+              <source src="/videos/Avaliacao.mp4" type="video/mp4" />
+              Seu navegador não suporta vídeos HTML5.
+            </video>
+            
+            {/* Overlay de informações */}
+            <div className="absolute top-4 left-4 right-4 bg-black/70 rounded-lg p-3 text-white text-sm text-center">
+              <p className="font-semibold">
+                🎯 Veja como funciona nossa avaliação
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Botão CTA após vídeo */}
+      <section className="px-4 py-6 bg-white">
+        <div className="max-w-sm mx-auto text-center">
+          <button 
+            onClick={() => openWhatsApp('Olá! Quero agendar minha avaliação personalizada de 30 minutos com a coach brasileira por $10.')}
+            className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+          >
+            📅 QUERO AGENDAR MINHA AVALIAÇÃO
+          </button>
+        </div>
+      </section>
+
       {/* Seção Motivacional */}
       <section className="px-4 py-8 bg-gradient-to-br from-blue-50 to-white">
         <div className="max-w-sm mx-auto text-center space-y-6">
@@ -60,60 +100,6 @@ export default function AvaliacaoPersonalizada() {
                 Apenas 5 vagas disponíveis esta semana para avaliação
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Video Section - PRIMEIRA SEÇÃO */}
-      <section className="px-4 py-8 bg-white">
-        <div className="max-w-sm mx-auto text-center">
-          <h2 className="text-xl font-bold text-brand-text mb-6">
-            🎥 Veja Como Funciona
-          </h2>
-          
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[9/16]">
-            {/* Imagem da Coach */}
-            <img
-              src="/images/coach-video-poster.jpg"
-              alt="Coach brasileira explicando avaliação"
-              className="w-full h-full object-cover"
-            />
-            
-            {/* Overlay de informações */}
-            <div className="absolute top-4 left-4 right-4 bg-black/70 rounded-lg p-3 text-white text-sm text-center">
-              <p className="font-semibold">
-                🎯 Veja como funciona nossa avaliação
-              </p>
-            </div>
-            
-            {/* Botão Play Central */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <button 
-                onClick={() => {
-                  const video = document.getElementById('coach-video') as HTMLVideoElement;
-                  if (video) {
-                    video.style.display = 'block';
-                    video.play();
-                  }
-                }}
-                className="bg-white/90 hover:bg-white text-brand-green rounded-full p-6 shadow-2xl transform hover:scale-110 transition-all duration-300"
-              >
-                <svg className="w-12 h-12 ml-1" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
-                </svg>
-              </button>
-            </div>
-            
-            {/* Vídeo Player (inicialmente oculto) */}
-            <video
-              id="coach-video"
-              controls
-              className="w-full h-full object-cover hidden"
-              poster="/images/coach-video-poster.jpg"
-            >
-              <source src="/videos/Avaliacao.mp4" type="video/mp4" />
-              Seu navegador não suporta vídeos HTML5.
-            </video>
           </div>
         </div>
       </section>
