@@ -1,5 +1,5 @@
-const CACHE_NAME = 'meuportalfit-v1.0.5';
-const STATIC_CACHE_NAME = 'meuportalfit-static-v1.0.5';
+const CACHE_NAME = 'meuportalfit-v1.0.6';
+const STATIC_CACHE_NAME = 'meuportalfit-static-v1.0.6';
 const urlsToCache = [
   '/',
   '/avaliacao',
@@ -73,38 +73,45 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Para páginas HTML: SEMPRE buscar na rede primeiro (mobile-first)
+  // Para páginas HTML: NUNCA usar cache (nuclear approach)
   if (request.headers.get('accept')?.includes('text/html')) {
     event.respondWith(
       fetch(request, {
-        // Forçar atualização ultra-agressiva para mobile
+        // Nuclear cache busting
         cache: 'no-store',
         headers: {
           'Cache-Control': 'no-cache, no-store, must-revalidate',
           'Pragma': 'no-cache',
           'Expires': '0',
           'If-Modified-Since': '0',
-          'If-None-Match': '*'
+          'If-None-Match': '*',
+          'X-Cache-Bust': Date.now().toString()
         }
       })
         .then((response) => {
-          // Se a resposta é válida, atualiza o cache
-          if (response.status === 200) {
-            const responseClone = response.clone();
-            caches.open(CACHE_NAME).then((cache) => {
-              cache.put(request, responseClone);
-            });
-          }
+          // NÃO armazenar no cache - sempre buscar na rede
           return response;
         })
         .catch(() => {
-          // Se falhou, busca no cache como último recurso
-          return caches.match(request).then((response) => {
-            if (response) {
-              return response;
-            }
-            // Se não encontrou no cache, retorna página offline
-            return caches.match('/');
+          // Se falhou, retorna página offline básica
+          return new Response(`
+            <!DOCTYPE html>
+            <html>
+              <head>
+                <title>MeuPortalFit - Offline</title>
+                <meta charset="utf-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+              </head>
+              <body>
+                <h1>Conectando...</h1>
+                <p>Verificando atualizações...</p>
+                <script>
+                  setTimeout(() => window.location.reload(), 2000);
+                </script>
+              </body>
+            </html>
+          `, {
+            headers: { 'Content-Type': 'text/html' }
           });
         })
     );
