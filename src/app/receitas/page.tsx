@@ -21,54 +21,32 @@ interface Receita {
 const getRecipeEmoji = (nome: string): string => {
   const nomeLower = nome.toLowerCase()
   
-  // Mapear palavras-chave para emojis específicos
-  if (nomeLower.includes('smoothie') || nomeLower.includes('bebida') || nomeLower.includes('suco')) {
-    return '🥤'
-  }
-  if (nomeLower.includes('sopa') || nomeLower.includes('caldo')) {
-    return '🍲'
-  }
-  if (nomeLower.includes('salada') || nomeLower.includes('verde')) {
-    return '🥗'
-  }
-  if (nomeLower.includes('bowl') || nomeLower.includes('tigela')) {
-    return '🍽️'
-  }
-  if (nomeLower.includes('pão') || nomeLower.includes('bread')) {
-    return '🍞'
-  }
-  if (nomeLower.includes('doce') || nomeLower.includes('açúcar') || nomeLower.includes('sweet')) {
-    return '🍰'
-  }
-  if (nomeLower.includes('quinoa') || nomeLower.includes('grão')) {
-    return '🌾'
-  }
-  if (nomeLower.includes('shot') || nomeLower.includes('energético')) {
-    return '⚡'
-  }
-  if (nomeLower.includes('anti-inflamatória') || nomeLower.includes('detox')) {
-    return '🌿'
-  }
+  if (nomeLower.includes('smoothie') || nomeLower.includes('suco')) return '🥤'
+  if (nomeLower.includes('salada') || nomeLower.includes('bowl')) return '🥗'
+  if (nomeLower.includes('sopa')) return '🍲'
+  if (nomeLower.includes('shot')) return '💉'
+  if (nomeLower.includes('chá') || nomeLower.includes('cha')) return '🍵'
+  if (nomeLower.includes('café') || nomeLower.includes('cafe')) return '☕'
+  if (nomeLower.includes('doce') || nomeLower.includes('sobremesa')) return '🍰'
+  if (nomeLower.includes('pão') || nomeLower.includes('pao')) return '🍞'
+  if (nomeLower.includes('ovo')) return '🥚'
+  if (nomeLower.includes('frango') || nomeLower.includes('carne')) return '🍗'
+  if (nomeLower.includes('peixe') || nomeLower.includes('salmão')) return '🐟'
+  if (nomeLower.includes('quinoa') || nomeLower.includes('arroz')) return '🌾'
   
-  // Emoji padrão para comida saudável
-  return '🥗'
+  return '🍽️'
 }
 
-// Função para gerar cor de fundo baseada no emoji
-const getRecipeBgColor = (emoji: string): string => {
-  const colorMap: { [key: string]: string } = {
-    '🥤': 'bg-gradient-to-br from-green-400 to-green-600',
-    '🍲': 'bg-gradient-to-br from-orange-400 to-orange-600', 
-    '🥗': 'bg-gradient-to-br from-green-300 to-green-500',
-    '🍽️': 'bg-gradient-to-br from-amber-400 to-amber-600',
-    '🍞': 'bg-gradient-to-br from-yellow-400 to-yellow-600',
-    '🍰': 'bg-gradient-to-br from-pink-400 to-pink-600',
-    '🌾': 'bg-gradient-to-br from-yellow-500 to-yellow-700',
-    '⚡': 'bg-gradient-to-br from-yellow-300 to-yellow-500',
-    '🌿': 'bg-gradient-to-br from-green-500 to-green-700'
+// Função para gerar cor de fundo baseada no tipo
+const getRecipeBgColor = (tipo: string): string => {
+  switch (tipo) {
+    case 'gratuita':
+      return 'bg-brand-greenSoft'
+    case 'paga':
+      return 'bg-brand-purpleSoft'
+    default:
+      return 'bg-brand-neutral'
   }
-  
-  return colorMap[emoji] || 'bg-gradient-to-br from-green-400 to-green-600'
 }
 
 export default function ReceitasPage() {
@@ -137,32 +115,24 @@ export default function ReceitasPage() {
     }
 
     loadRecipes()
-
-    // Verificar atualizações a cada 30 segundos
-    const interval = setInterval(loadRecipes, 30000)
-    
-    return () => {
-      clearInterval(interval)
-    }
   }, [])
 
   // Filtrar receitas baseado no filtro ativo e termo de busca
   useEffect(() => {
     let filtered = receitas
 
-    // Aplicar filtro por tipo
+    // Aplicar filtro de tipo
     if (activeFilter === 'gratuitas') {
       filtered = filtered.filter(receita => receita.tipo === 'gratuita')
     } else if (activeFilter === 'pagas') {
       filtered = filtered.filter(receita => receita.tipo === 'paga')
     }
 
-    // Aplicar busca por nome ou descrição
-    if (searchTerm.trim()) {
-      const term = searchTerm.toLowerCase()
-      filtered = filtered.filter(receita => 
-        receita.nome.toLowerCase().includes(term) ||
-        receita.descricao.toLowerCase().includes(term)
+    // Aplicar busca por texto
+    if (searchTerm) {
+      filtered = filtered.filter(receita =>
+        receita.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        receita.descricao.toLowerCase().includes(searchTerm.toLowerCase())
       )
     }
 
@@ -170,9 +140,8 @@ export default function ReceitasPage() {
   }, [receitas, activeFilter, searchTerm])
 
   const handleComprarReceita = (receita: Receita) => {
-    const mensagem = `Oi! Quero comprar a receita "${receita.nome}" por $${receita.preco.toFixed(2)}`
-    const whatsappUrl = `https://wa.me/5511999999999?text=${encodeURIComponent(mensagem)}`
-    window.open(whatsappUrl, '_blank')
+    // Simular processo de compra
+    alert(`Compra da receita "${receita.nome}" por $${receita.preco} realizada com sucesso!`)
   }
 
   const handleAcessarReceita = (receita: Receita) => {
@@ -203,170 +172,143 @@ export default function ReceitasPage() {
       <main className="max-w-sm mx-auto px-4 py-6">
         {/* Título */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-brand-text mb-2">
+          <h1 className="text-2xl font-bold text-brand-text">
             🍽️ Receitas & Protocolos
           </h1>
-          <p className="text-brand-textLight text-sm">
-            Receitas saudáveis e protocolos nutricionais personalizados para brasileiros nos EUA
+          <p className="text-brand-text2 mt-2">
+            Receitas saudáveis com ingredientes disponíveis nos EUA
           </p>
-        </div>
-
-        {/* Busca */}
-        <div className="mb-6">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="🔍 O que você quer cozinhar hoje?"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-3 bg-white border border-brand-green/20 rounded-xl text-brand-text placeholder-brand-textLight focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
-            />
-          </div>
         </div>
 
         {/* Filtros */}
         <div className="mb-6">
-          <div className="flex gap-2 overflow-x-auto pb-2">
-            <button 
+          <div className="flex gap-2 mb-4">
+            <button
               onClick={() => setActiveFilter('todas')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
-                activeFilter === 'todas' 
-                  ? 'bg-brand-green text-white' 
-                  : 'bg-white border border-brand-green/20 text-brand-text hover:bg-brand-green/5'
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeFilter === 'todas'
+                  ? 'bg-brand-green text-white'
+                  : 'bg-white text-brand-text border border-brand-border'
               }`}
             >
-              Todas ({receitas.length})
+              Todas
             </button>
-            <button 
+            <button
               onClick={() => setActiveFilter('gratuitas')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
-                activeFilter === 'gratuitas' 
-                  ? 'bg-brand-green text-white' 
-                  : 'bg-white border border-brand-green/20 text-brand-text hover:bg-brand-green/5'
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeFilter === 'gratuitas'
+                  ? 'bg-brand-green text-white'
+                  : 'bg-white text-brand-text border border-brand-border'
               }`}
             >
-              Gratuitas ({receitas.filter(r => r.tipo === 'gratuita').length})
+              Gratuitas
             </button>
-            <button 
+            <button
               onClick={() => setActiveFilter('pagas')}
-              className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
-                activeFilter === 'pagas' 
-                  ? 'bg-brand-green text-white' 
-                  : 'bg-white border border-brand-green/20 text-brand-text hover:bg-brand-green/5'
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                activeFilter === 'pagas'
+                  ? 'bg-brand-green text-white'
+                  : 'bg-white text-brand-text border border-brand-border'
               }`}
             >
-              Pagas ({receitas.filter(r => r.tipo === 'paga').length})
+              Pagas
             </button>
           </div>
+
+          {/* Busca */}
+          <input
+            type="text"
+            placeholder="Buscar receitas..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+          />
         </div>
 
-        {/* Lista de Receitas */}
-        {loading ? (
-          <div className="space-y-4">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-xl shadow-soft overflow-hidden animate-pulse">
-                <div className="h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                  <div className="w-20 h-20 bg-gray-300 rounded-full"></div>
-                </div>
-                <div className="p-4">
-                  <div className="h-5 bg-gray-200 rounded mb-2"></div>
-                  <div className="h-3 bg-gray-200 rounded mb-4"></div>
-                  <div className="h-10 bg-gray-200 rounded"></div>
-                </div>
-              </div>
-            ))}
+        {/* Loading */}
+        {loading && (
+          <div className="text-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-green mx-auto mb-4"></div>
+            <p className="text-brand-text2">Carregando receitas...</p>
           </div>
-        ) : (
+        )}
+
+        {/* Lista de Receitas */}
+        {!loading && (
           <div className="space-y-4">
             {filteredReceitas.length === 0 ? (
               <div className="text-center py-8">
-                <div className="text-6xl mb-4">🔍</div>
-                <h3 className="text-lg font-semibold text-brand-text mb-2">
-                  Nenhuma receita encontrada
-                </h3>
-                <p className="text-brand-textLight text-sm">
-                  Tente ajustar os filtros ou termo de busca
-                </p>
+                <p className="text-brand-text2">Nenhuma receita encontrada.</p>
               </div>
             ) : (
               filteredReceitas.map((receita) => (
-              <div key={receita.id} className="bg-white rounded-xl shadow-soft overflow-hidden">
-                {/* Imagem ou Emoji da Receita */}
-                <div className="relative h-48 w-full overflow-hidden">
-                  {receita.imagem ? (
-                    <img
-                      src={receita.imagem}
-                      alt={receita.nome}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className={`w-full h-full ${getRecipeBgColor(getRecipeEmoji(receita.nome))} flex items-center justify-center`}>
-                      <span className="text-8xl drop-shadow-lg">
-                        {getRecipeEmoji(receita.nome)}
-                      </span>
+                <div
+                  key={receita.id}
+                  className={`${getRecipeBgColor(receita.tipo)} rounded-xl p-4 shadow-soft border border-brand-border`}
+                >
+                  <div className="flex items-start space-x-4">
+                    {/* Emoji da Receita */}
+                    <div className="text-3xl flex-shrink-0">
+                      {getRecipeEmoji(receita.nome)}
                     </div>
-                  )}
-                  {receita.tipo === 'gratuita' && (
-                    <span className="absolute top-3 right-3 bg-brand-green text-white px-3 py-1 rounded-lg text-xs font-medium">
-                      GRÁTIS
-                    </span>
-                  )}
-                  {receita.tipo === 'paga' && (
-                    <span className="absolute top-3 right-3 bg-brand-amber text-white px-3 py-1 rounded-lg text-xs font-medium">
-                      ${receita.preco.toFixed(2)}
-                    </span>
-                  )}
-                </div>
-                
-                {/* Conteúdo da Receita */}
-                <div className="p-4">
-                  <h3 className="font-bold text-brand-text text-lg mb-2">
-                    {receita.nome}
-                  </h3>
-                  <p className="text-brand-textLight text-sm leading-relaxed mb-4">
-                    {receita.descricao}
-                  </p>
 
-                  <button
-                    onClick={() => handleAcessarReceita(receita)}
-                    className={`w-full py-3 rounded-lg text-sm font-medium transition-colors ${
-                      receita.tipo === 'gratuita'
-                        ? 'bg-brand-green text-white hover:bg-brand-greenDark'
-                        : 'bg-brand-amber text-white hover:bg-brand-amberDark'
-                    }`}
-                  >
-                    {receita.tipo === 'gratuita' ? 'Ver Receita' : 'Comprar Receita'}
-                  </button>
+                    {/* Conteúdo da Receita */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="font-bold text-brand-text text-lg">
+                          {receita.nome}
+                        </h3>
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                          receita.tipo === 'gratuita'
+                            ? 'bg-brand-green text-white'
+                            : 'bg-brand-purple text-white'
+                        }`}>
+                          {receita.tipo === 'gratuita' ? 'Gratuita' : `$${receita.preco}`}
+                        </span>
+                      </div>
+
+                      <p className="text-brand-text2 text-sm mb-3 line-clamp-2">
+                        {receita.descricao}
+                      </p>
+
+                      {/* Imagem da Receita */}
+                      {receita.imagem && (
+                        <div className="mb-3">
+                          <img
+                            src={`${receita.imagem}?t=${Date.now()}`}
+                            alt={receita.nome}
+                            className="w-full h-32 object-cover rounded-lg"
+                            loading="lazy"
+                            onError={(e) => {
+                              console.log('❌ Erro ao carregar imagem:', receita.imagem)
+                              e.currentTarget.style.display = 'none'
+                            }}
+                          />
+                        </div>
+                      )}
+
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-brand-text2">
+                          {receita.data_criacao}
+                        </span>
+                        <button
+                          onClick={() => handleAcessarReceita(receita)}
+                          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                            receita.tipo === 'gratuita'
+                              ? 'bg-brand-green text-white hover:bg-brand-greenDark'
+                              : 'bg-brand-purple text-white hover:bg-brand-purpleDark'
+                          }`}
+                        >
+                          {receita.tipo === 'gratuita' ? 'Ver Receita' : 'Comprar'}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
               ))
             )}
           </div>
         )}
-
-        {/* CTA Final */}
-        <div className="mt-8 bg-brand-green rounded-xl p-6 text-center text-white">
-          <div className="flex items-center justify-center mb-3">
-            <span className="text-2xl mr-2">🎯</span>
-            <h3 className="font-bold text-lg">
-              Protocolos Nutricionais Completos
-            </h3>
-          </div>
-          <p className="text-sm mb-4 opacity-90">
-            Planos de 7, 14 ou 30 dias com receitas, cardápios e acompanhamento personalizado
-          </p>
-          <button
-            onClick={() => {
-              const mensagem = "Oi! Quero saber mais sobre os protocolos nutricionais completos"
-              const whatsappUrl = `https://wa.me/5511999999999?text=${encodeURIComponent(mensagem)}`
-              window.open(whatsappUrl, '_blank')
-            }}
-            className="bg-white text-brand-green px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors"
-          >
-            Conhecer Protocolos
-          </button>
-        </div>
       </main>
     </div>
   )

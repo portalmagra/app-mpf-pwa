@@ -58,6 +58,7 @@ export default function AdminReceitas() {
 
   const [showForm, setShowForm] = useState(false)
   const [editingRecipe, setEditingRecipe] = useState<number | null>(null)
+  const [operationStatus, setOperationStatus] = useState<string>('')
 
   // Carregar receitas do Supabase
   useEffect(() => {
@@ -66,10 +67,23 @@ export default function AdminReceitas() {
         console.log('🔄 Carregando receitas do Supabase (Admin)...')
         const supabaseRecipes = await recipeService.getAllRecipes()
         console.log('📦 Receitas carregadas do Supabase (Admin):', supabaseRecipes)
+        console.log('📊 Total de receitas encontradas:', supabaseRecipes.length)
+        
+        // Log detalhado de cada receita
+        supabaseRecipes.forEach((recipe, index) => {
+          console.log(`📝 Receita ${index + 1}:`, {
+            id: recipe.id,
+            name: recipe.name,
+            image_url: recipe.image_url,
+            status: recipe.status
+          })
+        })
         
         setRecipes(supabaseRecipes)
       } catch (error) {
         console.error('❌ Erro ao carregar receitas do Supabase (Admin):', error)
+        console.log('🔄 Usando dados fallback...')
+        
         // Fallback para dados padrão - converter para formato Supabase
         const fallbackRecipes: Recipe[] = defaultRecipes.map(recipe => ({
           id: recipe.id,
@@ -199,53 +213,95 @@ export default function AdminReceitas() {
     setShowForm(true)
   }
 
-  const handleUpdateRecipe = () => {
+  const handleUpdateRecipe = async () => {
     if (editingRecipe && newRecipe.name && newRecipe.pdfLink) {
-      const updatedRecipes = recipes.map((recipe: Recipe) => 
-        recipe.id === editingRecipe 
-          ? { 
-              ...recipe, 
-              name: newRecipe.name,
-              description: newRecipe.description,
-              type: newRecipe.type,
-              price: newRecipe.price,
-              pdf_link: newRecipe.pdfLink,
-              image_url: newRecipe.imageUrl,
-              status: newRecipe.status as 'active' | 'inactive'
-            }
-          : recipe
-      )
-      setRecipes(updatedRecipes)
-      
-      // Salvar no localStorage
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('mpf-recipes', JSON.stringify(updatedRecipes))
+      const recipeData = {
+        name: newRecipe.name,
+        description: newRecipe.description,
+        type: newRecipe.type,
+        price: newRecipe.price,
+        pdf_link: newRecipe.pdfLink,
+        image_url: newRecipe.imageUrl,
+        status: newRecipe.status as 'active' | 'inactive'
       }
       
-      // Reset form
-      setNewRecipe({
-        name: '',
-        description: '',
-        type: 'doces',
-        price: 0,
-        pdfLink: '',
-        imageUrl: '',
-        status: 'active',
-        isFree: true
-      })
-      setEditingRecipe(null)
-      setShowForm(false)
+      console.log('Atualizando receita:', editingRecipe, recipeData)
+      
+      try {
+        setOperationStatus('Atualizando receita...')
+        console.log('🔄 Iniciando atualização da receita:', editingRecipe)
+        console.log('📝 Dados para atualização:', recipeData)
+        
+        const updatedRecipe = await recipeService.updateRecipe(editingRecipe, recipeData)
+        
+        if (updatedRecipe) {
+          console.log('✅ Receita atualizada no Supabase:', updatedRecipe)
+          console.log('🖼️ URL da imagem atualizada:', updatedRecipe.image_url)
+          
+          // Atualizar lista local
+          setRecipes(prev => 
+            prev.map(recipe => 
+              recipe.id === editingRecipe ? updatedRecipe : recipe
+            )
+          )
+          
+          // Forçar reload da página de receitas após 2 segundos
+          setTimeout(() => {
+            console.log('🔄 Forçando reload da página de receitas...')
+            // Enviar evento para recarregar receitas
+            window.dispatchEvent(new CustomEvent('refreshRecipes'))
+          }, 2000)
+          
+          // Reset form
+          setNewRecipe({
+            name: '',
+            description: '',
+            type: 'doces',
+            price: 0,
+            pdfLink: '',
+            imageUrl: '',
+            status: 'active',
+            isFree: true
+          })
+          setEditingRecipe(null)
+          setShowForm(false)
+          setOperationStatus('Receita atualizada com sucesso!')
+          
+          setTimeout(() => setOperationStatus(''), 3000)
+        } else {
+          alert('Erro ao atualizar receita. Tente novamente.')
+        }
+      } catch (error) {
+        console.error('❌ Erro ao atualizar receita:', error)
+        alert('Erro ao atualizar receita. Tente novamente.')
+      }
+    } else {
+      alert('Por favor, preencha todos os campos obrigatórios (Nome e Link do PDF)')
     }
   }
 
-  const handleDeleteRecipe = (id: number) => {
+  const handleDeleteRecipe = async (id: number) => {
     if (confirm('Tem certeza que deseja excluir esta receita?')) {
-      const updatedRecipes = recipes.filter((recipe: { id: number }) => recipe.id !== id)
-      setRecipes(updatedRecipes)
+      console.log('🗑️ Deletando receita:', id)
       
-      // Salvar no localStorage
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('mpf-recipes', JSON.stringify(updatedRecipes))
+      try {
+        setOperationStatus('Deletando receita...')
+        const success = await recipeService.deleteRecipe(id)
+        
+        if (success) {
+          console.log('✅ Receita deletada do Supabase:', id)
+          
+          // Atualizar lista local
+          setRecipes(prev => prev.filter(recipe => recipe.id !== id))
+          
+          setOperationStatus('Receita excluída com sucesso!')
+          setTimeout(() => setOperationStatus(''), 3000)
+        } else {
+          alert('Erro ao excluir receita. Tente novamente.')
+        }
+      } catch (error) {
+        console.error('❌ Erro ao deletar receita:', error)
+        alert('Erro ao excluir receita. Tente novamente.')
       }
     }
   }
@@ -326,15 +382,74 @@ export default function AdminReceitas() {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-800 mb-2">🍽️ Admin Receitas</h1>
           <p className="text-gray-600">Gerencie receitas e gere links únicos de acesso</p>
+          {operationStatus && (
+            <div className="mt-4 p-3 bg-blue-100 border border-blue-300 rounded-lg">
+              <p className="text-blue-800 font-medium">{operationStatus}</p>
+            </div>
+          )}
         </div>
 
         {/* Add Recipe Button */}
-        <div className="mb-6">
+        <div className="mb-6 flex gap-3">
           <button
             onClick={() => setShowForm(!showForm)}
             className="bg-brand-green text-white px-6 py-3 rounded-lg font-medium hover:bg-brand-greenDark transition-colors"
           >
             {showForm ? 'Cancelar' : '+ Adicionar Nova Receita'}
+          </button>
+          <button
+            onClick={() => {
+              console.log('🔄 Recarregando receitas...')
+              // Limpar cache e recarregar
+              if ('caches' in window) {
+                caches.keys().then(names => {
+                  names.forEach(name => {
+                    caches.delete(name)
+                  })
+                })
+              }
+              window.location.reload()
+            }}
+            className="bg-blue-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-600 transition-colors"
+          >
+            🔄 Recarregar Página
+          </button>
+          <button
+            onClick={async () => {
+              console.log('🧪 Testando conexão com Supabase...')
+              try {
+                const recipes = await recipeService.getAllRecipes()
+                console.log('📊 Receitas carregadas:', recipes.length)
+                alert(`Conexão OK! ${recipes.length} receitas encontradas.`)
+              } catch (error) {
+                console.error('❌ Erro na conexão:', error)
+                alert('Erro na conexão com Supabase!')
+              }
+            }}
+            className="bg-purple-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-purple-600 transition-colors"
+          >
+            🧪 Testar Conexão
+          </button>
+          <button
+            onClick={async () => {
+              console.log('🚫 Desabilitando Service Worker...')
+              try {
+                if ('serviceWorker' in navigator) {
+                  const registrations = await navigator.serviceWorker.getRegistrations()
+                  for (const registration of registrations) {
+                    await registration.unregister()
+                    console.log('✅ Service Worker desregistrado')
+                  }
+                }
+                alert('Service Worker desabilitado! Recarregue a página.')
+              } catch (error) {
+                console.error('❌ Erro ao desabilitar SW:', error)
+                alert('Erro ao desabilitar Service Worker!')
+              }
+            }}
+            className="bg-red-500 text-white px-6 py-3 rounded-lg font-medium hover:bg-red-600 transition-colors"
+          >
+            🚫 Desabilitar SW
           </button>
         </div>
 

@@ -119,23 +119,29 @@ self.addEventListener('fetch', (event) => {
   }
 
   // Para recursos estáticos (CSS, JS, imagens): Stale While Revalidate
-  event.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      const fetchPromise = fetch(request).then((response) => {
-        // Se a resposta é válida, atualiza o cache
-        if (response.status === 200) {
-          const responseClone = response.clone();
-          caches.open(STATIC_CACHE_NAME).then((cache) => {
-            cache.put(request, responseClone);
-          });
-        }
-        return response;
-      });
+  // Só fazer cache de requisições GET
+  if (request.method === 'GET') {
+    event.respondWith(
+      caches.match(request).then((cachedResponse) => {
+        const fetchPromise = fetch(request).then((response) => {
+          // Se a resposta é válida, atualiza o cache
+          if (response.status === 200) {
+            const responseClone = response.clone();
+            caches.open(STATIC_CACHE_NAME).then((cache) => {
+              cache.put(request, responseClone);
+            });
+          }
+          return response;
+        });
 
-      // Retorna cache imediatamente se disponível, senão aguarda a rede
-      return cachedResponse || fetchPromise;
-    })
-  );
+        // Retorna cache imediatamente se disponível, senão aguarda a rede
+        return cachedResponse || fetchPromise;
+      })
+    );
+  } else {
+    // Para requisições não-GET, apenas buscar na rede
+    event.respondWith(fetch(request));
+  }
 });
 
 // Notificações Push (para futuras implementações)
