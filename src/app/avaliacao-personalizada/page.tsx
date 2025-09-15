@@ -4,6 +4,11 @@ import Link from 'next/link'
 import Logo from '@/components/Logo'
 
 export default function AvaliacaoPersonalizada() {
+  const openWhatsApp = (message: string) => {
+    const encodedMessage = encodeURIComponent(message)
+    window.open(`https://wa.me/17862535032?text=${encodedMessage}`, '_blank')
+  }
+
   return (
     <div className="min-h-screen bg-brand-neutralLight pb-16">
       {/* Header */}
@@ -18,17 +23,97 @@ export default function AvaliacaoPersonalizada() {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="px-4 py-8 text-center bg-gradient-to-b from-green-50 to-white">
-        <div className="max-w-sm mx-auto">
-          <div className="mb-6">
-            <span className="text-6xl mb-4 block">👩‍⚕️</span>
-            <h1 className="text-3xl font-bold text-brand-text mb-4">
-              Avaliação Personalizada
-            </h1>
-            <p className="text-lg text-brand-text2 mb-6">
-              Coach brasileira especializada em bem-estar
-            </p>
+      {/* Seção Motivacional */}
+      <section className="px-4 py-8 bg-gradient-to-br from-blue-50 to-white">
+        <div className="max-w-sm mx-auto text-center space-y-6">
+          {/* Banner de Atenção */}
+          <div className="bg-blue-100 border border-blue-300 rounded-xl p-4">
+            <div className="flex items-center justify-center space-x-2">
+              <span className="text-red-500 text-xl">⚠️</span>
+              <p className="text-brand-text font-semibold">ATENÇÃO: Oferta Limitada</p>
+            </div>
+          </div>
+
+          {/* Título Principal */}
+          <h1 className="text-2xl font-bold text-brand-text leading-tight">
+            Descubra Por Que Você Não Está<br/>Alcançando Seus Objetivos
+          </h1>
+
+          {/* Subtítulo */}
+          <p className="text-lg text-brand-text2">
+            30 minutos que podem mudar sua vida para sempre
+          </p>
+
+          {/* Preço */}
+          <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-4 text-white">
+            <div className="flex items-center justify-center space-x-2">
+              <span className="text-yellow-300 text-xl">💰</span>
+              <span className="text-2xl font-bold">APENAS $10</span>
+            </div>
+          </div>
+
+          {/* Urgência */}
+          <div className="bg-green-100 border border-green-300 rounded-xl p-4">
+            <div className="flex items-center justify-center space-x-2">
+              <span className="text-yellow-500 text-xl">⚠️</span>
+              <p className="text-green-800 font-semibold">
+                Apenas 5 vagas disponíveis esta semana para avaliação
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Video Section - PRIMEIRA SEÇÃO */}
+      <section className="px-4 py-8 bg-white">
+        <div className="max-w-sm mx-auto text-center">
+          <h2 className="text-xl font-bold text-brand-text mb-6">
+            🎥 Veja Como Funciona
+          </h2>
+          
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[9/16]">
+            {/* Imagem da Coach */}
+            <img
+              src="/images/coach-video-poster.jpg"
+              alt="Coach brasileira explicando avaliação"
+              className="w-full h-full object-cover"
+            />
+            
+            {/* Overlay de informações */}
+            <div className="absolute top-4 left-4 right-4 bg-black/70 rounded-lg p-3 text-white text-sm text-center">
+              <p className="font-semibold">
+                🎯 Veja como funciona nossa avaliação
+              </p>
+            </div>
+            
+            {/* Botão Play Central */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <button 
+                onClick={() => {
+                  const video = document.getElementById('coach-video') as HTMLVideoElement;
+                  if (video) {
+                    video.style.display = 'block';
+                    video.play();
+                  }
+                }}
+                className="bg-white/90 hover:bg-white text-brand-green rounded-full p-6 shadow-2xl transform hover:scale-110 transition-all duration-300"
+              >
+                <svg className="w-12 h-12 ml-1" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </button>
+            </div>
+            
+            {/* Vídeo Player (inicialmente oculto) */}
+            <video
+              id="coach-video"
+              controls
+              className="w-full h-full object-cover hidden"
+              poster="/images/coach-video-poster.jpg"
+            >
+              <source src="/videos/Avaliacao.mp4" type="video/mp4" />
+              Seu navegador não suporta vídeos HTML5.
+            </video>
           </div>
         </div>
       </section>
@@ -56,36 +141,36 @@ export default function AvaliacaoPersonalizada() {
           {/* Como Funciona */}
           <div className="bg-white rounded-xl p-6 shadow-lg border border-brand-border">
             <h2 className="text-xl font-bold text-brand-text mb-4 flex items-center">
-              <span className="text-2xl mr-3">📋</span>
+              <span className="text-2xl mr-3">⚙️</span>
               Como Funciona?
             </h2>
             <div className="space-y-4">
               <div className="flex items-start space-x-3">
-                <span className="bg-brand-green text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+                <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-brand-green text-white rounded-full font-bold">1</span>
                 <div>
-                  <h3 className="font-semibold text-brand-text">Questionário Inicial</h3>
-                  <p className="text-sm text-brand-text2">Preencha um questionário detalhado sobre seu estilo de vida, hábitos e objetivos.</p>
+                  <h3 className="font-bold text-brand-text">Agendamento</h3>
+                  <p className="text-sm text-brand-text2">Escolha o melhor horário para sua sessão via WhatsApp.</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
-                <span className="bg-brand-green text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+                <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-brand-green text-white rounded-full font-bold">2</span>
                 <div>
-                  <h3 className="font-semibold text-brand-text">Análise Personalizada</h3>
-                  <p className="text-sm text-brand-text2">Nossa coach analisa suas respostas e identifica áreas de melhoria.</p>
+                  <h3 className="font-bold text-brand-text">Questionário Pré-Avaliação</h3>
+                  <p className="text-sm text-brand-text2">Preencha um breve formulário para a Coach entender seu perfil.</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
-                <span className="bg-brand-green text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+                <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-brand-green text-white rounded-full font-bold">3</span>
                 <div>
-                  <h3 className="font-semibold text-brand-text">Plano Personalizado</h3>
-                  <p className="text-sm text-brand-text2">Receba um plano completo adaptado à sua realidade nos EUA.</p>
+                  <h3 className="font-bold text-brand-text">Sessão Online</h3>
+                  <p className="text-sm text-brand-text2">Converse com a Coach por videochamada (Zoom, Google Meet, etc.).</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
-                <span className="bg-brand-green text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+                <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-brand-green text-white rounded-full font-bold">4</span>
                 <div>
-                  <h3 className="font-semibold text-brand-text">Acompanhamento</h3>
-                  <p className="text-sm text-brand-text2">Suporte contínuo para garantir seus resultados.</p>
+                  <h3 className="font-bold text-brand-text">Plano de Ação</h3>
+                  <p className="text-sm text-brand-text2">Receba um resumo e os próximos passos para sua transformação.</p>
                 </div>
               </div>
             </div>
@@ -95,88 +180,82 @@ export default function AvaliacaoPersonalizada() {
           <div className="bg-white rounded-xl p-6 shadow-lg border border-brand-border">
             <h2 className="text-xl font-bold text-brand-text mb-4 flex items-center">
               <span className="text-2xl mr-3">✨</span>
-              Benefícios
+              Benefícios para Você
             </h2>
-            <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <span className="text-green-500 text-xl">✓</span>
-                <span className="text-brand-text2">Plano adaptado à realidade americana</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <span className="text-green-500 text-xl">✓</span>
-                <span className="text-brand-text2">Coach brasileira que entende sua cultura</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <span className="text-green-500 text-xl">✓</span>
-                <span className="text-brand-text2">Acesso a produtos disponíveis nos EUA</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <span className="text-green-500 text-xl">✓</span>
-                <span className="text-brand-text2">Suporte em português</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <span className="text-green-500 text-xl">✓</span>
-                <span className="text-brand-text2">Acompanhamento personalizado</span>
-              </div>
-            </div>
+            <ul className="list-disc list-inside text-brand-text2 space-y-2">
+              <li>Clareza sobre seus objetivos de saúde</li>
+              <li>Motivação e suporte de uma especialista</li>
+              <li>Estratégias adaptadas à sua realidade nos EUA</li>
+              <li>Melhora na alimentação, energia e bem-estar geral</li>
+              <li>Conexão com uma profissional que entende sua cultura</li>
+            </ul>
           </div>
 
-          {/* CTA Principal */}
-          <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-6 text-white text-center shadow-lg">
-            <h2 className="text-xl font-bold mb-4">Pronto para começar sua jornada?</h2>
-            <p className="text-white/90 mb-6">
-              Agende sua avaliação personalizada com nossa coach brasileira especializada.
+          {/* Oferta Principal */}
+          <div className="bg-gradient-to-r from-green-100 to-green-200 rounded-xl p-6 shadow-lg border border-green-300 text-center">
+            <h2 className="text-2xl font-bold text-brand-text mb-4 flex items-center justify-center">
+              <span className="text-3xl mr-3">👩‍⚕️</span>
+              Coach Brasileira de Bem-estar
+            </h2>
+            <p className="text-brand-text2 mb-4">
+              Avaliação personalizada de 30 minutos por vídeo com coach brasileira especializada em qualidade de vida
             </p>
-            <a 
-              href="https://wa.me/17862535032" 
-              className="inline-block bg-white text-green-600 px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+            <div className="bg-white rounded-lg p-4 mb-4">
+              <p className="text-brand-green font-bold text-lg">
+                <strong>De $37 por apenas $10</strong><br/>
+                <span className="text-sm">Oferta exclusiva por 24h</span>
+              </p>
+            </div>
+            <button 
+              onClick={() => openWhatsApp('Olá! Quero agendar minha avaliação personalizada de 30 minutos com a coach brasileira por $10.')}
+              className="w-full bg-brand-green text-white px-6 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
             >
-              💬 Agendar por WhatsApp
-            </a>
+              💬 Agendar com Coach
+            </button>
           </div>
 
-          {/* Informações Adicionais */}
-          <div className="bg-white rounded-xl p-6 shadow-lg border border-brand-border">
-            <h2 className="text-xl font-bold text-brand-text mb-4 flex items-center">
-              <span className="text-2xl mr-3">ℹ️</span>
-              Informações Importantes
-            </h2>
-            <div className="space-y-3 text-sm text-brand-text2">
-              <p><strong>Duração:</strong> A avaliação completa leva aproximadamente 60 minutos.</p>
-              <p><strong>Formato:</strong> Consulta online via WhatsApp ou videochamada.</p>
-              <p><strong>Idioma:</strong> Atendimento em português.</p>
-              <p><strong>Investimento:</strong> Consulte valores diretamente com nossa coach.</p>
+          {/* Bônus Gratuito */}
+          <div className="bg-gradient-to-r from-yellow-100 to-yellow-200 rounded-xl p-6 shadow-lg border border-yellow-300">
+            <h3 className="text-xl font-bold text-brand-text mb-4 flex items-center justify-center">
+              <span className="text-2xl mr-3">🎁</span>
+              Bônus Gratuito
+            </h3>
+            <div className="bg-white rounded-lg p-4">
+              <h4 className="font-bold text-brand-text mb-2">
+                Guia "Jejum Intermitente para Brasileiros nos EUA"
+              </h4>
+              <p className="text-sm text-brand-text2">
+                Protocolos específicos, receitas e cronograma de 30 dias
+              </p>
             </div>
           </div>
 
+          {/* Informações Importantes */}
+          <div className="bg-white rounded-xl p-6 shadow-lg border border-brand-border text-center">
+            <h3 className="text-lg font-bold text-brand-text mb-4">Informações Importantes</h3>
+            <div className="space-y-2 text-brand-text2 text-sm">
+              <p>⏱️ Duração: 30 minutos</p>
+              <p>💻 Formato: Online (videochamada)</p>
+              <p>🇧🇷 Idioma: Português</p>
+              <p>👩‍⚕️ Coach: Brasileira especializada</p>
+            </div>
+            <p className="mt-4 text-brand-text font-medium">
+              Invista em você e na sua saúde!
+            </p>
+          </div>
+
+          {/* CTA Final */}
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-brand-text mb-4">Pronta para Transformar sua Saúde?</h2>
+            <button 
+              onClick={() => openWhatsApp('Olá! Quero agendar minha avaliação personalizada de 30 minutos com a coach brasileira por $10.')}
+              className="inline-block bg-brand-green text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+            >
+              💬 AGENDAR MINHA AVALIAÇÃO
+            </button>
+          </div>
         </div>
       </section>
-
-      {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-brand-greenSoft border-t border-brand-border px-4 py-2">
-        <div className="max-w-sm mx-auto flex justify-around">
-          <Link href="/" className="flex flex-col items-center py-1 text-brand-textLight">
-            <span className="text-lg">🏠</span>
-            <span className="text-xs">Home</span>
-          </Link>
-          <Link href="/receitas" className="flex flex-col items-center py-1 text-brand-textLight">
-            <span className="text-lg">🍲</span>
-            <span className="text-xs">Receitas</span>
-          </Link>
-          <Link href="/mercado" className="flex flex-col items-center py-1 text-brand-textLight">
-            <span className="text-lg">🛒</span>
-            <span className="text-xs">Mercado</span>
-          </Link>
-          <Link href="/avaliacao" className="flex flex-col items-center py-1 text-brand-textLight">
-            <span className="text-lg">🧠</span>
-            <span className="text-xs">Avaliação</span>
-          </Link>
-          <Link href="/produtos" className="flex flex-col items-center py-1 text-brand-textLight">
-            <span className="text-lg">📦</span>
-            <span className="text-xs">Produtos</span>
-          </Link>
-        </div>
-      </div>
     </div>
   )
 }
