@@ -91,7 +91,7 @@ export default function Home() {
             href="https://wa.me/17862535032" 
             className="inline-block bg-white text-orange-600 px-6 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
           >
-            📞 LIGAR AGORA
+            💬 FALAR POR WHATSAPP
           </a>
         </div>
       </section>
@@ -146,16 +146,16 @@ export default function Home() {
             </Link>
 
             {/* 4. Avaliação Personalizada */}
-            <a href="https://wa.me/17862535032" className="w-full bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-4 text-white shadow-lg hover:shadow-xl transition-all border border-green-600 transform hover:scale-105 block">
+            <Link href="/avaliacao-personalizada" className="w-full bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-4 text-white shadow-lg hover:shadow-xl transition-all border border-green-600 transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
                 <span className="text-3xl">👩‍⚕️</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-lg">Avaliação Personalizada</h3>
                   <p className="text-sm text-white/90">Coach brasileira especializada</p>
                 </div>
-                <span className="text-xs bg-white/20 px-3 py-1 rounded-full font-semibold">📞 Ligar</span>
+                <span className="text-xs bg-white/20 px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
-            </a>
+            </Link>
 
             {/* 5. Mercado */}
             <Link href="/mercado" className="w-full bg-orange-100 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-orange-200 transform hover:scale-105 block">
