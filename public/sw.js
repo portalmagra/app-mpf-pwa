@@ -1,5 +1,5 @@
-const CACHE_NAME = 'meuportalfit-v1.0.1';
-const STATIC_CACHE_NAME = 'meuportalfit-static-v1.0.1';
+const CACHE_NAME = 'meuportalfit-v1.0.2';
+const STATIC_CACHE_NAME = 'meuportalfit-static-v1.0.2';
 const urlsToCache = [
   '/',
   '/avaliacao',
@@ -77,7 +77,15 @@ self.addEventListener('fetch', (event) => {
   // Para páginas HTML: Network First com fallback para cache
   if (request.headers.get('accept')?.includes('text/html')) {
     event.respondWith(
-      fetch(request)
+      fetch(request, {
+        // Forçar atualização para mobile
+        cache: 'no-cache',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0'
+        }
+      })
         .then((response) => {
           // Se a resposta é válida, atualiza o cache
           if (response.status === 200) {

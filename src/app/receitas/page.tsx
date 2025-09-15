@@ -72,7 +72,10 @@ const getRecipeBgColor = (emoji: string): string => {
 
 export default function ReceitasPage() {
   const [receitas, setReceitas] = useState<Receita[]>([])
+  const [filteredReceitas, setFilteredReceitas] = useState<Receita[]>([])
   const [loading, setLoading] = useState(true)
+  const [activeFilter, setActiveFilter] = useState<'todas' | 'gratuitas' | 'pagas'>('todas')
+  const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
     // Carregar receitas do localStorage ou usar dados padrão
@@ -101,6 +104,7 @@ export default function ReceitasPage() {
             
             console.log('Receitas convertidas:', convertedRecipes)
             setReceitas(convertedRecipes)
+            setFilteredReceitas(convertedRecipes)
             setLoading(false)
             return
           } catch (error) {
@@ -145,6 +149,7 @@ export default function ReceitasPage() {
       
       setTimeout(() => {
         setReceitas(mockReceitas)
+        setFilteredReceitas(mockReceitas)
         setLoading(false)
       }, 1000)
     }
@@ -162,6 +167,29 @@ export default function ReceitasPage() {
       window.removeEventListener('storage', handleStorageChange)
     }
   }, [])
+
+  // Filtrar receitas baseado no filtro ativo e termo de busca
+  useEffect(() => {
+    let filtered = receitas
+
+    // Aplicar filtro por tipo
+    if (activeFilter === 'gratuitas') {
+      filtered = filtered.filter(receita => receita.tipo === 'gratuita')
+    } else if (activeFilter === 'pagas') {
+      filtered = filtered.filter(receita => receita.tipo === 'paga')
+    }
+
+    // Aplicar busca por nome ou descrição
+    if (searchTerm.trim()) {
+      const term = searchTerm.toLowerCase()
+      filtered = filtered.filter(receita => 
+        receita.nome.toLowerCase().includes(term) ||
+        receita.descricao.toLowerCase().includes(term)
+      )
+    }
+
+    setFilteredReceitas(filtered)
+  }, [receitas, activeFilter, searchTerm])
 
   const handleComprarReceita = (receita: Receita) => {
     const mensagem = `Oi! Quero comprar a receita "${receita.nome}" por $${receita.preco.toFixed(2)}`
@@ -211,6 +239,8 @@ export default function ReceitasPage() {
             <input
               type="text"
               placeholder="🔍 O que você quer cozinhar hoje?"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full px-4 py-3 bg-white border border-brand-green/20 rounded-xl text-brand-text placeholder-brand-textLight focus:outline-none focus:border-brand-green focus:ring-2 focus:ring-brand-green/20"
             />
           </div>
@@ -219,14 +249,35 @@ export default function ReceitasPage() {
         {/* Filtros */}
         <div className="mb-6">
           <div className="flex gap-2 overflow-x-auto pb-2">
-            <button className="px-4 py-2 bg-brand-green text-white rounded-lg text-sm font-medium whitespace-nowrap">
-              Todas
+            <button 
+              onClick={() => setActiveFilter('todas')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
+                activeFilter === 'todas' 
+                  ? 'bg-brand-green text-white' 
+                  : 'bg-white border border-brand-green/20 text-brand-text hover:bg-brand-green/5'
+              }`}
+            >
+              Todas ({receitas.length})
             </button>
-            <button className="px-4 py-2 bg-white border border-brand-green/20 text-brand-text rounded-lg text-sm font-medium whitespace-nowrap">
-              Gratuitas
+            <button 
+              onClick={() => setActiveFilter('gratuitas')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
+                activeFilter === 'gratuitas' 
+                  ? 'bg-brand-green text-white' 
+                  : 'bg-white border border-brand-green/20 text-brand-text hover:bg-brand-green/5'
+              }`}
+            >
+              Gratuitas ({receitas.filter(r => r.tipo === 'gratuita').length})
             </button>
-            <button className="px-4 py-2 bg-white border border-brand-green/20 text-brand-text rounded-lg text-sm font-medium whitespace-nowrap">
-              Pagas
+            <button 
+              onClick={() => setActiveFilter('pagas')}
+              className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
+                activeFilter === 'pagas' 
+                  ? 'bg-brand-green text-white' 
+                  : 'bg-white border border-brand-green/20 text-brand-text hover:bg-brand-green/5'
+              }`}
+            >
+              Pagas ({receitas.filter(r => r.tipo === 'paga').length})
             </button>
           </div>
         </div>
@@ -249,7 +300,18 @@ export default function ReceitasPage() {
           </div>
         ) : (
           <div className="space-y-4">
-            {receitas.map((receita) => (
+            {filteredReceitas.length === 0 ? (
+              <div className="text-center py-8">
+                <div className="text-6xl mb-4">🔍</div>
+                <h3 className="text-lg font-semibold text-brand-text mb-2">
+                  Nenhuma receita encontrada
+                </h3>
+                <p className="text-brand-textLight text-sm">
+                  Tente ajustar os filtros ou termo de busca
+                </p>
+              </div>
+            ) : (
+              filteredReceitas.map((receita) => (
               <div key={receita.id} className="bg-white rounded-xl shadow-soft overflow-hidden">
                 {/* Imagem ou Emoji da Receita */}
                 <div className="relative h-48 w-full overflow-hidden">
@@ -300,7 +362,8 @@ export default function ReceitasPage() {
                   </button>
                 </div>
               </div>
-            ))}
+              ))
+            )}
           </div>
         )}
 
