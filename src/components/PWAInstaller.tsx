@@ -38,6 +38,11 @@ export default function PWAInstaller() {
               })
             }
           })
+
+          // Verificar atualizações periodicamente (especialmente para mobile)
+          setInterval(() => {
+            registration.update()
+          }, 30000) // Verifica a cada 30 segundos
         })
         .catch((error) => {
           console.error('❌ Erro ao registrar Service Worker:', error)
@@ -49,6 +54,23 @@ export default function PWAInstaller() {
           setShowUpdateNotification(true)
         }
       })
+
+      // Forçar verificação de atualizações quando a página ganha foco (mobile)
+      const handleVisibilityChange = () => {
+        if (!document.hidden && 'serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistration().then((registration) => {
+            if (registration) {
+              registration.update()
+            }
+          })
+        }
+      }
+
+      document.addEventListener('visibilitychange', handleVisibilityChange)
+      
+      return () => {
+        document.removeEventListener('visibilitychange', handleVisibilityChange)
+      }
     }
 
     // Detectar evento de instalação
