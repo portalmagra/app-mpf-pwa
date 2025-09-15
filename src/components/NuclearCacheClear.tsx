@@ -57,8 +57,14 @@ export default function NuclearCacheClear() {
           })
         }
         
-        // 2. Limpar localStorage completamente
-        localStorage.clear()
+        // 2. Limpar localStorage seletivamente (preservar dados importantes)
+        const importantKeys = ['app-version']
+        const allKeys = Object.keys(localStorage)
+        allKeys.forEach(key => {
+          if (!importantKeys.includes(key)) {
+            localStorage.removeItem(key)
+          }
+        })
         
         // 3. Limpar sessionStorage
         sessionStorage.clear()
