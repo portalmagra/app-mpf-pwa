@@ -82,13 +82,15 @@ export default function ReceitasPage() {
         if (savedRecipes) {
           try {
             const adminRecipes = JSON.parse(savedRecipes)
+            console.log('Receitas carregadas do localStorage:', adminRecipes)
+            
             // Converter formato da admin para formato da página de receitas
             const convertedRecipes: Receita[] = adminRecipes
               .filter((recipe: { status: string }) => recipe.status === 'active')
               .map((recipe: { id: number; name: string; description: string; price: number; pdfLink: string; status: string; imageUrl?: string }) => ({
                 id: recipe.id,
                 nome: recipe.name,
-                descricao: recipe.description,
+                descricao: recipe.description || '', // Permitir descrição vazia
                 tipo: recipe.price === 0 ? 'gratuita' : 'paga',
                 preco: recipe.price,
                 link_pdf: recipe.pdfLink,
@@ -97,6 +99,7 @@ export default function ReceitasPage() {
                 imagem: recipe.imageUrl
               }))
             
+            console.log('Receitas convertidas:', convertedRecipes)
             setReceitas(convertedRecipes)
             setLoading(false)
             return
