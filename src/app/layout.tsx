@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import PWAInstaller from "@/components/PWAInstaller";
-import MobileRefreshButton from "@/components/MobileRefreshButton";
 import CacheBuster from "@/components/CacheBuster";
 
 const geistSans = Geist({
@@ -75,7 +74,6 @@ export default function RootLayout({
         {children}
         <CacheBuster />
         <PWAInstaller />
-        <MobileRefreshButton />
       </body>
     </html>
   );

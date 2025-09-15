@@ -162,22 +162,6 @@ export default function PWAInstaller() {
     setWaitingWorker(null)
   }
 
-  const forceRefresh = () => {
-    // Limpar todos os caches
-    if ('caches' in window) {
-      caches.keys().then((cacheNames) => {
-        cacheNames.forEach((cacheName) => {
-          caches.delete(cacheName)
-        })
-      })
-    }
-    
-    // Limpar localStorage se necessário
-    if (typeof window !== 'undefined') {
-      // Não limpar tudo, apenas forçar reload
-      window.location.reload()
-    }
-  }
 
   return (
     <div className="fixed bottom-4 right-4 z-50 space-y-3">
@@ -209,12 +193,6 @@ export default function PWAInstaller() {
               className="bg-white text-blue-600 px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-50 transition-colors"
             >
               Atualizar Agora
-            </button>
-            <button
-              onClick={forceRefresh}
-              className="bg-blue-500 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-blue-400 transition-colors"
-            >
-              Refresh Manual
             </button>
             <button
               onClick={handleDismissUpdate}
