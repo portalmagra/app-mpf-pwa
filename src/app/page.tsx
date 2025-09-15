@@ -80,12 +80,27 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Banner Coach Brasileira - DESTAQUE */}
+      <section className="px-4 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white">
+        <div className="max-w-sm mx-auto text-center">
+          <div className="flex items-center justify-center space-x-2 mb-2">
+            <span className="text-2xl">👩‍⚕️</span>
+            <h2 className="text-lg font-bold">Fale com Coach Brasileira AGORA</h2>
+          </div>
+          <a 
+            href="tel:+1234567890" 
+            className="inline-block bg-white text-orange-600 px-6 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
+          >
+            📞 LIGAR AGORA
+          </a>
+        </div>
+      </section>
+
       {/* Hero Compacto */}
       <section className="px-4 py-6 text-center">
         <div className="max-w-sm mx-auto">
-          <h2 className="text-2xl font-bold text-brand-text mb-2">
-            Para brasileiros nos
-            <span className="text-brand-green block">EUA</span>
+          <h2 className="text-xl font-bold text-brand-text">
+            Para brasileiros nos Estados Unidos
           </h2>
         </div>
       </section>
@@ -131,16 +146,16 @@ export default function Home() {
             </Link>
 
             {/* 4. Avaliação Personalizada */}
-            <Link href="/avaliacao-personalizada" className="w-full bg-brand-greenSoft rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-brand-border transform hover:scale-105 block">
+            <a href="tel:+1234567890" className="w-full bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-4 text-white shadow-lg hover:shadow-xl transition-all border border-green-600 transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
                 <span className="text-3xl">👩‍⚕️</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-lg">Avaliação Personalizada</h3>
-                  <p className="text-sm text-brand-text2">Coach de bem-estar brasileira</p>
+                  <p className="text-sm text-white/90">Coach brasileira especializada</p>
                 </div>
-                <span className="text-xs bg-brand-greenLight text-white px-3 py-1 rounded-full font-semibold">Ver</span>
+                <span className="text-xs bg-white/20 px-3 py-1 rounded-full font-semibold">📞 Ligar</span>
               </div>
-            </Link>
+            </a>
 
             {/* 5. Mercado */}
             <Link href="/mercado" className="w-full bg-orange-100 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-orange-200 transform hover:scale-105 block">
