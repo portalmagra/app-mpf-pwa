@@ -70,7 +70,7 @@ export default function Home() {
           <div className="flex justify-between items-center">
             <div>
               <Logo variant="horizontal" size="md" />
-              <p className="text-xs text-brand-text2 mt-1">Para brasileiros nos EUA</p>
+              <p className="text-xs text-brand-text2 mt-1">Para brasileiros dos Estados Unidos</p>
             </div>
             <button 
               id="install-button"
@@ -84,7 +84,7 @@ export default function Home() {
       </header>
 
       {/* Banner Coach Brasileira - DESTAQUE */}
-      <section className="px-4 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white">
+      <section className="px-4 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white mb-6">
         <div className="max-w-sm mx-auto text-center">
           <div className="flex items-center justify-center space-x-2 mb-2">
             <span className="text-2xl">👩‍⚕️</span>
@@ -140,19 +140,7 @@ export default function Home() {
               </div>
             </Link>
 
-            {/* 4. Avaliação Personalizada */}
-            <Link href="/avaliacao-personalizada" className="w-full bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-4 text-white shadow-lg hover:shadow-xl transition-all border border-green-600 transform hover:scale-105 block">
-              <div className="flex items-center space-x-4">
-                <span className="text-3xl">👩‍⚕️</span>
-                <div className="flex-1 text-left">
-                  <h3 className="font-bold text-lg">Avaliação Personalizada</h3>
-                  <p className="text-sm text-white/90">Coach brasileira especializada</p>
-                </div>
-                <span className="text-xs bg-white/20 px-3 py-1 rounded-full font-semibold">Ver</span>
-              </div>
-            </Link>
-
-            {/* 5. Produtos */}
+            {/* 4. Produtos */}
             <Link href="/produtos" className="w-full bg-brand-neutral rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-brand-border transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
                 <span className="text-4xl">📦</span>
@@ -161,6 +149,18 @@ export default function Home() {
                   <p className="text-sm text-brand-text2">Suplementos e produtos por categoria</p>
                 </div>
                 <span className="text-xs bg-brand-greenLight text-white px-3 py-1 rounded-full font-semibold">Ver</span>
+              </div>
+            </Link>
+
+            {/* 5. Avaliação Personalizada */}
+            <Link href="/avaliacao-personalizada" className="w-full bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-4 text-white shadow-lg hover:shadow-xl transition-all border border-green-600 transform hover:scale-105 block">
+              <div className="flex items-center space-x-4">
+                <span className="text-3xl">👩‍⚕️</span>
+                <div className="flex-1 text-left">
+                  <h3 className="font-bold text-lg">Avaliação Personalizada</h3>
+                  <p className="text-sm text-white/90">Coach brasileira especializada</p>
+                </div>
+                <span className="text-xs bg-white/20 px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
             </Link>
           </div>
