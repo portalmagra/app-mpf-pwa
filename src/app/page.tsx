@@ -85,13 +85,13 @@ export default function Home() {
         <div className="max-w-sm mx-auto text-center">
           <div className="flex items-center justify-center space-x-2 mb-2">
             <span className="text-2xl">👩‍⚕️</span>
-            <h2 className="text-lg font-bold">Fale com Coach Brasileira AGORA</h2>
+            <h2 className="text-lg font-bold">Agende uma Avaliação Personalizada</h2>
           </div>
           <a 
             href="https://wa.me/17862535032" 
             className="inline-block bg-white text-orange-600 px-6 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
           >
-            💬 FALAR POR WHATSAPP
+            📅 QUERO AGENDAR
           </a>
         </div>
       </section>
