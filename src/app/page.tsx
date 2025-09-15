@@ -135,9 +135,11 @@ export default function Home() {
       {/* Banner Coach Brasileira - DESTAQUE */}
       <section className="px-4 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white mb-6">
         <div className="max-w-sm mx-auto text-center">
-          <div className="flex items-center justify-center space-x-2 mb-2">
-            <span className="text-2xl">👩‍⚕️</span>
-            <h2 className="text-lg font-bold">Agende uma Avaliação Personalizada</h2>
+          <div className="mb-3">
+            <div className="flex items-center justify-center space-x-2 mb-2">
+              <span className="text-2xl">👩‍⚕️</span>
+              <h2 className="text-lg font-bold">Agende uma Avaliação Personalizada</h2>
+            </div>
           </div>
           <a 
             href="https://wa.me/17862535032" 
