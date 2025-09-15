@@ -68,7 +68,10 @@ export default function Home() {
       <header className="bg-brand-greenSoft shadow-soft sticky top-0 z-50 border-b border-brand-border">
         <div className="max-w-sm mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
-            <Logo variant="horizontal" size="md" />
+            <div>
+              <Logo variant="horizontal" size="md" />
+              <p className="text-xs text-brand-text2 mt-1">Para brasileiros nos EUA</p>
+            </div>
             <button 
               id="install-button"
               className="bg-brand-green text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-brand-greenDark transition-all transform hover:scale-105"
@@ -96,14 +99,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Hero Compacto */}
-      <section className="px-4 py-6 text-center">
-        <div className="max-w-sm mx-auto">
-          <h2 className="text-xl font-bold text-brand-text">
-            Para brasileiros nos Estados Unidos
-          </h2>
-        </div>
-      </section>
 
       {/* 4 Botões Principais - Layout Vertical */}
       <section className="px-4 mb-6">
@@ -157,19 +152,7 @@ export default function Home() {
               </div>
             </Link>
 
-            {/* 5. Mercado */}
-            <Link href="/mercado" className="w-full bg-orange-100 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-orange-200 transform hover:scale-105 block">
-              <div className="flex items-center space-x-4">
-                <span className="text-4xl">🛒</span>
-                <div className="flex-1 text-left">
-                  <h3 className="font-bold text-xl">Mercado</h3>
-                  <p className="text-sm text-brand-text2">Produtos selecionados para compra</p>
-                </div>
-                <span className="text-xs bg-orange-500 text-white px-3 py-1 rounded-full font-semibold">Ver</span>
-              </div>
-            </Link>
-
-            {/* 6. Produtos */}
+            {/* 5. Produtos */}
             <Link href="/produtos" className="w-full bg-brand-neutral rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-brand-border transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
                 <span className="text-4xl">📦</span>
