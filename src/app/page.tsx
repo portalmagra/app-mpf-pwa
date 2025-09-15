@@ -51,9 +51,34 @@ export default function Home() {
     }
   }, [])
 
+
+  const getInstallButtonText = () => {
+    if (isInstalled) return '💬 WhatsApp'
+    if (installStatus === 'installing') return '⏳ Instalando...'
+    if (installStatus === 'success') return '🎉 Instalado!'
+    if (installStatus === 'error') return '❌ Erro - Tente Novamente'
+    return '📱 Instalar App'
+  }
+
+  const getInstallButtonClass = () => {
+    const baseClass = "px-5 py-3 rounded-xl text-sm font-bold transition-all transform hover:scale-105"
+    if (isInstalled || installStatus === 'success') {
+      return `${baseClass} bg-green-500 text-white hover:bg-green-600`
+    }
+    if (installStatus === 'installing') {
+      return `${baseClass} bg-yellow-500 text-white animate-pulse`
+    }
+    if (installStatus === 'error') {
+      return `${baseClass} bg-red-500 text-white`
+    }
+    return `${baseClass} bg-brand-green text-white hover:bg-brand-greenDark`
+  }
+
   const handleInstallClick = async () => {
     if (isInstalled) {
-      return // Já está instalado
+      // Se já está instalado, abrir WhatsApp
+      window.open('https://wa.me/17862535032', '_blank')
+      return
     }
 
     if (deferredPrompt) {
@@ -76,28 +101,6 @@ export default function Home() {
       // Mostrar guia manual
       setShowInstallGuide(true)
     }
-  }
-
-  const getInstallButtonText = () => {
-    if (isInstalled) return '✅ Instalado'
-    if (installStatus === 'installing') return '⏳ Instalando...'
-    if (installStatus === 'success') return '🎉 Instalado!'
-    if (installStatus === 'error') return '❌ Erro - Tente Novamente'
-    return '📱 Instalar App'
-  }
-
-  const getInstallButtonClass = () => {
-    const baseClass = "px-5 py-3 rounded-xl text-sm font-bold transition-all transform hover:scale-105"
-    if (isInstalled || installStatus === 'success') {
-      return `${baseClass} bg-green-500 text-white`
-    }
-    if (installStatus === 'installing') {
-      return `${baseClass} bg-yellow-500 text-white animate-pulse`
-    }
-    if (installStatus === 'error') {
-      return `${baseClass} bg-red-500 text-white`
-    }
-    return `${baseClass} bg-brand-green text-white hover:bg-brand-greenDark`
   }
 
   return (
