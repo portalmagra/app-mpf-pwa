@@ -16,6 +16,8 @@ interface BeforeInstallPromptEvent extends Event {
 export default function Home() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null)
   const [isInstalled, setIsInstalled] = useState(false)
+  const [showInstallGuide, setShowInstallGuide] = useState(false)
+  const [installStatus, setInstallStatus] = useState<'idle' | 'installing' | 'success' | 'error'>('idle')
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (e: Event) => {
@@ -27,6 +29,8 @@ export default function Home() {
       console.log('🎉 PWA foi instalada!')
       setIsInstalled(true)
       setDeferredPrompt(null)
+      setInstallStatus('success')
+      setShowInstallGuide(false)
     }
 
     const checkIfInstalled = () => {
@@ -48,18 +52,52 @@ export default function Home() {
   }, [])
 
   const handleInstallClick = async () => {
+    if (isInstalled) {
+      return // Já está instalado
+    }
+
     if (deferredPrompt) {
+      // Instalação automática disponível
+      setInstallStatus('installing')
       try {
         await deferredPrompt.prompt()
         const { outcome } = await deferredPrompt.userChoice
-        console.log(`👤 Usuário ${outcome === 'accepted' ? 'aceitou' : 'rejeitou'} a instalação`)
+        if (outcome === 'accepted') {
+          setInstallStatus('success')
+        } else {
+          setInstallStatus('idle')
+        }
         setDeferredPrompt(null)
       } catch (error) {
         console.error('❌ Erro ao instalar PWA:', error)
+        setInstallStatus('error')
       }
     } else {
-      alert('Para instalar o app, procure pelo ícone de instalação na barra de endereços do seu navegador.')
+      // Mostrar guia manual
+      setShowInstallGuide(true)
     }
+  }
+
+  const getInstallButtonText = () => {
+    if (isInstalled) return '✅ Instalado'
+    if (installStatus === 'installing') return '⏳ Instalando...'
+    if (installStatus === 'success') return '🎉 Instalado!'
+    if (installStatus === 'error') return '❌ Erro - Tente Novamente'
+    return '📱 Instalar App'
+  }
+
+  const getInstallButtonClass = () => {
+    const baseClass = "px-5 py-3 rounded-xl text-sm font-bold transition-all transform hover:scale-105"
+    if (isInstalled || installStatus === 'success') {
+      return `${baseClass} bg-green-500 text-white`
+    }
+    if (installStatus === 'installing') {
+      return `${baseClass} bg-yellow-500 text-white animate-pulse`
+    }
+    if (installStatus === 'error') {
+      return `${baseClass} bg-red-500 text-white`
+    }
+    return `${baseClass} bg-brand-green text-white hover:bg-brand-greenDark`
   }
 
   return (
@@ -71,14 +109,28 @@ export default function Home() {
             <Logo variant="horizontal" size="md" />
             <button 
               id="install-button"
-              className="bg-brand-green text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-brand-greenDark transition-all transform hover:scale-105"
+              className={getInstallButtonClass()}
               onClick={handleInstallClick}
+              disabled={isInstalled || installStatus === 'installing'}
             >
-              {isInstalled ? '✅ Instalado' : '📱 Instalar Agora'}
+              {getInstallButtonText()}
             </button>
           </div>
         </div>
       </header>
+
+      {/* Banner de Instalação Automática */}
+      {deferredPrompt && !isInstalled && (
+        <section className="px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white mb-4">
+          <div className="max-w-sm mx-auto text-center">
+            <div className="flex items-center justify-center space-x-2 mb-2">
+              <span className="text-xl">📱</span>
+              <p className="text-sm font-medium">App pronto para instalar!</p>
+            </div>
+            <p className="text-xs opacity-90">Toque no botão "Instalar App" acima para adicionar à sua tela inicial</p>
+          </div>
+        </section>
+      )}
 
       {/* Banner Coach Brasileira - DESTAQUE */}
       <section className="px-4 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white mb-6">
@@ -189,6 +241,55 @@ export default function Home() {
           </Link>
         </div>
       </div>
+
+      {/* Modal de Guia de Instalação */}
+      {showInstallGuide && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl p-6 max-w-sm w-full max-h-[90vh] overflow-y-auto">
+            <div className="text-center mb-6">
+              <h2 className="text-2xl font-bold text-brand-text mb-2">📱 Instalar App</h2>
+              <p className="text-brand-text2">Siga os passos abaixo para instalar o MeuPortalFit no seu celular:</p>
+            </div>
+
+            <div className="space-y-4 mb-6">
+              {/* iPhone */}
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h3 className="font-bold text-brand-text mb-2 flex items-center">
+                  <span className="text-xl mr-2">📱</span>
+                  iPhone (Safari)
+                </h3>
+                <ol className="text-sm text-brand-text2 space-y-2">
+                  <li>1. Toque no botão <span className="bg-gray-200 px-2 py-1 rounded">📤</span> na parte inferior</li>
+                  <li>2. Selecione <strong>"Adicionar à Tela de Início"</strong></li>
+                  <li>3. Toque em <strong>"Adicionar"</strong></li>
+                </ol>
+              </div>
+
+              {/* Android */}
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h3 className="font-bold text-brand-text mb-2 flex items-center">
+                  <span className="text-xl mr-2">🤖</span>
+                  Android (Chrome)
+                </h3>
+                <ol className="text-sm text-brand-text2 space-y-2">
+                  <li>1. Toque no menu <span className="bg-gray-200 px-2 py-1 rounded">⋮</span> (três pontos)</li>
+                  <li>2. Selecione <strong>"Instalar app"</strong> ou <strong>"Adicionar à tela inicial"</strong></li>
+                  <li>3. Confirme a instalação</li>
+                </ol>
+              </div>
+            </div>
+
+            <div className="text-center">
+              <button
+                onClick={() => setShowInstallGuide(false)}
+                className="bg-brand-green text-white px-6 py-3 rounded-xl font-bold hover:bg-brand-greenDark transition-colors"
+              >
+                Entendi! 👍
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
