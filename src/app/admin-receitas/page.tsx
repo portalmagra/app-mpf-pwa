@@ -44,7 +44,6 @@ export default function AdminReceitas() {
 
   // Estado das receitas
   const [recipes, setRecipes] = useState<Recipe[]>([])
-  const [loading, setLoading] = useState(true)
 
   const [newRecipe, setNewRecipe] = useState({
     name: '',
@@ -69,12 +68,23 @@ export default function AdminReceitas() {
         console.log('📦 Receitas carregadas do Supabase (Admin):', supabaseRecipes)
         
         setRecipes(supabaseRecipes)
-        setLoading(false)
       } catch (error) {
         console.error('❌ Erro ao carregar receitas do Supabase (Admin):', error)
-        // Fallback para dados padrão
-        setRecipes(defaultRecipes)
-        setLoading(false)
+        // Fallback para dados padrão - converter para formato Supabase
+        const fallbackRecipes: Recipe[] = defaultRecipes.map(recipe => ({
+          id: recipe.id,
+          name: recipe.name,
+          description: recipe.description,
+          type: recipe.type,
+          price: recipe.price,
+          pdf_link: recipe.pdfLink,
+          image_url: '',
+          status: recipe.status as 'active' | 'inactive',
+          access_link: recipe.accessLink,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        }))
+        setRecipes(fallbackRecipes)
       }
     }
 
@@ -174,14 +184,14 @@ export default function AdminReceitas() {
     alert('Link copiado para a área de transferência!')
   }
 
-  const handleEditRecipe = (recipe: { id: number; name: string; description: string; type: string; price: number; pdfLink: string; imageUrl?: string; status: string }) => {
+  const handleEditRecipe = (recipe: Recipe) => {
     setNewRecipe({
       name: recipe.name,
       description: recipe.description,
       type: recipe.type,
       price: recipe.price,
-      pdfLink: recipe.pdfLink,
-      imageUrl: recipe.imageUrl || '',
+      pdfLink: recipe.pdf_link,
+      imageUrl: recipe.image_url || '',
       status: recipe.status,
       isFree: recipe.price === 0
     })
@@ -191,9 +201,18 @@ export default function AdminReceitas() {
 
   const handleUpdateRecipe = () => {
     if (editingRecipe && newRecipe.name && newRecipe.pdfLink) {
-      const updatedRecipes = recipes.map((recipe: { id: number; name: string; description: string; type: string; price: number; pdfLink: string; imageUrl?: string; status: string; accessLink: string }) => 
+      const updatedRecipes = recipes.map((recipe: Recipe) => 
         recipe.id === editingRecipe 
-          ? { ...recipe, ...newRecipe }
+          ? { 
+              ...recipe, 
+              name: newRecipe.name,
+              description: newRecipe.description,
+              type: newRecipe.type,
+              price: newRecipe.price,
+              pdf_link: newRecipe.pdfLink,
+              image_url: newRecipe.imageUrl,
+              status: newRecipe.status as 'active' | 'inactive'
+            }
           : recipe
       )
       setRecipes(updatedRecipes)
@@ -466,7 +485,7 @@ export default function AdminReceitas() {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {recipes.map((recipe: { id: number; name: string; description: string; price: number; pdfLink: string; imageUrl?: string; status: string; type: string; accessLink: string }) => (
+                {recipes.map((recipe: Recipe) => (
                   <tr key={recipe.id}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
@@ -520,7 +539,7 @@ export default function AdminReceitas() {
                           {recipe.status === 'active' ? '⏸️ Pausar' : '▶️ Ativar'}
                         </button>
                         <button
-                          onClick={() => copyAccessLink(recipe.accessLink)}
+                          onClick={() => copyAccessLink(recipe.access_link)}
                           className="px-3 py-1 bg-blue-100 text-blue-700 rounded text-xs hover:bg-blue-200"
                         >
                           📋 Link
