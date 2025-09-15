@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 interface ImageUploadProps {
   onImageUpload: (imageUrl: string) => void
@@ -10,6 +10,11 @@ interface ImageUploadProps {
 
 export default function ImageUpload({ onImageUpload, currentImage, className = '' }: ImageUploadProps) {
   const [imageUrl, setImageUrl] = useState(currentImage || '')
+
+  // Atualizar o estado interno quando currentImage mudar
+  useEffect(() => {
+    setImageUrl(currentImage || '')
+  }, [currentImage])
 
   const handleUrlChange = (url: string) => {
     setImageUrl(url)

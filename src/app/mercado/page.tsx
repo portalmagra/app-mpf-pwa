@@ -1,240 +1,376 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
+import { productService, Product } from '@/lib/supabase'
 
-export default function Mercado() {
-  const [searchQuery, setSearchQuery] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('all')
+export default function MercadoPage() {
+  const [products, setProducts] = useState<Product[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const categories = [
-    { id: 'all', name: 'Todos', icon: '🛒' },
-    { id: 'suplementos', name: 'Suplementos', icon: '💊' },
-    { id: 'alimentos', name: 'Alimentos', icon: '🥗' },
-    { id: 'cosmeticos', name: 'Cosméticos', icon: '💄' },
-    { id: 'fitness', name: 'Fitness', icon: '🏋️' }
-  ]
+  // Função para garantir que o link da Amazon tenha a tag de afiliado
+  const ensureAffiliateTag = (url: string) => {
+    if (!url) return url
+    
+    // Se já tem tag, retorna como está
+    if (url.includes('tag=')) return url
+    
+    // Adiciona a tag de afiliado
+    const separator = url.includes('?') ? '&' : '?'
+    return `${url}${separator}tag=portalsolutio-20`
+  }
 
-  const mockProducts = [
-    {
-      id: 1,
-      name: 'Multivitamínico para Mulheres',
-      price: 29.99,
-      originalPrice: 39.99,
-      category: 'suplementos',
-      image: '💊',
-      link: 'https://amazon.com/multivitamin',
-      rating: 4.5,
-      reviews: 1234,
-      description: 'Multivitamínico completo para mulheres brasileiras nos EUA'
-    },
-    {
-      id: 2,
-      name: 'Proteína em Pó Vegana',
-      price: 39.99,
-      originalPrice: 49.99,
-      category: 'suplementos',
-      image: '🥤',
-      link: 'https://amazon.com/protein',
-      rating: 4.8,
-      reviews: 856,
-      description: 'Proteína vegetal de alta qualidade'
-    },
-    {
-      id: 3,
-      name: 'Açaí Bowl Mix',
-      price: 19.99,
-      originalPrice: 24.99,
-      category: 'alimentos',
-      image: '🥣',
-      link: 'https://amazon.com/acai',
-      rating: 4.3,
-      reviews: 567,
-      description: 'Mistura para bowl de açaí autêntico'
-    },
-    {
-      id: 4,
-      name: 'Óleo de Coco Orgânico',
-      price: 15.99,
-      originalPrice: 19.99,
-      category: 'alimentos',
-      image: '🥥',
-      link: 'https://amazon.com/coconut-oil',
-      rating: 4.6,
-      reviews: 2341,
-      description: 'Óleo de coco extra virgem orgânico'
-    },
-    {
-      id: 5,
-      name: 'Hidratante Facial Brasileiro',
-      price: 24.99,
-      originalPrice: 29.99,
-      category: 'cosmeticos',
-      image: '🧴',
-      link: 'https://amazon.com/moisturizer',
-      rating: 4.4,
-      reviews: 789,
-      description: 'Hidratante com ingredientes brasileiros'
-    },
-    {
-      id: 6,
-      name: 'Resistência para Exercícios',
-      price: 34.99,
-      originalPrice: 44.99,
-      category: 'fitness',
-      image: '🏋️',
-      link: 'https://amazon.com/resistance-bands',
-      rating: 4.7,
-      reviews: 1456,
-      description: 'Kit completo de resistência para casa'
+  useEffect(() => {
+    const loadProducts = async () => {
+      try {
+        setLoading(true)
+        console.log('🔄 Carregando produtos do mercado...')
+        
+        // Buscar todos os produtos e filtrar apenas os que estão no mercado
+        const allProducts = await productService.getAllProducts()
+        const mercadoProducts = allProducts.filter(product => product.is_mentoria === true)
+        
+        console.log('✅ Produtos do mercado carregados:', mercadoProducts.length)
+        setProducts(mercadoProducts)
+      } catch (error) {
+        console.error('❌ Erro ao carregar produtos do mercado:', error)
+        setProducts([])
+      } finally {
+        setLoading(false)
+      }
     }
-  ]
 
-  const filteredProducts = mockProducts.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         product.description.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesCategory = selectedCategory === 'all' || product.category === selectedCategory
-    return matchesSearch && matchesCategory
-  })
+    loadProducts()
+  }, [])
+
+  if (loading) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f0fdf4 0%, #eff6ff 50%, #f0f9ff 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{
+            width: '48px',
+            height: '48px',
+            border: '3px solid #22c55e',
+            borderTop: '3px solid transparent',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite',
+            margin: '0 auto 1rem'
+          }}></div>
+          <p style={{ color: '#6b7280' }}>Carregando produtos selecionados...</p>
+        </div>
+      </div>
+    )
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-16">
+    <>
+      <style jsx global>{`
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+      `}</style>
+      
       {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-50">
+      <header className="bg-brand-greenSoft shadow-soft sticky top-0 z-50 border-b border-brand-border">
         <div className="max-w-sm mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <Logo variant="horizontal" size="md" />
-            <Link href="/" className="text-gray-600 text-sm font-medium">
-              🏠 Início
+            <Link href="/" className="text-sm text-gray-600 hover:text-brand-green transition-colors">
+              ← Voltar ao App
             </Link>
           </div>
         </div>
       </header>
-
-      {/* Hero */}
-      <section className="px-4 py-6 text-center">
-        <div className="max-w-sm mx-auto">
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">
-            🛒 Mercado
-          </h1>
-          <p className="text-gray-600 text-sm">
-            Produtos selecionados Amazon para brasileiros nos EUA
-          </p>
-        </div>
-      </section>
-
-      {/* Search Bar */}
-      <section className="px-4 mb-6">
-        <div className="max-w-sm mx-auto">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="🔍 Buscar produtos... (ex: suplementos, açaí, cosméticos)"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-3 bg-white rounded-xl border border-gray-200 focus:border-gray-400 focus:outline-none text-gray-700 placeholder-gray-400"
-            />
-            <div className="absolute right-3 top-3 text-gray-400">
-              {searchQuery ? '✨' : '🤖'}
+      
+      <main style={{
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #f0fdf4 0%, #eff6ff 50%, #f0f9ff 100%)',
+        padding: '2rem 0'
+      }}>
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '0 2rem'
+        }}>
+          {/* Introdução */}
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <h1 style={{
+              fontSize: 'clamp(1.5rem, 4vw, 2.5rem)',
+              fontWeight: 900,
+              color: '#1f2937',
+              marginBottom: '1rem',
+              lineHeight: 1.2
+            }}>
+              🛒 Produtos Selecionados
+            </h1>
+            <p style={{
+              fontSize: '1.1rem',
+              color: '#6b7280',
+              maxWidth: '800px',
+              margin: '0 auto 1.5rem',
+              lineHeight: 1.6
+            }}>
+              Compre direto na Amazon, coloque no seu carrinho Amazon
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <button
+                onClick={() => {
+                  const currentUrl = window.location.href
+                  const shareText = `🛒 Confira os produtos selecionados no MeuPortalFit!\n\n${currentUrl}\n\n#MeuPortalFit #ProdutosSelecionados #Amazon`
+                  
+                  if (navigator.share) {
+                    navigator.share({
+                      title: 'Produtos Selecionados - MeuPortalFit',
+                      text: shareText,
+                      url: currentUrl
+                    })
+                  } else {
+                    // Fallback para copiar para área de transferência
+                    navigator.clipboard.writeText(shareText).then(() => {
+                      alert('Link copiado para a área de transferência! Compartilhe com suas amigas! 💕')
+                    }).catch(() => {
+                      // Fallback manual
+                      const textArea = document.createElement('textarea')
+                      textArea.value = shareText
+                      document.body.appendChild(textArea)
+                      textArea.select()
+                      document.execCommand('copy')
+                      document.body.removeChild(textArea)
+                      alert('Link copiado para a área de transferência! Compartilhe com suas amigas! 💕')
+                    })
+                  }
+                }}
+                style={{
+                  padding: '8px 16px',
+                  backgroundColor: '#EC4899',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '14px',
+                  fontWeight: 'bold',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+              >
+                💕 Compartilhe com uma amiga
+              </button>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* Category Filters */}
-      <section className="px-4 mb-6">
-        <div className="max-w-sm mx-auto">
-          <div className="flex flex-wrap gap-2">
-            {categories.map(category => (
-              <button
-                key={category.id}
-                onClick={() => setSelectedCategory(category.id)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  selectedCategory === category.id
-                    ? 'bg-gray-600 text-white shadow-lg'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                <span className="mr-2">{category.icon}</span>
-                {category.name}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Products Grid */}
-      <section className="px-4 mb-6">
-        <div className="max-w-sm mx-auto">
-          <div className="space-y-4">
-            {filteredProducts.map(product => (
-              <div key={product.id} className="bg-white rounded-xl p-4 shadow-lg border border-gray-100 hover:shadow-xl transition-all">
-                <div className="flex items-start space-x-4">
-                  <span className="text-4xl">{product.image}</span>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-lg text-gray-800 mb-1">{product.name}</h3>
-                    <p className="text-sm text-gray-600 mb-2">{product.description}</p>
-                    
-                    <div className="flex items-center space-x-2 mb-2">
-                      <div className="flex items-center">
-                        {[...Array(5)].map((_, i) => (
-                          <span key={i} className={`text-sm ${i < Math.floor(product.rating) ? 'text-yellow-400' : 'text-gray-300'}`}>
-                            ⭐
-                          </span>
-                        ))}
-                      </div>
-                      <span className="text-xs text-gray-500">({product.reviews})</span>
+          {/* Lista de Produtos */}
+          <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+            {products.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '3rem 0' }}>
+                <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📦</div>
+                <h3 style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 700,
+                  color: '#374151',
+                  marginBottom: '0.5rem'
+                }}>
+                  Nenhum produto disponível
+                </h3>
+                <p style={{ color: '#6b7280' }}>
+                  Os produtos para o mercado ainda não foram configurados.
+                </p>
+                <Link href="/produtos" style={{
+                  display: 'inline-block',
+                  marginTop: '1rem',
+                  padding: '12px 24px',
+                  backgroundColor: '#3b82f6',
+                  color: 'white',
+                  textDecoration: 'none',
+                  borderRadius: '8px',
+                  fontWeight: 'bold'
+                }}>
+                  Ver Todas as Categorias
+                </Link>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                {products.map((product) => (
+                  <div key={product.id} style={{
+                    background: 'white',
+                    borderRadius: '15px',
+                    padding: '1rem',
+                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    transition: 'all 0.3s ease'
+                  }}>
+                    {/* Nome do produto */}
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <h3 style={{
+                        fontWeight: 600,
+                        color: '#1f2937',
+                        fontSize: '1rem',
+                        margin: 0
+                      }}>
+                        {product.name}
+                      </h3>
+                      {product.description && (
+                        <p style={{
+                          fontSize: '0.875rem',
+                          color: '#6b7280',
+                          margin: '0.25rem 0 0 0',
+                          lineHeight: 1.4
+                        }}>
+                          {product.description}
+                        </p>
+                      )}
+                      {product.current_price && (
+                        <p style={{
+                          fontSize: '0.875rem',
+                          color: '#059669',
+                          fontWeight: 600,
+                          margin: '0.25rem 0 0 0'
+                        }}>
+                          {product.current_price}
+                        </p>
+                      )}
                     </div>
                     
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-lg font-bold text-gray-800">R$ {product.price}</span>
-                        <span className="text-sm text-gray-500 line-through">R$ {product.originalPrice}</span>
-                      </div>
-                      
-                      <a 
-                        href={product.link}
+                    {/* Imagem pequena */}
+                    <div style={{
+                      width: '48px',
+                      height: '48px',
+                      background: '#f9fafb',
+                      borderRadius: '8px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      overflow: 'hidden',
+                      flexShrink: 0
+                    }}>
+                      {product.image_url ? (
+                        <img
+                          src={product.image_url}
+                          alt={product.name}
+                          style={{
+                            width: '48px',
+                            height: '48px',
+                            objectFit: 'cover',
+                            borderRadius: '8px'
+                          }}
+                          onError={(e) => {
+                            e.currentTarget.src = '/images/placeholder-product.png'
+                          }}
+                        />
+                      ) : (
+                        <div style={{ fontSize: '1.2rem', color: '#9ca3af' }}>📦</div>
+                      )}
+                    </div>
+
+                    {/* Botão Amazon */}
+                    <div style={{ flexShrink: 0 }}>
+                      <a
+                        href={ensureAffiliateTag(product.amazon_url || '')}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          background: 'linear-gradient(135deg, #f97316, #ea580c)',
+                          color: 'white',
+                          fontWeight: 700,
+                          padding: '0.75rem 1.5rem',
+                          borderRadius: '10px',
+                          textDecoration: 'none',
+                          fontSize: '0.9rem',
+                          transition: 'all 0.3s ease',
+                          boxShadow: '0 4px 12px rgba(249, 115, 22, 0.3)'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-2px)'
+                          e.currentTarget.style.boxShadow = '0 8px 20px rgba(249, 115, 22, 0.4)'
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0)'
+                          e.currentTarget.style.boxShadow = '0 4px 12px rgba(249, 115, 22, 0.3)'
+                        }}
                       >
-                        Comprar
+                        <span>🛒</span>
+                        Ver na Amazon
                       </a>
                     </div>
                   </div>
-                </div>
+                ))}
               </div>
-            ))}
+            )}
+          </div>
+
+          {/* Botão Indique sua Amiga */}
+          <div style={{ textAlign: 'center', marginTop: '3rem', marginBottom: '2rem' }}>
+            <div style={{
+              background: 'linear-gradient(135deg, #fce7f3, #f3e8ff, #dbeafe)',
+              borderRadius: '25px',
+              padding: '1.5rem',
+              maxWidth: '500px',
+              margin: '0 auto',
+              boxShadow: '0 20px 40px rgba(0, 0, 0, 0.1)',
+              border: '1px solid rgba(255, 255, 255, 0.3)'
+            }}>
+              <h3 style={{
+                fontSize: '1.5rem',
+                fontWeight: 700,
+                color: '#1f2937',
+                marginBottom: '1.5rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.5rem'
+              }}>
+                <span style={{ fontSize: '1.8rem' }}>💝</span>
+                Compartilhe com uma amiga!
+              </h3>
+              <Link 
+                href="/avaliacao"
+                style={{ textDecoration: 'none' }}
+              >
+                <button style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  background: 'linear-gradient(135deg, #ec4899, #8b5cf6, #3b82f6)',
+                  color: 'white',
+                  fontWeight: 700,
+                  padding: '1rem 2rem',
+                  borderRadius: '15px',
+                  border: 'none',
+                  fontSize: '1rem',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  boxShadow: '0 8px 25px rgba(236, 72, 153, 0.3)'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-3px)'
+                  e.currentTarget.style.boxShadow = '0 15px 35px rgba(236, 72, 153, 0.4)'
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)'
+                  e.currentTarget.style.boxShadow = '0 8px 25px rgba(236, 72, 153, 0.3)'
+                }}
+                >
+                  <span style={{ fontSize: '1.2rem' }}>👭</span>
+                  Indique sua amiga para fazer a avaliação
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
-      </section>
-
-      {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-2">
-        <div className="max-w-sm mx-auto flex justify-around">
-          <Link href="/" className="flex flex-col items-center py-1 text-gray-400">
-            <span className="text-lg">🏠</span>
-            <span className="text-xs">Home</span>
-          </Link>
-          <Link href="/receitas" className="flex flex-col items-center py-1 text-gray-400">
-            <span className="text-lg">🍲</span>
-            <span className="text-xs">Receitas</span>
-          </Link>
-          <Link href="/protocolos" className="flex flex-col items-center py-1 text-gray-400">
-            <span className="text-lg">📋</span>
-            <span className="text-xs">Protocolos</span>
-          </Link>
-          <Link href="/avaliacao" className="flex flex-col items-center py-1 text-gray-400">
-            <span className="text-lg">🧠</span>
-            <span className="text-xs">Avaliação</span>
-          </Link>
-          <button className="flex flex-col items-center py-1 text-gray-600">
-            <span className="text-lg">🛒</span>
-            <span className="text-xs font-semibold">Mercado</span>
-          </button>
-        </div>
-      </div>
-    </div>
+      </main>
+    </>
   )
 }

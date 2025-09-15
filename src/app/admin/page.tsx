@@ -3,325 +3,336 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
-
-interface Receita {
-  id: number
-  nome: string
-  descricao: string
-  tipo: 'gratuita' | 'paga'
-  preco: number
-  link_pdf: string
-  status: 'ativa' | 'inativa'
-  data_criacao: string
-}
+import { productService, categoryService, recipeService } from '@/lib/supabase'
 
 export default function AdminPage() {
-  const [receitas, setReceitas] = useState<Receita[]>([])
-  const [loading, setLoading] = useState(true)
-  const [showForm, setShowForm] = useState(false)
-  const [formData, setFormData] = useState({
-    nome: '',
-    descricao: '',
-    tipo: 'gratuita' as 'gratuita' | 'paga',
-    preco: 0,
-    link_pdf: '',
-    status: 'ativa' as 'ativa' | 'inativa'
+  const [activeTab, setActiveTab] = useState('dashboard')
+  const [stats, setStats] = useState({
+    recipes: 0,
+    products: 0,
+    categories: 0
   })
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Mock data para demonstração
-    const mockReceitas: Receita[] = [
-      {
-        id: 1,
-        nome: "Smoothie Verde Detox",
-        descricao: "Bebida refrescante rica em clorofila e antioxidantes para desintoxicar o organismo",
-        tipo: "gratuita",
-        preco: 0,
-        link_pdf: "https://drive.google.com/file/d/abc123",
-        status: "ativa",
-        data_criacao: "2024-01-15"
-      },
-      {
-        id: 2,
-        nome: "Bowl Energético com Quinoa",
-        descricao: "Refeição completa e nutritiva perfeita para dar energia durante o dia",
-        tipo: "paga",
-        preco: 1.99,
-        link_pdf: "https://drive.google.com/file/d/def456",
-        status: "ativa",
-        data_criacao: "2024-01-16"
-      },
-      {
-        id: 3,
-        nome: "Sopa Anti-inflamatória",
-        descricao: "Sopa reconfortante com ingredientes que combatem inflamações",
-        tipo: "paga",
-        preco: 2.99,
-        link_pdf: "https://drive.google.com/file/d/ghi789",
-        status: "ativa",
-        data_criacao: "2024-01-17"
-      }
-    ]
-    
-    setTimeout(() => {
-      setReceitas(mockReceitas)
-      setLoading(false)
-    }, 1000)
+    loadStats()
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    const novaReceita: Receita = {
-      id: receitas.length + 1,
-      ...formData,
-      data_criacao: new Date().toISOString().split('T')[0]
+  const loadStats = async () => {
+    try {
+      const [recipes, products, categories] = await Promise.all([
+        recipeService.getAllRecipes(),
+        productService.getAllProducts(),
+        categoryService.getAllCategories()
+      ])
+      
+      setStats({
+        recipes: recipes.length,
+        products: products.length,
+        categories: categories.length
+      })
+    } catch (error) {
+      console.error('Erro ao carregar estatísticas:', error)
+    } finally {
+      setLoading(false)
     }
-    
-    setReceitas([...receitas, novaReceita])
-    setFormData({
-      nome: '',
-      descricao: '',
-      tipo: 'gratuita',
-      preco: 0,
-      link_pdf: '',
-      status: 'ativa'
-    })
-    setShowForm(false)
   }
 
-  const generateLink = (receita: Receita) => {
-    const linkUnico = `app.meuportalfit.com/receita/${receita.id}-${receita.nome.toLowerCase().replace(/\s+/g, '-')}`
-    navigator.clipboard.writeText(linkUnico)
-    alert(`Link único copiado: ${linkUnico}`)
-  }
-
-  const toggleStatus = (id: number) => {
-    setReceitas(receitas.map(receita => 
-      receita.id === id 
-        ? { ...receita, status: receita.status === 'ativa' ? 'inativa' : 'ativa' }
-        : receita
-    ))
-  }
+  const adminSections = [
+    {
+      id: 'receitas',
+      title: '🍽️ Receitas',
+      description: 'Gerencie receitas e protocolos nutricionais',
+      href: '/admin-receitas',
+      color: 'bg-green-500',
+      stats: `${stats.recipes} receitas ativas`
+    },
+    {
+      id: 'produtos',
+      title: '🛒 Produtos',
+      description: 'Gerencie produtos e suplementos',
+      href: '/admin-produtos',
+      color: 'bg-blue-500',
+      stats: `${stats.products} produtos cadastrados`
+    },
+    {
+      id: 'protocolos',
+      title: '📋 Protocolos',
+      description: 'Gerencie protocolos nutricionais',
+      href: '/admin-protocolos',
+      color: 'bg-purple-500',
+      stats: 'Em desenvolvimento'
+    },
+    {
+      id: 'categorias',
+      title: '🏷️ Categorias',
+      description: 'Gerencie categorias de produtos',
+      href: '/admin-categorias',
+      color: 'bg-orange-500',
+      stats: `${stats.categories} categorias ativas`
+    },
+    {
+      id: 'usuarios',
+      title: '👥 Usuários',
+      description: 'Gerencie usuários e avaliações',
+      href: '/admin-usuarios',
+      color: 'bg-pink-500',
+      stats: 'Em desenvolvimento'
+    },
+    {
+      id: 'configuracoes',
+      title: '⚙️ Configurações',
+      description: 'Configurações gerais do sistema',
+      href: '/admin-configuracoes',
+      color: 'bg-gray-500',
+      stats: 'Em desenvolvimento'
+    }
+  ]
 
   return (
-    <div className="min-h-screen bg-brand-cream">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       {/* Header */}
-      <header className="bg-white shadow-soft sticky top-0 z-50">
-        <div className="max-w-sm mx-auto px-4 py-3">
-          <div className="flex justify-between items-center">
+      <header className="bg-white shadow-sm border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
             <Logo variant="horizontal" size="md" />
-            <Link href="/">
-              <button className="bg-brand-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-greenDark transition-colors">
-                🏠 Início
-              </button>
-            </Link>
+            <div className="flex items-center space-x-4">
+              <Link href="/" className="text-sm text-gray-600 hover:text-brand-green transition-colors">
+                ← Voltar ao App
+              </Link>
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Conteúdo Principal */}
-      <main className="max-w-sm mx-auto px-4 py-6">
-        {/* Título */}
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-brand-text mb-2">
-            🔧 Área Administrativa
-          </h1>
-          <p className="text-brand-textLight text-sm">
-            Gerencie suas receitas e protocolos nutricionais
-          </p>
-        </div>
-
-        {/* Estatísticas */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="bg-white rounded-xl p-4 shadow-soft text-center">
-            <div className="text-2xl font-bold text-brand-green">
-              {receitas.length}
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        {/* Header */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-800 mb-2">🎛️ Painel Administrativo</h1>
+              <p className="text-gray-600">Gerencie todos os aspectos do MeuPortalFit</p>
             </div>
-            <div className="text-sm text-brand-textLight">
-              Total de Receitas
-            </div>
-          </div>
-          <div className="bg-white rounded-xl p-4 shadow-soft text-center">
-            <div className="text-2xl font-bold text-brand-green">
-              {receitas.filter(r => r.status === 'ativa').length}
-            </div>
-            <div className="text-sm text-brand-textLight">
-              Receitas Ativas
-            </div>
+            <button
+              onClick={loadStats}
+              disabled={loading}
+              className="flex items-center px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors disabled:opacity-50"
+            >
+              <span className="mr-2">{loading ? '🔄' : '🔄'}</span>
+              {loading ? 'Atualizando...' : 'Atualizar'}
+            </button>
           </div>
         </div>
 
-        {/* Botão Adicionar Receita */}
-        <div className="mb-6">
-          <button
-            onClick={() => setShowForm(!showForm)}
-            className="w-full bg-brand-green text-white py-3 rounded-xl font-bold hover:bg-brand-greenDark transition-colors"
-          >
-            {showForm ? 'Cancelar' : '+ Adicionar Nova Receita'}
-          </button>
+        {/* Quick Actions - MOVED TO TOP */}
+        <div className="mb-8 bg-white rounded-xl shadow-lg p-6">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">⚡ Ações Rápidas</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Link
+              href="/admin-receitas"
+              className="flex items-center p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors group"
+            >
+              <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">➕</span>
+              <div>
+                <h3 className="font-medium text-gray-800">Nova Receita</h3>
+                <p className="text-sm text-gray-600">Adicionar receita</p>
+              </div>
+            </Link>
+            
+            <Link
+              href="/admin-produtos"
+              className="flex items-center p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors group"
+            >
+              <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">🛒</span>
+              <div>
+                <h3 className="font-medium text-gray-800">Novo Produto</h3>
+                <p className="text-sm text-gray-600">Adicionar produto</p>
+              </div>
+            </Link>
+            
+            <Link
+              href="/admin-categorias"
+              className="flex items-center p-4 bg-orange-50 rounded-lg hover:bg-orange-100 transition-colors group"
+            >
+              <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">🏷️</span>
+              <div>
+                <h3 className="font-medium text-gray-800">Nova Categoria</h3>
+                <p className="text-sm text-gray-600">Criar categoria</p>
+              </div>
+            </Link>
+            
+            <Link
+              href="/admin-protocolos"
+              className="flex items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors group"
+            >
+              <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">📋</span>
+              <div>
+                <h3 className="font-medium text-gray-800">Novo Protocolo</h3>
+                <p className="text-sm text-gray-600">Criar protocolo</p>
+              </div>
+            </Link>
+            
+            <Link
+              href="/admin-sync"
+              className="flex items-center p-4 bg-yellow-50 rounded-lg hover:bg-yellow-100 transition-colors group"
+            >
+              <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">🔄</span>
+              <div>
+                <h3 className="font-medium text-gray-800">Sincronizar</h3>
+                <p className="text-sm text-gray-600">Com MeuPortalFit</p>
+              </div>
+            </Link>
+          </div>
         </div>
 
-        {/* Formulário de Cadastro */}
-        {showForm && (
-          <div className="bg-white rounded-xl p-4 shadow-soft mb-6">
-            <h3 className="font-bold text-brand-text mb-4">Cadastrar Nova Receita</h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-brand-text mb-1">
-                  Nome da Receita
-                </label>
-                <input
-                  type="text"
-                  value={formData.nome}
-                  onChange={(e) => setFormData({...formData, nome: e.target.value})}
-                  className="w-full px-3 py-2 border border-brand-green/20 rounded-lg focus:outline-none focus:border-brand-green"
-                  required
-                />
+        {/* Dashboard Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="flex items-center">
+              <div className="p-3 bg-green-100 rounded-lg">
+                <span className="text-2xl">🍽️</span>
               </div>
-
-              <div>
-                <label className="block text-sm font-medium text-brand-text mb-1">
-                  Descrição
-                </label>
-                <textarea
-                  value={formData.descricao}
-                  onChange={(e) => setFormData({...formData, descricao: e.target.value})}
-                  className="w-full px-3 py-2 border border-brand-green/20 rounded-lg focus:outline-none focus:border-brand-green"
-                  rows={3}
-                  required
-                />
+              <div className="ml-4">
+                <h3 className="text-lg font-semibold text-gray-800">Receitas</h3>
+                <p className="text-2xl font-bold text-green-600">{stats.recipes}</p>
+                <p className="text-sm text-gray-500">Ativas</p>
               </div>
+            </div>
+          </div>
 
-              <div>
-                <label className="block text-sm font-medium text-brand-text mb-1">
-                  Tipo
-                </label>
-                <select
-                  value={formData.tipo}
-                  onChange={(e) => setFormData({...formData, tipo: e.target.value as 'gratuita' | 'paga'})}
-                  className="w-full px-3 py-2 border border-brand-green/20 rounded-lg focus:outline-none focus:border-brand-green"
-                >
-                  <option value="gratuita">Gratuita</option>
-                  <option value="paga">Paga</option>
-                </select>
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="flex items-center">
+              <div className="p-3 bg-blue-100 rounded-lg">
+                <span className="text-2xl">🛒</span>
               </div>
+              <div className="ml-4">
+                <h3 className="text-lg font-semibold text-gray-800">Produtos</h3>
+                <p className="text-2xl font-bold text-blue-600">{stats.products}</p>
+                <p className="text-sm text-gray-500">Cadastrados</p>
+              </div>
+            </div>
+          </div>
 
-              {formData.tipo === 'paga' && (
-                <div>
-                  <label className="block text-sm font-medium text-brand-text mb-1">
-                    Preço ($)
-                  </label>
-                  <input
-                    type="number"
-                    step="0.01"
-                    min="0"
-                    value={formData.preco}
-                    onChange={(e) => setFormData({...formData, preco: parseFloat(e.target.value)})}
-                    className="w-full px-3 py-2 border border-brand-green/20 rounded-lg focus:outline-none focus:border-brand-green"
-                    required={formData.tipo === 'paga'}
-                  />
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="flex items-center">
+              <div className="p-3 bg-orange-100 rounded-lg">
+                <span className="text-2xl">🏷️</span>
+              </div>
+              <div className="ml-4">
+                <h3 className="text-lg font-semibold text-gray-800">Categorias</h3>
+                <p className="text-2xl font-bold text-orange-600">{stats.categories}</p>
+                <p className="text-sm text-gray-500">Ativas</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Admin Sections */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {adminSections.map((section) => (
+            <Link
+              key={section.id}
+              href={section.href}
+              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-200 group"
+            >
+              <div className="flex items-start space-x-4">
+                <div className={`p-3 ${section.color} rounded-lg group-hover:scale-110 transition-transform duration-200`}>
+                  <span className="text-white text-xl">{section.title.split(' ')[0]}</span>
                 </div>
-              )}
-
-              <div>
-                <label className="block text-sm font-medium text-brand-text mb-1">
-                  Link do PDF (Google Drive)
-                </label>
-                <input
-                  type="url"
-                  value={formData.link_pdf}
-                  onChange={(e) => setFormData({...formData, link_pdf: e.target.value})}
-                  className="w-full px-3 py-2 border border-brand-green/20 rounded-lg focus:outline-none focus:border-brand-green"
-                  placeholder="https://drive.google.com/file/d/..."
-                  required
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-brand-text mb-1">
-                  Status
-                </label>
-                <select
-                  value={formData.status}
-                  onChange={(e) => setFormData({...formData, status: e.target.value as 'ativa' | 'inativa'})}
-                  className="w-full px-3 py-2 border border-brand-green/20 rounded-lg focus:outline-none focus:border-brand-green"
-                >
-                  <option value="ativa">Ativa</option>
-                  <option value="inativa">Inativa</option>
-                </select>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-brand-green text-white py-3 rounded-lg font-bold hover:bg-brand-greenDark transition-colors"
-              >
-                Salvar Receita
-              </button>
-            </form>
-          </div>
-        )}
-
-        {/* Lista de Receitas */}
-        {loading ? (
-          <div className="space-y-4">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-xl p-4 shadow-soft animate-pulse">
-                <div className="h-4 bg-gray-200 rounded mb-2"></div>
-                <div className="h-3 bg-gray-200 rounded mb-4"></div>
-                <div className="h-8 bg-gray-200 rounded"></div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {receitas.map((receita) => (
-              <div key={receita.id} className="bg-white rounded-xl p-4 shadow-soft">
-                <div className="flex justify-between items-start mb-3">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-bold text-brand-text text-lg">
-                        {receita.nome}
-                      </h3>
-                      <span className={`px-2 py-1 rounded-lg text-xs font-medium ${
-                        receita.status === 'ativa' 
-                          ? 'bg-brand-green text-white' 
-                          : 'bg-gray-400 text-white'
-                      }`}>
-                        {receita.status.toUpperCase()}
-                      </span>
-                    </div>
-                    <p className="text-brand-textLight text-sm leading-relaxed mb-2">
-                      {receita.descricao}
-                    </p>
-                    <div className="text-sm text-brand-textLight">
-                      <strong>Tipo:</strong> {receita.tipo === 'gratuita' ? 'Gratuita' : `Paga - $${receita.preco.toFixed(2)}`}
-                    </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                    {section.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-3">
+                    {section.description}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                      {section.stats}
+                    </span>
+                    <span className="text-gray-400 group-hover:text-gray-600 transition-colors">
+                      →
+                    </span>
                   </div>
                 </div>
+              </div>
+            </Link>
+          ))}
+        </div>
 
-                <div className="flex gap-2">
-                  <button
-                    onClick={() => generateLink(receita)}
-                    className="flex-1 bg-brand-blue text-white py-2 rounded-lg text-sm font-medium hover:bg-brand-blueDark transition-colors"
-                  >
-                    🔗 Gerar Link
-                  </button>
-                  <button
-                    onClick={() => toggleStatus(receita.id)}
-                    className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      receita.status === 'ativa'
-                        ? 'bg-red-500 text-white hover:bg-red-600'
-                        : 'bg-brand-green text-white hover:bg-brand-greenDark'
-                    }`}
-                  >
-                    {receita.status === 'ativa' ? 'Desativar' : 'Ativar'}
-                  </button>
+
+        {/* Recent Activity */}
+        <div className="mt-8 bg-white rounded-xl shadow-lg p-6">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">📈 Resumo de Atividade</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-3">📊 Estatísticas Gerais</h3>
+              <div className="space-y-2">
+                <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                  <span className="text-sm text-gray-600">Total de Receitas</span>
+                  <span className="font-semibold text-green-600">{stats.recipes}</span>
+                </div>
+                <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                  <span className="text-sm text-gray-600">Total de Produtos</span>
+                  <span className="font-semibold text-blue-600">{stats.products}</span>
+                </div>
+                <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                  <span className="text-sm text-gray-600">Total de Categorias</span>
+                  <span className="font-semibold text-orange-600">{stats.categories}</span>
                 </div>
               </div>
-            ))}
+            </div>
+            
+            <div>
+              <h3 className="font-semibold text-gray-800 mb-3">🚀 Ações Mais Usadas</h3>
+              <div className="space-y-2">
+                <Link href="/admin-produtos" className="flex items-center p-2 bg-blue-50 rounded hover:bg-blue-100 transition-colors">
+                  <span className="text-blue-600 mr-2">🛒</span>
+                  <span className="text-sm text-gray-700">Gerenciar Produtos</span>
+                </Link>
+                <Link href="/admin-receitas" className="flex items-center p-2 bg-green-50 rounded hover:bg-green-100 transition-colors">
+                  <span className="text-green-600 mr-2">🍽️</span>
+                  <span className="text-sm text-gray-700">Gerenciar Receitas</span>
+                </Link>
+                <Link href="/admin-categorias" className="flex items-center p-2 bg-orange-50 rounded hover:bg-orange-100 transition-colors">
+                  <span className="text-orange-600 mr-2">🏷️</span>
+                  <span className="text-sm text-gray-700">Gerenciar Categorias</span>
+                </Link>
+              </div>
+            </div>
           </div>
-        )}
+        </div>
+
+        {/* System Status */}
+        <div className="mt-8 bg-white rounded-xl shadow-lg p-6">
+          <h2 className="text-xl font-bold text-gray-800 mb-4">📊 Status do Sistema</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="flex items-center p-4 bg-green-50 rounded-lg">
+              <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+              <div>
+                <h3 className="font-medium text-gray-800">Supabase</h3>
+                <p className="text-sm text-gray-600">Conectado</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center p-4 bg-green-50 rounded-lg">
+              <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+              <div>
+                <h3 className="font-medium text-gray-800">API</h3>
+                <p className="text-sm text-gray-600">Funcionando</p>
+              </div>
+            </div>
+            
+            <div className="flex items-center p-4 bg-green-50 rounded-lg">
+              <div className="w-3 h-3 bg-green-500 rounded-full mr-3"></div>
+              <div>
+                <h3 className="font-medium text-gray-800">PWA</h3>
+                <p className="text-sm text-gray-600">Ativo</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </div>
   )
