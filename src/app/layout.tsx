@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MeuPortalFit - Saúde dos Brasileiros nos EUA",
-  description: "Avaliação gratuita de bem-estar personalizada para brasileiros nos Estados Unidos",
+  title: "MeuPortalFit - Brasileiros nos EUA",
+  description: "Saúde e bem-estar para brasileiros nos Estados Unidos. Receitas, produtos, avaliações personalizadas e muito mais!",
   manifest: "/manifest.json",
   themeColor: "#22c55e",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
@@ -27,21 +27,34 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/logo-192x192.png", sizes: "192x192", type: "image/png" },
-      { url: "/logo-512x512.png", sizes: "512x512", type: "image/png" },
-      { url: "/logo-128x128.png", sizes: "128x128", type: "image/png" },
-      { url: "/logo-64x64.png", sizes: "64x64", type: "image/png" },
-      { url: "/logo-32x32.png", sizes: "32x32", type: "image/png" }
+      { url: "/icons/icon-192x192.svg", sizes: "192x192", type: "image/svg+xml" },
+      { url: "/icons/icon-512x512.svg", sizes: "512x512", type: "image/svg+xml" }
     ],
     apple: [
-      { url: "/logo-192x192.png", sizes: "180x180", type: "image/png" }
+      { url: "/icons/icon-192x192.svg", sizes: "180x180", type: "image/svg+xml" }
     ]
   },
   openGraph: {
-    title: "MeuPortalFit - Saúde dos Brasileiros nos EUA",
-    description: "Avaliação gratuita de bem-estar personalizada para brasileiros nos Estados Unidos",
+    title: "MeuPortalFit - Brasileiros nos EUA",
+    description: "Saúde e bem-estar para brasileiros nos Estados Unidos. Receitas, produtos, avaliações personalizadas e muito mais!",
     type: "website",
     locale: "pt_BR",
+    url: "https://meuportalfit.com",
+    siteName: "MeuPortalFit",
+    images: [
+      {
+        url: "/icons/icon-512x512.svg",
+        width: 512,
+        height: 512,
+        alt: "MeuPortalFit - Brasileiros nos EUA",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MeuPortalFit - Brasileiros nos EUA",
+    description: "Saúde e bem-estar para brasileiros nos Estados Unidos",
+    images: ["/icons/icon-512x512.svg"],
   },
 };
 
@@ -58,9 +71,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="MeuPortalFit" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
-        <link rel="icon" type="image/png" sizes="512x512" href="/icon-512.png" />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.svg" />
+        <link rel="icon" type="image/svg+xml" sizes="192x192" href="/icons/icon-192x192.svg" />
+        <link rel="icon" type="image/svg+xml" sizes="512x512" href="/icons/icon-512x512.svg" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="application-name" content="MeuPortalFit" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />

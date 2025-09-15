@@ -1,7 +1,7 @@
 {
-  "name": "MeuPortalFit - Saúde dos Brasileiros nos EUA",
+  "name": "MeuPortalFit - Brasileiros nos EUA",
   "short_name": "MeuPortalFit",
-  "description": "Avaliação gratuita de bem-estar personalizada para brasileiros nos Estados Unidos",
+  "description": "Saúde e bem-estar para brasileiros nos Estados Unidos",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -12,34 +12,16 @@
   "categories": ["health", "lifestyle", "medical"],
   "icons": [
     {
-      "src": "/logo-192x192.png",
+      "src": "/icons/icon-192x192.svg",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     },
     {
-      "src": "/logo-512x512.png",
+      "src": "/icons/icon-512x512.svg",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/logo-128x128.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/logo-64x64.png",
-      "sizes": "64x64",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/logo-32x32.png",
-      "sizes": "32x32",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ],
   "screenshots": [
