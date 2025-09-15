@@ -88,7 +88,7 @@ export default function Home() {
             <h2 className="text-lg font-bold">Fale com Coach Brasileira AGORA</h2>
           </div>
           <a 
-            href="tel:+1234567890" 
+            href="https://wa.me/17862535032" 
             className="inline-block bg-white text-orange-600 px-6 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
           >
             📞 LIGAR AGORA
@@ -146,7 +146,7 @@ export default function Home() {
             </Link>
 
             {/* 4. Avaliação Personalizada */}
-            <a href="tel:+1234567890" className="w-full bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-4 text-white shadow-lg hover:shadow-xl transition-all border border-green-600 transform hover:scale-105 block">
+            <a href="https://wa.me/17862535032" className="w-full bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-4 text-white shadow-lg hover:shadow-xl transition-all border border-green-600 transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
                 <span className="text-3xl">👩‍⚕️</span>
                 <div className="flex-1 text-left">
