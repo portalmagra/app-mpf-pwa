@@ -70,7 +70,7 @@ export default function Home() {
           <div className="flex justify-between items-center">
             <div>
               <Logo variant="horizontal" size="md" />
-              <p className="text-xs text-brand-text2 mt-1">Para brasileiros dos Estados Unidos</p>
+              <p className="text-xs text-brand-text2 mt-1">Para brasileiros nos EUA</p>
             </div>
             <button 
               id="install-button"
