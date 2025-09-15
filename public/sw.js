@@ -1,10 +1,9 @@
-const CACHE_NAME = 'meuportalfit-v1.0.0';
+const CACHE_NAME = 'meuportalfit-v1.0.1';
+const STATIC_CACHE_NAME = 'meuportalfit-static-v1.0.1';
 const urlsToCache = [
   '/',
   '/avaliacao',
   '/resultados',
-  '/static/js/bundle.js',
-  '/static/css/main.css',
   '/manifest.json',
   '/icon-192.png',
   '/icon-512.png'
@@ -36,7 +35,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
-          if (cacheName !== CACHE_NAME) {
+          if (cacheName !== CACHE_NAME && cacheName !== STATIC_CACHE_NAME) {
             console.log('🗑️ Service Worker: Removendo cache antigo:', cacheName);
             return caches.delete(cacheName);
           }
@@ -51,49 +50,76 @@ self.addEventListener('activate', (event) => {
 
 // Interceptar requisições
 self.addEventListener('fetch', (event) => {
-  // Estratégia: Cache First para recursos estáticos, Network First para APIs
-  if (event.request.url.includes('/api/')) {
-    // Para APIs: Network First
+  const { request } = event;
+  const url = new URL(request.url);
+
+  // Ignorar requisições que não são HTTP/HTTPS
+  if (!request.url.startsWith('http')) {
+    return;
+  }
+
+  // Para APIs: sempre buscar na rede primeiro
+  if (url.pathname.startsWith('/api/')) {
     event.respondWith(
-      fetch(event.request)
+      fetch(request)
         .then((response) => {
           // Se a requisição foi bem-sucedida, retorna a resposta
           return response;
         })
         .catch(() => {
           // Se falhou, tenta buscar no cache
-          return caches.match(event.request);
+          return caches.match(request);
         })
     );
-  } else {
-    // Para recursos estáticos: Cache First
+    return;
+  }
+
+  // Para páginas HTML: Network First com fallback para cache
+  if (request.headers.get('accept')?.includes('text/html')) {
     event.respondWith(
-      caches.match(event.request)
+      fetch(request)
         .then((response) => {
-          // Se encontrou no cache, retorna
-          if (response) {
-            return response;
+          // Se a resposta é válida, atualiza o cache
+          if (response.status === 200) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(request, responseClone);
+            });
           }
-          
-          // Se não encontrou, busca na rede
-          return fetch(event.request).then((response) => {
-            // Verifica se a resposta é válida
-            if (!response || response.status !== 200 || response.type !== 'basic') {
+          return response;
+        })
+        .catch(() => {
+          // Se falhou, busca no cache
+          return caches.match(request).then((response) => {
+            if (response) {
               return response;
             }
-
-            // Clona a resposta para o cache
-            const responseToCache = response.clone();
-            caches.open(CACHE_NAME)
-              .then((cache) => {
-                cache.put(event.request, responseToCache);
-              });
-
-            return response;
+            // Se não encontrou no cache, retorna página offline
+            return caches.match('/');
           });
         })
     );
+    return;
   }
+
+  // Para recursos estáticos (CSS, JS, imagens): Stale While Revalidate
+  event.respondWith(
+    caches.match(request).then((cachedResponse) => {
+      const fetchPromise = fetch(request).then((response) => {
+        // Se a resposta é válida, atualiza o cache
+        if (response.status === 200) {
+          const responseClone = response.clone();
+          caches.open(STATIC_CACHE_NAME).then((cache) => {
+            cache.put(request, responseClone);
+          });
+        }
+        return response;
+      });
+
+      // Retorna cache imediatamente se disponível, senão aguarda a rede
+      return cachedResponse || fetchPromise;
+    })
+  );
 });
 
 // Notificações Push (para futuras implementações)
@@ -139,4 +165,28 @@ self.addEventListener('notificationclick', (event) => {
       clients.openWindow('/')
     );
   }
+});
+
+// Detectar atualizações do Service Worker
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
+// Notificar clientes sobre atualizações
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    self.clients.claim().then(() => {
+      // Notificar todos os clientes sobre a atualização
+      return self.clients.matchAll().then((clients) => {
+        clients.forEach((client) => {
+          client.postMessage({
+            type: 'SW_UPDATED',
+            message: 'Nova versão disponível! Recarregue a página para ver as atualizações.'
+          });
+        });
+      });
+    })
+  );
 });
