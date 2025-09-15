@@ -4,7 +4,15 @@ import { useState, useEffect } from 'react'
 import Logo from '@/components/Logo'
 
 export default function AdminSyncPage() {
-  const [syncStatus, setSyncStatus] = useState<any>(null)
+  const [syncStatus, setSyncStatus] = useState<{
+    hasDataFiles: boolean
+    dataStats: {
+      products: number
+      categories: number
+      mercadoProducts: number
+    } | null
+    message: string
+  } | null>(null)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState('')
 
@@ -100,7 +108,7 @@ export default function AdminSyncPage() {
               <code className="block bg-blue-100 p-2 rounded text-xs">
                 node sync-meuportalfit.js
               </code>
-              <p><strong>2.</strong> Clique no botão "Sincronizar Agora" abaixo</p>
+              <p><strong>2.</strong> Clique no botão &quot;Sincronizar Agora&quot; abaixo</p>
               <p><strong>3.</strong> Verifique os produtos na área administrativa</p>
             </div>
           </div>
