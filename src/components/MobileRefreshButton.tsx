@@ -36,8 +36,13 @@ export default function MobileRefreshButton() {
       })
     }
 
-    // Forçar reload com cache busting
-    window.location.reload()
+    // Limpar localStorage version para forçar atualização
+    localStorage.removeItem('app-version')
+
+    // Forçar reload com cache busting via URL
+    const url = new URL(window.location.href)
+    url.searchParams.set('_cb', Date.now().toString())
+    window.location.href = url.toString()
   }
 
   if (!isMobile || !isVisible) {
