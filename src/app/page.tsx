@@ -68,10 +68,7 @@ export default function Home() {
       <header className="bg-brand-greenSoft shadow-soft sticky top-0 z-50 border-b border-brand-border">
         <div className="max-w-sm mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
-            <div>
-              <Logo variant="horizontal" size="md" />
-              <p className="text-xs text-brand-text2 mt-1">Para brasileiros nos EUA</p>
-            </div>
+            <Logo variant="horizontal" size="md" />
             <button 
               id="install-button"
               className="bg-brand-green text-white px-5 py-3 rounded-xl text-sm font-bold hover:bg-brand-greenDark transition-all transform hover:scale-105"
