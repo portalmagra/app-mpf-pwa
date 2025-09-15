@@ -203,7 +203,8 @@ export default function AdminReceitas() {
       price: 0,
       pdfLink: '',
       imageUrl: '',
-      status: 'active'
+      status: 'active',
+      isFree: false
     })
     setEditingRecipe(null)
     setShowForm(false)
