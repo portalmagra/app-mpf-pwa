@@ -36,6 +36,7 @@ export default function AvaliacaoPersonalizada() {
               controls
               className="w-full h-full object-cover"
               poster="/images/coach-video-poster.jpg"
+              preload="metadata"
             >
               <source src="/videos/Avaliacao.mp4" type="video/mp4" />
               Seu navegador não suporta vídeos HTML5.
