@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import PWAInstaller from "@/components/PWAInstaller";
 import NuclearCacheClear from "@/components/NuclearCacheClear";
+import MobileSync from "@/components/MobileSync";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -76,6 +77,7 @@ export default function RootLayout({
       >
         {children}
         <NuclearCacheClear />
+        <MobileSync />
         <PWAInstaller />
       </body>
     </html>

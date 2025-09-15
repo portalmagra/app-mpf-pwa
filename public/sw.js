@@ -1,5 +1,5 @@
-const CACHE_NAME = 'meuportalfit-v1.0.6';
-const STATIC_CACHE_NAME = 'meuportalfit-static-v1.0.6';
+const CACHE_NAME = 'meuportalfit-v1.0.7';
+const STATIC_CACHE_NAME = 'meuportalfit-static-v1.0.7';
 const urlsToCache = [
   '/',
   '/avaliacao',
