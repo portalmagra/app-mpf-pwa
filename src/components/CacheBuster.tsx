@@ -6,13 +6,11 @@ export default function CacheBuster() {
   useEffect(() => {
     // Verificar se há uma versão nova no localStorage
     const checkForUpdates = () => {
-      const currentVersion = '1.0.4'
+      const currentVersion = '1.0.5'
       const storedVersion = localStorage.getItem('app-version')
       
       if (storedVersion !== currentVersion) {
-        console.log('🔄 Nova versão detectada, limpando cache...')
-        
-        // Limpar todos os caches
+        // Limpar todos os caches silenciosamente
         if ('caches' in window) {
           caches.keys().then((cacheNames) => {
             cacheNames.forEach((cacheName) => {
@@ -24,7 +22,7 @@ export default function CacheBuster() {
         // Atualizar versão no localStorage
         localStorage.setItem('app-version', currentVersion)
         
-        // Forçar reload com cache busting
+        // Forçar reload silencioso com cache busting
         const url = new URL(window.location.href)
         url.searchParams.set('_cb', Date.now().toString())
         window.location.href = url.toString()
@@ -34,10 +32,25 @@ export default function CacheBuster() {
     // Verificar imediatamente
     checkForUpdates()
 
-    // Verificar a cada 10 segundos
-    const interval = setInterval(checkForUpdates, 10000)
+    // Verificar a cada 5 segundos (mais frequente)
+    const interval = setInterval(checkForUpdates, 5000)
 
-    return () => clearInterval(interval)
+    // Verificar quando a página ganha foco (mobile)
+    const handleFocus = () => {
+      setTimeout(checkForUpdates, 1000)
+    }
+    
+    window.addEventListener('focus', handleFocus)
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        setTimeout(checkForUpdates, 1000)
+      }
+    })
+
+    return () => {
+      clearInterval(interval)
+      window.removeEventListener('focus', handleFocus)
+    }
   }, [])
 
   return null
