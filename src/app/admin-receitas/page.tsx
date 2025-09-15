@@ -57,7 +57,8 @@ export default function AdminReceitas() {
     price: 0,
     pdfLink: '',
     imageUrl: '',
-    status: 'active'
+    status: 'active',
+    isFree: true
   })
 
   const [showForm, setShowForm] = useState(false)
@@ -75,7 +76,9 @@ export default function AdminReceitas() {
   ]
 
   const handleAddRecipe = () => {
-    if (newRecipe.name && newRecipe.description && newRecipe.pdfLink) {
+    console.log('Tentando salvar receita:', newRecipe)
+    
+    if (newRecipe.name && newRecipe.pdfLink) {
       const id = Math.max(...recipes.map((r: { id: number }) => r.id)) + 1
       const accessLink = `https://app.meuportalfit.com/receita/${id}`
       
@@ -85,14 +88,18 @@ export default function AdminReceitas() {
         accessLink
       }
       
+      console.log('Nova receita criada:', recipe)
+      
       const updatedRecipes = [...recipes, recipe]
       setRecipes(updatedRecipes)
       
       // Salvar no localStorage
       if (typeof window !== 'undefined') {
         localStorage.setItem('mpf-recipes', JSON.stringify(updatedRecipes))
+        console.log('Receita salva no localStorage')
       }
       
+      // Reset form
       setNewRecipe({
         name: '',
         description: '',
@@ -100,9 +107,15 @@ export default function AdminReceitas() {
         price: 0,
         pdfLink: '',
         imageUrl: '',
-        status: 'active'
+        status: 'active',
+        isFree: true
       })
+      setEditingRecipe(null)
       setShowForm(false)
+      
+      alert('Receita salva com sucesso!')
+    } else {
+      alert('Por favor, preencha todos os campos obrigatórios (Nome e Link do PDF)')
     }
   }
 
@@ -133,14 +146,15 @@ export default function AdminReceitas() {
       price: recipe.price,
       pdfLink: recipe.pdfLink,
       imageUrl: recipe.imageUrl || '',
-      status: recipe.status
+      status: recipe.status,
+      isFree: recipe.price === 0
     })
     setEditingRecipe(recipe.id)
     setShowForm(true)
   }
 
   const handleUpdateRecipe = () => {
-    if (editingRecipe && newRecipe.name && newRecipe.description && newRecipe.pdfLink) {
+    if (editingRecipe && newRecipe.name && newRecipe.pdfLink) {
       const updatedRecipes = recipes.map((recipe: { id: number; name: string; description: string; type: string; price: number; pdfLink: string; imageUrl?: string; status: string; accessLink: string }) => 
         recipe.id === editingRecipe 
           ? { ...recipe, ...newRecipe }
@@ -161,7 +175,8 @@ export default function AdminReceitas() {
         price: 0,
         pdfLink: '',
         imageUrl: '',
-        status: 'active'
+        status: 'active',
+        isFree: true
       })
       setEditingRecipe(null)
       setShowForm(false)
@@ -192,6 +207,46 @@ export default function AdminReceitas() {
     })
     setEditingRecipe(null)
     setShowForm(false)
+  }
+
+  // Handlers específicos para evitar problemas de travamento
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewRecipe(prev => ({ ...prev, name: e.target.value }))
+  }
+
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNewRecipe(prev => ({ ...prev, description: e.target.value }))
+  }
+
+  const handleTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setNewRecipe(prev => ({ ...prev, type: e.target.value }))
+  }
+
+
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setNewRecipe(prev => ({ ...prev, status: e.target.value }))
+  }
+
+  const handlePdfLinkChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewRecipe(prev => ({ ...prev, pdfLink: e.target.value }))
+  }
+
+  const handleIsFreeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const isFree = e.target.checked
+    setNewRecipe(prev => ({ 
+      ...prev, 
+      isFree,
+      price: isFree ? 0 : prev.price || 1
+    }))
+  }
+
+  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const price = Number(e.target.value)
+    setNewRecipe(prev => ({ 
+      ...prev, 
+      price,
+      isFree: price === 0
+    }))
   }
 
   return (
@@ -239,7 +294,7 @@ export default function AdminReceitas() {
                 <input
                   type="text"
                   value={newRecipe.name}
-                  onChange={(e) => setNewRecipe({...newRecipe, name: e.target.value})}
+                  onChange={handleNameChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-brand-green focus:outline-none"
                   placeholder="Ex: Smoothie Bowl de Açaí"
                 />
@@ -248,7 +303,7 @@ export default function AdminReceitas() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">Tipo</label>
                 <select
                   value={newRecipe.type}
-                  onChange={(e) => setNewRecipe({...newRecipe, type: e.target.value})}
+                  onChange={handleTypeChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-brand-green focus:outline-none"
                 >
                   {recipeTypes.map(type => (
@@ -262,27 +317,51 @@ export default function AdminReceitas() {
                 <label className="block text-sm font-medium text-gray-700 mb-2">Descrição</label>
                 <textarea
                   value={newRecipe.description}
-                  onChange={(e) => setNewRecipe({...newRecipe, description: e.target.value})}
+                  onChange={handleDescriptionChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-brand-green focus:outline-none"
                   rows={3}
                   placeholder="Descrição da receita..."
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Preço (R$)</label>
-                <input
-                  type="number"
-                  value={newRecipe.price}
-                  onChange={(e) => setNewRecipe({...newRecipe, price: Number(e.target.value)})}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-brand-green focus:outline-none"
-                  placeholder="0 para gratuito"
-                />
+                <label className="block text-sm font-medium text-gray-700 mb-2">Preço</label>
+                <div className="space-y-3">
+                  {/* Checkbox Gratuito */}
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id="isFree"
+                      checked={newRecipe.isFree}
+                      onChange={handleIsFreeChange}
+                      className="h-4 w-4 text-brand-green focus:ring-brand-green border-gray-300 rounded"
+                    />
+                    <label htmlFor="isFree" className="ml-2 text-sm text-gray-700">
+                      ✅ Receita Gratuita
+                    </label>
+                  </div>
+                  
+                  {/* Campo de Preço (só aparece se não for gratuito) */}
+                  {!newRecipe.isFree && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-600 mb-1">Preço (R$)</label>
+                      <input
+                        type="number"
+                        value={newRecipe.price}
+                        onChange={handlePriceChange}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-brand-green focus:outline-none"
+                        placeholder="Ex: 15"
+                        min="0.01"
+                        step="0.01"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
                 <select
                   value={newRecipe.status}
-                  onChange={(e) => setNewRecipe({...newRecipe, status: e.target.value})}
+                  onChange={handleStatusChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-brand-green focus:outline-none"
                 >
                   <option value="active">Ativo</option>
@@ -294,14 +373,14 @@ export default function AdminReceitas() {
                 <input
                   type="url"
                   value={newRecipe.pdfLink}
-                  onChange={(e) => setNewRecipe({...newRecipe, pdfLink: e.target.value})}
+                  onChange={handlePdfLinkChange}
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-brand-green focus:outline-none"
                   placeholder="https://drive.google.com/file/d/..."
                 />
               </div>
           <div className="md:col-span-2">
             <ImageUpload
-              onImageUpload={(imageUrl) => setNewRecipe({...newRecipe, imageUrl})}
+              onImageUpload={(imageUrl) => setNewRecipe(prev => ({ ...prev, imageUrl }))}
               currentImage={newRecipe.imageUrl}
             />
           </div>
@@ -311,7 +390,7 @@ export default function AdminReceitas() {
             <div className="md:col-span-2">
               <PDFImageExtractor
                 pdfUrl={newRecipe.pdfLink}
-                onImageExtracted={(imageUrl) => setNewRecipe({...newRecipe, imageUrl})}
+                onImageExtracted={(imageUrl) => setNewRecipe(prev => ({ ...prev, imageUrl }))}
               />
             </div>
           )}
