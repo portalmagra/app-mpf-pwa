@@ -219,16 +219,6 @@ export default function MercadoPage() {
                       }}>
                         {product.name}
                       </h3>
-                      {product.description && (
-                        <p style={{
-                          fontSize: '0.875rem',
-                          color: '#6b7280',
-                          margin: '0.25rem 0 0 0',
-                          lineHeight: 1.4
-                        }}>
-                          {product.description}
-                        </p>
-                      )}
                       {product.current_price && (
                         <p style={{
                           fontSize: '0.875rem',
