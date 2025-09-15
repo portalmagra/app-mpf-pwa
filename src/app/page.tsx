@@ -153,63 +153,75 @@ export default function Home() {
       <section className="px-4 mb-6">
         <div className="max-w-sm mx-auto">
           <div className="space-y-4">
-            {/* 1. Receitas */}
-            <Link href="/receitas" className="w-full bg-brand-greenSoft rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-brand-border transform hover:scale-105 block">
+            {/* 1. Receitas - Verde claro com gradiente */}
+            <Link href="/receitas" className="w-full bg-gradient-to-r from-green-100 to-green-200 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-green-300 transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
                 <span className="text-4xl">🍽️</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-xl">Receitas</h3>
                   <p className="text-sm text-brand-text2">Ingredientes que tem nos EUA</p>
                 </div>
-                <span className="text-xs bg-brand-green text-white px-3 py-1 rounded-full font-semibold">Ver</span>
+                <span className="text-xs bg-green-500 text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
             </Link>
 
-            {/* 2. Protocolos Nutricionais */}
-            <Link href="/protocolos" className="w-full bg-brand-neutral rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-brand-border transform hover:scale-105 block">
+            {/* 2. Protocolos Nutricionais - Branco neutro */}
+            <Link href="/protocolos" className="w-full bg-white rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-gray-200 transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
                 <span className="text-4xl">📋</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-xl">Protocolos Nutricionais</h3>
                   <p className="text-sm text-brand-text2">Protocolos de 7, 14 e 30 dias</p>
                 </div>
-                <span className="text-xs bg-brand-greenLight text-white px-3 py-1 rounded-full font-semibold">Ver</span>
+                <span className="text-xs bg-gray-500 text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
             </Link>
 
-            {/* 3. Avaliação de Bem-estar por IA */}
-            <Link href="/avaliacao" className="w-full bg-brand-green rounded-xl p-4 text-white shadow-lg hover:shadow-xl transition-all border border-brand-green transform hover:scale-105 block">
+            {/* 3. Avaliação de Bem-estar - Verde claro com gradiente */}
+            <Link href="/avaliacao" className="w-full bg-gradient-to-r from-green-100 to-green-200 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-green-300 transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
                 <span className="text-4xl">🧠</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-xl">Avaliação de Bem-estar</h3>
-                  <p className="text-sm text-white/90">Com inteligência artificial</p>
+                  <p className="text-sm text-brand-text2">Com inteligência artificial</p>
                 </div>
-                <span className="text-xs bg-white/20 px-3 py-1 rounded-full font-semibold">Fazer</span>
+                <span className="text-xs bg-green-500 text-white px-3 py-1 rounded-full font-semibold">Fazer</span>
               </div>
             </Link>
 
-            {/* 4. Produtos */}
-            <Link href="/produtos" className="w-full bg-brand-neutral rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-brand-border transform hover:scale-105 block">
+            {/* 4. Produtos - Branco neutro */}
+            <Link href="/produtos" className="w-full bg-white rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-gray-200 transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
                 <span className="text-4xl">📦</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-xl">Produtos</h3>
                   <p className="text-sm text-brand-text2">Suplementos e produtos por categoria</p>
                 </div>
-                <span className="text-xs bg-brand-greenLight text-white px-3 py-1 rounded-full font-semibold">Ver</span>
+                <span className="text-xs bg-gray-500 text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
             </Link>
 
-            {/* 5. Avaliação Personalizada */}
-            <Link href="/avaliacao-personalizada" className="w-full bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-4 text-white shadow-lg hover:shadow-xl transition-all border border-green-600 transform hover:scale-105 block">
+            {/* 5. Avaliação Personalizada - Verde claro com gradiente */}
+            <Link href="/avaliacao-personalizada" className="w-full bg-gradient-to-r from-green-100 to-green-200 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-green-300 transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
                 <span className="text-3xl">👩‍⚕️</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-lg">Avaliação Personalizada</h3>
-                  <p className="text-sm text-white/90">Coach brasileira especializada</p>
+                  <p className="text-sm text-brand-text2">Coach brasileira especializada</p>
                 </div>
-                <span className="text-xs bg-white/20 px-3 py-1 rounded-full font-semibold">Ver</span>
+                <span className="text-xs bg-green-500 text-white px-3 py-1 rounded-full font-semibold">Ver</span>
+              </div>
+            </Link>
+
+            {/* 6. Mercado - Branco neutro */}
+            <Link href="/mercado" className="w-full bg-white rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-gray-200 transform hover:scale-105 block">
+              <div className="flex items-center space-x-4">
+                <span className="text-4xl">🛒</span>
+                <div className="flex-1 text-left">
+                  <h3 className="font-bold text-xl">Mercado</h3>
+                  <p className="text-sm text-brand-text2">Produtos selecionados para você</p>
+                </div>
+                <span className="text-xs bg-gray-500 text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
             </Link>
           </div>
