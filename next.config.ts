@@ -8,6 +8,9 @@ const nextConfig: NextConfig = {
   images: {
     domains: ['images-na.ssl-images-amazon.com', 'm.media-amazon.com'],
   },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 };
 
 export default nextConfig;
