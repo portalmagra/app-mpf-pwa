@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import PWAInstaller from "@/components/PWAInstaller";
-import CacheBuster from "@/components/CacheBuster";
+import NuclearCacheClear from "@/components/NuclearCacheClear";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -67,12 +67,15 @@ export default function RootLayout({
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-TileColor" content="#22c55e" />
         <meta name="msapplication-tap-highlight" content="no" />
+        <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta httpEquiv="Pragma" content="no-cache" />
+        <meta httpEquiv="Expires" content="0" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
-        <CacheBuster />
+        <NuclearCacheClear />
         <PWAInstaller />
       </body>
     </html>
