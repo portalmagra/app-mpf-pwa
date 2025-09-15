@@ -3,7 +3,7 @@ import { productService, categoryService } from '@/lib/supabase'
 import fs from 'fs'
 import path from 'path'
 
-export async function POST(request: NextRequest) {
+export async function POST() {
   try {
     console.log('🔄 Iniciando sincronização com MeuPortalFit...')
 
@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Verificar status da sincronização
     const dataDir = path.join(process.cwd(), 'data')
@@ -135,7 +135,7 @@ export async function GET(request: NextRequest) {
       dataStats = {
         products: productsData.length,
         categories: categoriesData.length,
-        mercadoProducts: productsData.filter((p: any) => p.is_mentoria).length
+        mercadoProducts: productsData.filter((p: { is_mentoria: boolean }) => p.is_mentoria).length
       }
     }
 

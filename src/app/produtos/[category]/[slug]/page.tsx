@@ -31,7 +31,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           slug: resolvedParams.slug
         })
         
-        let products = await productService.getProductsByCategory(resolvedParams.category)
+        const products = await productService.getProductsByCategory(resolvedParams.category)
         
         console.log('🔍 Todos os produtos da categoria:', products)
         
