@@ -145,9 +145,14 @@ export default function PWAInstaller() {
         })
       }
       
-      // Recarregar com cache busting
+      // Limpar localStorage version
+      localStorage.removeItem('app-version')
+      
+      // Recarregar com cache busting via URL
       setTimeout(() => {
-        window.location.reload()
+        const url = new URL(window.location.href)
+        url.searchParams.set('_cb', Date.now().toString())
+        window.location.href = url.toString()
       }, 100)
     }
   }

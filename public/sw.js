@@ -1,5 +1,5 @@
-const CACHE_NAME = 'meuportalfit-v1.0.3';
-const STATIC_CACHE_NAME = 'meuportalfit-static-v1.0.3';
+const CACHE_NAME = 'meuportalfit-v1.0.4';
+const STATIC_CACHE_NAME = 'meuportalfit-static-v1.0.4';
 const urlsToCache = [
   '/',
   '/avaliacao',
@@ -77,13 +77,14 @@ self.addEventListener('fetch', (event) => {
   if (request.headers.get('accept')?.includes('text/html')) {
     event.respondWith(
       fetch(request, {
-        // Forçar atualização agressiva para mobile
+        // Forçar atualização ultra-agressiva para mobile
         cache: 'no-store',
         headers: {
           'Cache-Control': 'no-cache, no-store, must-revalidate',
           'Pragma': 'no-cache',
           'Expires': '0',
-          'If-Modified-Since': '0'
+          'If-Modified-Since': '0',
+          'If-None-Match': '*'
         }
       })
         .then((response) => {
