@@ -9,7 +9,7 @@ export default function MobileRefreshButton() {
   useEffect(() => {
     // Detectar se é mobile
     const checkMobile = () => {
-      const userAgent = navigator.userAgent || navigator.vendor || (window as { opera?: string }).opera
+      const userAgent = navigator.userAgent || navigator.vendor || (window as { opera?: string }).opera || ''
       const isMobileDevice = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(userAgent.toLowerCase())
       setIsMobile(isMobileDevice)
     }
