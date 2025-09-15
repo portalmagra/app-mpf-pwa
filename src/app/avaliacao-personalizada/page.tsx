@@ -45,8 +45,19 @@ export default function AvaliacaoPersonalizada() {
             {/* Overlay de informações */}
             <div className="absolute top-4 left-4 right-4 bg-black/70 rounded-lg p-3 text-white text-sm text-center">
               <p className="font-semibold">
-                🎯 Veja como funciona nossa avaliação
+                🎯 Assista vídeo de 40 segundos e entenda como funciona
               </p>
+            </div>
+            
+            {/* Ícone de Play centralizado */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="bg-white/90 rounded-full p-6 shadow-2xl">
+                <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                  </svg>
+                </div>
+              </div>
             </div>
           </div>
         </div>
