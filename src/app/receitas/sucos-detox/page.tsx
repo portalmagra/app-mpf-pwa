@@ -66,6 +66,7 @@ export default function SucosDetoxPage() {
         // Converter formato do Supabase para formato da página de receitas
         const convertedRecipes: Receita[] = supabaseRecipes
           .filter((recipe: Recipe) => 
+            recipe.type?.toLowerCase() === 'sucos' ||
             recipe.category?.toLowerCase().includes('suco') || 
             recipe.name.toLowerCase().includes('suco') ||
             recipe.name.toLowerCase().includes('smoothie') ||

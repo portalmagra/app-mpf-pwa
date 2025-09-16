@@ -68,6 +68,7 @@ export default function SopasFuncionaisPage() {
         // Converter formato do Supabase para formato da página de receitas
         const convertedRecipes: Receita[] = supabaseRecipes
           .filter((recipe: Recipe) => 
+            recipe.type?.toLowerCase() === 'sopas' ||
             recipe.category?.toLowerCase().includes('sopa') || 
             recipe.name.toLowerCase().includes('sopa') ||
             recipe.name.toLowerCase().includes('caldo') ||

@@ -68,6 +68,7 @@ export default function LowCarbPage() {
         // Converter formato do Supabase para formato da página de receitas
         const convertedRecipes: Receita[] = supabaseRecipes
           .filter((recipe: Recipe) => 
+            recipe.type?.toLowerCase() === 'low-carb' ||
             recipe.category?.toLowerCase().includes('low') || 
             recipe.category?.toLowerCase().includes('carb') ||
             recipe.name.toLowerCase().includes('low carb') ||

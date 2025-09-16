@@ -68,6 +68,7 @@ export default function ReceitasSalgadasPage() {
         // Converter formato do Supabase para formato da página de receitas
         const convertedRecipes: Receita[] = supabaseRecipes
           .filter((recipe: Recipe) => 
+            recipe.type?.toLowerCase() === 'salgadas' ||
             recipe.category?.toLowerCase().includes('salgada') || 
             recipe.name.toLowerCase().includes('salgada') ||
             recipe.name.toLowerCase().includes('frango') ||
