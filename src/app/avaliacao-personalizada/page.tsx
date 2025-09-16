@@ -1,12 +1,23 @@
 'use client'
 
+import { useState, useRef } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
 
 export default function AvaliacaoPersonalizada() {
+  const [isPlaying, setIsPlaying] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
+
   const openWhatsApp = (message: string) => {
     const encodedMessage = encodeURIComponent(message)
     window.open(`https://wa.me/17862535032?text=${encodedMessage}`, '_blank')
+  }
+
+  const handlePlayVideo = () => {
+    setIsPlaying(true)
+    if (videoRef.current) {
+      videoRef.current.play()
+    }
   }
 
   return (
@@ -30,24 +41,44 @@ export default function AvaliacaoPersonalizada() {
             🎥 Veja Como Funciona
           </h2>
           
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[9/16]">
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[9/16] bg-white">
             {/* Vídeo Player */}
             <video
+              ref={videoRef}
               controls
               className="w-full h-full object-cover"
-              poster="/images/coach-video-poster.jpg"
               preload="metadata"
+              style={{ display: isPlaying ? 'block' : 'none' }}
             >
               <source src="/videos/Avaliacao.mp4" type="video/mp4" />
               Seu navegador não suporta vídeos HTML5.
             </video>
             
-            {/* Overlay de informações */}
-            <div className="absolute top-4 left-4 right-4 bg-black/70 rounded-lg p-3 text-white text-sm text-center">
-              <p className="font-semibold">
-                🎯 Assista vídeo de 40 segundos e entenda como funciona
-              </p>
-            </div>
+            {/* Tela branca com Play Button quando não está tocando */}
+            {!isPlaying && (
+              <div 
+                className="absolute inset-0 w-full h-full cursor-pointer bg-white flex items-center justify-center"
+                onClick={handlePlayVideo}
+              >
+                {/* Botão de Play centralizado */}
+                <div className="bg-white/90 rounded-full p-6 shadow-2xl hover:bg-white transition-all">
+                  <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transition-all">
+                    <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            {/* Overlay de informações (condicional) */}
+            {!isPlaying && (
+              <div className="absolute top-4 left-4 right-4 bg-black/70 rounded-lg p-3 text-white text-sm text-center">
+                <p className="font-semibold">
+                  🎯 Aperte o play assista vídeo de 40 segundos e entenda como funciona
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -55,12 +86,12 @@ export default function AvaliacaoPersonalizada() {
       {/* Botão CTA após vídeo */}
       <section className="px-4 py-6 bg-white">
         <div className="max-w-sm mx-auto text-center">
-          <button 
+              <button
             onClick={() => openWhatsApp('Olá! Quero agendar minha avaliação personalizada de 30 minutos com a coach brasileira por $10.')}
             className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
           >
             📅 QUERO AGENDAR MINHA AVALIAÇÃO
-          </button>
+              </button>
         </div>
       </section>
 
