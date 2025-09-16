@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
+import ImageUpload from '@/components/ImageUpload'
+import PDFImageExtractor from '@/components/PDFImageExtractor'
 import { recipeService, Recipe } from '@/lib/supabase'
 
 export default function AdminReceitasPage() {
@@ -19,6 +21,7 @@ export default function AdminReceitasPage() {
     type: '',
     price: 0,
     pdf_link: '',
+    image_url: '',
     status: 'active' as 'active' | 'inactive'
   })
 
@@ -127,6 +130,7 @@ export default function AdminReceitasPage() {
         type: '',
         price: 0,
         pdf_link: '',
+        image_url: '',
         status: 'active'
       })
       setShowAddForm(false)
@@ -145,6 +149,7 @@ export default function AdminReceitasPage() {
       type: '',
       price: 0,
       pdf_link: '',
+      image_url: '',
       status: 'active'
     })
     setShowAddForm(false)
@@ -332,6 +337,24 @@ export default function AdminReceitasPage() {
                   onChange={(e) => setNewReceita({...newReceita, pdf_link: e.target.value})}
                   placeholder="https://drive.google.com/file/d/..."
                   className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                />
+              </div>
+
+              {/* Extrator de Imagem do PDF */}
+              {newReceita.pdf_link && (
+                <div className="md:col-span-2">
+                  <PDFImageExtractor
+                    pdfUrl={newReceita.pdf_link}
+                    onImageExtracted={(imageUrl) => setNewReceita({...newReceita, image_url: imageUrl})}
+                  />
+                </div>
+              )}
+
+              {/* Upload Manual de Imagem */}
+              <div className="md:col-span-2">
+                <ImageUpload
+                  onImageUpload={(imageUrl) => setNewReceita({...newReceita, image_url: imageUrl})}
+                  currentImage={newReceita.image_url}
                 />
               </div>
 
