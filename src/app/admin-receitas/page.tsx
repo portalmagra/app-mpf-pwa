@@ -153,6 +153,18 @@ export default function AdminReceitasPage() {
       status: 'active'
     })
     setShowAddForm(false)
+    // Limpar filtros quando fechar o formulário
+    setSearchTerm('')
+    setSelectedCategory('todas')
+    setSelectedStatus('todas')
+  }
+
+  const openAddForm = () => {
+    setShowAddForm(true)
+    // Limpar filtros quando abrir o formulário
+    setSearchTerm('')
+    setSelectedCategory('todas')
+    setSelectedStatus('todas')
   }
 
   return (
@@ -185,7 +197,7 @@ export default function AdminReceitasPage() {
           {/* Botão Nova Receita */}
           <div className="mt-4">
             <button
-              onClick={() => setShowAddForm(!showAddForm)}
+              onClick={showAddForm ? resetForm : openAddForm}
               className="bg-brand-green text-white px-6 py-3 rounded-lg font-medium hover:bg-brand-greenDark transition-colors shadow-lg"
             >
               {showAddForm ? '❌ Cancelar' : '➕ Nova Receita'}
@@ -193,65 +205,71 @@ export default function AdminReceitasPage() {
           </div>
         </div>
 
-        {/* Filtros e Busca */}
-        <div className="bg-white rounded-xl p-6 shadow-soft mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {/* Busca */}
-            <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-brand-text mb-2">
-                🔍 Buscar Receita
-              </label>
-              <input
-                type="text"
-                placeholder="Digite o nome da receita..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
-              />
+        {/* Filtros e Busca - Apenas quando não está no formulário */}
+        {!showAddForm && (
+          <div className="bg-white rounded-xl p-6 shadow-soft mb-6">
+            <h2 className="text-xl font-bold text-brand-text mb-4">
+              🔍 Buscar e Filtrar Receitas
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              {/* Busca */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-brand-text mb-2">
+                  🔍 Buscar Receita
+                </label>
+                <input
+                  type="text"
+                  placeholder="Digite o nome da receita..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                />
+              </div>
+
+              {/* Filtro por Categoria */}
+              <div>
+                <label className="block text-sm font-medium text-brand-text mb-2">
+                  📂 Categoria
+                </label>
+                <select
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                >
+                  <option value="todas">Todas as categorias</option>
+                  {getCategoryOptions().map(category => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Filtro por Status */}
+              <div>
+                <label className="block text-sm font-medium text-brand-text mb-2">
+                  📊 Status
+                </label>
+                <select
+                  value={selectedStatus}
+                  onChange={(e) => setSelectedStatus(e.target.value)}
+                  className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                >
+                  <option value="todas">Todos os status</option>
+                  <option value="active">Ativo</option>
+                  <option value="inactive">Inativo</option>
+                </select>
+              </div>
             </div>
 
-            {/* Filtro por Categoria */}
-            <div>
-              <label className="block text-sm font-medium text-brand-text mb-2">
-                📂 Categoria
-              </label>
-              <select
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
-              >
-                <option value="todas">Todas as categorias</option>
-                {getCategoryOptions().map(category => (
-                  <option key={category} value={category}>
-                    {category}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {/* Filtro por Status */}
-            <div>
-              <label className="block text-sm font-medium text-brand-text mb-2">
-                📊 Status
-              </label>
-              <select
-                value={selectedStatus}
-                onChange={(e) => setSelectedStatus(e.target.value)}
-                className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
-              >
-                <option value="todas">Todos os status</option>
-                <option value="active">Ativo</option>
-                <option value="inactive">Inativo</option>
-              </select>
+            {/* Estatísticas */}
+            <div className="mt-4 flex justify-between items-center text-sm text-brand-text2">
+              <span>Total: {receitas.length} receitas</span>
+              <span>Filtradas: {filteredReceitas.length} receitas</span>
             </div>
           </div>
-
-          {/* Estatísticas */}
-          <div className="mt-4 flex justify-between items-center text-sm text-brand-text2">
-            <span>Total: {receitas.length} receitas</span>
-            <span>Filtradas: {filteredReceitas.length} receitas</span>
-          </div>
-        </div>
+        )}
 
         {/* Formulário de Nova Receita */}
         {showAddForm && (
