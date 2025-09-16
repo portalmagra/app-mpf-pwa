@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Fit - Opções de Logotipo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #10B981, #059669);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #059669;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+        
+        .logo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .logo-option {
+            text-align: center;
+            padding: 20px;
+            border: 2px solid #e5e7eb;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo-option:hover {
+            transform: translateY(-5px);
+            border-color: #10B981;
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.2);
+        }
+        
+        .logo-preview {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .logo-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #374151;
+            margin-bottom: 10px;
+        }
+        
+        .logo-description {
+            color: #6b7280;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .app-icon-preview {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .app-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        
+        .strategy-section {
+            background: #f9fafb;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+        
+        .strategy-title {
+            color: #059669;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        
+        .strategy-points {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .strategy-points li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+            color: #374151;
+        }
+        
+        .strategy-points li:before {
+            content: "✓ ";
+            color: #10B981;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏋️ PORTAL FIT - Opções de Logotipo</h1>
+        
+        <div class="logo-grid">
+            <div class="logo-option">
+                <img src="icons/portal-fit-logo-1.svg" alt="Logo 1" class="logo-preview">
+                <div class="logo-title">Opção 1: Clássico Circular</div>
+                <div class="logo-description">
+                    Design circular com elementos da bandeira brasileira integrados. 
+                    Simples, reconhecível e profissional. Ideal para uso em apps e WhatsApp.
+                </div>
+                <div class="app-icon-preview">
+                    <img src="icons/portal-fit-logo-1.svg" alt="App Icon 1" class="app-icon">
+                </div>
+            </div>
+            
+            <div class="logo-option">
+                <img src="icons/portal-fit-logo-2.svg" alt="Logo 2" class="logo-preview">
+                <div class="logo-title">Opção 2: Moderno Retangular</div>
+                <div class="logo-description">
+                    Layout retangular com gradiente verde. Bandeira brasileira centralizada 
+                    com elementos de fitness nos cantos. Mais moderno e dinâmico.
+                </div>
+                <div class="app-icon-preview">
+                    <img src="icons/portal-fit-logo-2.svg" alt="App Icon 2" class="app-icon">
+                </div>
+            </div>
+            
+            <div class="logo-option">
+                <img src="icons/portal-fit-logo-3.svg" alt="Logo 3" class="logo-preview">
+                <div class="logo-title">Opção 3: Portal com Conexão</div>
+                <div class="logo-description">
+                    Conceito de "portal" com círculos concêntricos. Inclui "BR • US" 
+                    sutilmente para conectar brasileiros nos EUA. Elegante e estratégico.
+                </div>
+                <div class="app-icon-preview">
+                    <img src="icons/portal-fit-logo-3.svg" alt="App Icon 3" class="app-icon">
+                </div>
+            </div>
+            
+            <div class="logo-option">
+                <img src="icons/portal-fit-logo-4.svg" alt="Logo 4" class="logo-preview">
+                <div class="logo-title">Opção 4: Anéis de Portal</div>
+                <div class="logo-description">
+                    Múltiplos anéis criando efeito de portal dimensional. Bandeira brasileira 
+                    centralizada com elementos de fitness nos cantos. Muito impactante.
+                </div>
+                <div class="app-icon-preview">
+                    <img src="icons/portal-fit-logo-4.svg" alt="App Icon 4" class="app-icon">
+                </div>
+            </div>
+            
+            <div class="logo-option">
+                <img src="icons/portal-fit-logo-5.svg" alt="Logo 5" class="logo-preview">
+                <div class="logo-title">Opção 5: Conexão Global</div>
+                <div class="logo-description">
+                    Design com elementos conectados por linhas sutis. Representa a conexão 
+                    entre Brasil e EUA. Bandeira brasileira centralizada com elementos de rede.
+                </div>
+                <div class="app-icon-preview">
+                    <img src="icons/portal-fit-logo-5.svg" alt="App Icon 5" class="app-icon">
+                </div>
+            </div>
+        </div>
+        
+        <div class="strategy-section">
+            <div class="strategy-title">🎯 Estratégia de Marca</div>
+            <ul class="strategy-points">
+                <li><strong>Cores:</strong> Verde (#10B981) como cor principal da marca</li>
+                <li><strong>Brasil:</strong> Elementos da bandeira para conectar com brasileiros</li>
+                <li><strong>Portal:</strong> Conceito de conexão entre Brasil e EUA</li>
+                <li><strong>Fitness:</strong> Elementos sutis de wellness e saúde</li>
+                <li><strong>Versatilidade:</strong> Funciona bem em apps, WhatsApp e materiais</li>
+                <li><strong>Reconhecimento:</strong> Simples o suficiente para ser memorável</li>
+                <li><strong>Profissional:</strong> Adequado para uso empresarial</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

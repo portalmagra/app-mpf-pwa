@@ -1,0 +1,32 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" rx="80" fill="#059669"/>
+  
+  <!-- Portal Ring -->
+  <circle cx="256" cy="256" r="180" fill="none" stroke="white" stroke-width="8" opacity="0.3"/>
+  <circle cx="256" cy="256" r="140" fill="none" stroke="white" stroke-width="6" opacity="0.5"/>
+  <circle cx="256" cy="256" r="100" fill="none" stroke="white" stroke-width="4" opacity="0.7"/>
+  
+  <!-- Central Brazil Design -->
+  <rect x="176" y="176" width="160" height="160" rx="20" fill="#FFDF00"/>
+  <path d="M176 256 L336 256 M256 176 L256 336" stroke="#009639" stroke-width="8"/>
+  <circle cx="256" cy="256" r="30" fill="#002776"/>
+  
+  <!-- Portal Text -->
+  <text x="256" y="380" font-family="Arial, sans-serif" font-size="48" font-weight="900" text-anchor="middle" fill="white">PORTAL</text>
+  <text x="256" y="420" font-family="Arial, sans-serif" font-size="36" font-weight="900" text-anchor="middle" fill="white">FIT</text>
+  
+  <!-- Fitness Elements -->
+  <g transform="translate(120, 120)">
+    <rect x="-8" y="-8" width="16" height="16" rx="2" fill="white" opacity="0.8"/>
+  </g>
+  <g transform="translate(392, 120)">
+    <rect x="-8" y="-8" width="16" height="16" rx="2" fill="white" opacity="0.8"/>
+  </g>
+  <g transform="translate(120, 392)">
+    <rect x="-8" y="-8" width="16" height="16" rx="2" fill="white" opacity="0.8"/>
+  </g>
+  <g transform="translate(392, 392)">
+    <rect x="-8" y="-8" width="16" height="16" rx="2" fill="white" opacity="0.8"/>
+  </g>
+</svg>
