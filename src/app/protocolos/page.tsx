@@ -41,14 +41,14 @@ export default function Protocolos() {
             </h2>
             <p className="text-brand-text2 text-sm mb-6">
               Estamos preparando protocolos nutricionais personalizados para brasileiros nos EUA. 
-              Enquanto isso, que tal falar com nossa nutricionista?
+              Enquanto isso, que tal falar no WhatsApp?
             </p>
             
             <Link 
               href="/avaliacao-personalizada" 
               className="bg-brand-green text-white px-6 py-3 rounded-xl font-bold hover:bg-brand-greenDark transition-colors inline-block"
             >
-              👩‍⚕️ Falar com Nutricionista
+              💬 Falar no WhatsApp
             </Link>
           </div>
         </div>
@@ -57,11 +57,11 @@ export default function Protocolos() {
       {/* CTA Coaching */}
       <section className="px-4 mb-6">
         <div className="max-w-sm mx-auto">
-          <div className="bg-gradient-to-r from-brand-green to-brand-blue rounded-xl p-6 text-white text-center">
+          <div className="bg-brand-green rounded-xl p-6 text-white text-center shadow-lg">
             <h3 className="text-xl font-bold mb-2">👩‍⚕️ Coaching Personalizado</h3>
             <p className="text-sm mb-4">Protocolos são só o começo! Acompanhamento individual com nutricionista brasileira</p>
             <Link href="/avaliacao-personalizada" className="bg-white text-brand-green px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors inline-block">
-              Falar com Nutricionista
+              💬 Falar no WhatsApp
             </Link>
           </div>
         </div>
