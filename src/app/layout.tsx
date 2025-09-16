@@ -32,7 +32,7 @@ export const metadata: Metadata = {
       { url: "/icons/portal-fit-icon-512-v3.svg", sizes: "512x512", type: "image/svg+xml" }
     ],
     apple: [
-      { url: "/icons/icon-192x192.svg", sizes: "180x180", type: "image/svg+xml" }
+      { url: "/icons/portal-fit-icon-180-ios.svg", sizes: "180x180", type: "image/svg+xml" }
     ]
   },
   openGraph: {
@@ -68,13 +68,13 @@ export default function RootLayout({
     <html lang="pt-BR">
       <head>
         <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/icons/portal-fit-icon-180-ios.svg" />
         <meta name="theme-color" content="#22c55e" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="MeuPortalFit" />
-        <link rel="apple-touch-icon" href="/icons/icon-192x192.svg" />
-        <link rel="icon" type="image/svg+xml" sizes="192x192" href="/icons/icon-192x192.svg" />
-        <link rel="icon" type="image/svg+xml" sizes="512x512" href="/icons/icon-512x512.svg" />
+        <link rel="icon" type="image/svg+xml" sizes="192x192" href="/icons/portal-fit-icon-192-v3.svg" />
+        <link rel="icon" type="image/svg+xml" sizes="512x512" href="/icons/portal-fit-icon-512-v3.svg" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="application-name" content="MeuPortalFit" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
