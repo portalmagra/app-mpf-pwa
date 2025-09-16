@@ -67,7 +67,7 @@ export default function MeusProtocolosPage() {
   }
 
   const handleCompartilharWhatsApp = (protocolo: ProtocoloSalvo) => {
-    const mensagem = `📋 *${protocolo.nome}*\n\n${protocolo.descricao}\n\n📖 Veja o protocolo completo: ${protocolo.link_pdf}\n\n✨ Protocolo salvo do MeuPortalFit`
+    const mensagem = `📋 *${protocolo.nome}*\n\n${protocolo.descricao}\n\n📖 Veja o protocolo completo: ${protocolo.link_pdf}\n\n✨ Protocolo salvo do Portal Fit`
     const url = `https://wa.me/?text=${encodeURIComponent(mensagem)}`
     window.open(url, '_blank')
   }

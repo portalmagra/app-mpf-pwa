@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import PWAInstaller from "@/components/PWAInstaller";
 import NuclearCacheClear from "@/components/NuclearCacheClear";
+import CacheClearer from "@/components/CacheClearer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MeuPortalFit - Brasileiros nos EUA",
+  title: "Portal Fit - Brasileiros nos EUA",
   description: "Saúde e bem-estar para brasileiros nos Estados Unidos. Receitas, produtos, avaliações personalizadas e muito mais!",
   manifest: "/manifest.json",
   themeColor: "#22c55e",
@@ -23,12 +24,12 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "MeuPortalFit",
+    title: "Portal Fit",
   },
   icons: {
     icon: [
-      { url: "/icons/icon-192x192.svg", sizes: "192x192", type: "image/svg+xml" },
-      { url: "/icons/icon-512x512.svg", sizes: "512x512", type: "image/svg+xml" }
+      { url: "/icons/portal-fit-icon-192.svg", sizes: "192x192", type: "image/svg+xml" },
+      { url: "/icons/portal-fit-icon-512.svg", sizes: "512x512", type: "image/svg+xml" }
     ],
     apple: [
       { url: "/icons/icon-192x192.svg", sizes: "180x180", type: "image/svg+xml" }
@@ -88,6 +89,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
+        <CacheClearer />
         <NuclearCacheClear />
         <PWAInstaller />
       </body>

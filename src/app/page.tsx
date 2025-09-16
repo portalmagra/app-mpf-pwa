@@ -255,7 +255,7 @@ export default function Home() {
           <div className="bg-white rounded-xl p-6 max-w-sm w-full max-h-[90vh] overflow-y-auto">
             <div className="text-center mb-6">
               <h2 className="text-2xl font-bold text-brand-text mb-2">📱 Instalar App</h2>
-              <p className="text-brand-text2">Siga os passos abaixo para instalar o MeuPortalFit no seu celular:</p>
+              <p className="text-brand-text2">Siga os passos abaixo para instalar o Portal Fit no seu celular:</p>
             </div>
 
             <div className="space-y-4 mb-6">
