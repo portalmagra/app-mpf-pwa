@@ -88,6 +88,13 @@ export default function ReceitasPage() {
                 <h3 className="font-bold text-sm">Sucos Detox</h3>
               </div>
             </Link>
+            
+            <Link href="/receitas/shots" className="bg-gradient-to-r from-purple-100 to-purple-200 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-purple-300 transform hover:scale-105">
+              <div className="text-center">
+                <span className="text-3xl block mb-2">💉</span>
+                <h3 className="font-bold text-sm">Shots</h3>
+              </div>
+            </Link>
           </div>
         </div>
 
