@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
-import { openWhatsApp } from '@/utils/whatsapp'
+import { openWhatsApp, openWhatsAppSimple } from '@/utils/whatsapp'
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[]
@@ -77,8 +77,8 @@ export default function Home() {
 
   const handleInstallClick = async () => {
     if (isInstalled) {
-      // Se já está instalado, abrir WhatsApp
-      openWhatsApp()
+      // Se já está instalado, abrir WhatsApp usando função simples
+      openWhatsAppSimple()
       return
     }
 

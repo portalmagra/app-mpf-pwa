@@ -1,5 +1,5 @@
 /**
- * Função utilitária para abrir WhatsApp de forma compatível com iOS
+ * Função utilitária para abrir WhatsApp de forma compatível com iOS e Android
  */
 export const openWhatsApp = (phoneNumber: string = '17862535032', message?: string) => {
   const baseUrl = 'https://wa.me/';
@@ -7,15 +7,32 @@ export const openWhatsApp = (phoneNumber: string = '17862535032', message?: stri
     ? `${baseUrl}${phoneNumber}?text=${encodeURIComponent(message)}`
     : `${baseUrl}${phoneNumber}`;
 
-  // Detectar iOS
+  // Detectar dispositivos móveis
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  const isAndroid = /Android/.test(navigator.userAgent);
+  const isMobile = isIOS || isAndroid;
   
-  // Para iOS, usar location.href é mais confiável em PWAs
-  if (isIOS) {
+  // Para PWAs em dispositivos móveis, usar location.href é mais confiável
+  if (isMobile) {
+    // Para PWAs instaladas, usar location.href diretamente
     window.location.href = whatsappUrl;
   } else {
+    // Desktop - usar window.open
     window.open(whatsappUrl, '_blank');
   }
+};
+
+/**
+ * Função alternativa mais simples para WhatsApp (fallback)
+ */
+export const openWhatsAppSimple = (phoneNumber: string = '17862535032', message?: string) => {
+  const baseUrl = 'https://wa.me/';
+  const whatsappUrl = message 
+    ? `${baseUrl}${phoneNumber}?text=${encodeURIComponent(message)}`
+    : `${baseUrl}${phoneNumber}`;
+
+  // Sempre usar location.href para máxima compatibilidade
+  window.location.href = whatsappUrl;
 };
 
 /**
