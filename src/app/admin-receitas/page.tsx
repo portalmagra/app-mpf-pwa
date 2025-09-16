@@ -278,9 +278,9 @@ export default function AdminReceitasPage() {
               ➕ Cadastrar Nova Receita
             </h2>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
               {/* Nome da Receita */}
-              <div className="md:col-span-2">
+              <div className="lg:col-span-3">
                 <label className="block text-sm font-medium text-brand-text mb-2">
                   Nome da Receita *
                 </label>
@@ -294,7 +294,7 @@ export default function AdminReceitasPage() {
               </div>
 
               {/* Descrição */}
-              <div className="md:col-span-2">
+              <div className="lg:col-span-3">
                 <label className="block text-sm font-medium text-brand-text mb-2">
                   Descrição
                 </label>
@@ -302,12 +302,12 @@ export default function AdminReceitasPage() {
                   value={newReceita.description}
                   onChange={(e) => setNewReceita({...newReceita, description: e.target.value})}
                   placeholder="Descrição da receita..."
-                  rows={3}
+                  rows={2}
                   className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
                 />
               </div>
 
-              {/* Tipo/Categoria */}
+              {/* Categoria */}
               <div>
                 <label className="block text-sm font-medium text-brand-text mb-2">
                   Categoria *
@@ -328,49 +328,44 @@ export default function AdminReceitasPage() {
                 </select>
               </div>
 
-              {/* Tipo e Valor */}
-              <div className="md:col-span-2">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Tipo */}
-                  <div>
-                    <label className="block text-sm font-medium text-brand-text mb-2">
-                      Tipo
-                    </label>
-                    <select
-                      value={newReceita.price === 0 ? 'gratuita' : 'paga'}
-                      onChange={(e) => {
-                        if (e.target.value === 'gratuita') {
-                          setNewReceita({...newReceita, price: 0})
-                        } else {
-                          setNewReceita({...newReceita, price: 9.99})
-                        }
-                      }}
-                      className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
-                    >
-                      <option value="gratuita">Gratuita</option>
-                      <option value="paga">Paga</option>
-                    </select>
-                  </div>
+              {/* Tipo */}
+              <div>
+                <label className="block text-sm font-medium text-brand-text mb-2">
+                  Tipo
+                </label>
+                <select
+                  value={newReceita.price === 0 ? 'gratuita' : 'paga'}
+                  onChange={(e) => {
+                    if (e.target.value === 'gratuita') {
+                      setNewReceita({...newReceita, price: 0})
+                    } else {
+                      setNewReceita({...newReceita, price: 9.99})
+                    }
+                  }}
+                  className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                >
+                  <option value="gratuita">Gratuita</option>
+                  <option value="paga">Paga</option>
+                </select>
+              </div>
 
-                  {/* Valor */}
-                  <div>
-                    <label className="block text-sm font-medium text-brand-text mb-2">
-                      Valor (USD)
-                    </label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      min="0"
-                      value={newReceita.price}
-                      onChange={(e) => setNewReceita({...newReceita, price: parseFloat(e.target.value) || 0})}
-                      placeholder={newReceita.price === 0 ? "0.00 (Gratuita)" : "9.99"}
-                      className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
-                    />
-                    {newReceita.price === 0 && (
-                      <p className="text-xs text-green-600 mt-1">✓ Receita Gratuita</p>
-                    )}
-                  </div>
-                </div>
+              {/* Valor */}
+              <div>
+                <label className="block text-sm font-medium text-brand-text mb-2">
+                  Valor (USD)
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={newReceita.price}
+                  onChange={(e) => setNewReceita({...newReceita, price: parseFloat(e.target.value) || 0})}
+                  placeholder={newReceita.price === 0 ? "0.00" : "9.99"}
+                  className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                />
+                {newReceita.price === 0 && (
+                  <p className="text-xs text-green-600 mt-1">✓ Gratuita</p>
+                )}
               </div>
 
               {/* Status */}
@@ -389,7 +384,7 @@ export default function AdminReceitasPage() {
               </div>
 
               {/* Link PDF */}
-              <div className="md:col-span-2">
+              <div className="lg:col-span-3">
                 <label className="block text-sm font-medium text-brand-text mb-2">
                   Link do PDF *
                 </label>
@@ -404,7 +399,7 @@ export default function AdminReceitasPage() {
 
               {/* Extrator de Imagem do PDF */}
               {newReceita.pdf_link && (
-                <div className="md:col-span-2">
+                <div className="lg:col-span-3">
                   <PDFImageExtractor
                     pdfUrl={newReceita.pdf_link}
                     onImageExtracted={(imageUrl) => setNewReceita({...newReceita, image_url: imageUrl})}
@@ -413,7 +408,7 @@ export default function AdminReceitasPage() {
               )}
 
               {/* Upload Manual de Imagem */}
-              <div className="md:col-span-2">
+              <div className="lg:col-span-3">
                 <ImageUpload
                   onImageUpload={(imageUrl) => setNewReceita({...newReceita, image_url: imageUrl})}
                   currentImage={newReceita.image_url}
