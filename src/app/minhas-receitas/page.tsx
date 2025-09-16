@@ -66,7 +66,7 @@ export default function MinhasReceitasPage() {
   }
 
   const handleCompartilharWhatsApp = (receita: ReceitaSalva) => {
-    const mensagem = `🍽️ *${receita.nome}*\n\n${receita.descricao}\n\n📖 Veja a receita completa: ${receita.link_pdf}\n\n✨ Receita salva do MeuPortalFit`
+    const mensagem = `🍽️ *${receita.nome}*\n\n${receita.descricao}\n\n📖 Veja a receita completa: ${receita.link_pdf}\n\n✨ Receita salva do Portal Fit`
     const url = `https://wa.me/?text=${encodeURIComponent(mensagem)}`
     window.open(url, '_blank')
   }
