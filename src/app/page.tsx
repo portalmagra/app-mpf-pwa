@@ -234,6 +234,10 @@ export default function Home() {
             <span className="text-lg">🍲</span>
             <span className="text-xs">Receitas</span>
           </Link>
+          <Link href="/minhas-receitas" className="flex flex-col items-center py-1 text-brand-textLight">
+            <span className="text-lg">📚</span>
+            <span className="text-xs">Minhas</span>
+          </Link>
           <Link href="/mercado" className="flex flex-col items-center py-1 text-brand-textLight">
             <span className="text-lg">🛒</span>
             <span className="text-xs">Mercado</span>
@@ -241,10 +245,6 @@ export default function Home() {
           <Link href="/avaliacao" className="flex flex-col items-center py-1 text-brand-textLight">
             <span className="text-lg">🧠</span>
             <span className="text-xs">Avaliação</span>
-          </Link>
-          <Link href="/produtos" className="flex flex-col items-center py-1 text-brand-textLight">
-            <span className="text-lg">📦</span>
-            <span className="text-xs">Produtos</span>
           </Link>
         </div>
       </div>

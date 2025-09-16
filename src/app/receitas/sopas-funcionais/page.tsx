@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
 import { recipeService, Recipe } from '@/lib/supabase'
-import { useSavedRecipes } from '@/hooks/useSavedItems'
 
 interface Receita {
   id: number
@@ -23,15 +22,18 @@ interface Receita {
 const getRecipeEmoji = (nome: string): string => {
   const nomeLower = nome.toLowerCase()
   
-  if (nomeLower.includes('shot')) return '💉'
-  if (nomeLower.includes('curcuma') || nomeLower.includes('turmeric')) return '🟡'
-  if (nomeLower.includes('ginger') || nomeLower.includes('gengibre')) return '🟠'
-  if (nomeLower.includes('lemon') || nomeLower.includes('limão')) return '🍋'
-  if (nomeLower.includes('apple') || nomeLower.includes('maçã')) return '🍎'
-  if (nomeLower.includes('beet') || nomeLower.includes('beterraba')) return '🟣'
-  if (nomeLower.includes('green') || nomeLower.includes('verde')) return '🟢'
+  if (nomeLower.includes('sopa') || nomeLower.includes('soup')) return '🍲'
+  if (nomeLower.includes('caldo') || nomeLower.includes('broth')) return '🥣'
+  if (nomeLower.includes('creme') || nomeLower.includes('cream')) return '🥄'
+  if (nomeLower.includes('tomate') || nomeLower.includes('tomato')) return '🍅'
+  if (nomeLower.includes('abóbora') || nomeLower.includes('pumpkin')) return '🎃'
+  if (nomeLower.includes('cenoura') || nomeLower.includes('carrot')) return '🥕'
+  if (nomeLower.includes('brócolis') || nomeLower.includes('broccoli')) return '🥦'
+  if (nomeLower.includes('espinafre') || nomeLower.includes('spinach')) return '🥬'
+  if (nomeLower.includes('lentilha') || nomeLower.includes('lentil')) return '🫘'
+  if (nomeLower.includes('feijão') || nomeLower.includes('bean')) return '🫘'
   
-  return '💉'
+  return '🍲'
 }
 
 // Função para gerar cor de fundo baseada no tipo
@@ -46,27 +48,29 @@ const getRecipeBgColor = (tipo: string): string => {
   }
 }
 
-export default function ShotsPage() {
+export default function SopasFuncionaisPage() {
   const [receitas, setReceitas] = useState<Receita[]>([])
   const [filteredReceitas, setFilteredReceitas] = useState<Receita[]>([])
   const [loading, setLoading] = useState(true)
   const [activeFilter, setActiveFilter] = useState<'todas' | 'gratuitas' | 'pagas'>('todas')
   const [searchTerm, setSearchTerm] = useState('')
-  const { salvarReceita, isReceitaSalva } = useSavedRecipes()
 
   useEffect(() => {
     // Carregar receitas do Supabase filtradas por categoria
     const loadRecipes = async () => {
       try {
-        console.log('🔄 Carregando receitas Shots do Supabase...')
+        console.log('🔄 Carregando receitas Sopas Funcionais do Supabase...')
         const supabaseRecipes = await recipeService.getActiveRecipes()
         console.log('📦 Receitas carregadas do Supabase:', supabaseRecipes)
         
         // Converter formato do Supabase para formato da página de receitas
         const convertedRecipes: Receita[] = supabaseRecipes
           .filter((recipe: Recipe) => 
-            recipe.category?.toLowerCase().includes('shot') || 
-            recipe.name.toLowerCase().includes('shot')
+            recipe.category?.toLowerCase().includes('sopa') || 
+            recipe.name.toLowerCase().includes('sopa') ||
+            recipe.name.toLowerCase().includes('caldo') ||
+            recipe.name.toLowerCase().includes('creme') ||
+            recipe.name.toLowerCase().includes('soup')
           )
           .map((recipe: Recipe) => ({
             id: recipe.id,
@@ -81,47 +85,47 @@ export default function ShotsPage() {
             categoria: recipe.category
           }))
         
-        console.log('✅ Receitas Shots convertidas:', convertedRecipes)
+        console.log('✅ Receitas Sopas Funcionais convertidas:', convertedRecipes)
         setReceitas(convertedRecipes)
         setFilteredReceitas(convertedRecipes)
         setLoading(false)
       } catch (error) {
-        console.error('❌ Erro ao carregar receitas Shots do Supabase:', error)
+        console.error('❌ Erro ao carregar receitas Sopas Funcionais do Supabase:', error)
         
         // Fallback para dados padrão em caso de erro
         const mockReceitas: Receita[] = [
           {
             id: 1,
-            nome: "Shot de Curcuma",
-            descricao: "Shot anti-inflamatório com curcuma, limão e pimenta-do-reino",
+            nome: "Sopa Anti-inflamatória",
+            descricao: "Sopa reconfortante com ingredientes que combatem inflamações",
             tipo: "gratuita",
             preco: 0,
-            link_pdf: "https://drive.google.com/file/d/curcuma-shot/view",
+            link_pdf: "https://drive.google.com/file/d/sopa-anti/view",
             status: "ativa",
             data_criacao: "2024-01-15",
-            categoria: "shots"
+            categoria: "sopas-funcionais"
           },
           {
             id: 2,
-            nome: "Shot de Gengibre",
-            descricao: "Shot energético com gengibre fresco e limão",
+            nome: "Creme de Abóbora Funcional",
+            descricao: "Sopa cremosa rica em betacaroteno e vitaminas",
             tipo: "gratuita",
             preco: 0,
-            link_pdf: "https://drive.google.com/file/d/gengibre-shot/view",
+            link_pdf: "https://drive.google.com/file/d/creme-abobora/view",
             status: "ativa",
             data_criacao: "2024-01-16",
-            categoria: "shots"
+            categoria: "sopas-funcionais"
           },
           {
             id: 3,
-            nome: "Shot Verde Detox",
-            descricao: "Shot desintoxicante com espinafre, pepino e limão",
+            nome: "Sopa de Lentilha Detox",
+            descricao: "Sopa nutritiva com proteínas vegetais e fibras",
             tipo: "gratuita",
             preco: 0,
-            link_pdf: "https://drive.google.com/file/d/verde-shot/view",
+            link_pdf: "https://drive.google.com/file/d/sopa-lentilha/view",
             status: "ativa",
             data_criacao: "2024-01-17",
-            categoria: "shots"
+            categoria: "sopas-funcionais"
           }
         ]
         
@@ -169,17 +173,6 @@ export default function ShotsPage() {
     }
   }
 
-  const handleSalvarReceita = (receita: Receita) => {
-    salvarReceita({
-      nome: receita.nome,
-      descricao: receita.descricao,
-      categoria: 'shots',
-      link_pdf: receita.link_pdf,
-      emoji: getRecipeEmoji(receita.nome)
-    })
-    alert(`Receita "${receita.nome}" salva em Minhas Receitas!`)
-  }
-
   return (
     <div className="min-h-screen bg-brand-cream">
       {/* Header */}
@@ -201,10 +194,10 @@ export default function ShotsPage() {
         {/* Título */}
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-brand-text">
-            💉 Shots
+            🍲 Sopas Funcionais
           </h1>
           <p className="text-brand-text2 mt-2">
-            Shots energéticos e funcionais
+            Sopas nutritivas e reconfortantes
           </p>
         </div>
 
@@ -246,7 +239,7 @@ export default function ShotsPage() {
           {/* Busca */}
           <input
             type="text"
-            placeholder="Buscar shots..."
+            placeholder="Buscar sopas funcionais..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
@@ -257,7 +250,7 @@ export default function ShotsPage() {
         {loading && (
           <div className="text-center py-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-green mx-auto mb-4"></div>
-            <p className="text-brand-text2">Carregando shots...</p>
+            <p className="text-brand-text2">Carregando sopas funcionais...</p>
           </div>
         )}
 
@@ -266,7 +259,7 @@ export default function ShotsPage() {
           <div className="space-y-4">
             {filteredReceitas.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-brand-text2">Nenhum shot encontrado.</p>
+                <p className="text-brand-text2">Nenhuma sopa funcional encontrada.</p>
               </div>
             ) : (
               filteredReceitas.map((receita) => (
@@ -315,7 +308,7 @@ export default function ShotsPage() {
                         </div>
                       )}
 
-                      <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center justify-between">
                         <span className="text-xs text-brand-text2">
                           {receita.data_criacao}
                         </span>
@@ -327,22 +320,7 @@ export default function ShotsPage() {
                               : 'bg-brand-purple text-white hover:bg-brand-purpleDark'
                           }`}
                         >
-                          {receita.tipo === 'gratuita' ? 'Ver Shot' : 'Comprar'}
-                        </button>
-                      </div>
-
-                      {/* Botão Salvar */}
-                      <div className="flex justify-center">
-                        <button
-                          onClick={() => handleSalvarReceita(receita)}
-                          disabled={isReceitaSalva(receita.nome)}
-                          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                            isReceitaSalva(receita.nome)
-                              ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
-                              : 'bg-blue-100 text-blue-600 hover:bg-blue-200'
-                          }`}
-                        >
-                          {isReceitaSalva(receita.nome) ? '✅ Salva' : '💾 Salvar Receita'}
+                          {receita.tipo === 'gratuita' ? 'Ver Sopa' : 'Comprar'}
                         </button>
                       </div>
                     </div>
