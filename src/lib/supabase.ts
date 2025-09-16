@@ -75,6 +75,7 @@ export interface Recipe {
   access_link: string
   created_at: string
   updated_at: string
+  category?: string
 }
 
 export interface Category {
@@ -278,7 +279,8 @@ function getMockRecipes(): Recipe[] {
       status: 'active',
       access_link: 'https://app.meuportalfit.com/receita/1',
       created_at: '2024-01-15T10:00:00Z',
-      updated_at: '2024-01-15T10:00:00Z'
+      updated_at: '2024-01-15T10:00:00Z',
+      category: 'shots'
     },
     {
       id: 2,
@@ -291,7 +293,8 @@ function getMockRecipes(): Recipe[] {
       status: 'active',
       access_link: 'https://app.meuportalfit.com/receita/2',
       created_at: '2024-01-16T10:00:00Z',
-      updated_at: '2024-01-16T10:00:00Z'
+      updated_at: '2024-01-16T10:00:00Z',
+      category: 'sucos'
     },
     {
       id: 3,
@@ -304,7 +307,8 @@ function getMockRecipes(): Recipe[] {
       status: 'active',
       access_link: 'https://app.meuportalfit.com/receita/3',
       created_at: '2024-01-17T10:00:00Z',
-      updated_at: '2024-01-17T10:00:00Z'
+      updated_at: '2024-01-17T10:00:00Z',
+      category: 'saladas'
     },
     {
       id: 4,
@@ -317,7 +321,22 @@ function getMockRecipes(): Recipe[] {
       status: 'active',
       access_link: 'https://app.meuportalfit.com/receita/4',
       created_at: '2024-01-18T10:00:00Z',
-      updated_at: '2024-01-18T10:00:00Z'
+      updated_at: '2024-01-18T10:00:00Z',
+      category: 'sopas'
+    },
+    {
+      id: 5,
+      name: 'Brownie Fit de Chocolate',
+      description: 'Brownie saudável sem açúcar refinado, rico em proteínas',
+      type: 'doces',
+      price: 0,
+      pdf_link: 'https://drive.google.com/file/d/brownie-fit/view',
+      image_url: '',
+      status: 'active',
+      access_link: 'https://app.meuportalfit.com/receita/5',
+      created_at: '2024-01-19T10:00:00Z',
+      updated_at: '2024-01-19T10:00:00Z',
+      category: 'doces'
     }
   ]
 }
