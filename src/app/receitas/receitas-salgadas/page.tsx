@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
 import { recipeService, Recipe } from '@/lib/supabase'
+import { useSavedRecipes } from '@/hooks/useSavedItems'
 
 interface Receita {
   id: number
@@ -54,6 +55,7 @@ export default function ReceitasSalgadasPage() {
   const [loading, setLoading] = useState(true)
   const [activeFilter, setActiveFilter] = useState<'todas' | 'gratuitas' | 'pagas'>('todas')
   const [searchTerm, setSearchTerm] = useState('')
+  const { salvarReceita, isReceitaSalva } = useSavedRecipes()
 
   useEffect(() => {
     // Carregar receitas do Supabase filtradas por categoria
@@ -173,6 +175,17 @@ export default function ReceitasSalgadasPage() {
     } else {
       handleComprarReceita(receita)
     }
+  }
+
+  const handleSalvarReceita = (receita: Receita) => {
+    salvarReceita({
+      nome: receita.nome,
+      descricao: receita.descricao,
+      categoria: 'receitas-salgadas',
+      link_pdf: receita.link_pdf,
+      emoji: getRecipeEmoji(receita.nome)
+    })
+    alert(`Receita "${receita.nome}" salva em Minhas Receitas!`)
   }
 
   return (
@@ -310,7 +323,7 @@ export default function ReceitasSalgadasPage() {
                         </div>
                       )}
 
-                      <div className="flex items-center justify-between">
+                      <div className="flex items-center justify-between mb-3">
                         <span className="text-xs text-brand-text2">
                           {receita.data_criacao}
                         </span>
@@ -323,6 +336,21 @@ export default function ReceitasSalgadasPage() {
                           }`}
                         >
                           {receita.tipo === 'gratuita' ? 'Ver Receita' : 'Comprar'}
+                        </button>
+                      </div>
+
+                      {/* Botão Salvar */}
+                      <div className="flex justify-center">
+                        <button
+                          onClick={() => handleSalvarReceita(receita)}
+                          disabled={isReceitaSalva(receita.nome)}
+                          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                            isReceitaSalva(receita.nome)
+                              ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+                              : 'bg-blue-100 text-blue-600 hover:bg-blue-200'
+                          }`}
+                        >
+                          {isReceitaSalva(receita.nome) ? '✅ Salva' : '💾 Salvar Receita'}
                         </button>
                       </div>
                     </div>
