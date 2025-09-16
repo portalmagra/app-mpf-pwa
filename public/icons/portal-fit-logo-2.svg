@@ -1,0 +1,39 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background with Gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10B981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main Background -->
+  <rect width="512" height="512" rx="80" fill="url(#bgGradient)"/>
+  
+  <!-- Brazil Flag Inspired Design -->
+  <rect x="60" y="120" width="392" height="240" rx="20" fill="#FFDF00"/>
+  <path d="M60 240 L452 240 M256 120 L256 360" stroke="#009639" stroke-width="16"/>
+  <circle cx="256" cy="240" r="50" fill="#002776"/>
+  
+  <!-- Portal Text -->
+  <text x="256" y="420" font-family="Arial, sans-serif" font-size="52" font-weight="900" text-anchor="middle" fill="white">PORTAL</text>
+  <text x="256" y="470" font-family="Arial, sans-serif" font-size="40" font-weight="900" text-anchor="middle" fill="white">FIT</text>
+  
+  <!-- Fitness Icons -->
+  <g transform="translate(100, 100)">
+    <circle cx="0" cy="0" r="15" fill="white" opacity="0.9"/>
+    <path d="M-10 -10 L10 10 M10 -10 L-10 10" stroke="#10B981" stroke-width="3"/>
+  </g>
+  <g transform="translate(412, 100)">
+    <circle cx="0" cy="0" r="15" fill="white" opacity="0.9"/>
+    <path d="M-10 -10 L10 10 M10 -10 L-10 10" stroke="#10B981" stroke-width="3"/>
+  </g>
+  <g transform="translate(100, 380)">
+    <circle cx="0" cy="0" r="15" fill="white" opacity="0.9"/>
+    <path d="M-10 -10 L10 10 M10 -10 L-10 10" stroke="#10B981" stroke-width="3"/>
+  </g>
+  <g transform="translate(412, 380)">
+    <circle cx="0" cy="0" r="15" fill="white" opacity="0.9"/>
+    <path d="M-10 -10 L10 10 M10 -10 L-10 10" stroke="#10B981" stroke-width="3"/>
+  </g>
+</svg>
