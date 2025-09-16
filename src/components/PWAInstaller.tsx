@@ -130,30 +130,32 @@ export default function PWAInstaller() {
     }
   }
 
-  const handleUpdateClick = () => {
+  const handleUpdateClick = async () => {
     if (waitingWorker) {
-      waitingWorker.postMessage({ type: 'SKIP_WAITING' })
-      setWaitingWorker(null)
-      setShowUpdateNotification(false)
-      
-      // Limpar cache do navegador antes de recarregar
-      if ('caches' in window) {
-        caches.keys().then((cacheNames) => {
-          cacheNames.forEach((cacheName) => {
-            caches.delete(cacheName)
-          })
-        })
+      try {
+        // Ativar o novo service worker
+        waitingWorker.postMessage({ type: 'SKIP_WAITING' })
+        
+        // Aguardar um pouco para o worker ser ativado
+        await new Promise(resolve => setTimeout(resolve, 500))
+        
+        // Limpar todos os caches
+        if ('caches' in window) {
+          const cacheNames = await caches.keys()
+          await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)))
+        }
+        
+        // Limpar localStorage
+        localStorage.clear()
+        sessionStorage.clear()
+        
+        // Forçar reload completo
+        window.location.reload()
+      } catch (error) {
+        console.error('Erro ao atualizar:', error)
+        // Fallback: reload simples
+        window.location.reload()
       }
-      
-      // Limpar localStorage version
-      localStorage.removeItem('app-version')
-      
-      // Recarregar com cache busting via URL
-      setTimeout(() => {
-        const url = new URL(window.location.href)
-        url.searchParams.set('_cb', Date.now().toString())
-        window.location.href = url.toString()
-      }, 100)
     }
   }
 
