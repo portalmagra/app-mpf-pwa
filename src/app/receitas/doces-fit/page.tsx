@@ -67,15 +67,21 @@ export default function DocesFitPage() {
         
         // Converter formato do Supabase para formato da página de receitas
         const convertedRecipes: Receita[] = supabaseRecipes
-          .filter((recipe: Recipe) => 
-            recipe.type?.toLowerCase() === 'doces' ||
-            recipe.category?.toLowerCase().includes('doce') || 
-            recipe.name.toLowerCase().includes('doce') ||
-            recipe.name.toLowerCase().includes('bolo') ||
-            recipe.name.toLowerCase().includes('biscoito') ||
-            recipe.name.toLowerCase().includes('bombom') ||
-            recipe.name.toLowerCase().includes('beijinho')
-          )
+          .filter((recipe: Recipe) => {
+            // Prioridade: tipo exato
+            if (recipe.type?.toLowerCase() === 'doces') return true
+            
+            // Se não for doce, não incluir
+            if (recipe.type?.toLowerCase() === 'salgadas') return false
+            
+            // Fallback: filtros por nome (apenas para receitas sem tipo definido)
+            return recipe.name.toLowerCase().includes('doce') ||
+                   recipe.name.toLowerCase().includes('bolo') ||
+                   recipe.name.toLowerCase().includes('biscoito') ||
+                   recipe.name.toLowerCase().includes('bombom') ||
+                   recipe.name.toLowerCase().includes('beijinho') ||
+                   recipe.name.toLowerCase().includes('sobremesa')
+          })
           .map((recipe: Recipe) => ({
             id: recipe.id,
             nome: recipe.name,
