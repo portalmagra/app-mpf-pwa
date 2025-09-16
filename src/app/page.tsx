@@ -78,7 +78,7 @@ export default function Home() {
   const handleInstallClick = async () => {
     if (isInstalled) {
       // Se já está instalado, abrir WhatsApp
-      window.location.href = 'https://wa.me/17862535032'
+      openWhatsApp()
       return
     }
 
