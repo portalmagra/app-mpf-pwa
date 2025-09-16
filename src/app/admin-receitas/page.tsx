@@ -12,6 +12,15 @@ export default function AdminReceitasPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('todas')
   const [selectedStatus, setSelectedStatus] = useState('todas')
+  const [showAddForm, setShowAddForm] = useState(false)
+  const [newReceita, setNewReceita] = useState({
+    name: '',
+    description: '',
+    type: '',
+    price: 0,
+    pdf_link: '',
+    status: 'active' as 'active' | 'inactive'
+  })
 
   useEffect(() => {
     loadReceitas()
@@ -95,6 +104,52 @@ export default function AdminReceitasPage() {
     }
   }
 
+  const handleAddReceita = async () => {
+    try {
+      if (!newReceita.name || !newReceita.type || !newReceita.pdf_link) {
+        alert('Preencha todos os campos obrigatórios')
+        return
+      }
+
+      const receitaData = {
+        ...newReceita,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      }
+
+      // Implementar criação da receita
+      alert(`Cadastrar nova receita: ${newReceita.name}`)
+      
+      // Limpar formulário
+      setNewReceita({
+        name: '',
+        description: '',
+        type: '',
+        price: 0,
+        pdf_link: '',
+        status: 'active'
+      })
+      setShowAddForm(false)
+      
+      await loadReceitas() // Recarregar lista
+    } catch (error) {
+      console.error('Erro ao cadastrar receita:', error)
+      alert('Erro ao cadastrar receita')
+    }
+  }
+
+  const resetForm = () => {
+    setNewReceita({
+      name: '',
+      description: '',
+      type: '',
+      price: 0,
+      pdf_link: '',
+      status: 'active'
+    })
+    setShowAddForm(false)
+  }
+
   return (
     <div className="min-h-screen bg-brand-cream">
       {/* Header */}
@@ -121,6 +176,16 @@ export default function AdminReceitasPage() {
           <p className="text-brand-text2 mt-2">
             Gerencie todas as receitas cadastradas
           </p>
+          
+          {/* Botão Nova Receita */}
+          <div className="mt-4">
+            <button
+              onClick={() => setShowAddForm(!showAddForm)}
+              className="bg-brand-green text-white px-6 py-3 rounded-lg font-medium hover:bg-brand-greenDark transition-colors shadow-lg"
+            >
+              {showAddForm ? '❌ Cancelar' : '➕ Nova Receita'}
+            </button>
+          </div>
         </div>
 
         {/* Filtros e Busca */}
@@ -182,6 +247,127 @@ export default function AdminReceitasPage() {
             <span>Filtradas: {filteredReceitas.length} receitas</span>
           </div>
         </div>
+
+        {/* Formulário de Nova Receita */}
+        {showAddForm && (
+          <div className="bg-white rounded-xl p-6 shadow-soft mb-6">
+            <h2 className="text-xl font-bold text-brand-text mb-4">
+              ➕ Cadastrar Nova Receita
+            </h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Nome da Receita */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-brand-text mb-2">
+                  Nome da Receita *
+                </label>
+                <input
+                  type="text"
+                  value={newReceita.name}
+                  onChange={(e) => setNewReceita({...newReceita, name: e.target.value})}
+                  placeholder="Ex: Bolo de Chocolate Fit"
+                  className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                />
+              </div>
+
+              {/* Descrição */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-brand-text mb-2">
+                  Descrição
+                </label>
+                <textarea
+                  value={newReceita.description}
+                  onChange={(e) => setNewReceita({...newReceita, description: e.target.value})}
+                  placeholder="Descrição da receita..."
+                  rows={3}
+                  className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                />
+              </div>
+
+              {/* Tipo/Categoria */}
+              <div>
+                <label className="block text-sm font-medium text-brand-text mb-2">
+                  Categoria *
+                </label>
+                <select
+                  value={newReceita.type}
+                  onChange={(e) => setNewReceita({...newReceita, type: e.target.value})}
+                  className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                >
+                  <option value="">Selecione uma categoria</option>
+                  <option value="doces">Doces</option>
+                  <option value="salgadas">Salgadas</option>
+                  <option value="sucos">Sucos</option>
+                  <option value="saladas">Saladas</option>
+                  <option value="sopas">Sopas</option>
+                  <option value="shots">Shots</option>
+                  <option value="low-carb">Low Carb</option>
+                </select>
+              </div>
+
+              {/* Preço */}
+              <div>
+                <label className="block text-sm font-medium text-brand-text mb-2">
+                  Preço (USD)
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={newReceita.price}
+                  onChange={(e) => setNewReceita({...newReceita, price: parseFloat(e.target.value) || 0})}
+                  placeholder="0.00"
+                  className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                />
+              </div>
+
+              {/* Link PDF */}
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-brand-text mb-2">
+                  Link do PDF *
+                </label>
+                <input
+                  type="url"
+                  value={newReceita.pdf_link}
+                  onChange={(e) => setNewReceita({...newReceita, pdf_link: e.target.value})}
+                  placeholder="https://drive.google.com/file/d/..."
+                  className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                />
+              </div>
+
+              {/* Status */}
+              <div>
+                <label className="block text-sm font-medium text-brand-text mb-2">
+                  Status
+                </label>
+                <select
+                  value={newReceita.status}
+                  onChange={(e) => setNewReceita({...newReceita, status: e.target.value as 'active' | 'inactive'})}
+                  className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                >
+                  <option value="active">Ativo</option>
+                  <option value="inactive">Inativo</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Botões do Formulário */}
+            <div className="flex justify-end space-x-4 mt-6">
+              <button
+                onClick={resetForm}
+                className="px-6 py-3 border border-brand-border rounded-lg text-brand-text hover:bg-gray-50 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleAddReceita}
+                className="px-6 py-3 bg-brand-green text-white rounded-lg font-medium hover:bg-brand-greenDark transition-colors"
+              >
+                Cadastrar Receita
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Loading */}
         {loading && (
