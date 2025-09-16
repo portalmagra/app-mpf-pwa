@@ -352,23 +352,24 @@ export default function AdminReceitasPage() {
                     </select>
                   </div>
 
-                  {/* Valor (apenas se for paga) */}
-                  {newReceita.price > 0 && (
-                    <div>
-                      <label className="block text-sm font-medium text-brand-text mb-2">
-                        Valor (USD)
-                      </label>
-                      <input
-                        type="number"
-                        step="0.01"
-                        min="0.01"
-                        value={newReceita.price}
-                        onChange={(e) => setNewReceita({...newReceita, price: parseFloat(e.target.value) || 0.01})}
-                        placeholder="9.99"
-                        className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
-                      />
-                    </div>
-                  )}
+                  {/* Valor */}
+                  <div>
+                    <label className="block text-sm font-medium text-brand-text mb-2">
+                      Valor (USD)
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      value={newReceita.price}
+                      onChange={(e) => setNewReceita({...newReceita, price: parseFloat(e.target.value) || 0})}
+                      placeholder={newReceita.price === 0 ? "0.00 (Gratuita)" : "9.99"}
+                      className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                    />
+                    {newReceita.price === 0 && (
+                      <p className="text-xs text-green-600 mt-1">✓ Receita Gratuita</p>
+                    )}
+                  </div>
                 </div>
               </div>
 
