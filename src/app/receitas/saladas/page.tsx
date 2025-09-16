@@ -68,6 +68,7 @@ export default function SaladasPage() {
         // Converter formato do Supabase para formato da página de receitas
         const convertedRecipes: Receita[] = supabaseRecipes
           .filter((recipe: Recipe) => 
+            recipe.type?.toLowerCase() === 'saladas' ||
             recipe.category?.toLowerCase().includes('salada') || 
             recipe.name.toLowerCase().includes('salada') ||
             recipe.name.toLowerCase().includes('bowl') ||
