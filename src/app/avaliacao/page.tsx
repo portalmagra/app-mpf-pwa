@@ -417,12 +417,12 @@ export default function AvaliacaoPage() {
         <div className="px-4 py-6">
           <div className="max-w-sm mx-auto">
             <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-br from-brand-green via-brand-green to-brand-blue rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🧠</span>
+              <div className="flex items-center justify-center mb-4">
+                <span className="text-3xl mr-3">🧠</span>
+                <h2 className="text-2xl font-bold text-brand-green">
+                  Avaliação Gratuita
+                </h2>
               </div>
-              <h2 className="text-2xl font-bold text-brand-blue mb-2">
-                Avaliação Gratuita
-              </h2>
               <p className="text-brand-blue text-lg font-semibold mb-2">
                 feita por Inteligência Artificial
               </p>
@@ -452,7 +452,7 @@ export default function AvaliacaoPage() {
               <button
                 onClick={handleNameSubmit}
                 disabled={!userName.trim()}
-                className="w-full bg-gradient-to-b from-brand-green to-brand-blue text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all disabled:bg-gray-300 disabled:cursor-not-allowed"
+                className="w-full bg-brand-greenLight text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
                 Continuar
               </button>
@@ -483,14 +483,14 @@ export default function AvaliacaoPage() {
         <div className="px-4 py-6">
           <div className="max-w-sm mx-auto">
             <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-br from-brand-green via-brand-green to-brand-blue rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">💭</span>
+              <div className="flex items-center justify-center mb-4">
+                <span className="text-3xl mr-3">💭</span>
+                <h2 className="text-xl font-bold text-brand-green">
+                  Conte-nos mais sobre você
+                </h2>
               </div>
-              <h2 className="text-xl font-bold text-brand-text mb-2">
-                Conte-nos mais sobre você
-              </h2>
-              <p className="text-brand-text2 text-sm">
-                O que você mais gostaria de conquistar?
+              <p className="text-brand-text2 text-sm mb-4">
+                Conte seus objetivos, desafios e restrições alimentares
               </p>
             </div>
 
@@ -498,21 +498,30 @@ export default function AvaliacaoPage() {
               <textarea
                 value={userGoals}
                 onChange={(e) => setUserGoals(e.target.value)}
-                placeholder="Ex: Quero perder 10kg, ter mais energia para brincar com meus filhos, me sentir mais confiante..."
+                placeholder="Ex: Quero perder 10kg e ter mais energia. Tenho dificuldade para dormir e sou intolerante à lactose. Meu maior desafio é resistir aos doces à noite e não tenho tempo para cozinhar durante a semana..."
                 className="w-full h-32 p-4 border border-brand-border rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-brand-green"
               />
+              
+              {/* Mensagem de orientação */}
+              <div className="mt-3 p-3 bg-brand-greenSoft rounded-lg">
+                <p className="text-brand-text text-xs">
+                  💡 <strong>Dica:</strong> Mencione seus objetivos específicos (peso, energia, saúde), 
+                  desafios que enfrenta (tempo, motivação, hábitos) e qualquer restrição alimentar 
+                  (lactose, glúten, alergias) para uma avaliação mais personalizada.
+                </p>
+              </div>
               
               {/* Botões de navegação */}
               <div className="flex gap-3 mt-4">
                 <button
                   onClick={() => setShowGoalsInput(false)}
-                  className="flex-1 bg-gradient-to-r from-brand-blueSoft to-brand-greenSoft text-brand-text py-3 rounded-lg font-semibold hover:shadow-lg transition-all"
+                  className="flex-1 bg-brand-greenSoft text-brand-text py-3 rounded-lg font-semibold hover:shadow-lg transition-all"
                 >
                   ← Voltar
                 </button>
                 <button
                   onClick={handleGoalsSubmit}
-                  className="flex-1 bg-gradient-to-b from-brand-green to-brand-blue text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all"
+                  className="flex-1 bg-brand-greenLight text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all"
                 >
                   Continuar
                 </button>
@@ -551,9 +560,9 @@ export default function AvaliacaoPage() {
             {/* Header Celebrativo */}
             <div className="text-center mb-6">
               {/* Mensagem de Parabéns - Simplificada */}
-              <div className="bg-gradient-to-r from-brand-greenSoft to-brand-blueSoft rounded-xl p-4 mb-4">
+              <div className="bg-brand-greenSoft rounded-xl p-4 mb-4">
                 <div className="flex items-center justify-center space-x-3">
-                  <div className="w-16 h-16 bg-gradient-to-br from-brand-green via-brand-green to-brand-blue rounded-full flex items-center justify-center animate-pulse">
+                  <div className="w-16 h-16 bg-brand-greenLight rounded-full flex items-center justify-center animate-pulse">
                     <span className="text-2xl">🎉</span>
                   </div>
                   <div className="text-center">
@@ -573,7 +582,7 @@ export default function AvaliacaoPage() {
               </div>
 
               {/* Progresso */}
-              <div className="bg-gradient-to-r from-brand-green to-brand-blue rounded-lg p-3 mb-4 text-center">
+              <div className="bg-brand-greenLight rounded-lg p-3 mb-4 text-center">
                 <div className="flex items-center justify-center space-x-2 mb-2">
                   <span className="text-white text-sm font-semibold">🎯 Você está no caminho certo!</span>
                 </div>
@@ -614,7 +623,7 @@ export default function AvaliacaoPage() {
                   </div>
                 </div>
                 
-                <div className="mt-4 p-3 bg-gradient-to-r from-brand-greenSoft to-brand-blueSoft rounded-lg text-center">
+                <div className="mt-4 p-3 bg-brand-greenSoft rounded-lg text-center">
                   <p className="text-brand-text text-sm font-semibold">
                     + Receitas exclusivas e dicas de adaptação cultural! 🇧🇷
                   </p>
@@ -622,7 +631,7 @@ export default function AvaliacaoPage() {
               </div>
 
               {/* CTA Principal Melhorado */}
-              <div className="bg-gradient-to-r from-brand-green to-brand-blue rounded-xl p-4 mb-6 relative overflow-hidden">
+              <div className="bg-brand-greenLight rounded-xl p-4 mb-6 relative overflow-hidden">
                 {/* Urgência */}
                 <div className="absolute top-2 right-2 bg-brand-amber text-white px-2 py-1 rounded-full text-xs font-bold animate-bounce">
                   ⏰ 24h
@@ -662,21 +671,21 @@ export default function AvaliacaoPage() {
 
             {/* Mensagem de Encorajamento */}
             {result.encouragement && (
-              <div className="bg-gradient-to-r from-brand-greenSoft to-brand-blueSoft rounded-xl p-4 mb-6 text-center">
+              <div className="bg-brand-greenSoft rounded-xl p-4 mb-6 text-center">
                 <p className="text-brand-text font-medium text-sm">{result.encouragement}</p>
               </div>
             )}
 
             {/* Promessa de Receitas */}
             {result.promise && (
-              <div className="bg-gradient-to-r from-brand-amber to-brand-amberDark rounded-xl p-4 mb-6 text-center">
+              <div className="bg-brand-amber rounded-xl p-4 mb-6 text-center">
                 <h3 className="font-bold text-white mb-2">🍽️ Receitas Exclusivas!</h3>
                 <p className="text-amber-100 text-sm">{result.promise}</p>
               </div>
             )}
 
             {/* Testimonial */}
-            <div className="bg-gradient-to-r from-brand-greenSoft to-brand-blueSoft rounded-xl p-4 mb-6">
+            <div className="bg-brand-greenSoft rounded-xl p-4 mb-6">
               <div className="flex items-start space-x-3">
                 <div className="w-10 h-10 bg-brand-green rounded-full flex items-center justify-center flex-shrink-0">
                   <span className="text-white font-bold text-sm">M</span>
@@ -691,7 +700,7 @@ export default function AvaliacaoPage() {
             </div>
 
             {/* CTA Coach Melhorado */}
-            <div className="bg-gradient-to-r from-brand-blue to-brand-blueDark rounded-xl p-4 text-center">
+            <div className="bg-brand-blue rounded-xl p-4 text-center">
               <h3 className="font-bold text-white mb-2 text-lg">Quer aprofundar seu plano?</h3>
               <p className="text-green-100 text-sm mb-4">
                 Converse com uma Coach Brasileira especializada
@@ -712,7 +721,7 @@ export default function AvaliacaoPage() {
             </div>
 
             {/* Viralização */}
-            <div className="bg-gradient-to-r from-brand-amber to-brand-amberDark rounded-xl p-4 text-center mt-6">
+            <div className="bg-brand-amber rounded-xl p-4 text-center mt-6">
               <h3 className="font-bold text-white mb-2">💝 Compartilhe com uma amiga brasileira!</h3>
               <p className="text-amber-100 text-sm mb-3">
                 Ajude outra brasileira nos Estados Unidos a transformar sua vida
@@ -774,12 +783,12 @@ Baixe agora: https://app.meuportalfit.com
       <div className="px-4 py-6">
         <div className="max-w-sm mx-auto">
             <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-br from-brand-green via-brand-green to-brand-blue rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-3xl">🧠</span>
+              <div className="flex items-center justify-center mb-4">
+                <span className="text-3xl mr-3">🧠</span>
+                <h2 className="text-2xl font-bold text-brand-green">
+                  Avaliação Gratuita
+                </h2>
               </div>
-              <h2 className="text-2xl font-bold text-brand-blue mb-2">
-                Avaliação Gratuita
-              </h2>
               <p className="text-brand-blue text-lg font-semibold mb-2">
                 feita por Inteligência Artificial
               </p>
@@ -801,7 +810,7 @@ Baixe agora: https://app.meuportalfit.com
                 <button
                   key={index}
                   onClick={() => handleAnswer(quizQuestions[currentQuestion].values[index])}
-                  className="w-full bg-gradient-to-r from-brand-greenSoft via-white to-brand-blueSoft text-brand-text p-4 rounded-lg text-left hover:shadow-lg transition-all border border-brand-border hover:border-brand-blue transform hover:scale-105"
+                  className="w-full bg-brand-greenSoft text-brand-text p-4 rounded-lg text-left hover:shadow-lg transition-all border border-brand-border hover:border-brand-green transform hover:scale-105"
                 >
                   {option}
                 </button>
@@ -813,7 +822,7 @@ Baixe agora: https://app.meuportalfit.com
               <button
                 onClick={handlePrevious}
                 disabled={currentQuestion === 0}
-                className="px-4 py-2 bg-gradient-to-r from-brand-blueSoft to-brand-greenSoft text-brand-text rounded-lg font-semibold hover:shadow-lg transition-all disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-brand-greenSoft text-brand-text rounded-lg font-semibold hover:shadow-lg transition-all disabled:bg-gray-100 disabled:text-gray-400 disabled:cursor-not-allowed"
               >
                 ← Anterior
               </button>
@@ -825,7 +834,7 @@ Baixe agora: https://app.meuportalfit.com
                     setShowGoalsInput(true);
                   }
                 }}
-                className="px-4 py-2 bg-gradient-to-b from-brand-green to-brand-blue text-white rounded-lg font-semibold hover:shadow-lg transition-all"
+                className="px-4 py-2 bg-brand-greenLight text-white rounded-lg font-semibold hover:shadow-lg transition-all"
               >
                 {currentQuestion < quizQuestions.length - 1 ? 'Próxima' : 'Próxima'}
               </button>

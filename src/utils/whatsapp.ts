@@ -44,16 +44,22 @@ export const openWhatsAppIOS = (phoneNumber: string = '17862535032', message?: s
     ? `${baseUrl}${phoneNumber}?text=${encodeURIComponent(message)}`
     : `${baseUrl}${phoneNumber}`;
 
-  // Para iOS PWAs, usar window.open com fallback
-  try {
-    const newWindow = window.open(whatsappUrl, '_blank');
-    if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
-      // Se não conseguiu abrir nova aba, usar location.href
+  // Para iOS PWAs instaladas, usar location.href é mais confiável
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    // PWA instalada - usar location.href
+    window.location.href = whatsappUrl;
+  } else {
+    // PWA não instalada - tentar window.open primeiro
+    try {
+      const newWindow = window.open(whatsappUrl, '_blank');
+      if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+        // Se não conseguiu abrir nova aba, usar location.href
+        window.location.href = whatsappUrl;
+      }
+    } catch (error) {
+      // Fallback para location.href
       window.location.href = whatsappUrl;
     }
-  } catch (error) {
-    // Fallback para location.href
-    window.location.href = whatsappUrl;
   }
 };
 
