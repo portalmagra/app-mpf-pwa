@@ -133,7 +133,7 @@ export default function Home() {
             </div>
           </div>
           <button 
-            onClick={() => window.location.href = 'https://wa.me/17862535032'}
+            onClick={() => window.open('https://wa.me/17862535032', '_blank')}
             className="inline-block bg-white text-orange-600 px-6 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
           >
             📅 QUERO AGENDAR
@@ -214,7 +214,7 @@ export default function Home() {
       <section className="px-4 py-4">
         <div className="max-w-sm mx-auto text-center">
           <button 
-            onClick={() => window.location.href = 'https://wa.me/17862535032'}
+            onClick={() => window.open('https://wa.me/17862535032', '_blank')}
             className="bg-green-500 text-white px-6 py-3 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all transform hover:scale-105 flex items-center justify-center space-x-2 mx-auto"
           >
             <span>💬</span>

@@ -28,8 +28,8 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icons/portal-fit-icon-192.svg", sizes: "192x192", type: "image/svg+xml" },
-      { url: "/icons/portal-fit-icon-512.svg", sizes: "512x512", type: "image/svg+xml" }
+      { url: "/icons/portal-fit-icon-192-v2.svg", sizes: "192x192", type: "image/svg+xml" },
+      { url: "/icons/portal-fit-icon-512-v2.svg", sizes: "512x512", type: "image/svg+xml" }
     ],
     apple: [
       { url: "/icons/icon-192x192.svg", sizes: "180x180", type: "image/svg+xml" }
