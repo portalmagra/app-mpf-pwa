@@ -1,12 +1,12 @@
-const CACHE_NAME = 'portalfit-v2.1.0';
-const STATIC_CACHE_NAME = 'portalfit-static-v2.1.0';
+const CACHE_NAME = 'portalfit-v2.2.0';
+const STATIC_CACHE_NAME = 'portalfit-static-v2.2.0';
 const urlsToCache = [
   '/',
   '/avaliacao',
   '/resultados',
   '/manifest.json',
-  '/icons/portal-fit-icon-192-v2.svg',
-  '/icons/portal-fit-icon-512-v2.svg'
+  '/icons/portal-fit-icon-192-v3.svg',
+  '/icons/portal-fit-icon-512-v3.svg'
 ];
 
 // Instalar Service Worker
