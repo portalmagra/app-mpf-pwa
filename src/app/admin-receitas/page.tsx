@@ -328,60 +328,35 @@ export default function AdminReceitasPage() {
                 </select>
               </div>
 
-              {/* Preço e Status */}
-              <div className="md:col-span-2">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {/* Preço */}
-                  <div>
-                    <label className="block text-sm font-medium text-brand-text mb-2">
-                      💰 Valor
-                    </label>
-                    <div className="flex gap-2">
-                      <input
-                        type="text"
-                        value={newReceita.price === 0 ? 'Gratuito' : newReceita.price.toString()}
-                        onChange={(e) => {
-                          const value = e.target.value.toLowerCase()
-                          if (value === 'gratuito' || value === 'free' || value === '0') {
-                            setNewReceita({...newReceita, price: 0})
-                          } else {
-                            const numValue = parseFloat(value.replace(/[^0-9.]/g, ''))
-                            if (!isNaN(numValue)) {
-                              setNewReceita({...newReceita, price: numValue})
-                            }
-                          }
-                        }}
-                        placeholder="Gratuito ou 9.99"
-                        className="flex-1 px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
-                      />
-                      <button
-                        type="button"
-                        onClick={() => setNewReceita({...newReceita, price: 0})}
-                        className="px-4 py-3 bg-green-100 text-green-700 rounded-lg hover:bg-green-200 transition-colors text-sm font-medium"
-                      >
-                        Gratuito
-                      </button>
-                    </div>
-                    <p className="text-xs text-gray-500 mt-1">
-                      Digite "Gratuito" ou um valor numérico (ex: 9.99)
-                    </p>
-                  </div>
+              {/* Preço */}
+              <div>
+                <label className="block text-sm font-medium text-brand-text mb-2">
+                  Preço (USD)
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  value={newReceita.price}
+                  onChange={(e) => setNewReceita({...newReceita, price: parseFloat(e.target.value) || 0})}
+                  placeholder="0.00"
+                  className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                />
+              </div>
 
-                  {/* Status */}
-                  <div>
-                    <label className="block text-sm font-medium text-brand-text mb-2">
-                      📊 Status
-                    </label>
-                    <select
-                      value={newReceita.status}
-                      onChange={(e) => setNewReceita({...newReceita, status: e.target.value as 'active' | 'inactive'})}
-                      className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
-                    >
-                      <option value="active">✅ Ativo</option>
-                      <option value="inactive">❌ Inativo</option>
-                    </select>
-                  </div>
-                </div>
+              {/* Status */}
+              <div>
+                <label className="block text-sm font-medium text-brand-text mb-2">
+                  Status
+                </label>
+                <select
+                  value={newReceita.status}
+                  onChange={(e) => setNewReceita({...newReceita, status: e.target.value as 'active' | 'inactive'})}
+                  className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                >
+                  <option value="active">Ativo</option>
+                  <option value="inactive">Inativo</option>
+                </select>
               </div>
 
               {/* Link PDF */}
