@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
+import { useSavedProtocols } from '@/hooks/useSavedItems'
 
 interface ProtocoloSalvo {
   id: number
@@ -41,28 +42,18 @@ const getProtocoloEmoji = (nome: string, categoria: string): string => {
 }
 
 export default function MeusProtocolosPage() {
-  const [protocolosSalvos, setProtocolosSalvos] = useState<ProtocoloSalvo[]>([])
+  const { protocolosSalvos, removerProtocolo } = useSavedProtocols()
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
-    // Carregar protocolos salvos do localStorage
-    const loadSavedProtocols = () => {
-      try {
-        const savedProtocols = localStorage.getItem('meusProtocolos')
-        if (savedProtocols) {
-          const protocols = JSON.parse(savedProtocols)
-          setProtocolosSalvos(protocols)
-        }
-        setLoading(false)
-      } catch (error) {
-        console.error('❌ Erro ao carregar protocolos salvos:', error)
-        setLoading(false)
-      }
-    }
-
-    loadSavedProtocols()
-  }, [])
+    // Simular loading para sincronizar com o hook
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 500)
+    
+    return () => clearTimeout(timer)
+  }, [protocolosSalvos])
 
   // Filtrar protocolos baseado no termo de busca
   const filteredProtocolos = protocolosSalvos.filter(protocolo =>
@@ -72,9 +63,7 @@ export default function MeusProtocolosPage() {
   )
 
   const handleRemoverProtocolo = (id: number) => {
-    const novosProtocolos = protocolosSalvos.filter(protocolo => protocolo.id !== id)
-    setProtocolosSalvos(novosProtocolos)
-    localStorage.setItem('meusProtocolos', JSON.stringify(novosProtocolos))
+    removerProtocolo(id)
   }
 
   const handleCompartilharWhatsApp = (protocolo: ProtocoloSalvo) => {

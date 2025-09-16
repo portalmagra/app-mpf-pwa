@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
+import { useSavedRecipes } from '@/hooks/useSavedItems'
 
 interface ReceitaSalva {
   id: number
@@ -40,28 +41,18 @@ const getRecipeEmoji = (nome: string, categoria: string): string => {
 }
 
 export default function MinhasReceitasPage() {
-  const [receitasSalvas, setReceitasSalvas] = useState<ReceitaSalva[]>([])
+  const { receitasSalvas, removerReceita } = useSavedRecipes()
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
 
   useEffect(() => {
-    // Carregar receitas salvas do localStorage
-    const loadSavedRecipes = () => {
-      try {
-        const savedRecipes = localStorage.getItem('minhasReceitas')
-        if (savedRecipes) {
-          const recipes = JSON.parse(savedRecipes)
-          setReceitasSalvas(recipes)
-        }
-        setLoading(false)
-      } catch (error) {
-        console.error('❌ Erro ao carregar receitas salvas:', error)
-        setLoading(false)
-      }
-    }
-
-    loadSavedRecipes()
-  }, [])
+    // Simular loading para sincronizar com o hook
+    const timer = setTimeout(() => {
+      setLoading(false)
+    }, 500)
+    
+    return () => clearTimeout(timer)
+  }, [receitasSalvas])
 
   // Filtrar receitas baseado no termo de busca
   const filteredReceitas = receitasSalvas.filter(receita =>
@@ -71,9 +62,7 @@ export default function MinhasReceitasPage() {
   )
 
   const handleRemoverReceita = (id: number) => {
-    const novasReceitas = receitasSalvas.filter(receita => receita.id !== id)
-    setReceitasSalvas(novasReceitas)
-    localStorage.setItem('minhasReceitas', JSON.stringify(novasReceitas))
+    removerReceita(id)
   }
 
   const handleCompartilharWhatsApp = (receita: ReceitaSalva) => {
