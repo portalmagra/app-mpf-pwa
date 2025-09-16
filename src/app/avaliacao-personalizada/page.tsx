@@ -3,14 +3,14 @@
 import { useState, useRef } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
+import { openWhatsApp } from '@/utils/whatsapp'
 
 export default function AvaliacaoPersonalizada() {
   const [isPlaying, setIsPlaying] = useState(false)
   const videoRef = useRef<HTMLVideoElement>(null)
 
-  const openWhatsApp = (message: string) => {
-    const encodedMessage = encodeURIComponent(message)
-    window.open(`https://wa.me/17862535032?text=${encodedMessage}`, '_blank')
+  const handleWhatsApp = (message: string) => {
+    openWhatsApp('17862535032', message)
   }
 
   const handlePlayVideo = () => {
@@ -87,7 +87,7 @@ export default function AvaliacaoPersonalizada() {
       <section className="px-4 py-6 bg-white">
         <div className="max-w-sm mx-auto text-center">
               <button
-            onClick={() => openWhatsApp('Olá! Quero agendar minha avaliação personalizada de 30 minutos com a coach brasileira por $10.')}
+            onClick={() => handleWhatsApp('Olá! Quero agendar minha avaliação personalizada de 30 minutos com a coach brasileira por $10.')}
             className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
           >
             📅 QUERO AGENDAR MINHA AVALIAÇÃO
@@ -225,7 +225,7 @@ export default function AvaliacaoPersonalizada() {
               </p>
             </div>
             <button 
-              onClick={() => openWhatsApp('Olá! Quero agendar minha avaliação personalizada de 30 minutos com a coach brasileira por $10.')}
+              onClick={() => handleWhatsApp('Olá! Quero agendar minha avaliação personalizada de 30 minutos com a coach brasileira por $10.')}
               className="w-full bg-brand-green text-white px-6 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
             >
               💬 Agendar com Coach
@@ -266,7 +266,7 @@ export default function AvaliacaoPersonalizada() {
           <div className="text-center">
             <h2 className="text-2xl font-bold text-brand-text mb-4">Pronta para Transformar sua Saúde?</h2>
             <button 
-              onClick={() => openWhatsApp('Olá! Quero agendar minha avaliação personalizada de 30 minutos com a coach brasileira por $10.')}
+              onClick={() => handleWhatsApp('Olá! Quero agendar minha avaliação personalizada de 30 minutos com a coach brasileira por $10.')}
               className="inline-block bg-brand-green text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
             >
               💬 AGENDAR MINHA AVALIAÇÃO
