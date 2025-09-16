@@ -73,6 +73,8 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="MeuPortalFit" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" type="image/svg+xml" href="/icon.svg" />
         <link rel="icon" type="image/svg+xml" sizes="192x192" href="/icons/portal-fit-icon-192-v3.svg" />
         <link rel="icon" type="image/svg+xml" sizes="512x512" href="/icons/portal-fit-icon-512-v3.svg" />
         <meta name="mobile-web-app-capable" content="yes" />

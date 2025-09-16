@@ -36,6 +36,28 @@ export const openWhatsAppSimple = (phoneNumber: string = '17862535032', message?
 };
 
 /**
+ * Função específica para iOS PWAs
+ */
+export const openWhatsAppIOS = (phoneNumber: string = '17862535032', message?: string) => {
+  const baseUrl = 'https://wa.me/';
+  const whatsappUrl = message 
+    ? `${baseUrl}${phoneNumber}?text=${encodeURIComponent(message)}`
+    : `${baseUrl}${phoneNumber}`;
+
+  // Para iOS PWAs, usar window.open com fallback
+  try {
+    const newWindow = window.open(whatsappUrl, '_blank');
+    if (!newWindow || newWindow.closed || typeof newWindow.closed == 'undefined') {
+      // Se não conseguiu abrir nova aba, usar location.href
+      window.location.href = whatsappUrl;
+    }
+  } catch (error) {
+    // Fallback para location.href
+    window.location.href = whatsappUrl;
+  }
+};
+
+/**
  * Função para compartilhar conteúdo via WhatsApp
  */
 export const shareViaWhatsApp = (text: string, phoneNumber: string = '17862535032') => {

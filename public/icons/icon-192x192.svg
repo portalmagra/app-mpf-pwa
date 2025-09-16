@@ -1,21 +1,21 @@
-<svg width="192" height="192" viewBox="0 0 192 192" xmlns="http://www.w3.org/2000/svg">
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
   <!-- Background -->
-  <rect width="192" height="192" rx="24" fill="#059669"/>
+  <rect width="512" height="512" rx="100" fill="#059669"/>
   
   <!-- Portal Circle -->
-  <circle cx="96" cy="75" r="45" fill="white" opacity="0.2"/>
-  <circle cx="96" cy="75" r="35" fill="white" opacity="0.3"/>
-  <circle cx="96" cy="75" r="25" fill="white" opacity="0.4"/>
+  <circle cx="256" cy="200" r="120" fill="white" opacity="0.2"/>
+  <circle cx="256" cy="200" r="100" fill="white" opacity="0.3"/>
+  <circle cx="256" cy="200" r="80" fill="white" opacity="0.4"/>
   
   <!-- Brazil Elements -->
-  <rect x="66" y="45" width="60" height="60" rx="8" fill="#FFDF00"/>
-  <path d="M66 75 L126 75 M96 45 L96 105" stroke="#059669" stroke-width="4"/>
-  <circle cx="96" cy="75" r="15" fill="#002776"/>
+  <rect x="156" y="120" width="200" height="160" rx="20" fill="#FFDF00"/>
+  <path d="M156 200 L356 200 M256 120 L256 280" stroke="#059669" stroke-width="12"/>
+  <circle cx="256" cy="200" r="40" fill="#002776"/>
   
   <!-- Portal Text -->
-  <text x="96" y="130" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="white">PORTAL</text>
-  <text x="96" y="150" font-family="Arial, sans-serif" font-size="16" font-weight="bold" text-anchor="middle" fill="white">FIT</text>
+  <text x="256" y="350" font-family="Arial, sans-serif" font-size="56" font-weight="bold" text-anchor="middle" fill="white">PORTAL</text>
+  <text x="256" y="400" font-family="Arial, sans-serif" font-size="44" font-weight="bold" text-anchor="middle" fill="white">FIT</text>
   
   <!-- Subtle Brazil-US Connection -->
-  <text x="96" y="165" font-family="Arial, sans-serif" font-size="6" text-anchor="middle" fill="white" opacity="0.8">BR • US</text>
+  <text x="256" y="440" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="white" opacity="0.8">BR • US</text>
 </svg>

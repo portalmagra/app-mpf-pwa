@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
-import { openWhatsApp, openWhatsAppSimple } from '@/utils/whatsapp'
+import { openWhatsApp, openWhatsAppSimple, openWhatsAppIOS } from '@/utils/whatsapp'
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[]
@@ -77,8 +77,13 @@ export default function Home() {
 
   const handleInstallClick = async () => {
     if (isInstalled) {
-      // Se já está instalado, abrir WhatsApp usando função simples
-      openWhatsAppSimple()
+      // Se já está instalado, abrir WhatsApp usando função específica para iOS
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+      if (isIOS) {
+        openWhatsAppIOS();
+      } else {
+        openWhatsAppSimple();
+      }
       return
     }
 
