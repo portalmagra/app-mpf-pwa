@@ -122,18 +122,6 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Banner de Instalação Automática */}
-      {deferredPrompt && !isInstalled && (
-        <section className="px-4 py-3 bg-gradient-to-r from-blue-500 to-blue-600 text-white mb-4">
-          <div className="max-w-sm mx-auto text-center">
-            <div className="flex items-center justify-center space-x-2 mb-2">
-              <span className="text-xl">📱</span>
-              <p className="text-sm font-medium">App pronto para instalar!</p>
-            </div>
-            <p className="text-xs opacity-90">Toque no botão "Instalar App" acima para adicionar à sua tela inicial</p>
-          </div>
-        </section>
-      )}
 
       {/* Banner Coach Brasileira - DESTAQUE */}
       <section className="px-4 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white mb-6">
@@ -218,18 +206,20 @@ export default function Home() {
               </div>
             </Link>
 
-            {/* 6. Mercado - Branco neutro */}
-            <Link href="/mercado" className="w-full bg-white rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-gray-200 transform hover:scale-105 block">
-              <div className="flex items-center space-x-4">
-                <span className="text-4xl">🛒</span>
-                <div className="flex-1 text-left">
-                  <h3 className="font-bold text-xl">Mercado</h3>
-                  <p className="text-sm text-brand-text2">Produtos selecionados para você</p>
-                </div>
-                <span className="text-xs bg-gray-500 text-white px-3 py-1 rounded-full font-semibold">Ver</span>
-              </div>
-            </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Botão WhatsApp Fixo - Suporte */}
+      <section className="px-4 py-4">
+        <div className="max-w-sm mx-auto text-center">
+          <button 
+            onClick={() => window.location.href = 'https://wa.me/17862535032'}
+            className="bg-green-500 text-white px-6 py-3 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all transform hover:scale-105 flex items-center justify-center space-x-2 mx-auto"
+          >
+            <span>💬</span>
+            <span>Precisa de ajuda? Fale conosco</span>
+          </button>
         </div>
       </section>
 
