@@ -328,20 +328,48 @@ export default function AdminReceitasPage() {
                 </select>
               </div>
 
-              {/* Preço */}
-              <div>
-                <label className="block text-sm font-medium text-brand-text mb-2">
-                  Preço (USD)
-                </label>
-                <input
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  value={newReceita.price}
-                  onChange={(e) => setNewReceita({...newReceita, price: parseFloat(e.target.value) || 0})}
-                  placeholder="0.00"
-                  className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
-                />
+              {/* Tipo e Valor */}
+              <div className="md:col-span-2">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {/* Tipo */}
+                  <div>
+                    <label className="block text-sm font-medium text-brand-text mb-2">
+                      Tipo
+                    </label>
+                    <select
+                      value={newReceita.price === 0 ? 'gratuita' : 'paga'}
+                      onChange={(e) => {
+                        if (e.target.value === 'gratuita') {
+                          setNewReceita({...newReceita, price: 0})
+                        } else {
+                          setNewReceita({...newReceita, price: 9.99})
+                        }
+                      }}
+                      className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                    >
+                      <option value="gratuita">Gratuita</option>
+                      <option value="paga">Paga</option>
+                    </select>
+                  </div>
+
+                  {/* Valor (apenas se for paga) */}
+                  {newReceita.price > 0 && (
+                    <div>
+                      <label className="block text-sm font-medium text-brand-text mb-2">
+                        Valor (USD)
+                      </label>
+                      <input
+                        type="number"
+                        step="0.01"
+                        min="0.01"
+                        value={newReceita.price}
+                        onChange={(e) => setNewReceita({...newReceita, price: parseFloat(e.target.value) || 0.01})}
+                        placeholder="9.99"
+                        className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Status */}
