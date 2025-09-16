@@ -1,10 +1,12 @@
-const CACHE_NAME = 'portalfit-v2.4.0';
-const STATIC_CACHE_NAME = 'portalfit-static-v2.4.0';
+const CACHE_NAME = 'portalfit-v2.5.0';
+const STATIC_CACHE_NAME = 'portalfit-static-v2.5.0';
 const urlsToCache = [
   '/',
   '/avaliacao',
   '/resultados',
   '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png',
   '/icons/portal-fit-icon-192-v3.svg',
   '/icons/portal-fit-icon-512-v3.svg',
   '/icons/portal-fit-icon-180-ios.svg',

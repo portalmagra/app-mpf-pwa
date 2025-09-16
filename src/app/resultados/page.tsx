@@ -314,11 +314,11 @@ function ResultadosContent() {
               .header { 
                 text-align: center; 
                 margin-bottom: 30px; 
-                background: linear-gradient(135deg, #f0fdf4 0%, #eff6ff 50%, #f0f9ff 100%);
+                background: #f0fdf4;
                 padding: 30px;
                 border-radius: 12px;
               }
-              .logo { font-size: 28px; font-weight: bold; background: linear-gradient(135deg, #22c55e, #3b82f6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+              .logo { font-size: 28px; font-weight: bold; color: #059669; }
               .title { font-size: 24px; color: #1f2937; margin: 10px 0; }
               .subtitle { font-size: 16px; color: #6b7280; }
               .section { margin-bottom: 25px; }
@@ -645,7 +645,7 @@ function ResultadosContent() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(135deg, #f0fdf4 0%, #eff6ff 50%, #f0f9ff 100%)'
+        background: '#f0fdf4'
       }}>
         <div style={{
           textAlign: 'center',
@@ -689,7 +689,7 @@ function ResultadosContent() {
               <div style={{
                 width: '40px',
                 height: '40px',
-                background: 'linear-gradient(135deg, #22c55e, #3b82f6)',
+                background: '#059669',
                 borderRadius: '8px',
                 display: 'flex',
                 alignItems: 'center',
@@ -703,10 +703,7 @@ function ResultadosContent() {
               <span style={{
                 fontSize: '1.5rem',
                 fontWeight: 900,
-                background: 'linear-gradient(135deg, #22c55e, #3b82f6)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
+                color: '#059669'
               }}>
                 MeuPortalFit
               </span>
@@ -719,7 +716,7 @@ function ResultadosContent() {
                   alignItems: 'center',
                   gap: '0.5rem',
                   padding: '0.6rem 1.2rem',
-                  background: 'linear-gradient(135deg, #25d366, #128c7e)',
+                  background: '#25d366',
                   color: 'white',
                   border: 'none',
                   borderRadius: '20px',
@@ -739,7 +736,7 @@ function ResultadosContent() {
 
       {/* Hero Section - Mais Compacto */}
       <section style={{
-        background: 'linear-gradient(135deg, #f0fdf4 0%, #eff6ff 50%, #f0f9ff 100%)',
+        background: '#f0fdf4',
         padding: '1.5rem 0',
         position: 'relative',
         overflow: 'hidden',
@@ -754,7 +751,7 @@ function ResultadosContent() {
             color: '#1f2937',
             whiteSpace: 'pre-line'
           }}>
-            <span style={{ background: 'linear-gradient(135deg, #22c55e, #3b82f6)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+            <span style={{ color: '#059669' }}>
               Avaliação de Bem-Estar Gratuita feita por Inteligência Artificial
             </span>
           </h1>
@@ -1618,7 +1615,7 @@ function ResultadosContent() {
                             </p>
                             <a href={`https://www.amazon.com/s?k=${product.searchTerm}&tag=portalsolutio-20`} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
                               <button style={{
-                                background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                                background: '#059669',
                                 color: 'white',
                                 padding: '0.6rem 1rem',
                                 border: 'none',
@@ -1761,7 +1758,7 @@ function ResultadosContent() {
                       <button onClick={() => openWhatsApp('Olá! Quero agendar minha avaliação personalizada de 30 minutos com a coach brasileira por $10.')} style={{
                         width: '100%',
                         padding: '0.8rem',
-                        background: 'linear-gradient(135deg, #22c55e, #16a34a)',
+                        background: '#059669',
                         color: 'white',
                         border: 'none',
                         borderRadius: '8px',
@@ -1885,7 +1882,7 @@ function ResultadosContent() {
                     alignItems: 'center',
                     gap: '0.5rem',
                     padding: '0.8rem 1.5rem',
-                    background: 'linear-gradient(135deg, #10b981, #059669)',
+                    background: '#059669',
                     color: 'white',
                     border: 'none',
                     borderRadius: '25px',
@@ -2116,7 +2113,7 @@ export default function ResultadosPage() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'linear-gradient(135deg, #f0fdf4 0%, #eff6ff 50%, #f0f9ff 100%)'
+        background: '#f0fdf4'
       }}>
         <div style={{
           textAlign: 'center',

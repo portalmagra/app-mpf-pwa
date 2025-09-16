@@ -77,12 +77,13 @@ export default function Home() {
 
   const handleInstallClick = async () => {
     if (isInstalled) {
-      // Se já está instalado, abrir WhatsApp usando função específica para iOS
+      // Se já está instalado, abrir WhatsApp com mensagem específica
+      const message = "Olá! Gostaria de saber mais sobre o MeuPortalFit e fazer uma avaliação personalizada.";
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
       if (isIOS) {
-        openWhatsAppIOS();
+        openWhatsAppIOS('17862535032', message);
       } else {
-        openWhatsAppSimple();
+        openWhatsAppSimple('17862535032', message);
       }
       return
     }
