@@ -77,7 +77,7 @@ export default function Home() {
   const handleInstallClick = async () => {
     if (isInstalled) {
       // Se já está instalado, abrir WhatsApp
-      window.open('https://wa.me/17862535032', '_blank')
+      window.location.href = 'https://wa.me/17862535032'
       return
     }
 
@@ -144,12 +144,12 @@ export default function Home() {
               <h2 className="text-lg font-bold">Agende uma Avaliação Personalizada</h2>
             </div>
           </div>
-          <a 
-            href="https://wa.me/17862535032" 
+          <button 
+            onClick={() => window.location.href = 'https://wa.me/17862535032'}
             className="inline-block bg-white text-orange-600 px-6 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
           >
             📅 QUERO AGENDAR
-          </a>
+          </button>
         </div>
       </section>
 
