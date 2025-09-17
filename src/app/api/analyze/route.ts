@@ -265,7 +265,7 @@ function generateBenefits(productName: string, language: string): string[] {
 
 export async function POST(request: NextRequest) {
   try {
-    const { answers, language = 'pt' } = await request.json()
+    const { answers, language = 'pt', detailed } = await request.json()
     
     if (!answers || typeof answers !== 'object') {
       return NextResponse.json(
@@ -273,6 +273,8 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       )
     }
+
+    console.log('📊 Dados recebidos:', { answers, detailed })
 
     // Análise com OpenAI
     let analysis = ''
@@ -308,7 +310,20 @@ export async function POST(request: NextRequest) {
       Respostas do quiz (0=primeira opção, 1=segunda, etc):
       ${JSON.stringify(answers)}
       
-      Analise e identifique as necessidades de saúde e bem-estar desta pessoa.
+      ${detailed ? `
+      Dados detalhados adicionais:
+      - Horário de acordar: ${detailed.wakeUpTime || 'Não informado'}
+      - Horário de dormir: ${detailed.sleepTime || 'Não informado'}
+      - Qualidade do sono: ${detailed.sleepQuality || 'Não informado'}
+      - Principal preocupação: ${detailed.mainConcern || 'Não informado'}
+      - Áreas de melhoria: ${detailed.improvementAreas?.join(', ') || 'Não informado'}
+      - Usa medicamentos: ${detailed.usesMedication || 'Não informado'} ${detailed.medicationDetails ? `(${detailed.medicationDetails})` : ''}
+      - Alterações na saúde: ${detailed.healthIssues || 'Não informado'} ${detailed.healthIssuesDetails ? `(${detailed.healthIssuesDetails})` : ''}
+      - Restrições alimentares: ${detailed.foodRestrictions || 'Não informado'} ${detailed.foodRestrictionsDetails ? `(${detailed.foodRestrictionsDetails})` : ''}
+      - Usa suplementos: ${detailed.usesSupplements || 'Não informado'} ${detailed.supplementsDetails ? `(${detailed.supplementsDetails})` : ''}
+      ` : ''}
+      
+      Analise e identifique as necessidades de saúde e bem-estar desta pessoa considerando todos os dados fornecidos.
       Responda em ${language === 'pt' ? 'português brasileiro' : language === 'es' ? 'espanhol' : 'inglês'}.
       `
 

@@ -89,8 +89,9 @@ function ResultadosContent() {
         const lang = searchParams.get('language') || 'pt'
         const userName = searchParams.get('userName') || ''
         const userAge = searchParams.get('userAge') || ''
+        const detailed = searchParams.get('detailed')
         
-        console.log('📊 Parâmetros da URL:', { answers: !!answers, comments, lang, userName, userAge })
+        console.log('📊 Parâmetros da URL:', { answers: !!answers, comments, lang, userName, userAge, detailed: !!detailed })
         
         setLanguage(lang)
         
@@ -100,6 +101,18 @@ function ResultadosContent() {
           console.log('📝 Answers parseados:', parsedAnswers)
           
           console.log('🚀 Chamando API de análise...')
+          
+          // Parse dos dados detalhados se existirem
+          let parsedDetailed = null
+          if (detailed) {
+            try {
+              parsedDetailed = JSON.parse(decodeURIComponent(detailed))
+              console.log('📋 Dados detalhados parseados:', parsedDetailed)
+            } catch (error) {
+              console.error('❌ Erro ao fazer parse dos dados detalhados:', error)
+            }
+          }
+          
           // Chamar API de análise com idioma e dados pessoais
           const response = await fetch('/api/analyze', {
             method: 'POST',
@@ -108,7 +121,8 @@ function ResultadosContent() {
             },
             body: JSON.stringify({
               answers: parsedAnswers,
-              language: lang
+              language: lang,
+              detailed: parsedDetailed
             })
           })
 
