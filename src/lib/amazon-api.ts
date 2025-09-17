@@ -106,7 +106,7 @@ interface SearchOptions {
 }
 
 // === Busca Otimizada na API da Amazon ===
-async function searchAmazonAPI(
+export async function searchAmazonAPI(
   query: string, 
   maxResults: number,
   options: SearchOptions = {}
@@ -167,6 +167,8 @@ async function searchAmazonAPI(
   const authorization = buildAuthHeader(AWS_ACCESS_KEY, dateStamp, AWS_REGION, SERVICE, signedHeaders, signature);
 
   console.log(`🔎 Amazon API Search: "${optimizedQuery}" (max: ${maxResults})`);
+  console.log(`📡 Endpoint: ${ENDPOINT}`);
+  console.log(`🔑 Authorization header: ${authorization.substring(0, 50)}...`);
   
   try {
     const res = await fetch(ENDPOINT, {
@@ -180,8 +182,11 @@ async function searchAmazonAPI(
 
     const text = await res.text();
     
+    console.log(`📊 Response status: ${res.status}`);
+    console.log(`📄 Response body preview: ${text.substring(0, 200)}`);
+    
     if (!res.ok) {
-      console.error(`❌ API Error ${res.status}:`, text.substring(0, 100));
+      console.error(`❌ API Error ${res.status}:`, text.substring(0, 500));
       return [];
     }
 
@@ -290,6 +295,7 @@ export async function searchAmazonProducts(
   
   // 1. BUSCA PRINCIPAL - Com filtros de qualidade
   if (CREDENTIALS_VALID) {
+    console.log('✅ Credentials valid, attempting Amazon API calls...');
     const intelligentQueries = generateIntelligentQueries(query);
     
     for (const searchQuery of intelligentQueries) {
@@ -304,11 +310,14 @@ export async function searchAmazonProducts(
         sortBy: 'Featured'
       });
       
+      console.log(`📊 API returned ${products.length} products for "${searchQuery}"`);
+      
       // Adicionar apenas produtos únicos
       for (const product of products) {
         if (!processedASINs.has(product.asin)) {
           processedASINs.add(product.asin);
           curatedProducts.push(product);
+          console.log(`✅ Added product: ${product.name} (${product.asin})`);
         }
       }
       
@@ -316,6 +325,8 @@ export async function searchAmazonProducts(
         break;
       }
     }
+  } else {
+    console.log('❌ Credentials invalid, skipping Amazon API calls');
   }
   
   // 2. BUSCA GENÉRICA - Se ainda precisa mais produtos
@@ -448,8 +459,10 @@ export async function searchAmazonProducts(
       }
     ];
     
-    // Usar produtos reais da Amazon baseados na query
-    curatedProducts = getCuratedRealProducts(query);
+    // Usar produtos reais da Amazon baseados na query apenas se não há produtos da API
+    if (curatedProducts.length === 0) {
+      curatedProducts = getCuratedRealProducts(query);
+    }
   }
   
   // 5. ORDENAÇÃO FINAL - Melhores primeiro
