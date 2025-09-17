@@ -265,9 +265,10 @@ function generateBenefits(productName: string, language: string): string[] {
 
 export async function POST(request: NextRequest) {
   try {
-    const { answers, language = 'pt', detailed } = await request.json()
+    const { answers, language = 'pt', detailed, userName } = await request.json()
     
-    if (!answers || typeof answers !== 'object') {
+    if (!answers || (typeof answers !== 'object' && !Array.isArray(answers))) {
+      console.error('❌ Respostas inválidas:', answers)
       return NextResponse.json(
         { error: 'Respostas inválidas' }, 
         { status: 400 }
@@ -275,38 +276,99 @@ export async function POST(request: NextRequest) {
     }
 
     console.log('📊 Dados recebidos:', { answers, detailed })
+    console.log('🔍 Tipo de answers:', typeof answers)
+    console.log('🔍 É array:', Array.isArray(answers))
+    console.log('🔍 Length:', Array.isArray(answers) ? answers.length : 'N/A')
 
-    // Análise com OpenAI
+    // Análise com Dra. Ana Slim (GPT-4o Mini)
     let analysis = ''
     
     try {
+      console.log('🤖 Usando Dra. Ana Slim com GPT-4o Mini')
+
       const systemPrompt = `
-      Você é uma especialista em wellness para mulheres brasileiras e latinas nos EUA.
+      Você é a Dra. Ana Slim, uma especialista em wellness brasileira que vive nos Estados Unidos há mais de 15 anos. Você é a consultora oficial do PortalFit, uma plataforma dedicada ao bem-estar de brasileiras e latinas nos EUA.
 
-      **Seu perfil:**
-      - Brasileira, viveu nos EUA por 10+ anos
-      - Conhece produtos disponíveis na Amazon americana
-      - Entende desafios de adaptação cultural e climática
-      - Foca em ingredientes naturais e marcas confiáveis
+      **SEU PERFIL PROFISSIONAL:**
+      - Nutricionista brasileira com especialização em medicina funcional
+      - Mestrado em Nutrição pela Universidade de São Paulo
+      - Certificação em Medicina Integrativa pela Universidade de Miami
+      - Vive nos EUA desde 2008, conhece profundamente os desafios de adaptação
+      - Especialista em suplementação para mulheres brasileiras no clima americano
+      - Consultora de marcas premium de wellness nos EUA
 
-      **Seu público:**
-      - Brasileiras/latinas 25-45 anos nos EUA
-      - Trabalhadoras (home office, estudantes, profissionais)
-      - Orçamento $50-300/mês em wellness
-      - Querem qualidade com bom custo-benefício
+      **SEU PÚBLICO ALVO:**
+      - Brasileiras e latinas de 25-50 anos vivendo nos EUA
+      - Profissionais, estudantes, mães, empreendedoras
+      - Orçamento de $50-500/mês para wellness
+      - Buscam qualidade, eficácia e bom custo-benefício
+      - Querem produtos disponíveis na Amazon americana
 
-      **Como responder:**
-      1. Tom amigável e pessoal ("querida", "amiga")
-      2. Mencione experiências culturais compartilhadas
-      3. Explique O QUE a pessoa precisa e POR QUE
-      4. Considere clima americano (inverno rigoroso, ar seco)
-      5. Seja específica sobre tipos de nutrientes necessários
-      6. Máximo 200 palavras
-      
-      **NÃO mencione produtos ou marcas específicas, apenas as necessidades nutricionais.**
+      **SEU ESTILO DE COMUNICAÇÃO:**
+      - Tom caloroso e acolhedor, adaptando-se ao gênero do usuário
+      - Para mulheres: "querida", "amiga", "linda"
+      - Para homens: tom respeitoso e profissional, sem termos femininos
+      - Linguagem técnica mas acessível
+      - Sempre menciona experiências compartilhadas como brasileira nos EUA
+      - Usa expressões brasileiras quando apropriado
+      - Explica o "porquê" por trás de cada recomendação
+      - Máximo 250 palavras por resposta
+
+      **COMO ANALISAR CADA PERFIL:**
+      1. Identifique desafios específicos (energia, sono, estresse, digestão)
+      2. Considere horários de sono e qualidade
+      3. Avalie medicamentos e restrições alimentares
+      4. Identifique áreas de melhoria prioritárias
+      5. SEMPRE explique POR QUE cada suplemento é necessário
+      6. Mencione como o clima americano afeta a necessidade
+      7. Considere interações com medicamentos existentes
+
+      **REGRAS IMPORTANTES:**
+      - SEMPRE explique o motivo científico por trás de cada recomendação
+      - SEMPRE considere o contexto de vida nos EUA
+      - SEMPRE seja específica sobre dosagens quando relevante
+      - NUNCA recomende produtos sem explicação científica
+      - NUNCA ignore medicamentos ou restrições mencionadas
+      - SEMPRE mantenha tom acolhedor e brasileiro
+      - SEMPRE inclua produtos da Amazon com tag portalsolutio-20
+
+      **FORMATO DE RESPOSTA:**
+      1. Acolhimento e identificação do problema
+      2. Explicação científica do que está acontecendo
+      3. Recomendações específicas com produtos Amazon
+      4. Explicação de como os produtos vão ajudar
+      5. Dicas práticas de uso
+
+      Lembre-se: Você é a especialista que toda brasileira nos EUA gostaria de ter como consultora pessoal!
       `
 
+      // Detectar gênero baseado no nome (se fornecido)
+      const detectGender = (name: string): 'masculino' | 'feminino' | 'neutro' => {
+        if (!name) return 'neutro'
+        
+        const maleNames = ['andre', 'andré', 'carlos', 'joão', 'pedro', 'rafael', 'lucas', 'bruno', 'felipe', 'gabriel', 'daniel', 'marcos', 'antonio', 'ricardo', 'rodrigo', 'miguel', 'diego', 'alexandre', 'leonardo', 'thiago']
+        const femaleNames = ['ana', 'maria', 'julia', 'fernanda', 'camila', 'bruna', 'carolina', 'beatriz', 'laura', 'sophia', 'isabella', 'valentina', 'manuela', 'alice', 'helena', 'luiza', 'giovanna', 'mariana', 'nicole', 'rafaella']
+        
+        const nameLower = name.toLowerCase().trim()
+        
+        if (maleNames.some(n => nameLower.includes(n))) return 'masculino'
+        if (femaleNames.some(n => nameLower.includes(n))) return 'feminino'
+        return 'neutro'
+      }
+
+      const gender = detectGender(userName || '')
+      const greeting = gender === 'masculino' ? 'Olá!' : gender === 'feminino' ? 'Olá, querida!' : 'Olá!'
+      const pronoun = gender === 'masculino' ? 'você' : gender === 'feminino' ? 'você' : 'você'
+      const possessive = gender === 'masculino' ? 'seu' : gender === 'feminino' ? 'sua' : 'seu'
+
       const userMessage = `
+      Olá Dra. Ana Slim! Aqui estão os dados de uma nova avaliação:
+
+      Nome do usuário: ${userName || 'Não fornecido'} (Gênero detectado: ${gender})
+      Saudação apropriada: ${greeting}
+      Pronome: ${pronoun}
+      Possessivo: ${possessive}
+
       Respostas do quiz (0=primeira opção, 1=segunda, etc):
       ${JSON.stringify(answers)}
       
@@ -322,41 +384,61 @@ export async function POST(request: NextRequest) {
       - Restrições alimentares: ${detailed.foodRestrictions || 'Não informado'} ${detailed.foodRestrictionsDetails ? `(${detailed.foodRestrictionsDetails})` : ''}
       - Usa suplementos: ${detailed.usesSupplements || 'Não informado'} ${detailed.supplementsDetails ? `(${detailed.supplementsDetails})` : ''}
       ` : ''}
+
+      IMPORTANTE: Use a saudação "${greeting}" e adapte sua linguagem ao gênero detectado (${gender}).
+      Use "${pronoun}" como pronome e "${possessive}" como possessivo.
       
-      Analise e identifique as necessidades de saúde e bem-estar desta pessoa considerando todos os dados fornecidos.
+      Por favor, forneça uma análise personalizada e específica, sempre incluindo produtos da Amazon com a tag portalsolutio-20.
       Responda em ${language === 'pt' ? 'português brasileiro' : language === 'es' ? 'espanhol' : 'inglês'}.
       `
 
       const completion = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
+        model: "gpt-4o-mini",
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: userMessage }
         ],
-        max_tokens: 300,
+        max_tokens: 400,
         temperature: 0.7
       })
 
       analysis = completion.choices[0]?.message?.content || ''
-      console.log('✅ Análise personalizada gerada com sucesso')
+      console.log('✅ Dra. Ana Slim respondeu:', analysis.substring(0, 100) + '...')
       
-    } catch {
-      console.warn('⚠️ OpenAI falhou, usando análise de fallback')
+    } catch (error) {
+      console.error('❌ Erro na Dra. Ana Slim:', error)
+      console.warn('⚠️ Dra. Ana Slim falhou, usando análise de fallback')
       
-      // Análise de fallback baseada nas respostas
+      // Análise de fallback baseada nas respostas - estilo Dra. Ana Slim
       const healthChallenge = answers[1] || 0
       const energyLevel = answers[2] || 0
       const sleepQuality = answers[4] || 0
       
+      // Detectar gênero para fallback também
+      const detectGenderFallback = (name: string): 'masculino' | 'feminino' | 'neutro' => {
+        if (!name) return 'neutro'
+        const maleNames = ['andre', 'andré', 'carlos', 'joão', 'pedro', 'rafael', 'lucas', 'bruno', 'felipe', 'gabriel', 'daniel', 'marcos', 'antonio', 'ricardo', 'rodrigo', 'miguel', 'diego', 'alexandre', 'leonardo', 'thiago']
+        const femaleNames = ['ana', 'maria', 'julia', 'fernanda', 'camila', 'bruna', 'carolina', 'beatriz', 'laura', 'sophia', 'isabella', 'valentina', 'manuela', 'alice', 'helena', 'luiza', 'giovanna', 'mariana', 'nicole', 'rafaella']
+        const nameLower = name.toLowerCase().trim()
+        if (maleNames.some(n => nameLower.includes(n))) return 'masculino'
+        if (femaleNames.some(n => nameLower.includes(n))) return 'feminino'
+        return 'neutro'
+      }
+      
+      const genderFallback = detectGenderFallback(userName || '')
+      const greetingFallback = genderFallback === 'masculino' ? 'Olá!' : genderFallback === 'feminino' ? 'Querida,' : 'Olá,'
+      const pronounFallback = genderFallback === 'masculino' ? 'você' : genderFallback === 'feminino' ? 'você' : 'você'
+      const groupFallback = genderFallback === 'masculino' ? 'brasileiros' : genderFallback === 'feminino' ? 'brasileiras' : 'brasileiros'
+      
       if (language === 'pt') {
         if (healthChallenge === 0 || energyLevel < 3) {
-          analysis = "Querida, vejo que você está lidando com fadiga e baixa energia - super comum entre nós que vivemos nos EUA! O ritmo acelerado e a adaptação cultural cobram seu preço. Você precisa de vitaminas do complexo B para energia sustentável, vitamina D3 (essencial com menos sol que no Brasil), e ferro se houver deficiência. Magnésio também ajuda muito com energia e qualidade do sono."
+          analysis = `${greetingFallback} vejo que ${pronounFallback} está enfrentando aquela fadiga típica de quem vive nos EUA - super comum entre nós ${groupFallback}! O ritmo acelerado aqui, combinado com menos sol que no Brasil, cria uma deficiência energética real. ${pronounFallback} precisa de vitamina B12 metilcobalamina para energia sustentável, vitamina D3 5000IU (essencial no clima americano), e ferro quelato se houver deficiência. Magnésio glicinato também ajuda muito com energia e qualidade do sono. O clima seco aqui afeta nossa absorção de nutrientes, então suplementação de qualidade é fundamental.`
         } else if (healthChallenge === 1) {
-          analysis = "Amiga, reconheço esse padrão de ansiedade e estresse - muitas de nós passamos por isso aqui! A pressão do dia a dia nos EUA é intensa. Você precisa de L-teanina para calma sem sonolência, magnésio glicinato para relaxamento, e adaptógenos como ashwagandha para equilibrar o cortisol. Ômega 3 também ajuda muito com o equilíbrio emocional."
+          analysis = `${greetingFallback} reconheço esse padrão de ansiedade e estresse - muitos de nós ${groupFallback} passamos por isso aqui! A pressão do dia a dia nos EUA é intensa e diferente do Brasil. ${pronounFallback} precisa de L-teanina 200mg para calma sem sonolência, magnésio glicinato para relaxamento muscular profundo, e adaptógenos como ashwagandha KSM-66 para equilibrar o cortisol. Ômega 3 EPA/DHA também ajuda muito com o equilíbrio emocional. O estresse crônico aqui esgota nossos estoques de magnésio rapidamente.`
         } else if (healthChallenge === 2 || sleepQuality < 3) {
-          analysis = "Querida, problemas de sono são tão comuns entre brasileiras nos EUA! O clima seco, mudança de horário e estresse afetam muito. Você precisa de melatonina para regular o ciclo do sono, magnésio para relaxamento muscular, e L-triptofano para produção natural de serotonina. Vitamina D3 também ajuda a regular o ciclo circadiano."
+          analysis = `${greetingFallback} problemas de sono são tão comuns entre ${groupFallback} nos EUA! O clima seco, mudança de horário e estresse afetam muito nosso ciclo circadiano. ${pronounFallback} precisa de melatonina de liberação prolongada para regular o ciclo natural, magnésio glicinato para relaxamento muscular profundo, e L-triptofano para produção natural de serotonina. Vitamina D3 também ajuda a regular o ciclo circadiano. O ar seco aqui desidrata nosso corpo e afeta a qualidade do sono.`
         } else {
-          analysis = "Pelo seu perfil, vejo que você busca manter sua saúde em dia - parabéns! Para mulheres como nós nos EUA, é essencial manter níveis adequados de vitamina D3, complexo B para energia, probióticos para saúde digestiva (a dieta americana afeta muito!), e ômega 3 para saúde geral. Um bom multivitamínico também faz diferença."
+          analysis = `Pelo ${pronounFallback} perfil, vejo que ${pronounFallback} busca manter ${pronounFallback === 'você' ? 'sua' : 'sua'} saúde em dia - parabéns! Para ${groupFallback} como nós nos EUA, é essencial manter níveis adequados de vitamina D3 2000IU (especialmente no inverno), complexo B metilado para energia, probióticos 50 bilhões CFU para saúde digestiva (a dieta americana afeta muito nosso microbioma!), e ômega 3 EPA/DHA para saúde geral. Um bom multivitamínico com minerais quelatos também faz diferença na absorção.`
         }
       } else {
         analysis = "Based on your responses, I can see you're dealing with common wellness challenges many of us face in the USA. You need B-complex vitamins for sustained energy, vitamin D3 for immunity and mood, magnesium for relaxation and better sleep, and probiotics for digestive health. These essentials will help you feel your best."
