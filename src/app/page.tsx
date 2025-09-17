@@ -35,9 +35,12 @@ export default function Home() {
     }
 
     const checkIfInstalled = () => {
-      if (window.matchMedia('(display-mode: standalone)').matches) {
+      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+      console.log('🔍 Verificando se PWA está instalada:', isStandalone);
+      if (isStandalone) {
         setIsInstalled(true)
         setDeferredPrompt(null)
+        console.log('✅ PWA detectada como instalada');
       }
     }
 
@@ -62,12 +65,12 @@ export default function Home() {
   }
 
   const getInstallButtonClass = () => {
-    const baseClass = "px-5 py-3 rounded-xl text-sm font-bold transition-all transform hover:scale-105"
+    const baseClass = "px-5 py-3 rounded-xl text-sm font-bold transition-all transform hover:scale-105 cursor-pointer"
     if (isInstalled || installStatus === 'success') {
       return `${baseClass} bg-green-500 text-white hover:bg-green-600`
     }
     if (installStatus === 'installing') {
-      return `${baseClass} bg-yellow-500 text-white animate-pulse`
+      return `${baseClass} bg-yellow-500 text-white animate-pulse cursor-not-allowed`
     }
     if (installStatus === 'error') {
       return `${baseClass} bg-red-500 text-white`
@@ -76,10 +79,15 @@ export default function Home() {
   }
 
   const handleInstallClick = async () => {
+    console.log('🔘 Botão clicado!', { isInstalled, installStatus });
+    
     if (isInstalled) {
       // Se já está instalado, abrir WhatsApp com mensagem específica
+      console.log('📱 PWA instalada, abrindo WhatsApp...');
       const message = "Olá! Gostaria de saber mais sobre o MeuPortalFit e fazer uma avaliação personalizada.";
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+      console.log('📱 Dispositivo iOS?', isIOS);
+      
       if (isIOS) {
         openWhatsAppIOS('17862535032', message);
       } else {
@@ -121,7 +129,7 @@ export default function Home() {
               id="install-button"
               className={getInstallButtonClass()}
               onClick={handleInstallClick}
-              disabled={isInstalled || installStatus === 'installing'}
+              disabled={installStatus === 'installing'}
             >
               {getInstallButtonText()}
             </button>
