@@ -68,33 +68,7 @@ export default function AmazonPage() {
     }
   }
 
-  // Carregar produtos curados iniciais
-  useEffect(() => {
-    const loadInitialProducts = async () => {
-      try {
-        const response = await fetch('/api/search-amazon', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            query: 'vitaminas mulheres',
-            maxResults: 3
-          })
-        })
-        
-        const data = await response.json()
-        
-        if (data.success && data.products && data.products.length > 0) {
-          setCuratedProducts(data.products)
-        }
-      } catch (error) {
-        console.error('Erro ao carregar produtos iniciais:', error)
-      }
-    }
-    
-    loadInitialProducts()
-  }, [])
+  // Não carregar produtos iniciais - página começa limpa
 
   // Buscar produtos quando o usuário pressionar Enter
   const handleSearchKeyPress = (e: React.KeyboardEvent) => {
@@ -159,7 +133,8 @@ export default function AmazonPage() {
               </button>
             </div>
 
-            {/* Por Que Comprar Através do MeuPortalFit */}
+            {/* Por Que Comprar Através do MeuPortalFit - Só mostra se não há produtos */}
+            {curatedProducts.length === 0 && (
             <div className="bg-gradient-to-r from-green-50 to-green-100 border-2 border-green-200 text-green-800 p-6 rounded-xl mb-6">
               <h2 className="text-xl font-bold mb-3 text-green-900">
                 🛒 Por Que Comprar na Amazon Através do Portal Fit?
@@ -201,8 +176,10 @@ export default function AmazonPage() {
                 </div>
               </div>
             </div>
+            )}
 
-            {/* Call-to-Action */}
+            {/* Call-to-Action - Só mostra se não há produtos */}
+            {curatedProducts.length === 0 && (
             <div className="bg-gradient-to-r from-green-100 to-green-200 border-2 border-green-300 text-green-800 p-6 rounded-xl">
               <h3 className="text-lg font-bold mb-2 text-green-900">
                 🚀 Pronto para Encontrar os Melhores Produtos?
@@ -220,6 +197,7 @@ export default function AmazonPage() {
                 🔍 Fazer Nova Busca
               </button>
             </div>
+            )}
 
             {/* Produtos Selecionados pela IA */}
             {curatedProducts.length > 0 && (
