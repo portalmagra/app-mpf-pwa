@@ -155,7 +155,7 @@ export default function AdminCategorias() {
     category.description?.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
-  const commonIcons = ['🔥', '⚡', '🛡️', '🧘', '☕', '🌿', '😴', '✨', '👨', '⚖️', '♻️', '🌸', '🛒', '💪', '🍎', '🏋️', '📦']
+  const commonIcons = ['🔥', '⚡', '🛡️', '🧘', '☕', '🌿', '😴', '✨', '👨', '⚖️', '♻️', '🌸', '🛒', '💪', '🍎', '🏋️', '📦', '🍞']
 
   if (loading) {
     return (
