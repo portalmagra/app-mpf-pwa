@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
+import BottomNavigation from '@/components/BottomNavigation'
 import { openWhatsApp } from '@/utils/whatsapp'
 
 export default function AvaliacaoPersonalizada() {
@@ -274,6 +275,9 @@ export default function AvaliacaoPersonalizada() {
           </div>
         </div>
       </section>
+
+      {/* Bottom Navigation */}
+      <BottomNavigation currentPage="/avaliacao-personalizada" />
     </div>
   )
 }

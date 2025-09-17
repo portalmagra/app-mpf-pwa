@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
+import BottomNavigation from '@/components/BottomNavigation'
 
 export default function ReceitasPage() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -99,6 +100,9 @@ export default function ReceitasPage() {
         </div>
 
       </main>
+
+      {/* Bottom Navigation */}
+      <BottomNavigation currentPage="/receitas" />
     </div>
   )
 }

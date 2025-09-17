@@ -89,7 +89,7 @@ export default function MercadoPage() {
           </div>
         </div>
       </header>
-      
+
       <main style={{
         minHeight: '100vh',
         background: 'linear-gradient(135deg, #f0fdf4 0%, #eff6ff 50%, #f0f9ff 100%)',
@@ -110,7 +110,7 @@ export default function MercadoPage() {
               lineHeight: 1.2
             }}>
               🛒 Produtos Selecionados
-            </h1>
+          </h1>
             <p style={{
               fontSize: '1.1rem',
               color: '#6b7280',
@@ -195,7 +195,7 @@ export default function MercadoPage() {
                 }}>
                   Ver Todas as Categorias
                 </Link>
-              </div>
+                      </div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                 {products.map((product) => (
@@ -260,11 +260,11 @@ export default function MercadoPage() {
                       ) : (
                         <div style={{ fontSize: '1.2rem', color: '#9ca3af' }}>📦</div>
                       )}
-                    </div>
-
+                      </div>
+                      
                     {/* Botão Amazon */}
                     <div style={{ flexShrink: 0 }}>
-                      <a
+                      <a 
                         href={ensureAffiliateTag(product.amazon_url || '')}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -356,10 +356,10 @@ export default function MercadoPage() {
                   <span style={{ fontSize: '1.2rem' }}>👭</span>
                   Indique sua amiga para fazer a avaliação
                 </button>
-              </Link>
-            </div>
-          </div>
+          </Link>
         </div>
+      </div>
+    </div>
       </main>
     </>
   )

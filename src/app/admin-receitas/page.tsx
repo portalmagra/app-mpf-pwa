@@ -38,7 +38,7 @@ export default function AdminReceitasPage() {
       setLoading(true)
       const allRecipes = await recipeService.getAllRecipes()
       setReceitas(allRecipes)
-    } catch (error) {
+      } catch (error) {
       console.error('Erro ao carregar receitas:', error)
     } finally {
       setLoading(false)
@@ -178,7 +178,7 @@ export default function AdminReceitasPage() {
               <button className="bg-brand-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-greenDark transition-colors">
                 ← Voltar ao Admin
               </button>
-            </Link>
+              </Link>
           </div>
         </div>
       </header>
@@ -196,12 +196,12 @@ export default function AdminReceitasPage() {
           
           {/* Botão Nova Receita */}
           <div className="mt-4">
-            <button
+          <button
               onClick={showAddForm ? resetForm : openAddForm}
               className="bg-brand-green text-white px-6 py-3 rounded-lg font-medium hover:bg-brand-greenDark transition-colors shadow-lg"
-            >
+          >
               {showAddForm ? '❌ Cancelar' : '➕ Nova Receita'}
-            </button>
+          </button>
           </div>
         </div>
 
@@ -332,7 +332,7 @@ export default function AdminReceitasPage() {
               <div>
                 <label className="block text-sm font-medium text-brand-text mb-2">
                   Tipo
-                </label>
+                    </label>
                 <select
                   value={newReceita.price === 0 ? 'gratuita' : 'paga'}
                   onChange={(e) => {
@@ -347,25 +347,25 @@ export default function AdminReceitasPage() {
                   <option value="gratuita">Gratuita</option>
                   <option value="paga">Paga</option>
                 </select>
-              </div>
-
+                  </div>
+                  
               {/* Valor */}
-              <div>
+                    <div>
                 <label className="block text-sm font-medium text-brand-text mb-2">
                   Valor (USD)
                 </label>
-                <input
-                  type="number"
-                  step="0.01"
+                      <input
+                        type="number"
+                        step="0.01"
                   min="0"
                   value={newReceita.price}
                   onChange={(e) => setNewReceita({...newReceita, price: parseFloat(e.target.value) || 0})}
                   placeholder={newReceita.price === 0 ? "0.00" : "9.99"}
                   className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
-                />
+                      />
                 {newReceita.price === 0 && (
                   <p className="text-xs text-green-600 mt-1">✓ Gratuita</p>
-                )}
+                  )}
               </div>
 
               {/* Status */}
@@ -394,18 +394,18 @@ export default function AdminReceitasPage() {
                   onChange={(e) => setNewReceita({...newReceita, pdf_link: e.target.value})}
                   placeholder="https://drive.google.com/file/d/..."
                   className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
-                />
-              </div>
+            />
+          </div>
 
               {/* Extrator de Imagem do PDF */}
               {newReceita.pdf_link && (
                 <div className="lg:col-span-3">
-                  <PDFImageExtractor
+              <PDFImageExtractor
                     pdfUrl={newReceita.pdf_link}
                     onImageExtracted={(imageUrl) => setNewReceita({...newReceita, image_url: imageUrl})}
-                  />
-                </div>
-              )}
+              />
+            </div>
+          )}
 
               {/* Upload Manual de Imagem */}
               <div className="lg:col-span-3">
@@ -460,8 +460,8 @@ export default function AdminReceitasPage() {
                 </p>
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full">
+          <div className="overflow-x-auto">
+            <table className="w-full">
                   <thead className="bg-brand-greenSoft">
                     <tr>
                       <th className="px-6 py-4 text-left text-sm font-semibold text-brand-text">Receita</th>
@@ -470,24 +470,24 @@ export default function AdminReceitasPage() {
                       <th className="px-6 py-4 text-left text-sm font-semibold text-brand-text">Status</th>
                       <th className="px-6 py-4 text-left text-sm font-semibold text-brand-text">Criado em</th>
                       <th className="px-6 py-4 text-center text-sm font-semibold text-brand-text">Ações</th>
-                    </tr>
-                  </thead>
+                </tr>
+              </thead>
                   <tbody className="divide-y divide-brand-border">
                     {filteredReceitas.map((receita) => (
                       <tr key={receita.id} className="hover:bg-gray-50">
                         <td className="px-6 py-4">
-                          <div>
+                      <div>
                             <div className="font-medium text-brand-text">{receita.name}</div>
                             <div className="text-sm text-brand-text2 truncate max-w-xs">
                               {receita.description || 'Sem descrição'}
                             </div>
-                          </div>
-                        </td>
+                      </div>
+                    </td>
                         <td className="px-6 py-4">
                           <span className="px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                             {receita.type || 'Não definido'}
-                          </span>
-                        </td>
+                      </span>
+                    </td>
                         <td className="px-6 py-4">
                           <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                             receita.price === 0 
@@ -495,29 +495,29 @@ export default function AdminReceitasPage() {
                               : 'bg-purple-100 text-purple-800'
                           }`}>
                             {receita.price === 0 ? 'GRATUITO' : `$${receita.price}`}
-                          </span>
-                        </td>
+                      </span>
+                    </td>
                         <td className="px-6 py-4">
                           <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                             receita.status === 'active' 
-                              ? 'bg-green-100 text-green-800' 
-                              : 'bg-red-100 text-red-800'
-                          }`}>
+                          ? 'bg-green-100 text-green-800' 
+                          : 'bg-red-100 text-red-800'
+                      }`}>
                             {receita.status === 'active' ? 'Ativo' : 'Inativo'}
-                          </span>
-                        </td>
+                      </span>
+                    </td>
                         <td className="px-6 py-4 text-sm text-brand-text2">
                           {new Date(receita.created_at).toLocaleDateString('pt-BR')}
                         </td>
                         <td className="px-6 py-4">
                           <div className="flex justify-center space-x-2">
-                            <button
+                        <button
                               onClick={() => handleEditReceita(receita)}
                               className="bg-yellow-100 text-yellow-600 px-3 py-1 rounded text-xs font-medium hover:bg-yellow-200 transition-colors"
-                            >
-                              ✏️ Editar
-                            </button>
-                            <button
+                        >
+                          ✏️ Editar
+                        </button>
+                        <button
                               onClick={() => handleToggleStatus(receita)}
                               className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
                                 receita.status === 'active'
@@ -526,13 +526,13 @@ export default function AdminReceitasPage() {
                               }`}
                             >
                               {receita.status === 'active' ? '⏸️ Pausar' : '▶️ Ativar'}
-                            </button>
-                            <button
+                        </button>
+                        <button
                               onClick={() => handleDeleteReceita(receita)}
                               className="bg-red-100 text-red-600 px-3 py-1 rounded text-xs font-medium hover:bg-red-200 transition-colors"
-                            >
+                        >
                               🗑️ Excluir
-                            </button>
+                        </button>
                             <a
                               href={receita.pdf_link}
                               target="_blank"
@@ -541,13 +541,13 @@ export default function AdminReceitasPage() {
                             >
                               🔗 Link
                             </a>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
             )}
           </div>
         )}
