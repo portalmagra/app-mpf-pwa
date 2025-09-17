@@ -142,7 +142,8 @@ function ResultadosContent() {
               console.log('🤖 Resultados da API:', results)
             } catch (parseError) {
               console.error('❌ Erro ao fazer parse da resposta:', parseError)
-              throw new Error(`Erro ao processar resposta da API: ${parseError.message}`)
+              const errorMessage = parseError instanceof Error ? parseError.message : 'Erro desconhecido'
+              throw new Error(`Erro ao processar resposta da API: ${errorMessage}`)
             }
             
             // Converter formato da API do PWA para formato esperado pela página
