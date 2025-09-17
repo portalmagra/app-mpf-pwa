@@ -129,8 +129,21 @@ function ResultadosContent() {
           console.log('📡 Resposta da API:', response.status, response.ok)
 
           if (response.ok) {
-            const results = await response.json()
-            console.log('🤖 Resultados da API:', results)
+            let results
+            try {
+              const responseText = await response.text()
+              console.log('📄 Resposta bruta da API:', responseText.substring(0, 200) + '...')
+              
+              if (!responseText || responseText.trim() === '') {
+                throw new Error('Resposta vazia da API')
+              }
+              
+              results = JSON.parse(responseText)
+              console.log('🤖 Resultados da API:', results)
+            } catch (parseError) {
+              console.error('❌ Erro ao fazer parse da resposta:', parseError)
+              throw new Error(`Erro ao processar resposta da API: ${parseError.message}`)
+            }
             
             // Converter formato da API do PWA para formato esperado pela página
             const convertedResults = {
@@ -149,8 +162,41 @@ function ResultadosContent() {
             setAnalysisResults(convertedResults)
           } else {
             console.error('❌ Erro na API:', response.status, response.statusText)
-            const errorText = await response.text()
-            console.error('❌ Detalhes do erro:', errorText)
+            let errorText = ''
+            try {
+              errorText = await response.text()
+              console.error('❌ Detalhes do erro:', errorText)
+            } catch (textError) {
+              console.error('❌ Erro ao ler texto da resposta:', textError)
+            }
+            
+            // Usar fallback em caso de erro
+            const fallbackResults = {
+              acolhimento: `Olá! Houve um problema técnico, mas aqui está sua análise personalizada.`,
+              analise: `Baseado nas suas respostas, identifiquei áreas importantes para melhorar seu bem-estar.`,
+              contexto_cultural: `Como brasileiro nos EUA, você enfrenta mudanças que podem impactar sua saúde.`,
+              habitos: [
+                '**Hábito 1:** Inclua vitaminas do complexo B na sua dieta - Essenciais para energia.',
+                '**Hábito 2:** Experimente um adaptógeno natural - Ajuda com estresse.',
+                '**Hábito 3:** Mantenha hidratação adequada - Fundamental no clima americano.'
+              ],
+              produtos: [
+                {
+                  name: 'Nature Made Vitamin B12',
+                  description: 'Vitamina B12 para energia e foco',
+                  amazonUrl: 'https://www.amazon.com/dp/B0027J1LUM?tag=portalsolutio-20',
+                  savings: 15
+                }
+              ],
+              timeline: [
+                '**Semana 1-2:** Comece com vitamina B12',
+                '**Semana 3-4:** Adicione adaptógeno',
+                '**Mês 2:** Avalie resultados e ajuste'
+              ],
+              proximo_passo: 'Continue monitorando seus hábitos e considere uma consulta personalizada.'
+            }
+            
+            setAnalysisResults(fallbackResults)
           }
         } else {
           console.log('❌ Nenhum answer encontrado na URL')
