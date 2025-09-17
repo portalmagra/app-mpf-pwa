@@ -48,10 +48,10 @@ const quizQuestions: QuizQuestion[] = [
     id: 2,
     question: "Qual seu estilo de vida atual?",
     options: [
-      "Vida agitada (Muito trabalho, pouco tempo)",
-      "Vida equilibrada (Tenta manter hábitos)",
-      "Vida flexível (Adapta-se às mudanças)",
-      "Vida sedentária (Pouca atividade física)"
+      "Vida agitada",
+      "Vida equilibrada",
+      "Vida flexível",
+      "Vida sedentária"
     ],
     values: [1, 2, 3, 4]
   },
@@ -67,23 +67,12 @@ const quizQuestions: QuizQuestion[] = [
   },
   {
     id: 4,
-    question: "Quantas vezes você tentou e falhou? (Não se culpe)",
-    options: [
-      "1-2 vezes (Ainda acredita)",
-      "3-5 vezes (Frustrado mas persistente)",
-      "6-10 vezes (Quase desistindo)",
-      "10+ vezes (Precisa de ajuda especializada)"
-    ],
-    values: [1, 2, 3, 4]
-  },
-  {
-    id: 5,
     question: "Em quanto tempo você quer ver resultados?",
     options: [
-      "1-2 semanas (Preciso de motivação rápida)",
-      "1 mês (Quero ver mudanças consistentes)",
-      "3 meses (Foco em transformação real)",
-      "6+ meses (Quero mudança permanente)"
+      "1-2 semanas",
+      "1 mês",
+      "3 meses",
+      "6+ meses"
     ],
     values: [1, 2, 3, 4]
   },
