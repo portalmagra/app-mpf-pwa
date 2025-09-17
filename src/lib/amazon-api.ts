@@ -153,7 +153,7 @@ async function searchAmazonAPI(
   const headers: Record<string,string> = {
     'content-type': 'application/json; charset=utf-8',
     'host': HOST,
-    'x-amz-target': 'com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems', // CORRIGIDO
+    'x-amz-target': 'com.amazon.paapi5.v1.ProductAdvertisingAPIv1.SearchItems',
     'x-amz-date': amzDate,
     'x-amz-content-sha256': payloadHash,
   };
