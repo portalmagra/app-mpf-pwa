@@ -140,7 +140,7 @@ export default function Home() {
 
 
       {/* Banner Coach Brasileira - DESTAQUE */}
-      <section className="px-4 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white mb-6">
+      <section className="px-4 py-4 bg-gradient-to-r from-orange-300 to-orange-400 text-white mb-6">
         <div className="max-w-sm mx-auto text-center">
           <div className="mb-3">
             <div className="flex items-center justify-center space-x-2 mb-2">
@@ -162,7 +162,37 @@ export default function Home() {
       <section className="px-4 mb-6">
         <div className="max-w-sm mx-auto">
           <div className="space-y-4">
-            {/* 1. Receitas - Verde claro com gradiente */}
+            {/* 1. Acompanhamento Personalizado - Primeiro lugar */}
+            <Link href="/avaliacao-personalizada" className="w-full bg-gradient-to-r from-green-100 to-green-200 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-green-300 transform hover:scale-105 block">
+              <div className="flex items-center space-x-4">
+                <span className="text-3xl">👩‍⚕️</span>
+                <div className="flex-1 text-left">
+                  <h3 className="font-bold text-lg">Acompanhamento Personalizado</h3>
+                  <p className="text-sm text-brand-text2">Coach brasileira especializada</p>
+                </div>
+                <span className="text-xs bg-green-500 text-white px-3 py-1 rounded-full font-semibold">Ver</span>
+              </div>
+            </Link>
+
+            {/* 2. Nossa Seleção */}
+            <Link href="/produtos" className="w-full bg-gradient-to-r from-blue-100 to-blue-200 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-blue-300 transform hover:scale-105 block">
+              <div className="flex items-center space-x-4">
+                <img 
+                  src="/icons/amazon-logo-official.png" 
+                  alt="Amazon" 
+                  width="40" 
+                  height="40"
+                  className="object-contain"
+                />
+                <div className="flex-1 text-left">
+                  <h3 className="font-bold text-xl">Nossa Seleção</h3>
+                  <p className="text-sm text-brand-text2">Produtos curados especialmente para você</p>
+                </div>
+                <span className="text-xs bg-blue-500 text-white px-3 py-1 rounded-full font-semibold">Ver</span>
+              </div>
+            </Link>
+
+            {/* 3. Receitas - Verde claro com gradiente */}
             <Link href="/receitas" className="w-full bg-gradient-to-r from-green-100 to-green-200 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-green-300 transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
                 <span className="text-4xl">🍽️</span>
@@ -174,7 +204,7 @@ export default function Home() {
               </div>
             </Link>
 
-            {/* 2. Protocolos Nutricionais - Branco neutro */}
+            {/* 4. Protocolos Nutricionais - Branco neutro */}
             <Link href="/protocolos" className="w-full bg-white rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-gray-200 transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
                 <span className="text-4xl">📋</span>
@@ -186,39 +216,15 @@ export default function Home() {
               </div>
             </Link>
 
-            {/* 3. Avaliação de Bem-estar - Verde claro com gradiente */}
+            {/* 5. Avaliação por IA - Verde claro com gradiente */}
             <Link href="/avaliacao" className="w-full bg-gradient-to-r from-green-100 to-green-200 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-green-300 transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
                 <span className="text-4xl">🧠</span>
                 <div className="flex-1 text-left">
-                  <h3 className="font-bold text-xl">Avaliação de Bem-estar</h3>
+                  <h3 className="font-bold text-xl">Avaliação por IA</h3>
                   <p className="text-sm text-brand-text2">Com inteligência artificial</p>
                 </div>
                 <span className="text-xs bg-green-500 text-white px-3 py-1 rounded-full font-semibold">Fazer</span>
-              </div>
-            </Link>
-
-            {/* 4. Produtos - Branco neutro */}
-            <Link href="/produtos" className="w-full bg-white rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-gray-200 transform hover:scale-105 block">
-              <div className="flex items-center space-x-4">
-                <span className="text-4xl">📦</span>
-                <div className="flex-1 text-left">
-                  <h3 className="font-bold text-xl">Produtos</h3>
-                  <p className="text-sm text-brand-text2">Suplementos e produtos por categoria</p>
-                </div>
-                <span className="text-xs bg-gray-500 text-white px-3 py-1 rounded-full font-semibold">Ver</span>
-              </div>
-            </Link>
-
-            {/* 5. Avaliação Personalizada - Verde claro com gradiente */}
-            <Link href="/avaliacao-personalizada" className="w-full bg-gradient-to-r from-green-100 to-green-200 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-green-300 transform hover:scale-105 block">
-              <div className="flex items-center space-x-4">
-                <span className="text-3xl">👩‍⚕️</span>
-                <div className="flex-1 text-left">
-                  <h3 className="font-bold text-lg">Avaliação Personalizada</h3>
-                  <p className="text-sm text-brand-text2">Coach brasileira especializada</p>
-                </div>
-                <span className="text-xs bg-green-500 text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
             </Link>
 
