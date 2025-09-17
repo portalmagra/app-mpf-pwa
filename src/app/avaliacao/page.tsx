@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Logo from '@/components/Logo';
+import BottomNavigation from '@/components/BottomNavigation';
 import { WHATSAPP_CONFIG, getWhatsAppUrl } from '@/config/whatsapp';
 
 interface QuizQuestion {
@@ -842,6 +843,9 @@ Baixe agora: https://app.meuportalfit.com
           </div>
         </div>
       </div>
+
+      {/* Bottom Navigation */}
+      <BottomNavigation currentPage="/avaliacao" />
     </div>
   );
 }

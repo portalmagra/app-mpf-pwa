@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
+import BottomNavigation from '@/components/BottomNavigation'
 import { openWhatsApp, openWhatsAppSimple, openWhatsAppIOS } from '@/utils/whatsapp'
 
 interface BeforeInstallPromptEvent extends Event {
@@ -239,30 +240,7 @@ export default function Home() {
       </section>
 
       {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-brand-greenSoft border-t border-brand-border px-4 py-2">
-        <div className="max-w-sm mx-auto flex justify-around">
-          <button className="flex flex-col items-center py-1 text-brand-green">
-            <span className="text-lg">🏠</span>
-            <span className="text-xs font-semibold">Home</span>
-          </button>
-          <Link href="/receitas" className="flex flex-col items-center py-1 text-brand-textLight">
-            <span className="text-lg">🍲</span>
-            <span className="text-xs">Receitas</span>
-          </Link>
-          <Link href="/minhas-receitas" className="flex flex-col items-center py-1 text-brand-textLight">
-            <span className="text-lg">📚</span>
-            <span className="text-xs">Minhas</span>
-          </Link>
-          <Link href="/mercado" className="flex flex-col items-center py-1 text-brand-textLight">
-            <span className="text-lg">🛒</span>
-            <span className="text-xs">Mercado</span>
-          </Link>
-          <Link href="/avaliacao" className="flex flex-col items-center py-1 text-brand-textLight">
-            <span className="text-lg">🧠</span>
-            <span className="text-xs">Avaliação</span>
-          </Link>
-        </div>
-      </div>
+      <BottomNavigation currentPage="/" />
 
       {/* Modal de Guia de Instalação */}
       {showInstallGuide && (
