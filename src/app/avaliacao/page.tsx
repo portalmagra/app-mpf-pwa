@@ -87,17 +87,6 @@ const quizQuestions: QuizQuestion[] = [
     ],
     values: [1, 2, 3, 4]
   },
-  {
-    id: 6,
-    question: "O que você está disposto a fazer AGORA para mudar?",
-    options: [
-      "Mudar hábitos alimentares (Começar hoje)",
-      "Adicionar exercícios (Sem desculpas)",
-      "Suplementação inteligente (Apoio científico)",
-      "Tudo junto (Transformação completa)"
-    ],
-    values: [1, 2, 3, 4]
-  }
 ];
 
 /* const quizResults: Record<string, QuizResult> = {
