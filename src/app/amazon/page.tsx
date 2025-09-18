@@ -34,7 +34,7 @@ export default function AmazonPage() {
     
     try {
       // Buscar produtos através da API route
-      const response = await fetch('/api/search-amazon', {
+      const response = await fetch('/api/search-real-amazon', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
