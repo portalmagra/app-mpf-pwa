@@ -6,27 +6,16 @@ import Logo from '@/components/Logo'
 import BottomNavigation from '@/components/BottomNavigation'
 import { productService, Product } from '@/lib/supabase'
 
-export default function EmagrecimentoPage() {
+export default function CafePage() {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Carregar produtos da categoria "emagrecimento" do Supabase
     const loadProducts = async () => {
       try {
         console.log('🔄 Carregando produtos do Supabase...')
-        
-        // Buscar produtos da categoria emagrecimento no Supabase
-        const products = await productService.getProductsByCategory('emagrecimento')
-        
+        const products = await productService.getProductsByCategory('cafe')
         console.log('✅ Produtos carregados do Supabase:', products?.length || 0, 'produtos')
-        console.log('🔍 Dados dos produtos:', products)
-        if (products && products.length > 0) {
-          console.log('🔍 Slug do primeiro produto:', products[0].slug)
-          console.log('🔍 ID do primeiro produto:', products[0].id)
-          console.log('🔍 Nome do primeiro produto:', products[0].name)
-          console.log('🔍 Categoria do primeiro produto:', products[0].category_id)
-        }
         setProducts(products || [])
       } catch (error) {
         console.error('❌ Erro ao carregar produtos:', error)
@@ -36,27 +25,6 @@ export default function EmagrecimentoPage() {
     }
 
     loadProducts()
-    
-    // Sincronizar com mudanças de outros dispositivos
-    try {
-      const channel = new BroadcastChannel('admin-sync')
-      console.log('📡 Escutando sincronização na página emagrecimento')
-      
-      channel.onmessage = (event) => {
-        console.log('📨 Mensagem recebida:', event.data.type, event.data.action || '')
-        if (event.data.type === 'products-updated') {
-          // Recarregar do Supabase quando houver mudanças
-          loadProducts()
-        }
-      }
-      
-      return () => {
-        console.log('🔌 Fechando canal de sincronização')
-        channel.close()
-      }
-    } catch (error) {
-      console.log('❌ BroadcastChannel não suportado na página emagrecimento:', error)
-    }
   }, [])
 
   return (
@@ -78,7 +46,7 @@ export default function EmagrecimentoPage() {
       <main style={{ padding: '0', background: 'white' }}>
         {/* Hero Section Mínimo Proporcional */}
         <section style={{
-          background: 'linear-gradient(135deg, #96CEB4, #27ae60)',
+          background: 'linear-gradient(135deg, #D97706, #B45309)',
           padding: '0.15rem 0',
           textAlign: 'center',
           marginBottom: '0.2rem',
@@ -86,10 +54,10 @@ export default function EmagrecimentoPage() {
         }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <h1 style={{ fontSize: '2.5rem', marginBottom: '20px', fontWeight: 'bold' }}>
-              🔥 Suporte para Emagrecimento
+              ☕ Café e Bebidas
             </h1>
             <p style={{ fontSize: '1.2rem', marginBottom: '30px', opacity: 0.9 }}>
-              Produtos para perda de peso saudável
+              Cafés especiais e bebidas saudáveis
             </p>
             <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
               <Link href="/avaliacao" style={{
@@ -129,15 +97,15 @@ export default function EmagrecimentoPage() {
           ) : products.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '60px 20px' }}>
               <h2 style={{ color: '#333', marginBottom: '20px' }}>
-                🔥 Nenhum produto adicionado ainda para esta categoria
+                ☕ Nenhum produto adicionado ainda para esta categoria
               </h2>
               <p style={{ color: '#666', marginBottom: '30px', fontSize: '1.1rem' }}>
-                Produtos para perda de peso saudável
+                Cafés especiais e bebidas saudáveis
               </p>
               <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <Link href="/avaliacao" style={{
                   padding: '15px 30px',
-                  backgroundColor: '#96CEB4, #27ae60',
+                  backgroundColor: '#D97706',
                   color: 'white',
                   textDecoration: 'none',
                   borderRadius: '8px',
@@ -148,7 +116,7 @@ export default function EmagrecimentoPage() {
                 </Link>
                 <Link href="/produtos" style={{
                   padding: '15px 30px',
-                  backgroundColor: '#27ae60',
+                  backgroundColor: '#B45309',
                   color: 'white',
                   textDecoration: 'none',
                   borderRadius: '8px',
@@ -162,7 +130,7 @@ export default function EmagrecimentoPage() {
           ) : (
             <>
               <h2 style={{ textAlign: 'center', color: '#333', marginBottom: '40px', fontSize: '2rem' }}>
-                🔥 Produtos Disponíveis
+                ☕ Produtos Disponíveis
               </h2>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
                 {products.map((product) => (
@@ -239,7 +207,7 @@ export default function EmagrecimentoPage() {
                       marginTop: 'auto'
                     }}>
                       <a 
-                        href={`/produtos/emagrecimento/${product.slug || product.id}`} 
+                        href={`/produtos/cafe/${product.slug || product.id}`} 
                         style={{ 
                           textDecoration: 'none', 
                           flex: 1,
@@ -301,7 +269,6 @@ export default function EmagrecimentoPage() {
         </div>
       </main>
 
-      {/* Bottom Navigation */}
       <BottomNavigation currentPage="/produtos" />
     </div>
   )
