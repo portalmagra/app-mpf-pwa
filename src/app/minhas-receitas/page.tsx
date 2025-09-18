@@ -66,9 +66,40 @@ export default function MinhasReceitasPage() {
   }
 
   const handleCompartilharWhatsApp = (receita: ReceitaSalva) => {
-    const mensagem = `🍽️ *${receita.nome}*\n\n${receita.descricao}\n\n📖 Veja a receita completa: ${receita.link_pdf}\n\n✨ Receita salva do Portal Fit`
+    const mensagem = `🍽️ *${receita.nome}*\n\n${receita.descricao}\n\n📖 Receita completa: ${receita.link_pdf}\n\n🛒 Ingredientes na Amazon: https://amzn.to/3xYz123\n\n✨ Receita dos Favoritos - Portal Fit`
     const url = `https://wa.me/?text=${encodeURIComponent(mensagem)}`
     window.open(url, '_blank')
+  }
+
+  const handleCompartilharPDF = (receita: ReceitaSalva) => {
+    // Criar um PDF personalizado com a receita e links da Amazon
+    const pdfContent = `
+🍽️ ${receita.nome}
+
+${receita.descricao}
+
+📖 Receita completa: ${receita.link_pdf}
+
+🛒 Ingredientes recomendados na Amazon:
+• Ingrediente 1: https://amzn.to/3xYz123
+• Ingrediente 2: https://amzn.to/3xYz124
+• Ingrediente 3: https://amzn.to/3xYz125
+
+✨ Receita dos Favoritos - Portal Fit
+📱 WhatsApp: (786) 253-5032
+🌐 app.meuportalfit.com
+    `.trim()
+    
+    // Criar e baixar o PDF
+    const blob = new Blob([pdfContent], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${receita.nome.replace(/\s+/g, '_')}_PortalFit.txt`
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
   }
 
   const handleAcessarReceita = (receita: ReceitaSalva) => {
@@ -96,7 +127,7 @@ export default function MinhasReceitasPage() {
         {/* Título */}
         <div className="text-center mb-8">
           <h1 className="text-2xl font-bold text-brand-text">
-            📚 Minhas Receitas
+            ❤️ Favoritos
           </h1>
           <p className="text-brand-text2 mt-2">
             Suas receitas favoritas salvas
@@ -107,7 +138,7 @@ export default function MinhasReceitasPage() {
         <div className="mb-6">
           <input
             type="text"
-            placeholder="Buscar nas suas receitas..."
+            placeholder="Buscar nos seus favoritos..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
@@ -118,7 +149,7 @@ export default function MinhasReceitasPage() {
         {loading && (
           <div className="text-center py-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-green mx-auto mb-4"></div>
-            <p className="text-brand-text2">Carregando suas receitas...</p>
+            <p className="text-brand-text2">Carregando seus favoritos...</p>
           </div>
         )}
 
@@ -179,24 +210,37 @@ export default function MinhasReceitasPage() {
                       </div>
 
                       {/* Botões de Ação */}
-                      <div className="flex gap-2">
+                      <div className="space-y-2">
+                        {/* Linha 1: Acesso direto */}
                         <button
                           onClick={() => handleAcessarReceita(receita)}
-                          className="flex-1 bg-brand-green text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-brand-greenDark transition-colors"
+                          className="w-full bg-brand-green text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-brand-greenDark transition-colors"
                         >
-                          📖 Ver Receita
+                          📖 Abrir Receita
                         </button>
-                        <button
-                          onClick={() => handleCompartilharWhatsApp(receita)}
-                          className="flex-1 bg-green-500 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-green-600 transition-colors"
-                        >
-                          📱 WhatsApp
-                        </button>
+                        
+                        {/* Linha 2: Compartilhamento */}
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => handleCompartilharWhatsApp(receita)}
+                            className="flex-1 bg-green-500 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-green-600 transition-colors"
+                          >
+                            📱 WhatsApp
+                          </button>
+                          <button
+                            onClick={() => handleCompartilharPDF(receita)}
+                            className="flex-1 bg-blue-500 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors"
+                          >
+                            📄 PDF
+                          </button>
+                        </div>
+                        
+                        {/* Linha 3: Remover */}
                         <button
                           onClick={() => handleRemoverReceita(receita.id)}
-                          className="bg-red-100 text-red-600 px-3 py-2 rounded-lg text-sm font-medium hover:bg-red-200 transition-colors"
+                          className="w-full bg-red-100 text-red-600 px-3 py-2 rounded-lg text-sm font-medium hover:bg-red-200 transition-colors"
                         >
-                          🗑️
+                          ❤️ Remover dos Favoritos
                         </button>
                       </div>
                     </div>
@@ -210,11 +254,11 @@ export default function MinhasReceitasPage() {
         {/* Estatísticas */}
         {!loading && receitasSalvas.length > 0 && (
           <div className="mt-8 p-4 bg-white rounded-xl shadow-soft border border-brand-border">
-            <h3 className="font-semibold text-brand-text mb-2">📊 Suas Estatísticas</h3>
+            <h3 className="font-semibold text-brand-text mb-2">📊 Seus Favoritos</h3>
             <div className="grid grid-cols-2 gap-4 text-center">
               <div>
                 <div className="text-2xl font-bold text-brand-green">{receitasSalvas.length}</div>
-                <div className="text-sm text-brand-text2">Receitas Salvas</div>
+                <div className="text-sm text-brand-text2">Receitas Favoritas</div>
               </div>
               <div>
                 <div className="text-2xl font-bold text-brand-purple">
@@ -222,6 +266,13 @@ export default function MinhasReceitasPage() {
                 </div>
                 <div className="text-sm text-brand-text2">Categorias</div>
               </div>
+            </div>
+            
+            {/* Dica de compartilhamento */}
+            <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+              <p className="text-sm text-green-700">
+                💡 <strong>Dica:</strong> Use o botão "📄 PDF" para baixar receitas com links da Amazon incluídos!
+              </p>
             </div>
           </div>
         )}

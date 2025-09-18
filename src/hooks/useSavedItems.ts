@@ -16,7 +16,7 @@ export const useSavedRecipes = () => {
   const [receitasSalvas, setReceitasSalvas] = useState<SavedItem[]>([])
 
   useEffect(() => {
-    const savedRecipes = localStorage.getItem('minhasReceitas')
+    const savedRecipes = localStorage.getItem('receitasFavoritas')
     if (savedRecipes) {
       setReceitasSalvas(JSON.parse(savedRecipes))
     }
@@ -31,14 +31,14 @@ export const useSavedRecipes = () => {
 
     const novasReceitas = [...receitasSalvas, novaReceita]
     setReceitasSalvas(novasReceitas)
-    localStorage.setItem('minhasReceitas', JSON.stringify(novasReceitas))
+    localStorage.setItem('receitasFavoritas', JSON.stringify(novasReceitas))
     return novaReceita
   }
 
   const removerReceita = (id: number) => {
     const novasReceitas = receitasSalvas.filter(receita => receita.id !== id)
     setReceitasSalvas(novasReceitas)
-    localStorage.setItem('minhasReceitas', JSON.stringify(novasReceitas))
+    localStorage.setItem('receitasFavoritas', JSON.stringify(novasReceitas))
   }
 
   const isReceitaSalva = (nome: string) => {

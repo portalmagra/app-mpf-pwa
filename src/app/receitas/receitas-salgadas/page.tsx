@@ -186,7 +186,7 @@ export default function ReceitasSalgadasPage() {
       link_pdf: receita.link_pdf,
       emoji: getRecipeEmoji(receita.nome)
     })
-    alert(`Receita "${receita.nome}" salva em Minhas Receitas!`)
+    alert(`Receita "${receita.nome}" adicionada aos Favoritos! ❤️`)
   }
 
   return (
