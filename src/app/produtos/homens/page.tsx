@@ -2,11 +2,27 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Logo from '@/components/Logo'
-import BottomNavigation from '@/components/BottomNavigation'
-import { productService, Product } from '@/lib/supabase'
+import Header from '../../components/Header'
+import { supabase } from '@/lib/supabase'
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  category_id: string;
+  amazon_url: string;
+  current_price: string;
+  original_price: string;
+  rating: number;
+  review_count: number;
+  image_url: string;
+  benefits: string[];
+  features: string[];
+  slug?: string;
+}
 
 export default function HomensPage() {
+  const [language, setLanguage] = useState<'pt' | 'es' | 'en'>('pt')
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -14,39 +30,71 @@ export default function HomensPage() {
     const loadProducts = async () => {
       try {
         console.log('🔄 Carregando produtos do Supabase...')
-        const products = await productService.getProductsByCategory('homens')
-        console.log('✅ Produtos carregados do Supabase:', products?.length || 0, 'produtos')
-        setProducts(products || [])
+        
+        const { data: products, error } = await supabase
+          .from('products')
+          .select('*')
+          .eq('category_id', 'homens')
+        
+        if (error) {
+          console.error('❌ Erro ao carregar produtos do Supabase:', error)
+          const storedProducts = localStorage.getItem('adminProducts') || localStorage.getItem('globalProducts')
+          if (storedProducts) {
+            const allProducts = JSON.parse(storedProducts)
+            const homensProducts = allProducts.filter((product: any) => 
+              product.categoryId === 'homens'
+            )
+            console.log('🔄 Fallback para localStorage:', homensProducts.length, 'produtos')
+            setProducts(homensProducts)
+          }
+        } else {
+          console.log('✅ Produtos carregados do Supabase:', products?.length || 0, 'produtos')
+          setProducts(products || [])
+        }
       } catch (error) {
         console.error('❌ Erro ao carregar produtos:', error)
+        const storedProducts = localStorage.getItem('adminProducts') || localStorage.getItem('globalProducts')
+        if (storedProducts) {
+          const allProducts = JSON.parse(storedProducts)
+          const homensProducts = allProducts.filter((product: any) => 
+            product.categoryId === 'homens'
+          )
+          setProducts(homensProducts)
+        }
       } finally {
         setLoading(false)
       }
     }
 
     loadProducts()
+    
+    try {
+      const channel = new BroadcastChannel('admin-sync')
+      console.log('📡 Escutando sincronização na página homens')
+      
+      channel.onmessage = (event) => {
+        console.log('📨 Mensagem recebida:', event.data.type, event.data.action || '')
+        if (event.data.type === 'products-updated') {
+          loadProducts()
+        }
+      }
+      
+      return () => {
+        console.log('🔌 Fechando canal de sincronização')
+        channel.close()
+      }
+    } catch (error) {
+      console.log('❌ BroadcastChannel não suportado na página homens:', error)
+    }
   }, [])
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Logo variant="horizontal" size="md" />
-            <div className="flex items-center space-x-4">
-              <Link href="/produtos" className="text-sm text-gray-600 hover:text-brand-green transition-colors">
-                ← Voltar aos Produtos
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
-
+    <>
       <main style={{ padding: '0', background: 'white' }}>
-        {/* Hero Section Mínimo Proporcional */}
+        <Header language={language} onLanguageChange={setLanguage} />
+
         <section style={{
-          background: 'linear-gradient(135deg, #3B82F6, #2563EB)',
+          background: 'linear-gradient(135deg, #42A5F5, #1976D2)',
           padding: '0.15rem 0',
           textAlign: 'center',
           marginBottom: '0.2rem',
@@ -54,24 +102,12 @@ export default function HomensPage() {
         }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <h1 style={{ fontSize: '2.5rem', marginBottom: '20px', fontWeight: 'bold' }}>
-              💪 Produtos para Homens
+              💪 Homens
             </h1>
             <p style={{ fontSize: '1.2rem', marginBottom: '30px', opacity: 0.9 }}>
-              Suplementos e produtos para homens
+              Produtos específicos para saúde e bem-estar masculino
             </p>
             <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link href="/avaliacao" style={{
-                padding: '15px 30px',
-                backgroundColor: 'rgba(255,255,255,0.2)',
-                color: 'white',
-                textDecoration: 'none',
-                borderRadius: '8px',
-                border: '2px solid rgba(255,255,255,0.3)',
-                fontWeight: 'bold',
-                transition: 'all 0.3s ease'
-              }}>
-                🧠 Avaliação Personalizada
-              </Link>
               <Link href="/produtos" style={{
                 padding: '15px 30px',
                 backgroundColor: 'rgba(255,255,255,0.2)',
@@ -88,7 +124,6 @@ export default function HomensPage() {
           </div>
         </section>
 
-        {/* Conteúdo Principal */}
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
           {loading ? (
             <div style={{ textAlign: 'center', padding: '60px 20px' }}>
@@ -100,23 +135,12 @@ export default function HomensPage() {
                 💪 Nenhum produto adicionado ainda para esta categoria
               </h2>
               <p style={{ color: '#666', marginBottom: '30px', fontSize: '1.1rem' }}>
-                Suplementos e produtos para homens
+                Produtos específicos para saúde e bem-estar masculino
               </p>
               <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <Link href="/avaliacao" style={{
-                  padding: '15px 30px',
-                  backgroundColor: '#3B82F6',
-                  color: 'white',
-                  textDecoration: 'none',
-                  borderRadius: '8px',
-                  fontWeight: 'bold',
-                  transition: 'all 0.3s ease'
-                }}>
-                  🧠 Fazer Avaliação Personalizada
-                </Link>
                 <Link href="/produtos" style={{
                   padding: '15px 30px',
-                  backgroundColor: '#2563EB',
+                  backgroundColor: '#1976D2',
                   color: 'white',
                   textDecoration: 'none',
                   borderRadius: '8px',
@@ -268,8 +292,6 @@ export default function HomensPage() {
           )}
         </div>
       </main>
-
-      <BottomNavigation currentPage="/produtos" />
-    </div>
+    </>
   )
 }
