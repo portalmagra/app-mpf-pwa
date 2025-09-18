@@ -921,7 +921,7 @@ function getCuratedRealProducts(query: string): AmazonProduct[] {
     
     // Curadoria por critérios de qualidade
     const curatedProducts = uniqueProducts
-      .filter(p => p.rating >= 4.0 && p.reviewCount >= 1000) // Filtro de qualidade
+      .filter(p => p.rating >= 4.0 && (p.reviewCount || 0) >= 1000) // Filtro de qualidade
       .sort((a, b) => {
         // 1. Priorizar Amazon's Choice
         if (a.isAmazonChoice && !b.isAmazonChoice) return -1;
@@ -935,7 +935,7 @@ function getCuratedRealProducts(query: string): AmazonProduct[] {
         if (Math.abs(a.rating - b.rating) > 0.1) return b.rating - a.rating;
         
         // 4. Ordenar por número de reviews (mais reviews = mais confiável)
-        return b.reviewCount - a.reviewCount;
+        return (b.reviewCount || 0) - (a.reviewCount || 0);
       });
     
     console.log(`✅ Curated ${curatedProducts.length} high-quality products`);
