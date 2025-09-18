@@ -60,6 +60,18 @@ export default function AnsiedadePage() {
               Produtos naturais para controle da ansiedade
             </p>
             <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Link href="/avaliacao" style={{
+                padding: '15px 30px',
+                backgroundColor: 'rgba(255,255,255,0.2)',
+                color: 'white',
+                textDecoration: 'none',
+                borderRadius: '8px',
+                border: '2px solid rgba(255,255,255,0.3)',
+                fontWeight: 'bold',
+                transition: 'all 0.3s ease'
+              }}>
+                🧠 Avaliação Personalizada
+              </Link>
               <Link href="/produtos" style={{
                 padding: '15px 30px',
                 backgroundColor: 'rgba(255,255,255,0.2)',
@@ -92,6 +104,17 @@ export default function AnsiedadePage() {
                 Produtos naturais para controle da ansiedade
               </p>
               <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <Link href="/avaliacao" style={{
+                  padding: '15px 30px',
+                  backgroundColor: '#AED6F1',
+                  color: 'white',
+                  textDecoration: 'none',
+                  borderRadius: '8px',
+                  fontWeight: 'bold',
+                  transition: 'all 0.3s ease'
+                }}>
+                  🧠 Fazer Avaliação Personalizada
+                </Link>
                 <Link href="/produtos" style={{
                   padding: '15px 30px',
                   backgroundColor: '#85C1E9',
