@@ -30,40 +30,52 @@ export default function AmazonPage() {
     }
     
     setIsLoading(true)
-    setSearchMessage(`🤖 Nossa IA está selecionando os melhores produtos "${query}" para você...`)
+    setSearchMessage(`🔍 Redirecionando para Amazon com "${query}"...`)
     
     try {
-      // Buscar produtos através da API route
-      const response = await fetch('/api/search-real-amazon', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: query.trim(),
-          maxResults: 3
-        })
-      })
+      // SEMPRE redirecionar para busca Amazon primeiro
+      const amazonSearchUrl = `https://www.amazon.com/s?k=${encodeURIComponent(query.trim())}&tag=portalsolutio-20`
       
-      const data = await response.json()
+      // Abrir Amazon em nova aba
+      window.open(amazonSearchUrl, '_blank')
       
-      if (data.success && data.products && data.products.length > 0) {
-        setCuratedProducts(data.products)
-        setShowCuratedProducts(true)
-        setSearchMessage(`✅ Encontramos ${data.products.length} produtos selecionados especialmente para você!`)
-      } else {
-        // Fallback para busca direta na Amazon
-        const amazonSearchUrl = `https://www.amazon.com/s?k=${encodeURIComponent(query.trim())}&tag=portalsolutio-20`
-        window.open(amazonSearchUrl, '_blank')
-        setSearchMessage(`🔍 Redirecionando para Amazon com "${query}"...`)
-      }
+      // Simular curadoria após redirecionamento
+      setTimeout(async () => {
+        try {
+          const response = await fetch('/api/search-real-amazon', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              query: query.trim(),
+              maxResults: 3
+            })
+          })
+          
+          const data = await response.json()
+          
+          if (data.success && data.products && data.products.length > 0) {
+            setCuratedProducts(data.products)
+            setShowCuratedProducts(true)
+            setSearchMessage(`✅ Encontramos ${data.products.length} produtos selecionados especialmente para você!`)
+          } else {
+            setSearchMessage(`🔍 Busque por "${query}" na Amazon que acabou de abrir!`)
+          }
+        } catch (error) {
+          console.error('Erro na curadoria:', error)
+          setSearchMessage(`🔍 Busque por "${query}" na Amazon que acabou de abrir!`)
+        } finally {
+          setIsLoading(false)
+        }
+      }, 2000) // Aguardar 2 segundos para simular curadoria
+      
     } catch (error) {
       console.error('Erro na busca:', error)
       // Fallback para busca direta
       const amazonSearchUrl = `https://www.amazon.com/s?k=${encodeURIComponent(query.trim())}&tag=portalsolutio-20`
       window.open(amazonSearchUrl, '_blank')
       setSearchMessage(`🔍 Redirecionando para Amazon com "${query}"...`)
-    } finally {
       setIsLoading(false)
     }
   }
