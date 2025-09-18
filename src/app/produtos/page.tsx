@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import Header from '../components/Header'
 
 export default function ProdutosPage() {
   const [language, setLanguage] = useState<'pt' | 'es' | 'en'>('pt')
@@ -178,8 +177,6 @@ export default function ProdutosPage() {
   return (
     <>
       <main style={{ padding: '0', background: 'white' }}>
-        {/* Header Unificado */}
-        <Header language={language} onLanguageChange={setLanguage} />
 
         {/* Hero Section Mínimo Proporcional */}
         <section style={{

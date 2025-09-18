@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Header from '../../components/Header'
 import { supabase } from '@/lib/supabase'
 
 interface Product {
@@ -104,8 +103,6 @@ export default function EmagrecimentoPage() {
   return (
     <>
       <main style={{ padding: '0', background: 'white' }}>
-        {/* Header Unificado */}
-        <Header language={language} onLanguageChange={setLanguage} />
 
         {/* Hero Section Mínimo Proporcional */}
         <section style={{
