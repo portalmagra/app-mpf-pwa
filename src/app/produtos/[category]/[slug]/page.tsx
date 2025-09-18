@@ -3,7 +3,6 @@
 import { useState, useEffect, use } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
-import BottomNavigation from '@/components/BottomNavigation'
 import { productService, Product } from '@/lib/supabase'
 
 interface ProductPageProps {
@@ -32,7 +31,7 @@ export default function ProductPage({ params }: ProductPageProps) {
           slug: resolvedParams.slug
         })
         
-        const products = await productService.getProductsByCategory(resolvedParams.category)
+        let products = await productService.getProductsByCategory(resolvedParams.category)
         
         console.log('🔍 Todos os produtos da categoria:', products)
         
@@ -444,9 +443,6 @@ export default function ProductPage({ params }: ProductPageProps) {
           </Link>
         </div>
       </main>
-
-      {/* Bottom Navigation */}
-      <BottomNavigation currentPage="/produtos" />
     </div>
   )
 }

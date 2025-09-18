@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
-import BottomNavigation from '@/components/BottomNavigation'
 import { productService, Product } from '@/lib/supabase'
 
 export default function AnsiedadePage() {
@@ -269,9 +268,6 @@ export default function AnsiedadePage() {
           )}
         </div>
       </main>
-
-      {/* Bottom Navigation */}
-      <BottomNavigation currentPage="/produtos" />
     </div>
   )
 }
