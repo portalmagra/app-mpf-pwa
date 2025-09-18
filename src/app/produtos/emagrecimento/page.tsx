@@ -2,11 +2,27 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Logo from '@/components/Logo'
-import BottomNavigation from '@/components/BottomNavigation'
-import { productService, Product } from '@/lib/supabase'
+import Header from '../../components/Header'
+import { supabase } from '@/lib/supabase'
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  category_id: string;
+  amazon_url: string;
+  current_price: string;
+  original_price: string;
+  rating: number;
+  review_count: number;
+  image_url: string;
+  benefits: string[];
+  features: string[];
+  slug?: string;
+}
 
 export default function EmagrecimentoPage() {
+  const [language, setLanguage] = useState<'pt' | 'es' | 'en'>('pt')
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -17,19 +33,45 @@ export default function EmagrecimentoPage() {
         console.log('🔄 Carregando produtos do Supabase...')
         
         // Buscar produtos da categoria emagrecimento no Supabase
-        const products = await productService.getProductsByCategory('emagrecimento')
+        const { data: products, error } = await supabase
+          .from('products')
+          .select('*')
+          .eq('category_id', 'emagrecimento')
         
-        console.log('✅ Produtos carregados do Supabase:', products?.length || 0, 'produtos')
-        console.log('🔍 Dados dos produtos:', products)
-        if (products && products.length > 0) {
-          console.log('🔍 Slug do primeiro produto:', products[0].slug)
-          console.log('🔍 ID do primeiro produto:', products[0].id)
-          console.log('🔍 Nome do primeiro produto:', products[0].name)
-          console.log('🔍 Categoria do primeiro produto:', products[0].category_id)
+        if (error) {
+          console.error('❌ Erro ao carregar produtos do Supabase:', error)
+          // Fallback para localStorage se Supabase falhar
+          const storedProducts = localStorage.getItem('adminProducts') || localStorage.getItem('globalProducts')
+          if (storedProducts) {
+            const allProducts = JSON.parse(storedProducts)
+            const emagrecimentoProducts = allProducts.filter((product: any) => 
+              product.categoryId === 'emagrecimento'
+            )
+            console.log('🔄 Fallback para localStorage:', emagrecimentoProducts.length, 'produtos')
+            setProducts(emagrecimentoProducts)
+          }
+        } else {
+          console.log('✅ Produtos carregados do Supabase:', products?.length || 0, 'produtos')
+          console.log('🔍 Dados dos produtos:', products)
+          if (products && products.length > 0) {
+            console.log('🔍 Slug do primeiro produto:', products[0].slug)
+            console.log('🔍 ID do primeiro produto:', products[0].id)
+            console.log('🔍 Nome do primeiro produto:', products[0].name)
+            console.log('🔍 Categoria do primeiro produto:', products[0].category_id)
+          }
+          setProducts(products || [])
         }
-        setProducts(products || [])
       } catch (error) {
         console.error('❌ Erro ao carregar produtos:', error)
+        // Fallback para localStorage
+        const storedProducts = localStorage.getItem('adminProducts') || localStorage.getItem('globalProducts')
+        if (storedProducts) {
+          const allProducts = JSON.parse(storedProducts)
+          const emagrecimentoProducts = allProducts.filter((product: any) => 
+            product.categoryId === 'emagrecimento'
+          )
+          setProducts(emagrecimentoProducts)
+        }
       } finally {
         setLoading(false)
       }
@@ -60,22 +102,11 @@ export default function EmagrecimentoPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Logo variant="horizontal" size="md" />
-            <div className="flex items-center space-x-4">
-              <Link href="/produtos" className="text-sm text-gray-600 hover:text-brand-green transition-colors">
-                ← Voltar aos Produtos
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
-
+    <>
       <main style={{ padding: '0', background: 'white' }}>
+        {/* Header Unificado */}
+        <Header language={language} onLanguageChange={setLanguage} />
+
         {/* Hero Section Mínimo Proporcional */}
         <section style={{
           background: 'linear-gradient(135deg, #96CEB4, #27ae60)',
@@ -92,18 +123,6 @@ export default function EmagrecimentoPage() {
               Produtos para perda de peso saudável
             </p>
             <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link href="/avaliacao" style={{
-                padding: '15px 30px',
-                backgroundColor: 'rgba(255,255,255,0.2)',
-                color: 'white',
-                textDecoration: 'none',
-                borderRadius: '8px',
-                border: '2px solid rgba(255,255,255,0.3)',
-                fontWeight: 'bold',
-                transition: 'all 0.3s ease'
-              }}>
-                🧠 Avaliação Personalizada
-              </Link>
               <Link href="/produtos" style={{
                 padding: '15px 30px',
                 backgroundColor: 'rgba(255,255,255,0.2)',
@@ -135,17 +154,6 @@ export default function EmagrecimentoPage() {
                 Produtos para perda de peso saudável
               </p>
               <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                <Link href="/avaliacao" style={{
-                  padding: '15px 30px',
-                  backgroundColor: '#96CEB4, #27ae60',
-                  color: 'white',
-                  textDecoration: 'none',
-                  borderRadius: '8px',
-                  fontWeight: 'bold',
-                  transition: 'all 0.3s ease'
-                }}>
-                  🧠 Fazer Avaliação Personalizada
-                </Link>
                 <Link href="/produtos" style={{
                   padding: '15px 30px',
                   backgroundColor: '#27ae60',
@@ -300,9 +308,6 @@ export default function EmagrecimentoPage() {
           )}
         </div>
       </main>
-
-      {/* Bottom Navigation */}
-      <BottomNavigation currentPage="/produtos" />
-    </div>
+    </>
   )
 }
