@@ -5,85 +5,66 @@ import Link from 'next/link'
 import Logo from '@/components/Logo'
 import BottomNavigation from '@/components/BottomNavigation'
 
-export default function PaesPage() {
+export default function PaesProdutosPage() {
   const [searchTerm, setSearchTerm] = useState('')
 
-  // Receitas de pães mock - você pode substituir por dados do Supabase depois
-  const receitasPaes = [
+  // Produtos de pães para venda
+  const produtosPaes = [
     {
       id: 1,
       nome: 'Pão de Aveia Fit',
-      tempo: '45 min',
-      dificuldade: 'Fácil',
-      porcoes: '8 fatias',
+      preco: 12.90,
+      descricao: 'Pão integral com aveia, rico em fibras e proteínas',
+      ingredientes: ['Farinha de aveia', 'Água filtrada', 'Azeite extra virgem', 'Sal marinho', 'Fermento biológico'],
+      beneficios: ['Rico em fibras', 'Baixo índice glicêmico', 'Sem conservantes', 'Proteína vegetal'],
       imagem: '/images/pao-aveia.jpg',
-      ingredientes: [
-        '2 xícaras de farinha de aveia',
-        '1 xícara de água morna',
-        '1 colher de sopa de azeite',
-        '1 colher de chá de sal',
-        '1 colher de chá de fermento biológico',
-        '1 colher de sopa de mel'
-      ],
-      preparo: [
-        'Misture a farinha de aveia com o sal',
-        'Dissolva o fermento na água morna com o mel',
-        'Adicione o azeite e misture bem',
-        'Deixe descansar por 30 minutos',
-        'Asse em forno preaquecido a 180°C por 25 minutos'
-      ]
+      estoque: 'Disponível',
+      tempoEntrega: '2-3 dias úteis'
     },
     {
       id: 2,
       nome: 'Pão de Banana Low Carb',
-      tempo: '35 min',
-      dificuldade: 'Fácil',
-      porcoes: '6 fatias',
+      preco: 15.90,
+      descricao: 'Pão sem glúten feito com banana e farinha de amêndoa',
+      ingredientes: ['Banana orgânica', 'Farinha de amêndoa', 'Ovos caipiras', 'Canela', 'Fermento'],
+      beneficios: ['Sem glúten', 'Baixo carboidrato', 'Rico em potássio', 'Naturalmente doce'],
       imagem: '/images/pao-banana.jpg',
-      ingredientes: [
-        '2 bananas maduras',
-        '2 ovos',
-        '1/2 xícara de farinha de amêndoa',
-        '1 colher de chá de fermento',
-        '1 colher de sopa de canela',
-        '1 pitada de sal'
-      ],
-      preparo: [
-        'Amasse as bananas até ficarem bem pastosas',
-        'Misture com os ovos batidos',
-        'Adicione a farinha de amêndoa, fermento e canela',
-        'Misture até formar uma massa homogênea',
-        'Asse em forno a 180°C por 30 minutos'
-      ]
+      estoque: 'Disponível',
+      tempoEntrega: '2-3 dias úteis'
     },
     {
       id: 3,
       nome: 'Pão de Quinoa',
-      tempo: '50 min',
-      dificuldade: 'Médio',
-      porcoes: '10 fatias',
+      preco: 18.90,
+      descricao: 'Pão super nutritivo com quinoa e sementes',
+      ingredientes: ['Quinoa real', 'Farinha de quinoa', 'Sementes de chia', 'Sementes de linhaça', 'Azeite'],
+      beneficios: ['Proteína completa', 'Ômega 3', 'Sem glúten', 'Super nutritivo'],
       imagem: '/images/pao-quinoa.jpg',
-      ingredientes: [
-        '1 xícara de quinoa cozida',
-        '1 xícara de farinha de quinoa',
-        '1/2 xícara de água',
-        '2 colheres de sopa de azeite',
-        '1 colher de chá de sal',
-        '1 colher de chá de fermento'
-      ],
-      preparo: [
-        'Misture todos os ingredientes secos',
-        'Adicione a quinoa cozida e a água',
-        'Misture até formar uma massa consistente',
-        'Deixe descansar por 20 minutos',
-        'Asse em forno a 180°C por 35 minutos'
-      ]
+      estoque: 'Disponível',
+      tempoEntrega: '2-3 dias úteis'
+    },
+    {
+      id: 4,
+      nome: 'Pão de Batata Doce',
+      preco: 14.90,
+      descricao: 'Pão funcional com batata doce e especiarias',
+      ingredientes: ['Batata doce orgânica', 'Farinha integral', 'Azeite', 'Canela', 'Noz moscada'],
+      beneficios: ['Vitamina A', 'Antioxidantes', 'Energia sustentada', 'Sabor único'],
+      imagem: '/images/pao-batata.jpg',
+      estoque: 'Disponível',
+      tempoEntrega: '2-3 dias úteis'
     }
   ]
 
-  const filteredReceitas = receitasPaes.filter(receita =>
-    receita.nome.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProdutos = produtosPaes.filter(produto =>
+    produto.nome.toLowerCase().includes(searchTerm.toLowerCase())
   )
+
+  const handleComprarWhatsApp = (produto: any) => {
+    const mensagem = `🛒 *Olá! Quero comprar o produto:*\n\n🍞 *${produto.nome}*\n💰 *Preço: R$ ${produto.preco.toFixed(2)}*\n📝 *Descrição:* ${produto.descricao}\n\n📦 *Entrega:* ${produto.tempoEntrega}\n\n✨ *Portal Fit - Produtos Selecionados*`
+    const url = `https://wa.me/5511999999999?text=${encodeURIComponent(mensagem)}`
+    window.open(url, '_blank')
+  }
 
   return (
     <div className="min-h-screen bg-brand-cream">
@@ -91,7 +72,7 @@ export default function PaesPage() {
       <header className="bg-white shadow-soft sticky top-0 z-50">
         <div className="max-w-sm mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
-            <Link href="/receitas" className="flex items-center">
+            <Link href="/produtos" className="flex items-center">
               <button className="text-brand-green text-lg font-bold hover:text-brand-greenDark transition-colors">
                 ← Voltar
               </button>
@@ -133,17 +114,17 @@ export default function PaesPage() {
         <div className="mb-6">
           <input
             type="text"
-            placeholder="Buscar receitas de pães..."
+            placeholder="Buscar produtos de pães..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
           />
         </div>
 
-        {/* Lista de Receitas */}
+        {/* Lista de Produtos */}
         <div className="space-y-4">
-          {filteredReceitas.map((receita) => (
-            <div key={receita.id} className="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
+          {filteredProdutos.map((produto) => (
+            <div key={produto.id} className="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
               <div className="flex items-start space-x-4">
                 {/* Imagem placeholder */}
                 <div className="w-20 h-20 bg-gradient-to-br from-yellow-100 to-orange-200 rounded-lg flex items-center justify-center">
@@ -162,26 +143,37 @@ export default function PaesPage() {
                   </svg>
                 </div>
                 
-                {/* Informações da receita */}
+                {/* Informações do produto */}
                 <div className="flex-1">
                   <h3 className="font-bold text-brand-text text-lg mb-2">
-                    {receita.nome}
+                    {produto.nome}
                   </h3>
                   
-                  <div className="flex flex-wrap gap-2 mb-3">
-                    <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
-                      ⏱️ {receita.tempo}
-                    </span>
-                    <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
-                      📊 {receita.dificuldade}
-                    </span>
-                    <span className="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full">
-                      👥 {receita.porcoes}
+                  <div className="mb-3">
+                    <span className="text-2xl font-bold text-brand-green">
+                      R$ {produto.preco.toFixed(2)}
                     </span>
                   </div>
                   
-                  <button className="bg-brand-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-greenDark transition-colors">
-                    Ver Receita Completa
+                  <p className="text-sm text-brand-text2 mb-3">
+                    {produto.descricao}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2 mb-3">
+                    <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                      ✅ {produto.estoque}
+                    </span>
+                    <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                      📦 {produto.tempoEntrega}
+                    </span>
+                  </div>
+                  
+                  <button 
+                    onClick={() => handleComprarWhatsApp(produto)}
+                    className="w-full bg-green-500 text-white px-4 py-3 rounded-lg text-sm font-medium hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
+                  >
+                    <span>📱</span>
+                    Comprar via WhatsApp
                   </button>
                 </div>
               </div>
@@ -189,18 +181,29 @@ export default function PaesPage() {
           ))}
         </div>
 
-        {/* Mensagem quando não há receitas */}
-        {filteredReceitas.length === 0 && (
+        {/* Mensagem quando não há produtos */}
+        {filteredProdutos.length === 0 && (
           <div className="text-center py-8">
             <p className="text-brand-text2">
-              Nenhuma receita encontrada para "{searchTerm}"
+              Nenhum produto encontrado para "{searchTerm}"
             </p>
           </div>
         )}
+
+        {/* Informação sobre entrega */}
+        <div className="mt-8 bg-white rounded-xl p-4 shadow-lg border border-gray-100">
+          <div className="text-center">
+            <span className="text-2xl block mb-2">🚚</span>
+            <h3 className="font-bold text-brand-text mb-2">Entrega Rápida</h3>
+            <p className="text-sm text-brand-text2">
+              Todos os pães são feitos frescos e entregues em 2-3 dias úteis na sua casa!
+            </p>
+          </div>
+        </div>
       </main>
 
       {/* Bottom Navigation */}
-      <BottomNavigation currentPage="/receitas" />
+      <BottomNavigation currentPage="/produtos" />
     </div>
   )
 }
