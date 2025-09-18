@@ -97,26 +97,6 @@ export default function ReceitasPage() {
               </div>
             </Link>
             
-            <Link href="/receitas/paes" className="bg-gradient-to-r from-yellow-100 to-orange-200 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-yellow-300 transform hover:scale-105">
-              <div className="text-center">
-                <div className="flex justify-center mb-2">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M4 8C4 6.89543 4.89543 6 6 6H18C19.1046 6 20 6.89543 20 8V16C20 17.1046 19.1046 18 18 18H6C4.89543 18 4 17.1046 4 16V8Z" fill="#D4A574" stroke="#B8860B" strokeWidth="1.5"/>
-                    <path d="M6 8H18V10C18 10.5523 17.5523 11 17 11H7C6.44772 11 6 10.5523 6 10V8Z" fill="#E6C085"/>
-                    <path d="M8 9H16" stroke="#B8860B" strokeWidth="0.8" strokeLinecap="round"/>
-                    <path d="M8 11H16" stroke="#B8860B" strokeWidth="0.8" strokeLinecap="round"/>
-                    <path d="M8 13H16" stroke="#B8860B" strokeWidth="0.8" strokeLinecap="round"/>
-                    <circle cx="9" cy="9.5" r="0.5" fill="#8B4513"/>
-                    <circle cx="12" cy="10" r="0.5" fill="#8B4513"/>
-                    <circle cx="15" cy="9.5" r="0.5" fill="#8B4513"/>
-                    <circle cx="10" cy="12" r="0.5" fill="#8B4513"/>
-                    <circle cx="14" cy="12" r="0.5" fill="#8B4513"/>
-                    <path d="M6 8L8 6L10 8V10L8 12L6 10V8Z" fill="#F5DEB3" opacity="0.6"/>
-                  </svg>
-                </div>
-                <h3 className="font-bold text-sm">Pães</h3>
-              </div>
-            </Link>
           </div>
         </div>
 
