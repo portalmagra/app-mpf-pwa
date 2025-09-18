@@ -116,29 +116,39 @@ export default function AdminReceitasPage() {
 
       const receitaData = {
         ...newReceita,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
+        access_link: `https://app.meuportalfit.com/receita/${Date.now()}`
       }
 
-      // Implementar criação da receita
-      alert(`Cadastrar nova receita: ${newReceita.name}`)
+      console.log('🔄 Salvando receita no Supabase:', receitaData)
       
-      // Limpar formulário
-      setNewReceita({
-        name: '',
-        description: '',
-        type: '',
-        price: 0,
-        pdf_link: '',
-        image_url: '',
-        status: 'active'
-      })
-      setShowAddForm(false)
+      // Salvar no Supabase usando o recipeService
+      const savedRecipe = await recipeService.createRecipe(receitaData)
       
-      await loadReceitas() // Recarregar lista
+      if (savedRecipe) {
+        console.log('✅ Receita salva com sucesso:', savedRecipe)
+        alert(`✅ Receita "${newReceita.name}" cadastrada com sucesso!`)
+        
+        // Limpar formulário
+        setNewReceita({
+          name: '',
+          description: '',
+          type: '',
+          price: 0,
+          pdf_link: '',
+          image_url: '',
+          status: 'active'
+        })
+        setShowAddForm(false)
+        
+        // Recarregar lista de receitas
+        await loadReceitas()
+      } else {
+        console.error('❌ Falha ao salvar receita')
+        alert('❌ Erro ao cadastrar receita. Tente novamente.')
+      }
     } catch (error) {
-      console.error('Erro ao cadastrar receita:', error)
-      alert('Erro ao cadastrar receita')
+      console.error('❌ Erro ao cadastrar receita:', error)
+      alert('❌ Erro ao cadastrar receita. Verifique sua conexão e tente novamente.')
     }
   }
 
