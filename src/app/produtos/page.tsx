@@ -45,14 +45,6 @@ export default function ProdutosPage() {
             icon: '🔥',
             color: '#96CEB4',
             created_at: new Date().toISOString()
-          },
-          {
-            id: 'paes',
-            name: 'Pães Fit',
-            description: 'Pães saudáveis e nutritivos',
-            icon: '🥖',
-            color: '#96CEB4',
-            created_at: new Date().toISOString()
           }
         ]
         setCategories(defaultCategories)
