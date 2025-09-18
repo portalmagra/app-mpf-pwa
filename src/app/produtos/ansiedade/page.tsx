@@ -70,8 +70,6 @@ export default function AnsiedadePage() {
                 fontWeight: 'bold',
                 transition: 'all 0.3s ease'
               }}>
-                🧠 Avaliação Personalizada
-              </Link>
               <Link href="/produtos" style={{
                 padding: '15px 30px',
                 backgroundColor: 'rgba(255,255,255,0.2)',
@@ -113,8 +111,6 @@ export default function AnsiedadePage() {
                   fontWeight: 'bold',
                   transition: 'all 0.3s ease'
                 }}>
-                  🧠 Fazer Avaliação Personalizada
-                </Link>
                 <Link href="/produtos" style={{
                   padding: '15px 30px',
                   backgroundColor: '#85C1E9',
