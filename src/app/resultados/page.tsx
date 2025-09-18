@@ -490,56 +490,18 @@ function ResultadosContent() {
                   <div class="produto-nome">${produto.name}</div>
                   <div class="produto-desc">${produto.description}</div>
                   <div class="produto-preco">${produto.price} ⭐ ${produto.rating}</div>
-                  <div class="produto-why">💡 ${produto.whyPerfect}</div>
+                  <div class="produto-benefits">💡 ${produto.benefits}</div>
+                  ${produto.amazonUrl ? `
+                    <div class="produto-link">
+                      <a href="${produto.amazonUrl}" target="_blank" style="color: #ff6b35; text-decoration: none; font-weight: bold;">
+                        🛒 Ver na Amazon
+                      </a>
+                    </div>
+                  ` : ''}
                 </div>
               `).join('')}
               ` : ''}
               
-              <div class="produtos-adicionais">
-                <div style="font-size: 18px; font-weight: bold; color: #1e293b; margin-bottom: 15px; text-align: center;">
-                  🎯 Produtos Recomendados Adicionais
-                </div>
-                
-                <div class="produto-adicional">
-                  <div style="display: flex; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 18px; margin-right: 8px;">💊</span>
-                    <strong style="font-size: 16px; color: #1e293b;">Vitamina D3 2000 IU</strong>
-                  </div>
-                  <div style="font-size: 14px; color: #64748b; line-height: 1.4;">
-                    Essencial para imunidade e energia, especialmente importante no inverno americano.
-                  </div>
-                </div>
-                
-                <div class="produto-adicional">
-                  <div style="display: flex; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 18px; margin-right: 8px;">🌙</span>
-                    <strong style="font-size: 16px; color: #1e293b;">Magnésio para Sono</strong>
-                  </div>
-                  <div style="font-size: 14px; color: #64748b; line-height: 1.4;">
-                    Melhora a qualidade do sono e relaxamento muscular, ideal para quem tem dificuldade para dormir.
-                  </div>
-                </div>
-                
-                <div class="produto-adicional">
-                  <div style="display: flex; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 18px; margin-right: 8px;">⚡</span>
-                    <strong style="font-size: 16px; color: #1e293b;">Complexo B Energético</strong>
-                  </div>
-                  <div style="font-size: 14px; color: #64748b; line-height: 1.4;">
-                    Aumenta energia natural, melhora foco e reduz fadiga, perfeito para o dia a dia.
-                  </div>
-                </div>
-                
-                <div class="produto-adicional">
-                  <div style="display: flex; align-items: center; margin-bottom: 8px;">
-                    <span style="font-size: 18px; margin-right: 8px;">🐟</span>
-                    <strong style="font-size: 16px; color: #1e293b;">Ômega 3 Premium</strong>
-                  </div>
-                  <div style="font-size: 14px; color: #64748b; line-height: 1.4;">
-                    Suporte para coração, cérebro e inflamação, essencial para saúde geral.
-                  </div>
-                </div>
-              </div>
             </div>
             
             <div class="footer">

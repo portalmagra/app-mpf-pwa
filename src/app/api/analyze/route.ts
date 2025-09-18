@@ -330,14 +330,13 @@ export async function POST(request: NextRequest) {
       - NUNCA recomende produtos sem explicação científica
       - NUNCA ignore medicamentos ou restrições mencionadas
       - SEMPRE mantenha tom acolhedor e brasileiro
-      - SEMPRE inclua produtos da Amazon com tag portalsolutio-20
-
       **FORMATO DE RESPOSTA:**
       - Comece diretamente com uma análise personalizada e específica
       - NÃO use títulos genéricos como "Resumo da avaliação", "Áreas de prioridades", "Fatores de risco"
       - NÃO mencione "contexto cultural brasileiro" ou "sites específicos para você"
       - Seja direta e prática, focando nos problemas específicos do usuário
-      - Recomende produtos Amazon com explicação científica clara
+      - Mencione produtos específicos (ex: "melatonina", "magnésio glicinato") mas SEM incluir links
+      - NÃO inclua URLs da Amazon ou tags no texto
       - Termine com dicas práticas de implementação
 
       Lembre-se: Você é a especialista que toda brasileira nos EUA gostaria de ter como consultora pessoal!
@@ -389,7 +388,7 @@ export async function POST(request: NextRequest) {
       IMPORTANTE: Use a saudação "${greeting}" e adapte sua linguagem ao gênero detectado (${gender}).
       Use "${pronoun}" como pronome e "${possessive}" como possessivo.
       
-      Por favor, forneça uma análise personalizada e específica, sempre incluindo produtos da Amazon com a tag portalsolutio-20.
+      Por favor, forneça uma análise personalizada e específica, mencionando produtos específicos mas SEM incluir links da Amazon.
       Responda em ${language === 'pt' ? 'português brasileiro' : language === 'es' ? 'espanhol' : 'inglês'}.
       `
 
@@ -461,10 +460,11 @@ export async function POST(request: NextRequest) {
       rating: product.rating || 4.0,
       category: identifyCategory(product.name),
       benefits: generateBenefits(product.name, language),
-      amazonUrl: product.detailPageURL || `https://www.amazon.com/dp/${product.asin}?tag=portal07d-20`,
+      amazonUrl: product.detailPageURL || `https://www.amazon.com/dp/${product.asin}?tag=portalsolutio-20`,
       savings: Math.floor(Math.random() * 20) + 15, // 15-35% economia
       imageUrl: product.imageUrl || '',
-      featured: index === 0
+      featured: index === 0,
+      shortUrl: `amazon.com/dp/${product.asin}` // URL limpa para exibição
     }))
     
     console.log(`✅ Total de ${recommendedProducts.length} produtos processados`)
