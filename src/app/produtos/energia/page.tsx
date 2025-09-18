@@ -6,7 +6,7 @@ import Logo from '@/components/Logo'
 import BottomNavigation from '@/components/BottomNavigation'
 import { productService, Product } from '@/lib/supabase'
 
-export default function EmagrecimentoPage() {
+export default function EnergiaPage() {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -17,7 +17,7 @@ export default function EmagrecimentoPage() {
         console.log('🔄 Carregando produtos do Supabase...')
         
         // Buscar produtos da categoria emagrecimento no Supabase
-        const products = await productService.getProductsByCategory('emagrecimento')
+        const products = await productService.getProductsByCategory('energia')
         
         console.log('✅ Produtos carregados do Supabase:', products?.length || 0, 'produtos')
         console.log('🔍 Dados dos produtos:', products)
@@ -86,10 +86,10 @@ export default function EmagrecimentoPage() {
         }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <h1 style={{ fontSize: '2.5rem', marginBottom: '20px', fontWeight: 'bold' }}>
-              🔥 Suporte para Emagrecimento
+              ⚡ Energia e Disposição
             </h1>
             <p style={{ fontSize: '1.2rem', marginBottom: '30px', opacity: 0.9 }}>
-              Produtos para perda de peso saudável
+              Produtos para energia e disposição
             </p>
             <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
               <Link href="/avaliacao" style={{
@@ -129,10 +129,10 @@ export default function EmagrecimentoPage() {
           ) : products.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '60px 20px' }}>
               <h2 style={{ color: '#333', marginBottom: '20px' }}>
-                🔥 Nenhum produto adicionado ainda para esta categoria
+                ⚡ Nenhum produto adicionado ainda para esta categoria
               </h2>
               <p style={{ color: '#666', marginBottom: '30px', fontSize: '1.1rem' }}>
-                Produtos para perda de peso saudável
+                Produtos para energia e disposição
               </p>
               <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <Link href="/avaliacao" style={{
@@ -162,7 +162,7 @@ export default function EmagrecimentoPage() {
           ) : (
             <>
               <h2 style={{ textAlign: 'center', color: '#333', marginBottom: '40px', fontSize: '2rem' }}>
-                🔥 Produtos Disponíveis
+                ⚡ Produtos Disponíveis
               </h2>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
                 {products.map((product) => (
@@ -239,7 +239,7 @@ export default function EmagrecimentoPage() {
                       marginTop: 'auto'
                     }}>
                       <a 
-                        href={`/produtos/emagrecimento/${product.slug || product.id}`} 
+                        href={`/produtos/energia/${product.slug || product.id}`} 
                         style={{ 
                           textDecoration: 'none', 
                           flex: 1,
