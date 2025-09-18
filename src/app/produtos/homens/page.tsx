@@ -6,27 +6,16 @@ import Logo from '@/components/Logo'
 import BottomNavigation from '@/components/BottomNavigation'
 import { productService, Product } from '@/lib/supabase'
 
-export default function PaesPage() {
+export default function HomensPage() {
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Carregar produtos da categoria "paes" do Supabase
     const loadProducts = async () => {
       try {
         console.log('🔄 Carregando produtos do Supabase...')
-        
-        // Buscar produtos da categoria paes no Supabase
-        const products = await productService.getProductsByCategory('paes')
-        
+        const products = await productService.getProductsByCategory('homens')
         console.log('✅ Produtos carregados do Supabase:', products?.length || 0, 'produtos')
-        console.log('🔍 Dados dos produtos:', products)
-        if (products && products.length > 0) {
-          console.log('🔍 Slug do primeiro produto:', products[0].slug)
-          console.log('🔍 ID do primeiro produto:', products[0].id)
-          console.log('🔍 Nome do primeiro produto:', products[0].name)
-          console.log('🔍 Categoria do primeiro produto:', products[0].category_id)
-        }
         setProducts(products || [])
       } catch (error) {
         console.error('❌ Erro ao carregar produtos:', error)
@@ -36,28 +25,13 @@ export default function PaesPage() {
     }
 
     loadProducts()
-    
-    // Sincronizar com mudanças de outros dispositivos
-    try {
-      const channel = new BroadcastChannel('products-update')
-      channel.addEventListener('message', () => {
-        console.log('🔄 Atualização recebida via BroadcastChannel')
-        loadProducts()
-      })
-      
-      return () => {
-        channel.close()
-      }
-    } catch (error) {
-      console.log('⚠️ BroadcastChannel não suportado neste navegador')
-    }
   }, [])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-50">
       {/* Header */}
       <header style={{
-        background: 'linear-gradient(135deg, #96CEB4, #85C1A3)',
+        background: 'linear-gradient(135deg, #3B82F6, #2563EB)',
         padding: '1rem 0',
         boxShadow: '0 2px 10px rgba(0,0,0,0.1)'
       }}>
@@ -86,7 +60,7 @@ export default function PaesPage() {
       <main>
         {/* Hero Section */}
         <section style={{
-          background: 'linear-gradient(135deg, #96CEB4, #85C1A3)',
+          background: 'linear-gradient(135deg, #3B82F6, #2563EB)',
           padding: '3rem 0',
           textAlign: 'center',
           color: 'white'
@@ -102,7 +76,7 @@ export default function PaesPage() {
               marginBottom: '1rem',
               textShadow: '0 2px 4px rgba(0,0,0,0.3)'
             }}>
-              🥖 Pães Fit
+              💪 Produtos para Homens
             </h1>
             <p style={{
               fontSize: '1.2rem',
@@ -111,9 +85,8 @@ export default function PaesPage() {
               margin: '0 auto',
               lineHeight: 1.6
             }}>
-              Descubra nossa linha de pães saudáveis e nutritivos, feitos com ingredientes naturais 
-              e sem conservantes. Cada pão é cuidadosamente elaborado para oferecer sabor e saúde 
-              em cada mordida.
+              Suplementos e produtos selecionados especialmente para homens que buscam 
+              performance, energia e bem-estar.
             </p>
           </div>
         </section>
@@ -135,12 +108,12 @@ export default function PaesPage() {
               </div>
             ) : products.length === 0 ? (
               <div style={{ textAlign: 'center', padding: '3rem' }}>
-                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🥖</div>
+                <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>💪</div>
                 <h2 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: '#333' }}>
                   Produtos em breve!
                 </h2>
                 <p style={{ color: '#666', fontSize: '1rem' }}>
-                  Estamos preparando nossa linha de pães fit. Em breve você encontrará aqui 
+                  Estamos preparando nossa linha de produtos para homens. Em breve você encontrará aqui 
                   produtos selecionados especialmente para você.
                 </p>
               </div>
@@ -159,17 +132,9 @@ export default function PaesPage() {
                     boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
                     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
                     border: '1px solid #e5e7eb'
-                  }}
-                  onMouseOver={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-4px)'
-                    e.currentTarget.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)'
-                  }}
-                  onMouseOut={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)'
-                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)'
                   }}>
                     <div style={{
-                      background: 'linear-gradient(135deg, #96CEB4, #85C1A3)',
+                      background: 'linear-gradient(135deg, #3B82F6, #2563EB)',
                       borderRadius: '8px',
                       padding: '1rem',
                       marginBottom: '1rem',
@@ -213,37 +178,6 @@ export default function PaesPage() {
                       </div>
                     )}
 
-                    {product.benefits && product.benefits.length > 0 && (
-                      <div style={{ marginBottom: '1rem' }}>
-                        <h4 style={{
-                          fontSize: '0.9rem',
-                          fontWeight: 'bold',
-                          color: '#333',
-                          marginBottom: '0.5rem'
-                        }}>
-                          Benefícios:
-                        </h4>
-                        <ul style={{
-                          listStyle: 'none',
-                          padding: 0,
-                          margin: 0
-                        }}>
-                          {product.benefits.slice(0, 3).map((benefit, index) => (
-                            <li key={index} style={{
-                              fontSize: '0.85rem',
-                              color: '#666',
-                              marginBottom: '0.25rem',
-                              display: 'flex',
-                              alignItems: 'center'
-                            }}>
-                              <span style={{ color: '#96CEB4', marginRight: '0.5rem' }}>✓</span>
-                              {benefit}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
                     <Link
                       href={product.amazon_url || '#'}
                       target="_blank"
@@ -261,14 +195,6 @@ export default function PaesPage() {
                         transition: 'all 0.3s ease',
                         boxShadow: '0 2px 8px rgba(255, 149, 0, 0.3)'
                       }}
-                      onMouseOver={(e) => {
-                        e.currentTarget.style.transform = 'translateY(-1px)'
-                        e.currentTarget.style.boxShadow = '0 4px 12px rgba(255, 149, 0, 0.4)'
-                      }}
-                      onMouseOut={(e) => {
-                        e.currentTarget.style.transform = 'translateY(0)'
-                        e.currentTarget.style.boxShadow = '0 2px 8px rgba(255, 149, 0, 0.3)'
-                      }}
                     >
                       🛒 Ver na Amazon
                     </Link>
@@ -280,7 +206,6 @@ export default function PaesPage() {
         </section>
       </main>
 
-      {/* Bottom Navigation */}
       <BottomNavigation currentPage="/produtos" />
     </div>
   )
