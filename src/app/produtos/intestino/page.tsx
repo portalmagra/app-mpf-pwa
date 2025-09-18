@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Header from '../../components/Header'
 import { supabase } from '@/lib/supabase'
 
 interface Product {
@@ -59,7 +58,6 @@ export default function IntestinoPage() {
   return (
     <>
       <main style={{ padding: '0', background: 'white' }}>
-        <Header language={language} onLanguageChange={setLanguage} />
 
         <section style={{
           background: 'linear-gradient(135deg, #8BC34A, #558B2F)',
