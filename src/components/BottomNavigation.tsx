@@ -27,13 +27,13 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
           <span className={`text-xs font-semibold ${isActive('/') ? 'text-brand-green' : 'text-brand-green'}`}>Início</span>
         </Link>
 
-        {/* Receitas */}
+        {/* eBooks */}
         <Link 
-          href="/receitas" 
-          className={`flex flex-col items-center py-1 ${isActive('/receitas') ? 'text-brand-green' : 'text-brand-green'}`}
+          href="/ebooks" 
+          className={`flex flex-col items-center py-1 ${isActive('/ebooks') ? 'text-brand-green' : 'text-brand-green'}`}
         >
-          <span className="text-lg">🍲</span>
-          <span className={`text-xs font-semibold ${isActive('/receitas') ? 'text-brand-green' : 'text-brand-green'}`}>Receitas</span>
+          <span className="text-lg">📚</span>
+          <span className={`text-xs font-semibold ${isActive('/ebooks') ? 'text-brand-green' : 'text-brand-green'}`}>eBooks</span>
         </Link>
 
         {/* Favoritos */}

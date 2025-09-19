@@ -9,12 +9,50 @@ export function generatePDFThumbnail(pdfUrl: string): string {
     const fileIdMatch = pdfUrl.match(/\/file\/d\/([a-zA-Z0-9-_]+)/)
     if (fileIdMatch) {
       const fileId = fileIdMatch[1]
-      // Usar Google Drive Viewer para gerar miniatura
+      // Tentar diferentes métodos para obter thumbnail
+      // Método 1: Google Drive thumbnail
       viewerUrl = `https://drive.google.com/thumbnail?id=${fileId}&sz=w400-h600`
     }
   }
   
   return viewerUrl
+}
+
+// Função para testar se a imagem carrega e tentar métodos alternativos
+export async function getPDFThumbnailWithFallback(pdfUrl: string): Promise<string> {
+  if (!pdfUrl.includes('drive.google.com')) {
+    return pdfUrl
+  }
+
+  const fileIdMatch = pdfUrl.match(/\/file\/d\/([a-zA-Z0-9-_]+)/)
+  if (!fileIdMatch) {
+    return pdfUrl
+  }
+
+  const fileId = fileIdMatch[1]
+  
+  // Lista de métodos para tentar
+  const methods = [
+    `https://drive.google.com/thumbnail?id=${fileId}&sz=w400-h600`,
+    `https://lh3.googleusercontent.com/d/${fileId}=w400-h600`,
+    `https://drive.google.com/thumbnail?id=${fileId}&sz=w400`,
+    `https://drive.google.com/file/d/${fileId}/preview`
+  ]
+
+  // Testar cada método
+  for (const method of methods) {
+    try {
+      const response = await fetch(method, { method: 'HEAD' })
+      if (response.ok) {
+        return method
+      }
+    } catch (error) {
+      console.log(`Método ${method} falhou:`, error)
+    }
+  }
+
+  // Se todos os métodos falharem, retornar o primeiro
+  return methods[0]
 }
 
 // Função alternativa usando PDF.js (mantida como backup)

@@ -3,14 +3,17 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
-import { productService, categoryService, recipeService } from '@/lib/supabase'
+import AdminEbooks from '@/components/AdminEbooks'
+import { productService, categoryService, recipeService, ebookService } from '@/lib/supabase'
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState('dashboard')
+  const [showEbooksModal, setShowEbooksModal] = useState(false)
   const [stats, setStats] = useState({
     recipes: 0,
     products: 0,
-    categories: 0
+    categories: 0,
+    ebooks: 0
   })
   const [loading, setLoading] = useState(true)
 
@@ -20,16 +23,18 @@ export default function AdminPage() {
 
   const loadStats = async () => {
     try {
-      const [recipes, products, categories] = await Promise.all([
+      const [recipes, products, categories, ebooks] = await Promise.all([
         recipeService.getAllRecipes(),
         productService.getAllProducts(),
-        categoryService.getAllCategories()
+        categoryService.getAllCategories(),
+        ebookService.getAllEbooks()
       ])
       
       setStats({
         recipes: recipes.length,
         products: products.length,
-        categories: categories.length
+        categories: categories.length,
+        ebooks: ebooks.length
       })
     } catch (error) {
       console.error('Erro ao carregar estatísticas:', error)
@@ -46,6 +51,15 @@ export default function AdminPage() {
       href: '/admin-receitas',
       color: 'bg-green-500',
       stats: `${stats.recipes} receitas ativas`
+    },
+    {
+      id: 'ebooks',
+      title: '📚 eBooks',
+      description: 'Gerencie eBooks de receitas e dietas',
+      href: '#',
+      color: 'bg-purple-500',
+      stats: `${stats.ebooks} eBooks cadastrados`,
+      onClick: () => setShowEbooksModal(true)
     },
     {
       id: 'produtos',
@@ -162,9 +176,20 @@ export default function AdminPage() {
               </div>
             </Link>
             
+            <button
+              onClick={() => setShowEbooksModal(true)}
+              className="flex items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors group w-full text-left"
+            >
+              <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">📚</span>
+              <div>
+                <h3 className="font-medium text-gray-800">Novo eBook</h3>
+                <p className="text-sm text-gray-600">Criar eBook</p>
+              </div>
+            </button>
+            
             <Link
               href="/admin-protocolos"
-              className="flex items-center p-4 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors group"
+              className="flex items-center p-4 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-colors group"
             >
               <span className="text-2xl mr-3 group-hover:scale-110 transition-transform">📋</span>
               <div>
@@ -187,7 +212,7 @@ export default function AdminPage() {
         </div>
 
         {/* Dashboard Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-xl shadow-lg p-6">
             <div className="flex items-center">
               <div className="p-3 bg-green-100 rounded-lg">
@@ -226,39 +251,86 @@ export default function AdminPage() {
               </div>
             </div>
           </div>
+
+          <div className="bg-white rounded-xl shadow-lg p-6">
+            <div className="flex items-center">
+              <div className="p-3 bg-purple-100 rounded-lg">
+                <span className="text-2xl">📚</span>
+              </div>
+              <div className="ml-4">
+                <h3 className="text-lg font-semibold text-gray-800">eBooks</h3>
+                <p className="text-2xl font-bold text-purple-600">{stats.ebooks}</p>
+                <p className="text-sm text-gray-500">Cadastrados</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Admin Sections */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {adminSections.map((section) => (
-            <Link
-              key={section.id}
-              href={section.href}
-              className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-200 group"
-            >
-              <div className="flex items-start space-x-4">
-                <div className={`p-3 ${section.color} rounded-lg group-hover:scale-110 transition-transform duration-200`}>
-                  <span className="text-white text-xl">{section.title.split(' ')[0]}</span>
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                    {section.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-3">
-                    {section.description}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
-                      {section.stats}
-                    </span>
-                    <span className="text-gray-400 group-hover:text-gray-600 transition-colors">
-                      →
-                    </span>
+          {adminSections.map((section) => {
+            if (section.onClick) {
+              return (
+                <button
+                  key={section.id}
+                  onClick={section.onClick}
+                  className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-200 group w-full text-left"
+                >
+                  <div className="flex items-start space-x-4">
+                    <div className={`p-3 ${section.color} rounded-lg group-hover:scale-110 transition-transform duration-200`}>
+                      <span className="text-white text-xl">{section.title.split(' ')[0]}</span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                        {section.title}
+                      </h3>
+                      <p className="text-gray-600 text-sm mb-3">
+                        {section.description}
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                          {section.stats}
+                        </span>
+                        <span className="text-gray-400 group-hover:text-gray-600 transition-colors">
+                          →
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              )
+            }
+            
+            return (
+              <Link
+                key={section.id}
+                href={section.href}
+                className="bg-white rounded-xl shadow-lg p-6 hover:shadow-xl transition-shadow duration-200 group"
+              >
+                <div className="flex items-start space-x-4">
+                  <div className={`p-3 ${section.color} rounded-lg group-hover:scale-110 transition-transform duration-200`}>
+                    <span className="text-white text-xl">{section.title.split(' ')[0]}</span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                      {section.title}
+                    </h3>
+                    <p className="text-gray-600 text-sm mb-3">
+                      {section.description}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                        {section.stats}
+                      </span>
+                      <span className="text-gray-400 group-hover:text-gray-600 transition-colors">
+                        →
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            )
+          })}
         </div>
 
 
@@ -281,6 +353,10 @@ export default function AdminPage() {
                   <span className="text-sm text-gray-600">Total de Categorias</span>
                   <span className="font-semibold text-orange-600">{stats.categories}</span>
                 </div>
+                <div className="flex justify-between items-center p-2 bg-gray-50 rounded">
+                  <span className="text-sm text-gray-600">Total de eBooks</span>
+                  <span className="font-semibold text-purple-600">{stats.ebooks}</span>
+                </div>
               </div>
             </div>
             
@@ -299,6 +375,13 @@ export default function AdminPage() {
                   <span className="text-orange-600 mr-2">🏷️</span>
                   <span className="text-sm text-gray-700">Gerenciar Categorias</span>
                 </Link>
+                <button 
+                  onClick={() => setShowEbooksModal(true)}
+                  className="flex items-center p-2 bg-purple-50 rounded hover:bg-purple-100 transition-colors w-full text-left"
+                >
+                  <span className="text-purple-600 mr-2">📚</span>
+                  <span className="text-sm text-gray-700">Gerenciar eBooks</span>
+                </button>
               </div>
             </div>
           </div>
@@ -334,6 +417,11 @@ export default function AdminPage() {
           </div>
         </div>
       </main>
+
+      {/* Modal de Administração de eBooks */}
+      {showEbooksModal && (
+        <AdminEbooks onClose={() => setShowEbooksModal(false)} />
+      )}
     </div>
   )
 }
