@@ -106,6 +106,24 @@ export interface Product {
   is_mentoria?: boolean
 }
 
+export interface Ebook {
+  id: number
+  title: string
+  description: string
+  category: 'receitas' | 'dietas'
+  price: number
+  pdf_link: string
+  cover_image_url?: string
+  preview_images?: string[]
+  author: string
+  pages?: number
+  language: string
+  status: 'active' | 'inactive'
+  featured: boolean
+  created_at: string
+  updated_at: string
+}
+
 // Funções para gerenciar receitas
 export const recipeService = {
   // Buscar todas as receitas
@@ -666,6 +684,316 @@ function getMockProducts(): Product[] {
       image_url: 'https://example.com/vitamin-d3.jpg',
       created_at: '2024-01-16T10:00:00Z',
       is_mentoria: false
+    }
+  ]
+}
+
+// Funções para gerenciar eBooks
+export const ebookService = {
+  // Buscar todos os eBooks
+  async getAllEbooks(): Promise<Ebook[]> {
+    console.log('🔄 getAllEbooks chamado')
+    
+    if (!isSupabaseConfigured()) {
+      console.warn('⚠️ Supabase não configurado, usando dados mock')
+      return getMockEbooks()
+    }
+
+    console.log('📡 Fazendo consulta ao Supabase...')
+    const { data, error } = await supabase
+      .from('ebooks')
+      .select('*')
+      .order('created_at', { ascending: false })
+    
+    if (error) {
+      console.error('❌ Erro ao buscar eBooks:', error)
+      return getMockEbooks()
+    }
+    
+    console.log('✅ eBooks carregados:', data?.length || 0)
+    return data || []
+  },
+
+  // Buscar eBooks ativos
+  async getActiveEbooks(): Promise<Ebook[]> {
+    if (!isSupabaseConfigured()) {
+      console.warn('⚠️ Supabase não configurado, usando dados mock')
+      return getMockEbooks().filter(ebook => ebook.status === 'active')
+    }
+
+    const { data, error } = await supabase
+      .from('ebooks')
+      .select('*')
+      .eq('status', 'active')
+      .order('created_at', { ascending: false })
+      .limit(1000)
+    
+    if (error) {
+      console.error('Erro ao buscar eBooks ativos:', error)
+      return getMockEbooks().filter(ebook => ebook.status === 'active')
+    }
+    
+    console.log('📊 eBooks ativos encontrados:', data?.length || 0)
+    return data || []
+  },
+
+  // Buscar eBooks por categoria
+  async getEbooksByCategory(category: 'receitas' | 'dietas'): Promise<Ebook[]> {
+    if (!isSupabaseConfigured()) {
+      console.warn('⚠️ Supabase não configurado, usando dados mock')
+      return getMockEbooks().filter(ebook => ebook.category === category && ebook.status === 'active')
+    }
+
+    const { data, error } = await supabase
+      .from('ebooks')
+      .select('*')
+      .eq('category', category)
+      .eq('status', 'active')
+      .order('created_at', { ascending: false })
+    
+    if (error) {
+      console.error('❌ Erro ao buscar eBooks por categoria:', error)
+      return []
+    }
+    
+    return data || []
+  },
+
+  // Buscar eBooks em destaque
+  async getFeaturedEbooks(): Promise<Ebook[]> {
+    if (!isSupabaseConfigured()) {
+      console.warn('⚠️ Supabase não configurado, usando dados mock')
+      return getMockEbooks().filter(ebook => ebook.featured && ebook.status === 'active')
+    }
+
+    const { data, error } = await supabase
+      .from('ebooks')
+      .select('*')
+      .eq('featured', true)
+      .eq('status', 'active')
+      .order('created_at', { ascending: false })
+    
+    if (error) {
+      console.error('❌ Erro ao buscar eBooks em destaque:', error)
+      return []
+    }
+    
+    return data || []
+  },
+
+  // Buscar eBook por ID
+  async getEbookById(id: number): Promise<Ebook | null> {
+    if (!isSupabaseConfigured()) {
+      console.warn('⚠️ Supabase não configurado, usando dados mock')
+      return getMockEbooks().find(ebook => ebook.id === id) || null
+    }
+
+    const { data, error } = await supabase
+      .from('ebooks')
+      .select('*')
+      .eq('id', id)
+      .single()
+    
+    if (error) {
+      console.error('❌ Erro ao buscar eBook:', error)
+      return null
+    }
+    
+    return data
+  },
+
+  // Criar novo eBook
+  async createEbook(ebook: Omit<Ebook, 'id' | 'created_at' | 'updated_at'>): Promise<Ebook | null> {
+    if (!isSupabaseConfigured()) {
+      console.warn('⚠️ Supabase não configurado, simulando criação')
+      return {
+        id: Date.now(),
+        ...ebook,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      }
+    }
+
+    const { data, error } = await supabase
+      .from('ebooks')
+      .insert([ebook])
+      .select()
+      .single()
+    
+    if (error) {
+      console.error('❌ Erro ao criar eBook:', error)
+      return null
+    }
+    
+    return data
+  },
+
+  // Atualizar eBook
+  async updateEbook(id: number, updates: Partial<Ebook>): Promise<Ebook | null> {
+    console.log('🔄 Atualizando eBook no Supabase:', id, updates)
+    
+    if (!isSupabaseConfigured()) {
+      console.warn('⚠️ Supabase não configurado, simulando atualização')
+      const mockEbooks = getMockEbooks()
+      const ebook = mockEbooks.find(e => e.id === id)
+      if (ebook) {
+        return { ...ebook, ...updates, updated_at: new Date().toISOString() }
+      }
+      return null
+    }
+
+    const { data, error } = await supabase
+      .from('ebooks')
+      .update({ ...updates, updated_at: new Date().toISOString() })
+      .eq('id', id)
+      .select()
+      .single()
+    
+    if (error) {
+      console.error('❌ Erro ao atualizar eBook:', error)
+      return null
+    }
+    
+    console.log('✅ eBook atualizado com sucesso:', data)
+    return data
+  },
+
+  // Deletar eBook
+  async deleteEbook(id: number): Promise<boolean> {
+    console.log('🗑️ Deletando eBook do Supabase:', id)
+    
+    if (!isSupabaseConfigured()) {
+      console.warn('⚠️ Supabase não configurado, simulando deleção')
+      return true
+    }
+
+    const { error } = await supabase
+      .from('ebooks')
+      .delete()
+      .eq('id', id)
+    
+    if (error) {
+      console.error('❌ Erro ao deletar eBook:', error)
+      return false
+    }
+    
+    console.log('✅ eBook deletado com sucesso:', id)
+    return true
+  },
+
+  // Alternar status do eBook
+  async toggleEbookStatus(id: number): Promise<Ebook | null> {
+    if (!isSupabaseConfigured()) {
+      console.warn('⚠️ Supabase não configurado, simulando toggle')
+      const mockEbooks = getMockEbooks()
+      const ebook = mockEbooks.find(e => e.id === id)
+      if (ebook) {
+        const newStatus = ebook.status === 'active' ? 'inactive' : 'active'
+        return { ...ebook, status: newStatus, updated_at: new Date().toISOString() }
+      }
+      return null
+    }
+
+    // Primeiro buscar o eBook atual
+    const { data: currentEbook, error: fetchError } = await supabase
+      .from('ebooks')
+      .select('status')
+      .eq('id', id)
+      .single()
+    
+    if (fetchError) {
+      console.error('Erro ao buscar eBook:', fetchError)
+      return null
+    }
+    
+    const newStatus = currentEbook.status === 'active' ? 'inactive' : 'active'
+    
+    return this.updateEbook(id, { status: newStatus })
+  }
+}
+
+// Função para dados mock de eBooks
+function getMockEbooks(): Ebook[] {
+  return [
+    {
+      id: 1,
+      title: '50 Receitas Low Carb',
+      description: 'Coleção completa de receitas low carb para emagrecimento saudável',
+      category: 'receitas',
+      price: 19.90,
+      pdf_link: 'https://drive.google.com/file/d/ebook-receitas-low-carb/view',
+      cover_image_url: '/images/ebooks/low-carb-cover.jpg',
+      author: 'Meu Portal Fit',
+      pages: 45,
+      language: 'pt-BR',
+      status: 'active',
+      featured: true,
+      created_at: '2024-01-15T10:00:00Z',
+      updated_at: '2024-01-15T10:00:00Z'
+    },
+    {
+      id: 2,
+      title: 'Guia Completo de Dietas',
+      description: 'Manual completo com diferentes tipos de dietas e seus benefícios',
+      category: 'dietas',
+      price: 29.90,
+      pdf_link: 'https://drive.google.com/file/d/ebook-guia-dietas/view',
+      cover_image_url: '/images/ebooks/dietas-guide-cover.jpg',
+      author: 'Meu Portal Fit',
+      pages: 60,
+      language: 'pt-BR',
+      status: 'active',
+      featured: true,
+      created_at: '2024-01-16T10:00:00Z',
+      updated_at: '2024-01-16T10:00:00Z'
+    },
+    {
+      id: 3,
+      title: 'Receitas Detox Gratuitas',
+      description: 'Receitas detox para limpeza do organismo - versão gratuita',
+      category: 'receitas',
+      price: 0,
+      pdf_link: 'https://drive.google.com/file/d/ebook-receitas-detox-free/view',
+      cover_image_url: '/images/ebooks/detox-free-cover.jpg',
+      author: 'Meu Portal Fit',
+      pages: 20,
+      language: 'pt-BR',
+      status: 'active',
+      featured: false,
+      created_at: '2024-01-17T10:00:00Z',
+      updated_at: '2024-01-17T10:00:00Z'
+    },
+    {
+      id: 4,
+      title: 'Dieta Mediterrânea',
+      description: 'Guia completo da dieta mediterrânea com receitas e benefícios',
+      category: 'dietas',
+      price: 24.90,
+      pdf_link: 'https://drive.google.com/file/d/ebook-dieta-mediterranea/view',
+      cover_image_url: '/images/ebooks/mediterranea-cover.jpg',
+      author: 'Meu Portal Fit',
+      pages: 35,
+      language: 'pt-BR',
+      status: 'active',
+      featured: false,
+      created_at: '2024-01-18T10:00:00Z',
+      updated_at: '2024-01-18T10:00:00Z'
+    },
+    {
+      id: 5,
+      title: 'Smoothies Funcionais',
+      description: 'Receitas de smoothies para diferentes objetivos de saúde',
+      category: 'receitas',
+      price: 15.90,
+      pdf_link: 'https://drive.google.com/file/d/ebook-smoothies-funcionais/view',
+      cover_image_url: '/images/ebooks/smoothies-cover.jpg',
+      author: 'Meu Portal Fit',
+      pages: 30,
+      language: 'pt-BR',
+      status: 'active',
+      featured: false,
+      created_at: '2024-01-19T10:00:00Z',
+      updated_at: '2024-01-19T10:00:00Z'
     }
   ]
 }

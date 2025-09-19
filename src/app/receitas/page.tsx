@@ -100,6 +100,38 @@ export default function ReceitasPage() {
           </div>
         </div>
 
+        {/* Seção de eBooks */}
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold text-brand-text mb-4">📚 eBooks Completos</h2>
+          <div className="bg-gradient-to-r from-brand-greenSoft to-brand-greenSoftDark rounded-xl p-6 shadow-lg border border-brand-greenSoft">
+            <div className="text-center mb-4">
+              <span className="text-4xl block mb-2">📚</span>
+              <h3 className="font-bold text-brand-text text-lg mb-2">Coleções Completas</h3>
+              <p className="text-brand-textSoft text-sm mb-4">
+                eBooks com receitas e guias de dietas completos para seus objetivos
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-3 mb-4">
+              <div className="bg-white rounded-lg p-3 text-center">
+                <span className="text-2xl block mb-1">🍽️</span>
+                <h4 className="font-bold text-xs text-brand-text">Receitas</h4>
+                <p className="text-xs text-brand-textSoft">Coleções completas</p>
+              </div>
+              <div className="bg-white rounded-lg p-3 text-center">
+                <span className="text-2xl block mb-1">📚</span>
+                <h4 className="font-bold text-xs text-brand-text">Dietas</h4>
+                <p className="text-xs text-brand-textSoft">Guias especializados</p>
+              </div>
+            </div>
+            <Link 
+              href="/ebooks"
+              className="block w-full bg-brand-green text-white py-3 rounded-lg font-bold text-center hover:bg-brand-greenDark transition-colors"
+            >
+              📚 Ver eBooks Disponíveis
+            </Link>
+          </div>
+        </div>
+
       </main>
 
       {/* Bottom Navigation */}
