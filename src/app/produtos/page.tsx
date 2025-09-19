@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import BottomNavigation from '@/components/BottomNavigation'
 
 export default function ProdutosPage() {
   const [language, setLanguage] = useState<'pt' | 'es' | 'en'>('pt')
@@ -551,6 +552,9 @@ export default function ProdutosPage() {
           </section>
         )}
       </main>
+
+      {/* Bottom Navigation */}
+      <BottomNavigation currentPage="/produtos" />
     </>
   )
 }

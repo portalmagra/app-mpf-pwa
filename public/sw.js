@@ -137,6 +137,10 @@ self.addEventListener('fetch', (event) => {
             });
           }
           return response;
+        }).catch((error) => {
+          console.error('❌ Erro no fetch:', error);
+          // Retorna resposta em cache se disponível
+          return cachedResponse;
         });
 
         // Retorna cache imediatamente se disponível, senão aguarda a rede
@@ -145,7 +149,10 @@ self.addEventListener('fetch', (event) => {
     );
   } else {
     // Para requisições não-GET, apenas buscar na rede
-    event.respondWith(fetch(request));
+    event.respondWith(fetch(request).catch((error) => {
+      console.error('❌ Erro no fetch não-GET:', error);
+      return new Response('Network error', { status: 503 });
+    }));
   }
 });
 

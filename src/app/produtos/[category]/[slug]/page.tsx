@@ -2,6 +2,7 @@
 
 import { useState, useEffect, use } from 'react'
 import Link from 'next/link'
+import BottomNavigation from '@/components/BottomNavigation'
 import { supabase } from '@/lib/supabase'
 
 interface ProductPageProps {
@@ -350,6 +351,9 @@ export default function ProductPage({ params }: ProductPageProps) {
           </div>
         </div>
       </main>
+
+      {/* Bottom Navigation */}
+      <BottomNavigation currentPage="/produtos" />
     </>
   )
 }

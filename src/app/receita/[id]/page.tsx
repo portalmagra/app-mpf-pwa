@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
+import BottomNavigation from '@/components/BottomNavigation'
 
 interface Receita {
   id: number
@@ -245,6 +246,9 @@ export default function ReceitaPage() {
           </Link>
         </div>
       </main>
+
+      {/* Bottom Navigation */}
+      <BottomNavigation currentPage="/receitas" />
     </div>
   )
 }

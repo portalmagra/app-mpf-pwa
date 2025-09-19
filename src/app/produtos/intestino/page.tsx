@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import BottomNavigation from '@/components/BottomNavigation'
 import { supabase } from '@/lib/supabase'
 
 export default function IntestinoPage() {
@@ -423,7 +424,8 @@ export default function IntestinoPage() {
         </section>
       </main>
 
-
+      {/* Bottom Navigation */}
+      <BottomNavigation currentPage="/produtos" />
     </>
   )
 }

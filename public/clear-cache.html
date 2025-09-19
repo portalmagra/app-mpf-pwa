@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limpar Cache - Portal Fit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #22c55e;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #16a34a;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success { background: #d1fae5; color: #065f46; }
+        .error { background: #fee2e2; color: #991b1b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧹 Limpar Cache</h1>
+        <p>Use este botão para limpar o cache do service worker e resolver problemas de carregamento.</p>
+        
+        <button onclick="clearCache()">Limpar Cache e Recarregar</button>
+        
+        <div id="status"></div>
+        
+        <p><a href="/">← Voltar para o Portal Fit</a></p>
+    </div>
+
+    <script>
+        function clearCache() {
+            const status = document.getElementById('status');
+            status.innerHTML = '<div class="status">🔄 Limpando cache...</div>';
+            
+            if ('serviceWorker' in navigator) {
+                navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    for(let registration of registrations) {
+                        registration.unregister();
+                        console.log('✅ Service Worker removido:', registration.scope);
+                    }
+                    
+                    // Limpar todos os caches
+                    if ('caches' in window) {
+                        caches.keys().then(function(cacheNames) {
+                            return Promise.all(
+                                cacheNames.map(function(cacheName) {
+                                    console.log('🗑️ Removendo cache:', cacheName);
+                                    return caches.delete(cacheName);
+                                })
+                            );
+                        }).then(function() {
+                            status.innerHTML = '<div class="status success">✅ Cache limpo! Recarregando...</div>';
+                            setTimeout(() => {
+                                window.location.href = '/';
+                            }, 2000);
+                        }).catch(function(error) {
+                            status.innerHTML = '<div class="status error">❌ Erro ao limpar cache: ' + error + '</div>';
+                        });
+                    } else {
+                        status.innerHTML = '<div class="status success">✅ Service Workers removidos! Recarregando...</div>';
+                        setTimeout(() => {
+                            window.location.href = '/';
+                        }, 2000);
+                    }
+                });
+            } else {
+                status.innerHTML = '<div class="status error">❌ Service Worker não suportado neste navegador</div>';
+            }
+        }
+    </script>
+</body>
+</html>
