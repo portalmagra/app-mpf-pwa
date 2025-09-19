@@ -20,47 +20,94 @@ interface Product {
   slug?: string;
 }
 
-export default function HormonalPage() {
+export default function EquilíbrioHormonalPage() {
   const [language, setLanguage] = useState<'pt' | 'es' | 'en'>('pt')
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Carregar produtos da categoria "hormonal" do Supabase
     const loadProducts = async () => {
       try {
+        console.log('🔄 Carregando produtos do Supabase...')
+        
+        // Buscar produtos da categoria hormonal no Supabase
         const { data: products, error } = await supabase
           .from('products')
           .select('*')
           .eq('category_id', 'hormonal')
         
         if (error) {
+          console.error('❌ Erro ao carregar produtos do Supabase:', error)
+          // Fallback para localStorage se Supabase falhar
           const storedProducts = localStorage.getItem('adminProducts') || localStorage.getItem('globalProducts')
           if (storedProducts) {
             const allProducts = JSON.parse(storedProducts)
             const hormonalProducts = allProducts.filter((product: any) => 
               product.categoryId === 'hormonal'
             )
+            console.log('🔄 Fallback para localStorage:', hormonalProducts.length, 'produtos')
             setProducts(hormonalProducts)
           }
         } else {
+          console.log('✅ Produtos carregados do Supabase:', products?.length || 0, 'produtos')
+          console.log('🔍 Dados dos produtos:', products)
+          if (products && products.length > 0) {
+            console.log('🔍 Slug do primeiro produto:', products[0].slug)
+            console.log('🔍 ID do primeiro produto:', products[0].id)
+            console.log('🔍 Nome do primeiro produto:', products[0].name)
+            console.log('🔍 Categoria do primeiro produto:', products[0].category_id)
+          }
           setProducts(products || [])
         }
       } catch (error) {
         console.error('❌ Erro ao carregar produtos:', error)
+        // Fallback para localStorage
+        const storedProducts = localStorage.getItem('adminProducts') || localStorage.getItem('globalProducts')
+        if (storedProducts) {
+          const allProducts = JSON.parse(storedProducts)
+          const hormonalProducts = allProducts.filter((product: any) => 
+            product.categoryId === 'hormonal'
+          )
+          setProducts(hormonalProducts)
+        }
       } finally {
         setLoading(false)
       }
     }
 
     loadProducts()
+    
+    // Sincronizar com mudanças de outros dispositivos
+    try {
+      const channel = new BroadcastChannel('admin-sync')
+      console.log('📡 Escutando sincronização na página hormonal')
+      
+      channel.onmessage = (event) => {
+        console.log('📨 Mensagem recebida:', event.data.type, event.data.action || '')
+        if (event.data.type === 'products-updated') {
+          // Recarregar do Supabase quando houver mudanças
+          loadProducts()
+        }
+      }
+      
+      return () => {
+        console.log('🔌 Fechando canal de sincronização')
+        channel.close()
+      }
+    } catch (error) {
+      console.log('❌ BroadcastChannel não suportado na página hormonal:', error)
+    }
   }, [])
 
   return (
     <>
       <main style={{ padding: '0', background: 'white' }}>
+        {/* Header Unificado */}
 
+        {/* Hero Section Mínimo Proporcional */}
         <section style={{
-          background: 'linear-gradient(135deg, #AB47BC, #7B1FA2)',
+          background: 'linear-gradient(135deg, #F7DC6F, #f1c40f)',
           padding: '0.15rem 0',
           textAlign: 'center',
           marginBottom: '0.2rem',
@@ -68,12 +115,24 @@ export default function HormonalPage() {
         }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <h1 style={{ fontSize: '2.5rem', marginBottom: '20px', fontWeight: 'bold' }}>
-              ⚖️ Hormonal
+              ⚖️ Suporte para Equilíbrio Hormonal
             </h1>
             <p style={{ fontSize: '1.2rem', marginBottom: '30px', opacity: 0.9 }}>
-              Produtos para equilíbrio hormonal e saúde endócrina
+              Balance hormonal e bem-estar feminino
             </p>
             <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Link href="/analise" style={{
+                padding: '15px 30px',
+                backgroundColor: 'rgba(255,255,255,0.2)',
+                color: 'white',
+                textDecoration: 'none',
+                borderRadius: '8px',
+                border: '2px solid rgba(255,255,255,0.3)',
+                fontWeight: 'bold',
+                transition: 'all 0.3s ease'
+              }}>
+                🧠 Avaliação Personalizada
+              </Link>
               <Link href="/produtos" style={{
                 padding: '15px 30px',
                 backgroundColor: 'rgba(255,255,255,0.2)',
@@ -90,6 +149,7 @@ export default function HormonalPage() {
           </div>
         </section>
 
+        {/* Conteúdo Principal */}
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
           {loading ? (
             <div style={{ textAlign: 'center', padding: '60px 20px' }}>
@@ -101,12 +161,23 @@ export default function HormonalPage() {
                 ⚖️ Nenhum produto adicionado ainda para esta categoria
               </h2>
               <p style={{ color: '#666', marginBottom: '30px', fontSize: '1.1rem' }}>
-                Produtos para equilíbrio hormonal e saúde endócrina
+                Balance hormonal e bem-estar feminino
               </p>
               <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <Link href="/analise" style={{
+                  padding: '15px 30px',
+                  backgroundColor: '#F7DC6F, #f1c40f',
+                  color: 'white',
+                  textDecoration: 'none',
+                  borderRadius: '8px',
+                  fontWeight: 'bold',
+                  transition: 'all 0.3s ease'
+                }}>
+                  🧠 Fazer Avaliação Personalizada
+                </Link>
                 <Link href="/produtos" style={{
                   padding: '15px 30px',
-                  backgroundColor: '#7B1FA2',
+                  backgroundColor: '#f1c40f',
                   color: 'white',
                   textDecoration: 'none',
                   borderRadius: '8px',

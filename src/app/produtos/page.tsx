@@ -110,12 +110,6 @@ export default function ProdutosPage() {
       description: 'Cafés especiais e produtos relacionados',
       icon: '☕',
       href: '/produtos/cafe'
-    },
-    {
-      name: 'Pães Fit',
-      description: 'Pães saudáveis e nutritivos',
-      icon: '🥖',
-      href: '/produtos/paes'
     }
   ]
 
@@ -176,7 +170,10 @@ export default function ProdutosPage() {
 
   return (
     <>
+
+
       <main style={{ padding: '0', background: 'white' }}>
+        {/* Header Unificado */}
 
         {/* Hero Section Mínimo Proporcional */}
         <section style={{
@@ -557,3 +554,4 @@ export default function ProdutosPage() {
     </>
   )
 }
+

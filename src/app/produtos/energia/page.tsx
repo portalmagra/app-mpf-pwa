@@ -26,10 +26,12 @@ export default function EnergiaPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Carregar produtos da categoria "energia" do Supabase
     const loadProducts = async () => {
       try {
         console.log('🔄 Carregando produtos do Supabase...')
         
+        // Buscar produtos da categoria energia no Supabase
         const { data: products, error } = await supabase
           .from('products')
           .select('*')
@@ -37,21 +39,33 @@ export default function EnergiaPage() {
         
         if (error) {
           console.error('❌ Erro ao carregar produtos do Supabase:', error)
+          // Fallback para localStorage se Supabase falhar
           const storedProducts = localStorage.getItem('adminProducts') || localStorage.getItem('globalProducts')
           if (storedProducts) {
             const allProducts = JSON.parse(storedProducts)
+            console.log('🔍 Todos os produtos no localStorage:', allProducts.length)
+            console.log('🔍 Categorias encontradas:', [...new Set(allProducts.map((p: any) => p.categoryId))])
             const energiaProducts = allProducts.filter((product: any) => 
               product.categoryId === 'energia'
             )
-            console.log('🔄 Fallback para localStorage:', energiaProducts.length, 'produtos')
+            console.log('🔄 Fallback para localStorage:', energiaProducts.length, 'produtos de energia')
+            console.log('🔍 Exemplo de produto de energia:', energiaProducts[0])
             setProducts(energiaProducts)
           }
         } else {
           console.log('✅ Produtos carregados do Supabase:', products?.length || 0, 'produtos')
+          console.log('🔍 Dados dos produtos:', products)
+          if (products && products.length > 0) {
+            console.log('🔍 Slug do primeiro produto:', products[0].slug)
+            console.log('🔍 ID do primeiro produto:', products[0].id)
+            console.log('🔍 Nome do primeiro produto:', products[0].name)
+            console.log('🔍 Categoria do primeiro produto:', products[0].category_id)
+          }
           setProducts(products || [])
         }
       } catch (error) {
         console.error('❌ Erro ao carregar produtos:', error)
+        // Fallback para localStorage
         const storedProducts = localStorage.getItem('adminProducts') || localStorage.getItem('globalProducts')
         if (storedProducts) {
           const allProducts = JSON.parse(storedProducts)
@@ -67,6 +81,7 @@ export default function EnergiaPage() {
 
     loadProducts()
     
+    // Sincronizar com mudanças de outros dispositivos
     try {
       const channel = new BroadcastChannel('admin-sync')
       console.log('📡 Escutando sincronização na página energia')
@@ -74,6 +89,7 @@ export default function EnergiaPage() {
       channel.onmessage = (event) => {
         console.log('📨 Mensagem recebida:', event.data.type, event.data.action || '')
         if (event.data.type === 'products-updated') {
+          // Recarregar do Supabase quando houver mudanças
           loadProducts()
         }
       }
@@ -90,9 +106,11 @@ export default function EnergiaPage() {
   return (
     <>
       <main style={{ padding: '0', background: 'white' }}>
+        {/* Header Unificado */}
 
+        {/* Hero Section Mínimo Proporcional */}
         <section style={{
-          background: 'linear-gradient(135deg, #FFA726, #FF9800)',
+          background: 'linear-gradient(135deg, #45B7D1, #3498db)',
           padding: '0.15rem 0',
           textAlign: 'center',
           marginBottom: '0.2rem',
@@ -100,12 +118,24 @@ export default function EnergiaPage() {
         }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <h1 style={{ fontSize: '2.5rem', marginBottom: '20px', fontWeight: 'bold' }}>
-              ⚡ Energia e Disposição
+              ⚡ Suporte para Energia
             </h1>
             <p style={{ fontSize: '1.2rem', marginBottom: '30px', opacity: 0.9 }}>
-              Suplementos e produtos naturais para aumentar energia, melhorar disposição e combater o cansaço
+              Produtos selecionados para aumentar energia e disposição
             </p>
             <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Link href="/analise" style={{
+                padding: '15px 30px',
+                backgroundColor: 'rgba(255,255,255,0.2)',
+                color: 'white',
+                textDecoration: 'none',
+                borderRadius: '8px',
+                border: '2px solid rgba(255,255,255,0.3)',
+                fontWeight: 'bold',
+                transition: 'all 0.3s ease'
+              }}>
+                🧠 Avaliação Personalizada
+              </Link>
               <Link href="/produtos" style={{
                 padding: '15px 30px',
                 backgroundColor: 'rgba(255,255,255,0.2)',
@@ -122,6 +152,7 @@ export default function EnergiaPage() {
           </div>
         </section>
 
+        {/* Conteúdo Principal */}
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
           {loading ? (
             <div style={{ textAlign: 'center', padding: '60px 20px' }}>
@@ -133,12 +164,23 @@ export default function EnergiaPage() {
                 ⚡ Nenhum produto adicionado ainda para esta categoria
               </h2>
               <p style={{ color: '#666', marginBottom: '30px', fontSize: '1.1rem' }}>
-                Suplementos e produtos naturais para aumentar energia, melhorar disposição e combater o cansaço
+                Produtos selecionados para aumentar energia e disposição
               </p>
               <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <Link href="/analise" style={{
+                  padding: '15px 30px',
+                  backgroundColor: '#45B7D1, #3498db',
+                  color: 'white',
+                  textDecoration: 'none',
+                  borderRadius: '8px',
+                  fontWeight: 'bold',
+                  transition: 'all 0.3s ease'
+                }}>
+                  🧠 Fazer Avaliação Personalizada
+                </Link>
                 <Link href="/produtos" style={{
                   padding: '15px 30px',
-                  backgroundColor: '#FF9800',
+                  backgroundColor: '#3498db',
                   color: 'white',
                   textDecoration: 'none',
                   borderRadius: '8px',

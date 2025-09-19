@@ -2,9 +2,7 @@
 
 import { useState, useEffect, use } from 'react'
 import Link from 'next/link'
-import Logo from '@/components/Logo'
-import BottomNavigation from '@/components/BottomNavigation'
-import { productService, Product } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase'
 
 interface ProductPageProps {
   params: Promise<{
@@ -14,7 +12,8 @@ interface ProductPageProps {
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
-  const [product, setProduct] = useState<Product | null>(null)
+  const [language, setLanguage] = useState<'pt' | 'es' | 'en'>('pt')
+  const [product, setProduct] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -32,21 +31,51 @@ export default function ProductPage({ params }: ProductPageProps) {
           slug: resolvedParams.slug
         })
         
-        const products = await productService.getProductsByCategory(resolvedParams.category)
+        let { data: products, error } = await supabase
+          .from('products')
+          .select('*')
+          .eq('category_id', resolvedParams.category)
+          .eq('slug', resolvedParams.slug)
         
-        console.log('🔍 Todos os produtos da categoria:', products)
+        console.log('🔍 Resultado busca por slug:', products, error)
         
-        // Procurar produto por slug ou ID
-        let foundProduct = products.find(p => p.slug === resolvedParams.slug)
-        
-        if (!foundProduct) {
+        // Se não encontrar por slug, tentar por ID
+        if (!products || products.length === 0) {
           console.log('🔄 Tentando buscar por ID...')
-          foundProduct = products.find(p => p.id === resolvedParams.slug)
+          const { data: productsById, error: errorById } = await supabase
+            .from('products')
+            .select('*')
+            .eq('category_id', resolvedParams.category)
+            .eq('id', resolvedParams.slug)
+          
+          console.log('🔍 Resultado busca por ID:', productsById, errorById)
+          
+          if (productsById && productsById.length > 0) {
+            products = productsById
+            error = errorById
+          }
         }
         
-        if (foundProduct) {
-          console.log('✅ Produto encontrado:', foundProduct)
-          setProduct(foundProduct)
+        // Se ainda não encontrar, buscar todos os produtos da categoria para debug
+        if (!products || products.length === 0) {
+          console.log('🔄 Buscando todos os produtos da categoria para debug...')
+          const { data: allProducts, error: allError } = await supabase
+            .from('products')
+            .select('*')
+            .eq('category_id', resolvedParams.category)
+          
+          console.log('🔍 Todos os produtos da categoria:', allProducts)
+        }
+        
+        if (error) {
+          console.error('❌ Erro ao carregar produto do Supabase:', error)
+          setError('Erro ao carregar produto')
+          return
+        }
+        
+        if (products && products.length > 0) {
+          console.log('✅ Produto encontrado:', products[0])
+          setProduct(products[0])
         } else {
           console.log('❌ Produto não encontrado')
           setError('Produto não encontrado')
@@ -64,46 +93,17 @@ export default function ProductPage({ params }: ProductPageProps) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white">
-        {/* Header */}
-        <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
-          <div className="max-w-6xl mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <Logo variant="horizontal" size="md" />
-              <div className="flex items-center space-x-4">
-                <Link href="/produtos" className="text-sm text-gray-600 hover:text-brand-green transition-colors">
-                  ← Voltar aos Produtos
-                </Link>
-              </div>
-            </div>
-          </div>
-        </header>
-        
+      <>
         <main style={{ padding: '2rem', textAlign: 'center' }}>
-          <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🔄</div>
-          <p>Carregando produto...</p>
+          <div>Carregando...</div>
         </main>
-      </div>
+      </>
     )
   }
 
   if (error || !product) {
     return (
-      <div className="min-h-screen bg-white">
-        {/* Header */}
-        <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
-          <div className="max-w-6xl mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <Logo variant="horizontal" size="md" />
-              <div className="flex items-center space-x-4">
-                <Link href="/produtos" className="text-sm text-gray-600 hover:text-brand-green transition-colors">
-                  ← Voltar aos Produtos
-                </Link>
-              </div>
-            </div>
-          </div>
-        </header>
-        
+      <>
         <main style={{ 
           padding: '2rem', 
           textAlign: 'center',
@@ -146,26 +146,12 @@ export default function ProductPage({ params }: ProductPageProps) {
             </button>
           </Link>
         </main>
-      </div>
+      </>
     )
   }
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Logo variant="horizontal" size="md" />
-            <div className="flex items-center space-x-4">
-              <Link href="/produtos" className="text-sm text-gray-600 hover:text-brand-green transition-colors">
-                ← Voltar aos Produtos
-              </Link>
-            </div>
-          </div>
-        </div>
-      </header>
-
+    <>
       <main style={{ padding: '1rem', maxWidth: '1200px', margin: '0 auto' }}>
         {/* Breadcrumb */}
         <nav style={{ marginBottom: '2rem' }}>
@@ -245,16 +231,16 @@ export default function ProductPage({ params }: ProductPageProps) {
                   fontWeight: 'bold',
                   color: '#059669'
                 }}>
-                  {product.current_price}
+                  ${product.current_price}
                 </span>
-                {product.original_price && product.original_price !== product.current_price && (
+                {product.original_price && product.original_price > product.current_price && (
                   <span style={{
                     fontSize: '1rem',
                     color: '#6b7280',
                     textDecoration: 'line-through',
                     marginLeft: '0.5rem'
                   }}>
-                    {product.original_price}
+                    ${product.original_price}
                   </span>
                 )}
               </div>
@@ -274,13 +260,13 @@ export default function ProductPage({ params }: ProductPageProps) {
             )}
 
             {/* Benefits */}
-            {product.benefits && product.benefits.length > 0 && (
+            {product.benefits && typeof product.benefits === 'string' && (
               <div style={{ marginBottom: '1rem' }}>
                 <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
                   Benefícios:
                 </h3>
                 <ul style={{ listStyle: 'none', padding: 0 }}>
-                  {product.benefits.map((benefit: string, index: number) => (
+                  {product.benefits.split(',').map((benefit: string, index: number) => (
                     <li key={index} style={{ 
                       marginBottom: '0.25rem',
                       paddingLeft: '1rem',
@@ -299,13 +285,13 @@ export default function ProductPage({ params }: ProductPageProps) {
             )}
 
             {/* Features */}
-            {product.features && product.features.length > 0 && (
+            {product.features && typeof product.features === 'string' && (
               <div style={{ marginBottom: '1rem' }}>
                 <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>
                   Características:
                 </h3>
                 <ul style={{ listStyle: 'none', padding: 0 }}>
-                  {product.features.map((feature: string, index: number) => (
+                  {product.features.split(',').map((feature: string, index: number) => (
                     <li key={index} style={{ 
                       marginBottom: '0.25rem',
                       paddingLeft: '1rem',
@@ -363,90 +349,7 @@ export default function ProductPage({ params }: ProductPageProps) {
             </div>
           </div>
         </div>
-
-        {/* Additional Info */}
-        <div style={{
-          backgroundColor: '#f9fafb',
-          padding: '2rem',
-          borderRadius: '0.5rem',
-          marginBottom: '2rem'
-        }}>
-          <h2 style={{
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            marginBottom: '1rem',
-            color: '#1f2937'
-          }}>
-            Informações Importantes
-          </h2>
-          
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '1rem'
-          }}>
-            <div>
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#374151' }}>
-                🏷️ Categoria
-              </h3>
-              <p style={{ color: '#6b7280' }}>
-                {resolvedParams.category.charAt(0).toUpperCase() + resolvedParams.category.slice(1)}
-              </p>
-            </div>
-            
-            <div>
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#374151' }}>
-                📅 Data de Cadastro
-              </h3>
-              <p style={{ color: '#6b7280' }}>
-                {new Date(product.created_at).toLocaleDateString('pt-BR')}
-              </p>
-            </div>
-            
-            {product.is_mentoria && (
-              <div>
-                <h3 style={{ fontSize: '1.1rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#374151' }}>
-                  🎓 Produto de Mentoria
-                </h3>
-                <p style={{ color: '#6b7280' }}>
-                  Este produto faz parte do programa de mentoria
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Related Products */}
-        <div>
-          <h2 style={{
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            marginBottom: '1rem',
-            color: '#1f2937'
-          }}>
-            Produtos Relacionados
-          </h2>
-          <p style={{ color: '#6b7280', marginBottom: '1rem' }}>
-            Explore outros produtos da mesma categoria
-          </p>
-          <Link href={`/produtos/${resolvedParams.category}`}>
-            <button style={{
-              padding: '0.75rem 1.5rem',
-              backgroundColor: '#3b82f6',
-              color: 'white',
-              border: 'none',
-              borderRadius: '0.5rem',
-              fontSize: '1rem',
-              cursor: 'pointer'
-            }}>
-              Ver Todos os Produtos da Categoria
-            </button>
-          </Link>
-        </div>
       </main>
-
-      {/* Bottom Navigation */}
-      <BottomNavigation currentPage="/produtos" />
-    </div>
+    </>
   )
 }
