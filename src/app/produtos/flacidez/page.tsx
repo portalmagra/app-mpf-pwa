@@ -20,22 +20,22 @@ interface Product {
   slug?: string;
 }
 
-export default function AnsiedadePage() {
+export default function FlacidezPage() {
   const [language, setLanguage] = useState<'pt' | 'es' | 'en'>('pt')
   const [products, setProducts] = useState<Product[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Carregar produtos da categoria "ansiedade" do Supabase
+    // Carregar produtos da categoria "flacidez" do Supabase
     const loadProducts = async () => {
       try {
         console.log('🔄 Carregando produtos do Supabase...')
         
-        // Buscar produtos da categoria ansiedade no Supabase
+        // Buscar produtos da categoria flacidez no Supabase
         const { data: products, error } = await supabase
           .from('products')
           .select('*')
-          .eq('category_id', 'ansiedade')
+          .eq('category_id', 'flacidez')
         
         if (error) {
           console.error('❌ Erro ao carregar produtos do Supabase:', error)
@@ -43,11 +43,11 @@ export default function AnsiedadePage() {
           const storedProducts = localStorage.getItem('adminProducts') || localStorage.getItem('globalProducts')
           if (storedProducts) {
             const allProducts = JSON.parse(storedProducts)
-            const ansiedadeProducts = allProducts.filter((product: any) => 
-              product.categoryId === 'ansiedade'
+            const flacidezProducts = allProducts.filter((product: any) => 
+              product.categoryId === 'flacidez'
             )
-            console.log('🔄 Fallback para localStorage:', ansiedadeProducts.length, 'produtos')
-            setProducts(ansiedadeProducts)
+            console.log('🔄 Fallback para localStorage:', flacidezProducts.length, 'produtos')
+            setProducts(flacidezProducts)
           }
         } else {
           console.log('✅ Produtos carregados do Supabase:', products?.length || 0, 'produtos')
@@ -66,10 +66,10 @@ export default function AnsiedadePage() {
         const storedProducts = localStorage.getItem('adminProducts') || localStorage.getItem('globalProducts')
         if (storedProducts) {
           const allProducts = JSON.parse(storedProducts)
-          const ansiedadeProducts = allProducts.filter((product: any) => 
-            product.categoryId === 'ansiedade'
+          const flacidezProducts = allProducts.filter((product: any) => 
+            product.categoryId === 'flacidez'
           )
-          setProducts(ansiedadeProducts)
+          setProducts(flacidezProducts)
         }
       } finally {
         setLoading(false)
@@ -81,7 +81,7 @@ export default function AnsiedadePage() {
     // Sincronizar com mudanças de outros dispositivos
     try {
       const channel = new BroadcastChannel('admin-sync')
-      console.log('📡 Escutando sincronização na página ansiedade')
+      console.log('📡 Escutando sincronização na página flacidez')
       
       channel.onmessage = (event) => {
         console.log('📨 Mensagem recebida:', event.data.type, event.data.action || '')
@@ -96,7 +96,7 @@ export default function AnsiedadePage() {
         channel.close()
       }
     } catch (error) {
-      console.log('❌ BroadcastChannel não suportado na página ansiedade:', error)
+      console.log('❌ BroadcastChannel não suportado na página flacidez:', error)
     }
   }, [])
 
@@ -107,7 +107,7 @@ export default function AnsiedadePage() {
 
         {/* Hero Section Mínimo Proporcional */}
         <section style={{
-          background: 'linear-gradient(135deg, #AED6F1, #3498db)',
+          background: 'linear-gradient(135deg, #FFEAA7, #f39c12)',
           padding: '0.15rem 0',
           textAlign: 'center',
           marginBottom: '0.2rem',
@@ -115,10 +115,10 @@ export default function AnsiedadePage() {
         }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <h1 style={{ fontSize: '2.5rem', marginBottom: '20px', fontWeight: 'bold' }}>
-              🧘 Suporte para Ansiedade
+              ✨ Suporte para Flacidez
             </h1>
             <p style={{ fontSize: '1.2rem', marginBottom: '30px', opacity: 0.9 }}>
-              Suplementos para controle da ansiedade
+              Suplementos para firmeza e elasticidade da pele
             </p>
             <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
               <Link href="/analise" style={{
@@ -158,15 +158,15 @@ export default function AnsiedadePage() {
           ) : products.length === 0 ? (
             <div style={{ textAlign: 'center', padding: '60px 20px' }}>
               <h2 style={{ color: '#333', marginBottom: '20px' }}>
-                🧘 Nenhum produto adicionado ainda para esta categoria
+                ✨ Nenhum produto adicionado ainda para esta categoria
               </h2>
               <p style={{ color: '#666', marginBottom: '30px', fontSize: '1.1rem' }}>
-                Suplementos para controle da ansiedade
+                Suplementos para firmeza e elasticidade da pele
               </p>
               <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
                 <Link href="/analise" style={{
                   padding: '15px 30px',
-                  backgroundColor: '#AED6F1, #3498db',
+                  backgroundColor: '#FFEAA7, #f39c12',
                   color: 'white',
                   textDecoration: 'none',
                   borderRadius: '8px',
@@ -177,7 +177,7 @@ export default function AnsiedadePage() {
                 </Link>
                 <Link href="/produtos" style={{
                   padding: '15px 30px',
-                  backgroundColor: '#3498db',
+                  backgroundColor: '#f39c12',
                   color: 'white',
                   textDecoration: 'none',
                   borderRadius: '8px',
@@ -191,7 +191,7 @@ export default function AnsiedadePage() {
           ) : (
             <>
               <h2 style={{ textAlign: 'center', color: '#333', marginBottom: '40px', fontSize: '2rem' }}>
-                🧘 Produtos Disponíveis
+                ✨ Produtos Disponíveis
               </h2>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
                 {products.map((product) => (
@@ -268,7 +268,7 @@ export default function AnsiedadePage() {
                       marginTop: 'auto'
                     }}>
                       <a 
-                        href={`/produtos/ansiedade/${product.slug || product.id}`} 
+                        href={`/produtos/flacidez/${product.slug || product.id}`} 
                         style={{ 
                           textDecoration: 'none', 
                           flex: 1,

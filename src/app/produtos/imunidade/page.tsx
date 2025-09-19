@@ -26,10 +26,12 @@ export default function ImunidadePage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Carregar produtos da categoria "imunidade" do Supabase
     const loadProducts = async () => {
       try {
         console.log('🔄 Carregando produtos do Supabase...')
         
+        // Buscar produtos da categoria imunidade no Supabase
         const { data: products, error } = await supabase
           .from('products')
           .select('*')
@@ -37,6 +39,7 @@ export default function ImunidadePage() {
         
         if (error) {
           console.error('❌ Erro ao carregar produtos do Supabase:', error)
+          // Fallback para localStorage se Supabase falhar
           const storedProducts = localStorage.getItem('adminProducts') || localStorage.getItem('globalProducts')
           if (storedProducts) {
             const allProducts = JSON.parse(storedProducts)
@@ -48,10 +51,18 @@ export default function ImunidadePage() {
           }
         } else {
           console.log('✅ Produtos carregados do Supabase:', products?.length || 0, 'produtos')
+          console.log('🔍 Dados dos produtos:', products)
+          if (products && products.length > 0) {
+            console.log('🔍 Slug do primeiro produto:', products[0].slug)
+            console.log('🔍 ID do primeiro produto:', products[0].id)
+            console.log('🔍 Nome do primeiro produto:', products[0].name)
+            console.log('🔍 Categoria do primeiro produto:', products[0].category_id)
+          }
           setProducts(products || [])
         }
       } catch (error) {
         console.error('❌ Erro ao carregar produtos:', error)
+        // Fallback para localStorage
         const storedProducts = localStorage.getItem('adminProducts') || localStorage.getItem('globalProducts')
         if (storedProducts) {
           const allProducts = JSON.parse(storedProducts)
@@ -67,6 +78,7 @@ export default function ImunidadePage() {
 
     loadProducts()
     
+    // Sincronizar com mudanças de outros dispositivos
     try {
       const channel = new BroadcastChannel('admin-sync')
       console.log('📡 Escutando sincronização na página imunidade')
@@ -74,6 +86,7 @@ export default function ImunidadePage() {
       channel.onmessage = (event) => {
         console.log('📨 Mensagem recebida:', event.data.type, event.data.action || '')
         if (event.data.type === 'products-updated') {
+          // Recarregar do Supabase quando houver mudanças
           loadProducts()
         }
       }
@@ -90,9 +103,11 @@ export default function ImunidadePage() {
   return (
     <>
       <main style={{ padding: '0', background: 'white' }}>
+        {/* Header Unificado */}
 
+        {/* Hero Section Mínimo Proporcional */}
         <section style={{
-          background: 'linear-gradient(135deg, #26A69A, #00695C)',
+          background: 'linear-gradient(135deg, #98D8C8, #16a085)',
           padding: '0.15rem 0',
           textAlign: 'center',
           marginBottom: '0.2rem',
@@ -100,12 +115,24 @@ export default function ImunidadePage() {
         }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             <h1 style={{ fontSize: '2.5rem', marginBottom: '20px', fontWeight: 'bold' }}>
-              🛡️ Imunidade
+              🛡️ Suporte para Imunidade
             </h1>
             <p style={{ fontSize: '1.2rem', marginBottom: '30px', opacity: 0.9 }}>
-              Vitaminas, minerais e suplementos naturais para fortalecer o sistema imunológico e proteger sua saúde
+              Fortalecimento do sistema imunológico
             </p>
             <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Link href="/analise" style={{
+                padding: '15px 30px',
+                backgroundColor: 'rgba(255,255,255,0.2)',
+                color: 'white',
+                textDecoration: 'none',
+                borderRadius: '8px',
+                border: '2px solid rgba(255,255,255,0.3)',
+                fontWeight: 'bold',
+                transition: 'all 0.3s ease'
+              }}>
+                🧠 Avaliação Personalizada
+              </Link>
               <Link href="/produtos" style={{
                 padding: '15px 30px',
                 backgroundColor: 'rgba(255,255,255,0.2)',
@@ -122,6 +149,7 @@ export default function ImunidadePage() {
           </div>
         </section>
 
+        {/* Conteúdo Principal */}
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
           {loading ? (
             <div style={{ textAlign: 'center', padding: '60px 20px' }}>
@@ -133,12 +161,23 @@ export default function ImunidadePage() {
                 🛡️ Nenhum produto adicionado ainda para esta categoria
               </h2>
               <p style={{ color: '#666', marginBottom: '30px', fontSize: '1.1rem' }}>
-                Vitaminas, minerais e suplementos naturais para fortalecer o sistema imunológico e proteger sua saúde
+                Fortalecimento do sistema imunológico
               </p>
               <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                <Link href="/analise" style={{
+                  padding: '15px 30px',
+                  backgroundColor: '#98D8C8, #16a085',
+                  color: 'white',
+                  textDecoration: 'none',
+                  borderRadius: '8px',
+                  fontWeight: 'bold',
+                  transition: 'all 0.3s ease'
+                }}>
+                  🧠 Fazer Avaliação Personalizada
+                </Link>
                 <Link href="/produtos" style={{
                   padding: '15px 30px',
-                  backgroundColor: '#00695C',
+                  backgroundColor: '#16a085',
                   color: 'white',
                   textDecoration: 'none',
                   borderRadius: '8px',

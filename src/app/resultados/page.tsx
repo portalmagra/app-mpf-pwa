@@ -699,8 +699,8 @@ function ResultadosContent() {
                 </div>
 
 
-              </div>
-
+                  </div>
+                  
 
 
               {/* Produtos Recomendados - Simplificada */}
