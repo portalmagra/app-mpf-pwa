@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
 import { useSavedProtocols } from '@/hooks/useSavedItems'
+import BottomNavigation from '@/components/BottomNavigation'
 
 interface ProtocoloSalvo {
   id: number
@@ -227,6 +228,9 @@ export default function MeusProtocolosPage() {
           </div>
         )}
       </main>
+      
+      {/* Bottom Navigation */}
+      <BottomNavigation currentPage="/meus-protocolos" />
     </div>
   )
 }

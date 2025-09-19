@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
+import BottomNavigation from '@/components/BottomNavigation'
 import { productService, Product } from '@/lib/supabase'
 
 export default function MercadoPage() {
@@ -361,6 +362,9 @@ export default function MercadoPage() {
       </div>
     </div>
       </main>
+
+      {/* Bottom Navigation */}
+      <BottomNavigation currentPage="/mercado" />
     </>
   )
 }

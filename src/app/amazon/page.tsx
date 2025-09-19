@@ -23,6 +23,99 @@ export default function AmazonPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [showCuratedProducts, setShowCuratedProducts] = useState(false)
 
+  // Função para garantir tag de afiliado em URLs da Amazon
+  const ensureAffiliateTag = (url: string): string => {
+    if (!url) return url
+    
+    // Tag de afiliado
+    const affiliateTag = 'portalsolutio-20'
+    
+    try {
+      const urlObj = new URL(url)
+      
+      // Se já tem tag, substitui pela nossa
+      if (urlObj.searchParams.has('tag')) {
+        urlObj.searchParams.set('tag', affiliateTag)
+      } else {
+        // Adiciona nossa tag
+        urlObj.searchParams.set('tag', affiliateTag)
+      }
+      
+      return urlObj.toString()
+    } catch (error) {
+      // Se der erro na URL, tenta adicionar de forma simples
+      if (url.includes('tag=')) {
+        return url.replace(/tag=[^&]*/, `tag=${affiliateTag}`)
+      } else {
+        const separator = url.includes('?') ? '&' : '?'
+        return `${url}${separator}tag=${affiliateTag}`
+      }
+    }
+  }
+
+  // Função para buscar produto específico na Amazon
+  const searchSpecificProduct = async (asin: string) => {
+    try {
+      const response = await fetch('/api/search-real-amazon', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          query: asin,
+          maxResults: 1,
+          specificProduct: true 
+        })
+      })
+      
+      const data = await response.json()
+      
+      if (data.success && data.products.length > 0) {
+        const product = data.products[0]
+        const urlWithTag = ensureAffiliateTag(product.detailPageURL)
+        window.open(urlWithTag, '_blank')
+      } else {
+        // Fallback: usar URL genérica com tag
+        const fallbackUrl = `https://www.amazon.com/dp/${asin}?tag=portalsolutio-20`
+        window.open(fallbackUrl, '_blank')
+      }
+    } catch (error) {
+      console.error('Erro ao buscar produto específico:', error)
+      // Fallback: usar URL genérica com tag
+      const fallbackUrl = `https://www.amazon.com/dp/${asin}?tag=portalsolutio-20`
+      window.open(fallbackUrl, '_blank')
+    }
+  }
+
+  // Interceptar cliques em links da Amazon para garantir tag
+  useEffect(() => {
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      const link = target.closest('a')
+      
+      if (link && link.href.includes('amazon.com')) {
+        e.preventDefault()
+        
+        // Se é um link de produto específico (contém /dp/), buscar produto completo
+        if (link.href.includes('/dp/')) {
+          const asin = link.href.match(/\/dp\/([A-Z0-9]+)/)?.[1]
+          if (asin) {
+            searchSpecificProduct(asin)
+            return
+          }
+        }
+        
+        // Para outros links, usar método normal
+        const urlWithTag = ensureAffiliateTag(link.href)
+        window.open(urlWithTag, '_blank')
+      }
+    }
+
+    document.addEventListener('click', handleClick)
+    
+    return () => {
+      document.removeEventListener('click', handleClick)
+    }
+  }, [])
+
   // Função para buscar produtos com curadoria inteligente
   const searchWithCuration = async (query: string) => {
     if (!query || query.trim().length < 2) {
@@ -48,11 +141,23 @@ export default function AmazonPage() {
       const data = await response.json()
       
       if (data.success && data.products && data.products.length > 0) {
-        setCuratedProducts(data.products)
+        // Garantir que todos os produtos tenham a tag de afiliado
+        const productsWithAffiliateTag = data.products.map((product: CuratedProduct) => ({
+          ...product,
+          detailPageURL: ensureAffiliateTag(product.detailPageURL)
+        }))
+        
+        setCuratedProducts(productsWithAffiliateTag)
         setShowCuratedProducts(true)
         setSearchMessage(`✅ Encontramos ${data.products.length} produtos selecionados especialmente para você!`)
+      } else if (data.error) {
+        setSearchMessage(`❌ ${data.error}`)
+        setCuratedProducts([])
+        setShowCuratedProducts(false)
       } else {
         setSearchMessage(`❌ Não encontramos produtos para "${query}". Tente uma busca diferente.`)
+        setCuratedProducts([])
+        setShowCuratedProducts(false)
       }
     } catch (error) {
       console.error('Erro na busca:', error)
@@ -224,7 +329,7 @@ export default function AmazonPage() {
                             ))}
                           </div>
                           <a
-                            href={product.detailPageURL}
+                            href={ensureAffiliateTag(product.detailPageURL)}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors"

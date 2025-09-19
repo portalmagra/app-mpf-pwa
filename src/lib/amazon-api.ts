@@ -204,8 +204,12 @@ export async function searchAmazonAPI(
       const asin = item.ASIN;
       let url = item.DetailPageURL || `https://www.amazon.com/dp/${asin}`;
       
-      // Garantir tag de afiliado
-      if (!url.includes('tag=')) {
+      // Garantir tag de afiliado - sempre substituir por nossa tag
+      if (url.includes('tag=')) {
+        // Substituir tag existente pela nossa
+        url = url.replace(/tag=[^&]*/, `tag=${ASSOCIATE_TAG}`);
+      } else {
+        // Adicionar nossa tag
         url = url.includes('?') ? `${url}&tag=${ASSOCIATE_TAG}` : `${url}?tag=${ASSOCIATE_TAG}`;
       }
 

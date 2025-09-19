@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import Logo from '@/components/Logo'
+import BottomNavigation from '@/components/BottomNavigation'
 
 export default function Protocolos() {
 
@@ -96,6 +97,9 @@ export default function Protocolos() {
           </Link>
         </div>
       </div>
+      
+      {/* Bottom Navigation */}
+      <BottomNavigation currentPage="/protocolos" />
     </div>
   )
 }

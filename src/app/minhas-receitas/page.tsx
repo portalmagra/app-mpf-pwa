@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
+import BottomNavigation from '@/components/BottomNavigation'
 import { useSavedRecipes } from '@/hooks/useSavedItems'
 
 interface ReceitaSalva {
@@ -277,6 +278,9 @@ ${receita.descricao}
           </div>
         )}
       </main>
+
+      {/* Bottom Navigation */}
+      <BottomNavigation currentPage="/minhas-receitas" />
     </div>
   )
 }

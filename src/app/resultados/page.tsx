@@ -4,6 +4,7 @@
 import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import BottomNavigation from '@/components/BottomNavigation'
 
 // Sistema de traduções
 const translations = {
@@ -1180,6 +1181,7 @@ export default function ResultadosPage() {
       </div>
     }>
       <ResultadosContent />
+      <BottomNavigation currentPage="/" />
     </Suspense>
   )
 }
