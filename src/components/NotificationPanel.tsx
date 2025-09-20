@@ -78,22 +78,24 @@ export default function NotificationPanel({ onClose }: NotificationPanelProps) {
             </button>
           </div>
 
-          {/* Status das notificações */}
-          <div className="bg-gray-50 rounded-lg p-4 mb-6">
-            <h3 className="font-semibold text-gray-800 mb-2">Status Atual</h3>
-            
-            {!isSupported ? (
-              <p className="text-red-600 text-sm">❌ Navegador não suporta notificações</p>
-            ) : permission === 'granted' && isSubscribed ? (
-              <p className="text-green-600 text-sm">✅ Notificações ativadas e funcionando</p>
-            ) : permission === 'granted' ? (
-              <p className="text-yellow-600 text-sm">⚠️ Permissão concedida, mas não inscrito</p>
-            ) : permission === 'denied' ? (
-              <p className="text-red-600 text-sm">❌ Notificações bloqueadas</p>
-            ) : (
-              <p className="text-yellow-600 text-sm">⚠️ Permissão não solicitada</p>
-            )}
-          </div>
+          {/* Status das notificações - Só mostrar se NÃO for área admin */}
+          {!isAdminArea && (
+            <div className="bg-gray-50 rounded-lg p-4 mb-6">
+              <h3 className="font-semibold text-gray-800 mb-2">Status Atual</h3>
+              
+              {!isSupported ? (
+                <p className="text-red-600 text-sm">❌ Navegador não suporta notificações</p>
+              ) : permission === 'granted' && isSubscribed ? (
+                <p className="text-green-600 text-sm">✅ Notificações ativadas e funcionando</p>
+              ) : permission === 'granted' ? (
+                <p className="text-yellow-600 text-sm">⚠️ Permissão concedida, mas não inscrito</p>
+              ) : permission === 'denied' ? (
+                <p className="text-red-600 text-sm">❌ Notificações bloqueadas</p>
+              ) : (
+                <p className="text-yellow-600 text-sm">⚠️ Permissão não solicitada</p>
+              )}
+            </div>
+          )}
 
               {/* Controles de permissão - Só mostrar se NÃO for área admin */}
               {isSupported && !isAdminArea && (

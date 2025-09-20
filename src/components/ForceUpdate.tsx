@@ -12,18 +12,28 @@ export default function ForceUpdate() {
     const now = Date.now()
     const fiveMinutes = 5 * 60 * 1000
     
+    console.log('🔍 ForceUpdate: Verificando necessidade de atualização...', {
+      lastUpdate: lastUpdate ? new Date(parseInt(lastUpdate)).toLocaleString() : 'Nunca',
+      timeSinceUpdate: lastUpdate ? Math.round((now - parseInt(lastUpdate)) / 1000) : 'N/A',
+      shouldShow: !lastUpdate || (now - parseInt(lastUpdate)) >= fiveMinutes
+    })
+    
     if (lastUpdate && (now - parseInt(lastUpdate)) < fiveMinutes) {
+      console.log('⏭️ ForceUpdate: Pulando - já atualizou recentemente')
       return // Não mostrar popup se já atualizou recentemente
     }
 
     // Detectar se é iPhone
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
+    console.log('📱 ForceUpdate: Dispositivo iOS detectado:', isIOS)
     
     if (isIOS) {
       // Verificar se há Service Worker
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.addEventListener('message', (event) => {
+          console.log('📨 ForceUpdate: Mensagem do Service Worker:', event.data)
           if (event.data && event.data.type === 'FORCE_RELOAD') {
+            console.log('🔄 ForceUpdate: FORCE_RELOAD detectado - mostrando popup')
             setShowUpdate(true)
           }
         })
@@ -32,11 +42,15 @@ export default function ForceUpdate() {
       // Verificar se há atualizações pendentes
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.getRegistration().then((registration) => {
+          console.log('🔧 ForceUpdate: Service Worker registration:', registration)
           if (registration && registration.waiting) {
+            console.log('⏳ ForceUpdate: Service Worker aguardando - mostrando popup')
             setShowUpdate(true)
           }
         })
       }
+    } else {
+      console.log('💻 ForceUpdate: Dispositivo não iOS - não mostrando popup')
     }
   }, [])
 

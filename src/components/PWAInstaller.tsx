@@ -167,8 +167,8 @@ export default function PWAInstaller() {
 
   return (
     <div className="fixed bottom-4 right-4 z-50 space-y-3">
-      {/* Notificação de Atualização */}
-      {showUpdateNotification && (
+      {/* Notificação de Atualização - DESATIVADA (usando ForceUpdate.tsx) */}
+      {false && showUpdateNotification && (
         <div className="bg-blue-600 text-white px-6 py-4 rounded-lg shadow-lg max-w-sm">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
