@@ -4,6 +4,8 @@ export async function POST(request: NextRequest) {
   try {
     const { title, message, url } = await request.json()
     
+    console.log('📨 API: Recebendo notificação:', { title, message, url })
+    
     if (!title || !message) {
       return NextResponse.json(
         { error: 'Título e mensagem são obrigatórios' },
@@ -13,6 +15,11 @@ export async function POST(request: NextRequest) {
 
     const oneSignalAppId = process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID
     const oneSignalApiKey = process.env.ONESIGNAL_REST_API_KEY
+
+    console.log('🔑 API: Verificando configuração OneSignal:', {
+      appId: oneSignalAppId ? 'Configurado' : 'Ausente',
+      apiKey: oneSignalApiKey ? 'Configurado' : 'Ausente'
+    })
 
     if (!oneSignalAppId || !oneSignalApiKey) {
       return NextResponse.json(
@@ -26,7 +33,7 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Basic ${oneSignalApiKey}`
+        'Authorization': `Bearer ${oneSignalApiKey}`
       },
       body: JSON.stringify({
         app_id: oneSignalAppId,

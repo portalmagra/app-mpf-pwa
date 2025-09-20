@@ -21,7 +21,7 @@ export default function NotificationManager({ appId }: NotificationManagerProps)
       userAgent: navigator.userAgent
     })
     
-    if (appId && !isAdminArea && !isInitialized) {
+    if (appId && !isInitialized) {
       console.log('🚀 Inicializando OneSignal...')
       
       // Primeiro registrar o Service Worker
@@ -84,7 +84,7 @@ export default function NotificationManager({ appId }: NotificationManagerProps)
           }
         }, 3000) // Aguardar 3 segundos para garantir inicialização completa
     } else if (isAdminArea) {
-      console.log('🔧 Área administrativa detectada - OneSignal não inicializado para admin')
+      console.log('🔧 Área administrativa detectada - OneSignal inicializado para teste')
     } else if (!appId) {
       console.log('⚠️ OneSignal App ID não configurado')
     } else if (isInitialized) {
