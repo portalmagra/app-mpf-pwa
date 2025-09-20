@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNotifications } from '@/hooks/useNotifications'
 import { NOTIFICATION_MESSAGES, WHATSAPP_MESSAGES, openWhatsAppWithMessage } from '@/lib/messages'
 
@@ -13,6 +13,12 @@ export default function NotificationPanel({ onClose }: NotificationPanelProps) {
   const [message, setMessage] = useState('')
   const [title, setTitle] = useState('')
   const [loading, setLoading] = useState(false)
+  const [isAdminArea, setIsAdminArea] = useState(false)
+
+  useEffect(() => {
+    // Verificar se estamos na área administrativa
+    setIsAdminArea(window.location.pathname.includes('/admin'))
+  }, [])
 
   const handleSendNotification = async () => {
     if (!title || !message) {
@@ -89,33 +95,48 @@ export default function NotificationPanel({ onClose }: NotificationPanelProps) {
             )}
           </div>
 
-          {/* Controles de permissão */}
-          {isSupported && (
-            <div className="space-y-3 mb-6">
-              {permission !== 'granted' ? (
-                <button
-                  onClick={handlePermissionRequest}
-                  className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
-                >
-                  🔔 Solicitar Permissão
-                </button>
-              ) : !isSubscribed ? (
-                <button
-                  onClick={handlePermissionRequest}
-                  className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
-                >
-                  📱 Inscrever-se para Notificações
-                </button>
-              ) : (
-                <button
-                  onClick={handleUnsubscribe}
-                  className="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors"
-                >
-                  🔕 Desativar Notificações
-                </button>
+              {/* Controles de permissão - Só mostrar se NÃO for área admin */}
+              {isSupported && !isAdminArea && (
+                <div className="space-y-3 mb-6">
+                  {permission !== 'granted' ? (
+                    <button
+                      onClick={handlePermissionRequest}
+                      className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+                    >
+                      🔔 Solicitar Permissão
+                    </button>
+                  ) : !isSubscribed ? (
+                    <button
+                      onClick={handlePermissionRequest}
+                      className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
+                    >
+                      📱 Inscrever-se para Notificações
+                    </button>
+                  ) : (
+                    <button
+                      onClick={handleUnsubscribe}
+                      className="w-full bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors"
+                    >
+                      🔕 Desativar Notificações
+                    </button>
+                  )}
+                </div>
               )}
-            </div>
-          )}
+
+              {/* Aviso para área admin */}
+              {isAdminArea && (
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                  <div className="flex items-center">
+                    <span className="text-yellow-600 text-lg mr-2">⚠️</span>
+                    <div>
+                      <h3 className="font-semibold text-yellow-800">Área Administrativa</h3>
+                      <p className="text-sm text-yellow-700">
+                        Você está na área administrativa. Para testar notificações, acesse a área do usuário.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
           {/* Mensagens pré-definidas */}
           {permission === 'granted' && (

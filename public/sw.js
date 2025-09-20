@@ -1,5 +1,5 @@
-const CACHE_NAME = 'meuportalfit-v3.1.0';
-const STATIC_CACHE_NAME = 'meuportalfit-static-v3.1.0';
+const CACHE_NAME = 'meuportalfit-v3.2.0';
+const STATIC_CACHE_NAME = 'meuportalfit-static-v3.2.0';
 const urlsToCache = [
   '/',
   '/avaliacao',
@@ -55,6 +55,14 @@ self.addEventListener('activate', (event) => {
       });
     })
   );
+});
+
+// Listener para mensagens dos clientes
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    console.log('🔄 Service Worker: Recebido SKIP_WAITING');
+    self.skipWaiting();
+  }
 });
 
 // Interceptar requisições
