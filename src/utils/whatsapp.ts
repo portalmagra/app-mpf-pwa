@@ -67,6 +67,6 @@ export const openWhatsAppIOS = (phoneNumber: string = '17862535032', message?: s
  * Função para compartilhar conteúdo via WhatsApp
  */
 export const shareViaWhatsApp = (text: string, phoneNumber: string = '17862535032') => {
-  const message = `${text}\n\n📱 MeuPortalFit - Wellness para Brasileiros`;
+  const message = `${text}\n\n📱 MeuPortalFit - Brasileiros nos EUA`;
   openWhatsApp(phoneNumber, message);
 };

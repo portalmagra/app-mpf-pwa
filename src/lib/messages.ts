@@ -1,11 +1,11 @@
 /**
  * Mensagens padronizadas para WhatsApp e Notificações Push
- * MeuPortalFit - Wellness para Brasileiros
+ * MeuPortalFit - Brasileiros nos EUA
  */
 
 export const BRAND_INFO = {
   name: 'MeuPortalFit',
-  tagline: 'Wellness para Brasileiros',
+  tagline: 'Brasileiros nos EUA',
   phone: '+17862535032',
   website: 'https://meuportalfit.com',
   whatsapp: 'https://wa.me/17862535032'
@@ -15,7 +15,7 @@ export const WHATSAPP_MESSAGES = {
   // Mensagem de boas-vindas
   welcome: `Olá! 👋 
 
-Bem-vindo(a) ao *MeuPortalFit* - Wellness para Brasileiros! 🇧🇷
+Bem-vindo(a) ao *MeuPortalFit* - Brasileiros nos EUA! 🇧🇷
 
 📚 *O que oferecemos:*
 • eBooks exclusivos de receitas e dietas
@@ -29,7 +29,7 @@ Bem-vindo(a) ao *MeuPortalFit* - Wellness para Brasileiros! 🇧🇷
 • Ver produtos recomendados
 • Agendar consulta com nossa coach brasileira
 
-📱 *MeuPortalFit* - Wellness para Brasileiros
+📱 *MeuPortalFit* - Brasileiros nos EUA
 🌐 ${BRAND_INFO.website}`,
 
   // Mensagem para compra de eBook
@@ -45,7 +45,7 @@ Gostaria de comprar o eBook *"${title}"* por $${price.toFixed(2)}.
 
 💳 *Como proceder com o pagamento?*
 
-📱 *MeuPortalFit* - Wellness para Brasileiros
+📱 *MeuPortalFit* - Brasileiros nos EUA
 🌐 ${BRAND_INFO.website}`,
 
   // Mensagem para avaliação personalizada
@@ -65,7 +65,7 @@ Gostaria de fazer uma *avaliação personalizada* no MeuPortalFit!
 • Restrições alimentares (se houver)
 • Nível de atividade física
 
-📱 *MeuPortalFit* - Wellness para Brasileiros
+📱 *MeuPortalFit* - Brasileiros nos EUA
 🌐 ${BRAND_INFO.website}`,
 
   // Mensagem para produtos Amazon
@@ -85,7 +85,7 @@ Interessado(a) em nossos *produtos curados* na Amazon?
 3. Envio os links da Amazon
 4. Você compra com desconto (se disponível)
 
-📱 *MeuPortalFit* - Wellness para Brasileiros
+📱 *MeuPortalFit* - Brasileiros nos EUA
 🌐 ${BRAND_INFO.website}`,
 
   // Mensagem para protocolos
@@ -104,7 +104,7 @@ Interessado(a) em nossos *protocolos nutricionais*?
 • Receitas exclusivas
 • Acompanhamento via WhatsApp
 
-📱 *MeuPortalFit* - Wellness para Brasileiros
+📱 *MeuPortalFit* - Brasileiros nos EUA
 🌐 ${BRAND_INFO.website}`
 }
 
@@ -112,7 +112,7 @@ export const NOTIFICATION_MESSAGES = {
   // Notificações de boas-vindas
   welcome: {
     title: '🎉 Bem-vindo ao MeuPortalFit!',
-    body: 'Wellness para Brasileiros - eBooks, receitas e avaliações personalizadas!',
+    body: 'Brasileiros nos EUA - eBooks, receitas e avaliações personalizadas!',
     url: '/'
   },
 
@@ -173,7 +173,7 @@ export const openWhatsAppWithMessage = (message: string, phoneNumber: string = B
 
 // Função para compartilhar conteúdo
 export const shareContent = (content: string, type: 'ebook' | 'recipe' | 'protocol' | 'product') => {
-  const baseMessage = `${content}\n\n📱 *MeuPortalFit* - Wellness para Brasileiros\n🌐 ${BRAND_INFO.website}`
+  const baseMessage = `${content}\n\n📱 *MeuPortalFit* - Brasileiros nos EUA\n🌐 ${BRAND_INFO.website}`
   
   switch (type) {
     case 'ebook':
