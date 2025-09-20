@@ -7,6 +7,7 @@ import CacheClearer from "@/components/CacheClearer";
 import NotificationManager from "@/components/NotificationManager";
 import IOSUpdateManager from "@/components/IOSUpdateManager";
 import ForceUpdate from "@/components/ForceUpdate";
+import NotificationReminder from "@/components/NotificationReminder";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -99,9 +100,10 @@ export default function RootLayout({
         <CacheClearer />
         <NuclearCacheClear />
         <PWAInstaller />
-        <NotificationManager appId={process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID || ''} />
-        <IOSUpdateManager />
-        <ForceUpdate />
+                <NotificationManager appId={process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID || ''} />
+                <IOSUpdateManager />
+                <ForceUpdate />
+                <NotificationReminder />
       </body>
     </html>
   );
