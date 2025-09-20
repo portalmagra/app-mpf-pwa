@@ -1,0 +1,10 @@
+# OneSignal Configuration para .env.local
+# Copie este conteúdo para o arquivo .env.local na raiz do projeto
+
+NEXT_PUBLIC_ONESIGNAL_APP_ID=bb53ccbc-bec3-49a5-9208-67a7c4ccb7d4
+ONESIGNAL_REST_API_KEY=os_v2_app_xnj4zpf6yne2leqim6t4jtfx2ro3lw57utzupi44nm3fe3hqcxe3qa6eni4iyvdu22gsxwheb6n2up4xk2pb4dsku6lixuqgw7nrxrq
+
+# Instruções:
+# 1. Crie um arquivo chamado .env.local na raiz do projeto
+# 2. Cole o conteúdo acima no arquivo
+# 3. Reinicie o servidor de desenvolvimento (npm run dev)

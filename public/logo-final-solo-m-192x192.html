@@ -1,21 +1,12 @@
-const fs = require('fs');
-const path = require('path');
 
-// Função para criar um PNG usando Canvas API (Node.js)
-async function createPNGIcon(size, type = 'completo') {
-  try {
-    // Para este exemplo, vamos criar um PNG básico usando uma abordagem simples
-    // Em produção, você usaria sharp ou canvas
-    
-    const canvas = `
       <!DOCTYPE html>
       <html>
       <head>
         <style>
           body { margin: 0; padding: 0; background: #f0f0f0; }
           .icon-container { 
-            width: ${size}px; 
-            height: ${size}px; 
+            width: 192px; 
+            height: 192px; 
             margin: 20px auto;
             background: linear-gradient(135deg, #3B82F6 0%, #10B981 50%, #059669 100%);
             border-radius: 50%;
@@ -33,7 +24,7 @@ async function createPNGIcon(size, type = 'completo') {
             background-image: 
               linear-gradient(rgba(255,255,255,0.3) 1px, transparent 1px),
               linear-gradient(90deg, rgba(255,255,255,0.3) 1px, transparent 1px);
-            background-size: ${size/10}px ${size/10}px;
+            background-size: 19.2px 19.2px;
             border-radius: 50%;
           }
           .m-container {
@@ -41,8 +32,8 @@ async function createPNGIcon(size, type = 'completo') {
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: ${size * 0.3}px;
-            height: ${size * 0.3}px;
+            width: 57.599999999999994px;
+            height: 57.599999999999994px;
             background: rgba(255,255,255,0.2);
             border: 3px solid white;
             border-radius: 8px;
@@ -52,17 +43,17 @@ async function createPNGIcon(size, type = 'completo') {
           }
           .m-letter {
             color: white;
-            font-size: ${size * 0.4}px;
+            font-size: 76.80000000000001px;
             font-weight: bold;
             font-family: Arial, sans-serif;
           }
           .text {
             position: absolute;
-            bottom: ${size * 0.1}px;
+            bottom: 19.200000000000003px;
             left: 50%;
             transform: translateX(-50%);
             color: white;
-            font-size: ${size * 0.12}px;
+            font-size: 23.04px;
             font-weight: bold;
             font-family: Arial, sans-serif;
             text-align: center;
@@ -88,7 +79,7 @@ async function createPNGIcon(size, type = 'completo') {
           <div class="m-container">
             <div class="m-letter">M</div>
           </div>
-          ${type === 'completo' ? '<div class="text">MeuPortalFit</div>' : ''}
+          
         </div>
         
         <script>
@@ -97,11 +88,11 @@ async function createPNGIcon(size, type = 'completo') {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
             
-            canvas.width = ${size};
-            canvas.height = ${size};
+            canvas.width = 192;
+            canvas.height = 192;
             
             // Criar gradiente
-            const gradient = ctx.createLinearGradient(0, 0, ${size}, ${size});
+            const gradient = ctx.createLinearGradient(0, 0, 192, 192);
             gradient.addColorStop(0, '#3B82F6');
             gradient.addColorStop(0.5, '#10B981');
             gradient.addColorStop(1, '#059669');
@@ -109,7 +100,7 @@ async function createPNGIcon(size, type = 'completo') {
             // Desenhar círculo de fundo
             ctx.fillStyle = gradient;
             ctx.beginPath();
-            ctx.arc(${size/2}, ${size/2}, ${size/2 - 4}, 0, 2 * Math.PI);
+            ctx.arc(96, 96, 92, 0, 2 * Math.PI);
             ctx.fill();
             
             // Desenhar borda branca
@@ -121,23 +112,23 @@ async function createPNGIcon(size, type = 'completo') {
             ctx.strokeStyle = '#FFFFFF';
             ctx.lineWidth = 0.5;
             ctx.globalAlpha = 0.3;
-            for (let i = 0; i <= ${size}; i += ${size/10}) {
+            for (let i = 0; i <= 192; i += 19.2) {
               ctx.beginPath();
               ctx.moveTo(i, 0);
-              ctx.lineTo(i, ${size});
+              ctx.lineTo(i, 192);
               ctx.stroke();
               
               ctx.beginPath();
               ctx.moveTo(0, i);
-              ctx.lineTo(${size}, i);
+              ctx.lineTo(192, i);
               ctx.stroke();
             }
             ctx.globalAlpha = 1;
             
             // Desenhar retângulo branco para o M
-            const rectSize = ${size * 0.3};
-            const rectX = ${size/2} - rectSize/2;
-            const rectY = ${size/2} - rectSize/2;
+            const rectSize = 57.599999999999994;
+            const rectX = 96 - rectSize/2;
+            const rectY = 96 - rectSize/2;
             
             ctx.fillStyle = 'rgba(255,255,255,0.2)';
             ctx.strokeStyle = '#FFFFFF';
@@ -147,68 +138,25 @@ async function createPNGIcon(size, type = 'completo') {
             
             // Desenhar letra M
             ctx.fillStyle = '#FFFFFF';
-            ctx.font = 'bold ${size * 0.4}px Arial';
+            ctx.font = 'bold 76.80000000000001px Arial';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
-            ctx.fillText('M', ${size/2}, ${size/2});
+            ctx.fillText('M', 96, 96);
             
             // Para logo completo, adicionar texto
-            if ('${type}' === 'completo') {
-              ctx.font = 'bold ${size * 0.12}px Arial';
-              ctx.fillText('MeuPortalFit', ${size/2}, ${size * 0.8});
+            if ('solo-m' === 'completo') {
+              ctx.font = 'bold 23.04px Arial';
+              ctx.fillText('MeuPortalFit', 96, 153.60000000000002);
             }
             
             // Converter para PNG e baixar
             const dataURL = canvas.toDataURL('image/png');
             const link = document.createElement('a');
-            link.download = 'logo-final-${type}-${size}x${size}.png';
+            link.download = 'logo-final-solo-m-192x192.png';
             link.href = dataURL;
             link.click();
           }
         </script>
       </body>
       </html>
-    `;
     
-    return canvas;
-  } catch (error) {
-    console.error('Erro ao criar PNG:', error);
-    return null;
-  }
-}
-
-// Gerar todos os ícones necessários
-async function generateAllIcons() {
-  console.log('🎨 Gerando ícones PNG compatíveis...\n');
-  
-  const sizes = [16, 32, 192, 512];
-  const types = ['completo', 'solo-m'];
-  
-  for (const type of types) {
-    for (const size of sizes) {
-      const htmlContent = await createPNGIcon(size, type);
-      if (htmlContent) {
-        const filename = `logo-final-${type}-${size}x${size}.html`;
-        const filepath = path.join(__dirname, '..', 'public', filename);
-        fs.writeFileSync(filepath, htmlContent);
-        console.log(`✅ Criado: ${filename}`);
-      }
-    }
-  }
-  
-  console.log('\n📱 Instruções para usar:');
-  console.log('1. Abra os arquivos HTML no navegador');
-  console.log('2. Clique em "📥 Baixar PNG"');
-  console.log('3. Salve os PNGs na pasta public/');
-  console.log('4. Execute o script de atualização');
-  
-  console.log('\n🎯 Arquivos PNG necessários:');
-  types.forEach(type => {
-    sizes.forEach(size => {
-      console.log(`• logo-final-${type}-${size}x${size}.png`);
-    });
-  });
-}
-
-// Executar
-generateAllIcons().catch(console.error);

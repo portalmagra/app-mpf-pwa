@@ -22,7 +22,8 @@
     "onesignal-ngx": "^2.3.0",
     "openai": "^5.20.1",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "react-onesignal": "^3.4.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
