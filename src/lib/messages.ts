@@ -8,7 +8,9 @@ export const BRAND_INFO = {
   tagline: 'Brasileiros nos EUA',
   phone: '+17862535032',
   website: 'https://meuportalfit.com',
-  whatsapp: 'https://wa.me/17862535032'
+  whatsapp: 'https://wa.me/17862535032',
+  logo: 'https://meuportalfit.com/logo-final-completo.svg',
+  logoIcon: 'https://meuportalfit.com/logo-final-solo-m.svg'
 }
 
 export const WHATSAPP_MESSAGES = {

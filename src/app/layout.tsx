@@ -28,11 +28,11 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/icons/portal-fit-icon-192-v3.svg", sizes: "192x192", type: "image/svg+xml" },
-      { url: "/icons/portal-fit-icon-512-v3.svg", sizes: "512x512", type: "image/svg+xml" }
+      { url: "/logo-final-completo.svg", sizes: "400x400", type: "image/svg+xml" },
+      { url: "/logo-final-solo-m.svg", sizes: "400x400", type: "image/svg+xml" }
     ],
     apple: [
-      { url: "/icons/portal-fit-icon-180-ios.svg", sizes: "180x180", type: "image/svg+xml" }
+      { url: "/logo-final-solo-m.svg", sizes: "400x400", type: "image/svg+xml" }
     ]
   },
   openGraph: {
@@ -44,10 +44,10 @@ export const metadata: Metadata = {
     siteName: "MeuPortalFit",
     images: [
       {
-        url: "/icons/icon-512x512.svg",
-        width: 512,
-        height: 512,
-        alt: "MeuPortalFit - Wellness para Brasileiros",
+        url: "/logo-final-completo.svg",
+        width: 400,
+        height: 400,
+        alt: "MeuPortalFit - Brasileiros nos EUA",
       },
     ],
   },
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MeuPortalFit - Wellness para Brasileiros",
     description: "Wellness para Brasileiros - eBooks, receitas, dietas e produtos exclusivos!",
-    images: ["/icons/icon-512x512.svg"],
+    images: ["/logo-final-completo.svg"],
   },
 };
 
@@ -68,15 +68,15 @@ export default function RootLayout({
     <html lang="pt-BR">
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/icons/portal-fit-icon-180-ios.svg" />
+        <link rel="apple-touch-icon" href="/logo-final-solo-m.svg" />
         <meta name="theme-color" content="#3B82F6" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="MeuPortalFit" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-        <link rel="icon" type="image/svg+xml" sizes="192x192" href="/icons/portal-fit-icon-192-v3.svg" />
-        <link rel="icon" type="image/svg+xml" sizes="512x512" href="/icons/portal-fit-icon-512-v3.svg" />
+        <link rel="icon" type="image/svg+xml" sizes="400x400" href="/logo-final-completo.svg" />
+        <link rel="icon" type="image/svg+xml" sizes="400x400" href="/logo-final-solo-m.svg" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="application-name" content="MeuPortalFit" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />

@@ -1,0 +1,26 @@
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2563EB;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#10B981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#047857;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="100" cy="100" r="95" fill="url(#bgGradient5)" stroke="#FFFFFF" stroke-width="4"/>
+  
+  <!-- Main M letter - Compact -->
+  <g transform="translate(100, 100)">
+    <rect x="-22" y="-22" width="44" height="44" rx="9" fill="rgba(255,255,255,0.2)" stroke="#FFFFFF" stroke-width="2"/>
+    <text x="0" y="7" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="#FFFFFF">M</text>
+  </g>
+  
+  <!-- Text -->
+  <text x="100" y="160" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="bold" fill="#FFFFFF">
+    MeuPortalFit
+  </text>
+  <text x="100" y="175" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" fill="#F0FDF4">
+    Brasileiros nos EUA
+  </text>
+</svg>
