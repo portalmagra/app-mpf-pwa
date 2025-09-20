@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useNotifications } from '@/hooks/useNotifications'
 import { NOTIFICATION_MESSAGES, WHATSAPP_MESSAGES, openWhatsAppWithMessage } from '@/lib/messages'
+import SimpleNotificationTest from './SimpleNotificationTest'
 
 interface NotificationPanelProps {
   onClose: () => void
@@ -30,31 +31,28 @@ export default function NotificationPanel({ onClose }: NotificationPanelProps) {
     try {
       console.log('Enviando notificação:', { title, message })
       
-      // Enviar notificação via API real
-      const response = await fetch('/api/notifications/send', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          title,
-          message,
-          url: 'https://meuportalfit.com'
-        })
-      })
-
-      const result = await response.json()
-
-      if (response.ok) {
-        alert(`✅ Notificação enviada com sucesso!\n\nID: ${result.notificationId}\nDestinatários: ${result.recipients}`)
-        setTitle('')
-        setMessage('')
-      } else {
-        alert(`❌ Erro ao enviar notificação: ${result.error}`)
+      // Abrir OneSignal Dashboard para envio manual (mais confiável)
+      const oneSignalUrl = `https://app.onesignal.com/apps/${process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID}/notifications/new`
+      
+      // Copiar dados para clipboard
+      const notificationData = {
+        title,
+        message,
+        url: 'https://meuportalfit.com'
       }
+      
+      await navigator.clipboard.writeText(JSON.stringify(notificationData, null, 2))
+      
+      alert(`📋 Dados copiados para clipboard!\n\nAbrindo OneSignal Dashboard...\n\nCole os dados no dashboard e envie manualmente.`)
+      
+      // Abrir dashboard em nova aba
+      window.open(oneSignalUrl, '_blank')
+      
+      setTitle('')
+      setMessage('')
     } catch (error) {
       console.error('Erro ao enviar notificação:', error)
-      alert('❌ Erro ao enviar notificação')
+      alert('❌ Erro ao abrir dashboard')
     } finally {
       setLoading(false)
     }
@@ -139,18 +137,10 @@ export default function NotificationPanel({ onClose }: NotificationPanelProps) {
                 </div>
               )}
 
-              {/* Aviso para área admin */}
+              {/* Teste simples para área admin */}
               {isAdminArea && (
-                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
-                  <div className="flex items-center">
-                    <span className="text-yellow-600 text-lg mr-2">⚠️</span>
-                    <div>
-                      <h3 className="font-semibold text-yellow-800">Área Administrativa</h3>
-                      <p className="text-sm text-yellow-700">
-                        Você está na área administrativa. Para testar notificações, acesse a área do usuário.
-                      </p>
-                    </div>
-                  </div>
+                <div className="mb-6">
+                  <SimpleNotificationTest />
                 </div>
               )}
 
