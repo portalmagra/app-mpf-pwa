@@ -78,7 +78,7 @@ export default function IOSUpdateManager() {
           </div>
           
           <p className="text-xs text-gray-500 mt-4">
-            💡 Dica: Para atualizações futuras, vá em Configurações > Safari > Avançado > Website Data e limpe os dados do MeuPortalFit
+            💡 Dica: Para atualizações futuras, vá em Configurações {'>'} Safari {'>'} Avançado {'>'} Website Data e limpe os dados do MeuPortalFit
           </p>
         </div>
       </div>
