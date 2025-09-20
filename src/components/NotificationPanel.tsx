@@ -78,15 +78,10 @@ export default function NotificationPanel({ onClose }: NotificationPanelProps) {
             
             {!isSupported ? (
               <p className="text-red-600 text-sm">❌ Navegador não suporta notificações</p>
+            ) : permission === 'granted' && isSubscribed ? (
+              <p className="text-green-600 text-sm">✅ Notificações ativadas e funcionando</p>
             ) : permission === 'granted' ? (
-              <div className="space-y-2">
-                <p className="text-green-600 text-sm">✅ Notificações ativadas</p>
-                {isSubscribed ? (
-                  <p className="text-blue-600 text-sm">📱 Inscrito para receber notificações</p>
-                ) : (
-                  <p className="text-yellow-600 text-sm">⚠️ Não inscrito para push</p>
-                )}
-              </div>
+              <p className="text-yellow-600 text-sm">⚠️ Permissão concedida, mas não inscrito</p>
             ) : permission === 'denied' ? (
               <p className="text-red-600 text-sm">❌ Notificações bloqueadas</p>
             ) : (
@@ -102,7 +97,14 @@ export default function NotificationPanel({ onClose }: NotificationPanelProps) {
                   onClick={handlePermissionRequest}
                   className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
                 >
-                  🔔 Ativar Notificações
+                  🔔 Solicitar Permissão
+                </button>
+              ) : !isSubscribed ? (
+                <button
+                  onClick={handlePermissionRequest}
+                  className="w-full bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 transition-colors"
+                >
+                  📱 Inscrever-se para Notificações
                 </button>
               ) : (
                 <button
