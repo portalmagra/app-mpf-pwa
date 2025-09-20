@@ -1,5 +1,5 @@
-const CACHE_NAME = 'meuportalfit-v3.0.0';
-const STATIC_CACHE_NAME = 'meuportalfit-static-v3.0.0';
+const CACHE_NAME = 'meuportalfit-v3.1.0';
+const STATIC_CACHE_NAME = 'meuportalfit-static-v3.1.0';
 const urlsToCache = [
   '/',
   '/avaliacao',
@@ -43,7 +43,16 @@ self.addEventListener('activate', (event) => {
       );
     }).then(() => {
       console.log('✅ Service Worker: Ativado com sucesso - cache limpo');
-      return self.clients.claim();
+      // Forçar reload de todos os clientes
+      return self.clients.matchAll().then((clients) => {
+        clients.forEach((client) => {
+          client.postMessage({
+            type: 'FORCE_RELOAD',
+            message: 'Cache limpo - recarregando página'
+          });
+        });
+        return self.clients.claim();
+      });
     })
   );
 });
