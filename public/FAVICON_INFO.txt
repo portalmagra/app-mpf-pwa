@@ -1,0 +1,14 @@
+
+# Favicon.ico necessário
+
+Para criar o favicon.ico, você precisa:
+
+1. Usar o arquivo logo-final-solo-m-32x32.png
+2. Converter para ICO usando:
+   - Online: https://favicon.io/favicon-converter/
+   - Ou usar ImageMagick: convert logo-final-solo-m-32x32.png favicon.ico
+
+3. Salvar como favicon.ico na pasta public/
+
+Arquivo necessário: favicon.ico (16x16, 32x32, 48x48)
+  

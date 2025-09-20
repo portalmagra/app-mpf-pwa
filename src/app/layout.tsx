@@ -4,6 +4,8 @@ import "./globals.css";
 import PWAInstaller from "@/components/PWAInstaller";
 import NuclearCacheClear from "@/components/NuclearCacheClear";
 import CacheClearer from "@/components/CacheClearer";
+import NotificationManager from "@/components/NotificationManager";
+import IOSUpdateManager from "@/components/IOSUpdateManager";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,10 +30,12 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/logo-final-completo.svg", sizes: "400x400", type: "image/svg+xml" },
-      { url: "/logo-final-solo-m.svg", sizes: "400x400", type: "image/svg+xml" }
+      { url: "/logo-final-completo-192x192.png", sizes: "192x192", type: "image/png" },
+      { url: "/logo-final-completo-512x512.png", sizes: "512x512", type: "image/png" },
+      { url: "/logo-final-completo-512x512.png", sizes: "400x400", type: "image/svg+xml" }
     ],
     apple: [
+      { url: "/logo-final-solo-m-192x192.png", sizes: "192x192", type: "image/png" },
       { url: "/logo-final-solo-m.svg", sizes: "400x400", type: "image/svg+xml" }
     ]
   },
@@ -44,7 +48,7 @@ export const metadata: Metadata = {
     siteName: "MeuPortalFit",
     images: [
       {
-        url: "/logo-final-completo.svg",
+        url: "/logo-final-completo-512x512.png",
         width: 400,
         height: 400,
         alt: "MeuPortalFit - Brasileiros nos EUA",
@@ -55,7 +59,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MeuPortalFit - Wellness para Brasileiros",
     description: "Wellness para Brasileiros - eBooks, receitas, dietas e produtos exclusivos!",
-    images: ["/logo-final-completo.svg"],
+    images: ["/logo-final-completo-512x512.png"],
   },
 };
 
@@ -68,15 +72,15 @@ export default function RootLayout({
     <html lang="pt-BR">
       <head>
         <link rel="manifest" href="/manifest.json" />
-        <link rel="apple-touch-icon" href="/logo-final-solo-m.svg" />
+        <link rel="apple-touch-icon" href="/logo-final-solo-m-192x192.png" />
         <meta name="theme-color" content="#3B82F6" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="MeuPortalFit" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="icon" type="image/svg+xml" href="/icon.svg" />
-        <link rel="icon" type="image/svg+xml" sizes="400x400" href="/logo-final-completo.svg" />
-        <link rel="icon" type="image/svg+xml" sizes="400x400" href="/logo-final-solo-m.svg" />
+        <link rel="icon" type="image/svg+xml" sizes="400x400" href="/logo-final-completo-32x32.png" />
+        <link rel="icon" type="image/svg+xml" sizes="400x400" href="/logo-final-solo-m-192x192.png" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="application-name" content="MeuPortalFit" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -94,6 +98,8 @@ export default function RootLayout({
         <CacheClearer />
         <NuclearCacheClear />
         <PWAInstaller />
+        <NotificationManager appId={process.env.NEXT_PUBLIC_ONESIGNAL_APP_ID || ''} />
+        <IOSUpdateManager />
       </body>
     </html>
   );
