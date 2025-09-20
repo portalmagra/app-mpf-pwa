@@ -45,7 +45,6 @@ export default function SimpleNotificationTest() {
         body: 'Esta é uma notificação de teste do MeuPortalFit!',
         icon: '/logo-final-solo-m.svg',
         badge: '/logo-final-solo-m.svg',
-        image: '/logo-final-completo.svg',
         tag: 'test-notification',
         requireInteraction: true,
         silent: false
