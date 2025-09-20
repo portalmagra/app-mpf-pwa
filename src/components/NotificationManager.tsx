@@ -21,21 +21,19 @@ export default function NotificationManager({ appId }: NotificationManagerProps)
         
         // Forçar prompt de permissão após inicialização
         setTimeout(() => {
-          if (typeof window !== 'undefined' && window.OneSignal) {
+          if (typeof window !== 'undefined') {
             try {
-              // Tentar diferentes métodos para mostrar prompt
-              if (window.OneSignal.showSlidedownPrompt) {
-                window.OneSignal.showSlidedownPrompt()
-              } else if (window.OneSignal.showNativePrompt) {
-                window.OneSignal.showNativePrompt()
-              } else {
-                // Fallback: solicitar permissão diretamente
+              // Solicitar permissão diretamente usando API nativa
+              if ('Notification' in window) {
                 Notification.requestPermission().then(permission => {
                   console.log('Permissão de notificação:', permission)
+                  if (permission === 'granted') {
+                    console.log('✅ Notificações autorizadas!')
+                  }
                 })
               }
             } catch (error) {
-              console.log('Erro ao mostrar prompt:', error)
+              console.log('Erro ao solicitar permissão:', error)
             }
           }
         }, 2000) // Aguardar 2 segundos para garantir inicialização
