@@ -67,7 +67,7 @@ export default function MinhasReceitasPage() {
   }
 
   const handleCompartilharWhatsApp = (receita: ReceitaSalva) => {
-    const mensagem = `🍽️ *${receita.nome}*\n\n${receita.descricao}\n\n📖 Receita completa: ${receita.link_pdf}\n\n🛒 Ingredientes na Amazon: https://amzn.to/3xYz123\n\n✨ Receita dos Favoritos - Portal Fit`
+    const mensagem = `🍽️ *${receita.nome}*\n\n${receita.descricao}\n\n📖 Receita completa: ${receita.link_pdf}\n\n🛒 Ingredientes na Amazon: https://amzn.to/3xYz123\n\n✨ Receita dos Favoritos - MeuPortalFit`
     const url = `https://wa.me/?text=${encodeURIComponent(mensagem)}`
     window.open(url, '_blank')
   }
@@ -86,7 +86,7 @@ ${receita.descricao}
 • Ingrediente 2: https://amzn.to/3xYz124
 • Ingrediente 3: https://amzn.to/3xYz125
 
-✨ Receita dos Favoritos - Portal Fit
+✨ Receita dos Favoritos - MeuPortalFit
 📱 WhatsApp: (786) 253-5032
 🌐 app.meuportalfit.com
     `.trim()

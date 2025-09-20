@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useNotifications } from '@/hooks/useNotifications'
+import { NOTIFICATION_MESSAGES, WHATSAPP_MESSAGES, openWhatsAppWithMessage } from '@/lib/messages'
 
 interface NotificationPanelProps {
   onClose: () => void
@@ -111,6 +112,59 @@ export default function NotificationPanel({ onClose }: NotificationPanelProps) {
                   🔕 Desativar Notificações
                 </button>
               )}
+            </div>
+          )}
+
+          {/* Mensagens pré-definidas */}
+          {permission === 'granted' && (
+            <div className="space-y-4 mb-6">
+              <h3 className="font-semibold text-gray-800">📝 Mensagens Pré-definidas</h3>
+              
+              <div className="grid grid-cols-1 gap-2">
+                <button
+                  onClick={() => {
+                    setTitle(NOTIFICATION_MESSAGES.welcome.title)
+                    setMessage(NOTIFICATION_MESSAGES.welcome.body)
+                  }}
+                  className="text-left p-3 bg-green-50 border border-green-200 rounded-lg hover:bg-green-100 transition-colors"
+                >
+                  <div className="font-medium text-green-800">🎉 Boas-vindas</div>
+                  <div className="text-sm text-green-600">Bem-vindo ao MeuPortalFit!</div>
+                </button>
+                
+                <button
+                  onClick={() => {
+                    setTitle(NOTIFICATION_MESSAGES.newEbook('Novo eBook de Receitas').title)
+                    setMessage(NOTIFICATION_MESSAGES.newEbook('Novo eBook de Receitas').body)
+                  }}
+                  className="text-left p-3 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors"
+                >
+                  <div className="font-medium text-blue-800">📚 Novo eBook</div>
+                  <div className="text-sm text-blue-600">Anunciar novo eBook disponível</div>
+                </button>
+                
+                <button
+                  onClick={() => {
+                    setTitle(NOTIFICATION_MESSAGES.promotion(20).title)
+                    setMessage(NOTIFICATION_MESSAGES.promotion(20).body)
+                  }}
+                  className="text-left p-3 bg-orange-50 border border-orange-200 rounded-lg hover:bg-orange-100 transition-colors"
+                >
+                  <div className="font-medium text-orange-800">🔥 Promoção</div>
+                  <div className="text-sm text-orange-600">Desconto especial em eBooks</div>
+                </button>
+                
+                <button
+                  onClick={() => {
+                    setTitle(NOTIFICATION_MESSAGES.newProducts.title)
+                    setMessage(NOTIFICATION_MESSAGES.newProducts.body)
+                  }}
+                  className="text-left p-3 bg-purple-50 border border-purple-200 rounded-lg hover:bg-purple-100 transition-colors"
+                >
+                  <div className="font-medium text-purple-800">🛒 Novos Produtos</div>
+                  <div className="text-sm text-purple-600">Produtos curados na Amazon</div>
+                </button>
+              </div>
             </div>
           )}
 
