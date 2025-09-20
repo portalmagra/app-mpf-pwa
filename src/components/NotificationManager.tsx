@@ -9,7 +9,11 @@ interface NotificationManagerProps {
 
 export default function NotificationManager({ appId }: NotificationManagerProps) {
   useEffect(() => {
-    if (appId) {
+    // Verificar se estamos na área administrativa
+    const isAdminArea = window.location.pathname.includes('/admin')
+    
+    if (appId && !isAdminArea) {
+      // Só inicializar OneSignal se NÃO estivermos na área admin
       OneSignal.init({
         appId: appId,
         allowLocalhostAsSecure: true,
@@ -19,7 +23,7 @@ export default function NotificationManager({ appId }: NotificationManagerProps)
       }).then(() => {
         console.log('✅ OneSignal inicializado com sucesso!')
         
-        // Forçar prompt de permissão após inicialização
+        // Forçar prompt de permissão após inicialização (apenas para usuários finais)
         setTimeout(() => {
           if (typeof window !== 'undefined') {
             try {
@@ -40,6 +44,8 @@ export default function NotificationManager({ appId }: NotificationManagerProps)
       }).catch(error => {
         console.error('❌ Erro ao inicializar OneSignal:', error)
       })
+    } else if (isAdminArea) {
+      console.log('🔧 Área administrativa detectada - OneSignal não inicializado para admin')
     }
   }, [appId])
 
