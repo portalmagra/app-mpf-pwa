@@ -24,16 +24,36 @@ export default function NotificationManager({ appId }: NotificationManagerProps)
     if (appId && !isAdminArea && !isInitialized) {
       console.log('🚀 Inicializando OneSignal...')
       
-      // Só inicializar OneSignal se NÃO estivermos na área admin
-      OneSignal.init({
-        appId: appId,
-        allowLocalhostAsSecure: true,
-        serviceWorkerPath: '/sw.js',
-        // Configurações específicas para iOS
-        safari_web_id: appId
-      }).then(() => {
-        console.log('✅ OneSignal inicializado com sucesso!')
-        setIsInitialized(true)
+      // Primeiro registrar o Service Worker
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('✅ Service Worker registrado:', registration.scope)
+            
+            // Depois inicializar OneSignal
+            return OneSignal.init({
+              appId: appId,
+              allowLocalhostAsSecure: true,
+              serviceWorkerPath: '/sw.js',
+              // Configurações específicas para iOS
+              safari_web_id: appId
+            })
+          })
+          .then(() => {
+            console.log('✅ OneSignal inicializado com sucesso!')
+            setIsInitialized(true)
+          })
+          .catch((error) => {
+            console.error('❌ Erro ao inicializar OneSignal:', error)
+            // Tentar novamente após 5 segundos
+            setTimeout(() => {
+              console.log('🔄 Tentando reinicializar OneSignal...')
+              setIsInitialized(false)
+            }, 5000)
+          })
+      } else {
+        console.log('❌ Service Worker não suportado')
+      }
         
         // Forçar prompt de permissão após inicialização (apenas para usuários finais)
         setTimeout(() => {

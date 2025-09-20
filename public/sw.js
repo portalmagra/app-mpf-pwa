@@ -1,5 +1,5 @@
-const CACHE_NAME = 'meuportalfit-v3.2.0';
-const STATIC_CACHE_NAME = 'meuportalfit-static-v3.2.0';
+const CACHE_NAME = 'meuportalfit-v3.3.0';
+const STATIC_CACHE_NAME = 'meuportalfit-static-v3.3.0';
 const urlsToCache = [
   '/',
   '/avaliacao',
@@ -63,6 +63,76 @@ self.addEventListener('message', (event) => {
     console.log('🔄 Service Worker: Recebido SKIP_WAITING');
     self.skipWaiting();
   }
+});
+
+// Listener para Push Notifications
+self.addEventListener('push', (event) => {
+  console.log('🔔 Service Worker: Push recebido', event);
+  
+  if (event.data) {
+    const data = event.data.json();
+    console.log('📋 Dados da notificação:', data);
+    
+    const options = {
+      body: data.body || 'Nova notificação do MeuPortalFit',
+      icon: '/logo-final-solo-m.svg',
+      badge: '/logo-final-solo-m.svg',
+      image: data.image || '/logo-final-completo.svg',
+      data: data.data || {},
+      actions: [
+        {
+          action: 'open',
+          title: 'Abrir App',
+          icon: '/logo-final-solo-m.svg'
+        },
+        {
+          action: 'dismiss',
+          title: 'Fechar'
+        }
+      ],
+      requireInteraction: true,
+      silent: false,
+      tag: data.tag || 'meuportalfit-notification',
+      renotify: true
+    };
+    
+    event.waitUntil(
+      self.registration.showNotification(data.title || 'MeuPortalFit', options)
+    );
+  }
+});
+
+// Listener para cliques em notificações
+self.addEventListener('notificationclick', (event) => {
+  console.log('👆 Service Worker: Notificação clicada', event);
+  
+  event.notification.close();
+  
+  if (event.action === 'open' || !event.action) {
+    // Abrir o app
+    const urlToOpen = event.notification.data?.url || '/';
+    
+    event.waitUntil(
+      self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+        // Se já há uma janela aberta, focar nela
+        for (const client of clientList) {
+          if (client.url.includes(self.location.origin) && 'focus' in client) {
+            client.navigate(urlToOpen);
+            return client.focus();
+          }
+        }
+        // Se não há janela aberta, abrir nova
+        if (self.clients.openWindow) {
+          return self.clients.openWindow(urlToOpen);
+        }
+      })
+    );
+  }
+});
+
+// Listener para fechamento de notificações
+self.addEventListener('notificationclose', (event) => {
+  console.log('❌ Service Worker: Notificação fechada', event);
 });
 
 // Interceptar requisições

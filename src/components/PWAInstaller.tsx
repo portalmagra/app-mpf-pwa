@@ -19,41 +19,13 @@ export default function PWAInstaller() {
   const [waitingWorker, setWaitingWorker] = useState<ServiceWorker | null>(null)
 
   useEffect(() => {
-    // Registrar Service Worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then((registration) => {
-          console.log('✅ Service Worker registrado com sucesso:', registration.scope)
-          
-          // Verificar se há atualizações pendentes
-          registration.addEventListener('updatefound', () => {
-            const newWorker = registration.installing
-            if (newWorker) {
-              newWorker.addEventListener('statechange', () => {
-                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                  // Há uma nova versão disponível
-                  setWaitingWorker(newWorker)
-                  setShowUpdateNotification(true)
-                }
-              })
-            }
-          })
-
-          // Verificar atualizações periodicamente (especialmente para mobile)
-          setInterval(() => {
-            registration.update()
-          }, 30000) // Verifica a cada 30 segundos
-        })
-        .catch((error) => {
-          console.error('❌ Erro ao registrar Service Worker:', error)
-        })
-
-      // Escutar mensagens do Service Worker
-      navigator.serviceWorker.addEventListener('message', (event) => {
-        if (event.data && event.data.type === 'SW_UPDATED') {
-          setShowUpdateNotification(true)
-        }
-      })
+    // Service Worker já registrado pelo ForceUpdate - não registrar aqui
+    console.log('🔧 PWAInstaller: Service Worker gerenciado pelo ForceUpdate')
+    
+    // Apenas verificar se o app está instalado
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+      setIsInstalled(true)
+    }
 
       // Forçar verificação de atualizações quando a página ganha foco (mobile)
       const handleVisibilityChange = () => {

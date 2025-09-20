@@ -28,19 +28,33 @@ export default function NotificationPanel({ onClose }: NotificationPanelProps) {
 
     setLoading(true)
     try {
-      // Simular envio de notificação
-      // TODO: Implementar envio real via OneSignal
       console.log('Enviando notificação:', { title, message })
       
-      // Simular delay
-      await new Promise(resolve => setTimeout(resolve, 1000))
-      
-      alert('Notificação enviada com sucesso!')
-      setTitle('')
-      setMessage('')
+      // Enviar notificação via API real
+      const response = await fetch('/api/notifications/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title,
+          message,
+          url: 'https://meuportalfit.com'
+        })
+      })
+
+      const result = await response.json()
+
+      if (response.ok) {
+        alert(`✅ Notificação enviada com sucesso!\n\nID: ${result.notificationId}\nDestinatários: ${result.recipients}`)
+        setTitle('')
+        setMessage('')
+      } else {
+        alert(`❌ Erro ao enviar notificação: ${result.error}`)
+      }
     } catch (error) {
       console.error('Erro ao enviar notificação:', error)
-      alert('Erro ao enviar notificação')
+      alert('❌ Erro ao enviar notificação')
     } finally {
       setLoading(false)
     }
