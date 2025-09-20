@@ -16,15 +16,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Portal Fit - Brasileiros nos EUA",
-  description: "Saúde e bem-estar para brasileiros nos Estados Unidos. Receitas, produtos, avaliações personalizadas e muito mais!",
+  title: "MeuPortalFit - Wellness para Brasileiros",
+  description: "Wellness para Brasileiros - eBooks, receitas, dietas e produtos exclusivos para sua saúde e bem-estar!",
   manifest: "/manifest.json",
-  themeColor: "#22c55e",
+  themeColor: "#3B82F6",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "Portal Fit",
+    title: "MeuPortalFit",
   },
   icons: {
     icon: [
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
     ]
   },
   openGraph: {
-    title: "MeuPortalFit - Brasileiros nos EUA",
-    description: "Saúde e bem-estar para brasileiros nos Estados Unidos. Receitas, produtos, avaliações personalizadas e muito mais!",
+    title: "MeuPortalFit - Wellness para Brasileiros",
+    description: "Wellness para Brasileiros - eBooks, receitas, dietas e produtos exclusivos para sua saúde e bem-estar!",
     type: "website",
     locale: "pt_BR",
     url: "https://meuportalfit.com",
@@ -47,14 +47,14 @@ export const metadata: Metadata = {
         url: "/icons/icon-512x512.svg",
         width: 512,
         height: 512,
-        alt: "MeuPortalFit - Brasileiros nos EUA",
+        alt: "MeuPortalFit - Wellness para Brasileiros",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "MeuPortalFit - Brasileiros nos EUA",
-    description: "Saúde e bem-estar para brasileiros nos Estados Unidos",
+    title: "MeuPortalFit - Wellness para Brasileiros",
+    description: "Wellness para Brasileiros - eBooks, receitas, dietas e produtos exclusivos!",
     images: ["/icons/icon-512x512.svg"],
   },
 };
@@ -69,7 +69,7 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
         <link rel="apple-touch-icon" href="/icons/portal-fit-icon-180-ios.svg" />
-        <meta name="theme-color" content="#22c55e" />
+        <meta name="theme-color" content="#3B82F6" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="MeuPortalFit" />
@@ -81,7 +81,7 @@ export default function RootLayout({
         <meta name="application-name" content="MeuPortalFit" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-TileColor" content="#22c55e" />
+        <meta name="msapplication-TileColor" content="#3B82F6" />
         <meta name="msapplication-tap-highlight" content="no" />
         <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
         <meta httpEquiv="Pragma" content="no-cache" />

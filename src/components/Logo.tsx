@@ -24,12 +24,12 @@ export default function Logo({ size = 'md', variant = 'icon', className = '' }: 
   if (variant === 'horizontal') {
     return (
       <div className={`flex items-center space-x-3 ${className}`}>
-        <div className={`${sizeClasses[size]} bg-gradient-to-br from-brand-green via-brand-green to-brand-greenDark rounded-lg flex items-center justify-center`}>
-          <span className="text-white font-bold text-sm">P</span>
+        <div className={`${sizeClasses[size]} bg-gradient-to-br from-blue-500 via-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center`}>
+          <span className="text-white font-bold text-sm">M</span>
         </div>
         <div>
-          <h1 className="text-lg font-bold text-brand-text">Portal Fit</h1>
-          <p className="text-xs text-brand-text2">Brasileiros nos EUA</p>
+          <h1 className="text-lg font-bold text-brand-text">MeuPortalFit</h1>
+          <p className="text-xs text-brand-text2">Wellness para Brasileiros</p>
         </div>
       </div>
     )
@@ -38,12 +38,12 @@ export default function Logo({ size = 'md', variant = 'icon', className = '' }: 
   if (variant === 'full') {
     return (
       <div className={`flex flex-col items-center space-y-2 ${className}`}>
-        <div className={`${sizeClasses[size]} bg-gradient-to-br from-brand-green via-brand-green to-brand-greenDark rounded-lg flex items-center justify-center`}>
-          <span className="text-white font-bold text-sm">P</span>
+        <div className={`${sizeClasses[size]} bg-gradient-to-br from-blue-500 via-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center`}>
+          <span className="text-white font-bold text-sm">M</span>
         </div>
         <div className="text-center">
-          <h1 className="text-lg font-bold text-brand-text">Portal Fit</h1>
-          <p className="text-xs text-brand-text2">Brasileiros nos EUA</p>
+          <h1 className="text-lg font-bold text-brand-text">MeuPortalFit</h1>
+          <p className="text-xs text-brand-text2">Wellness para Brasileiros</p>
         </div>
       </div>
     )
@@ -51,7 +51,7 @@ export default function Logo({ size = 'md', variant = 'icon', className = '' }: 
 
   // Default icon variant
   return (
-    <div className={`${sizeClasses[size]} bg-gradient-to-br from-brand-green via-brand-green to-brand-greenDark rounded-lg flex items-center justify-center ${className}`}>
+    <div className={`${sizeClasses[size]} bg-gradient-to-br from-blue-500 via-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center ${className}`}>
       <span className="text-white font-bold text-sm">M</span>
     </div>
   )
