@@ -27,5 +27,5 @@ export default function NotificationManager({ appId }: NotificationManagerProps)
     }
   }, [appId])
 
-  return null // Este componente não renderiza nada visível
+  return null // Este componente não renderiza nada visível - Deploy fix
 }
