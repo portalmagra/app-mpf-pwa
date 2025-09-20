@@ -43,7 +43,6 @@ export default function PWAInstaller() {
       return () => {
         document.removeEventListener('visibilitychange', handleVisibilityChange)
       }
-    }
 
     // Detectar evento de instalação
     const handleBeforeInstallPrompt = (e: Event) => {
