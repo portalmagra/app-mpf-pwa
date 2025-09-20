@@ -35,13 +35,6 @@ export default function NotificationManager({ appId }: NotificationManagerProps)
         console.log('✅ OneSignal inicializado com sucesso!')
         setIsInitialized(true)
         
-        // Verificar se OneSignal está realmente funcionando
-        OneSignal.getSubscription().then(subscription => {
-          console.log('📱 Status da inscrição OneSignal:', subscription)
-        }).catch(error => {
-          console.log('❌ Erro ao verificar inscrição:', error)
-        })
-        
         // Forçar prompt de permissão após inicialização (apenas para usuários finais)
         setTimeout(() => {
           if (typeof window !== 'undefined') {
@@ -53,12 +46,7 @@ export default function NotificationManager({ appId }: NotificationManagerProps)
                   console.log('📋 Resposta da permissão:', permission)
                   if (permission === 'granted') {
                     console.log('✅ Notificações autorizadas!')
-                    // Tentar se inscrever no OneSignal após permissão
-                    OneSignal.setSubscription(true).then(() => {
-                      console.log('🎯 Inscrito no OneSignal com sucesso!')
-                    }).catch(error => {
-                      console.log('❌ Erro ao se inscrever no OneSignal:', error)
-                    })
+                    console.log('🎯 OneSignal deve se inscrever automaticamente')
                   } else if (permission === 'denied') {
                     console.log('❌ Notificações negadas pelo usuário')
                   } else {
