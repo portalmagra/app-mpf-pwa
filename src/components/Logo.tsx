@@ -29,7 +29,7 @@ export default function Logo({ size = 'md', variant = 'icon', className = '' }: 
         </div>
         <div>
           <h1 className="text-lg font-bold text-brand-text">MeuPortalFit</h1>
-          <p className="text-xs text-brand-text2">Wellness para Brasileiros</p>
+          <p className="text-xs text-brand-text2">Brasileiros nos EUA</p>
         </div>
       </div>
     )
@@ -43,7 +43,7 @@ export default function Logo({ size = 'md', variant = 'icon', className = '' }: 
         </div>
         <div className="text-center">
           <h1 className="text-lg font-bold text-brand-text">MeuPortalFit</h1>
-          <p className="text-xs text-brand-text2">Wellness para Brasileiros</p>
+          <p className="text-xs text-brand-text2">Brasileiros nos EUA</p>
         </div>
       </div>
     )
