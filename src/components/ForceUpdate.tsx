@@ -5,13 +5,15 @@ import { useEffect, useState } from 'react'
 export default function ForceUpdate() {
   const [showUpdate, setShowUpdate] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
-  const [hasUpdated, setHasUpdated] = useState(false)
 
   useEffect(() => {
-    // Verificar se já atualizou nesta sessão
-    const hasUpdatedThisSession = sessionStorage.getItem('hasUpdatedThisSession')
-    if (hasUpdatedThisSession === 'true') {
-      return // Não mostrar popup se já atualizou
+    // Verificar se já atualizou recentemente (últimas 5 minutos)
+    const lastUpdate = localStorage.getItem('lastForceUpdate')
+    const now = Date.now()
+    const fiveMinutes = 5 * 60 * 1000
+    
+    if (lastUpdate && (now - parseInt(lastUpdate)) < fiveMinutes) {
+      return // Não mostrar popup se já atualizou recentemente
     }
 
     // Detectar se é iPhone
@@ -41,10 +43,9 @@ export default function ForceUpdate() {
   const handleForceUpdate = async () => {
     try {
       setIsUpdating(true)
-      setHasUpdated(true)
       
-      // Marcar que já atualizou nesta sessão
-      sessionStorage.setItem('hasUpdatedThisSession', 'true')
+      // Marcar timestamp da última atualização
+      localStorage.setItem('lastForceUpdate', Date.now().toString())
 
       // Limpar Service Workers
       if ('serviceWorker' in navigator) {
