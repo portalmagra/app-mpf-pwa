@@ -20,7 +20,7 @@ export default function NotificationManager({ appId }: NotificationManagerProps)
         console.log('✅ OneSignal inicializado com sucesso!')
         // Para iOS, não mostrar prompt automático
         // O usuário precisa clicar no botão de notificação
-        OneSignal.showNativePrompt()
+        OneSignal.showSlidedownPrompt()
       }).catch(error => {
         console.error('❌ Erro ao inicializar OneSignal:', error)
       })
