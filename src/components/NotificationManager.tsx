@@ -15,18 +15,7 @@ export default function NotificationManager({ appId }: NotificationManagerProps)
         allowLocalhostAsSecure: true,
         serviceWorkerPath: '/sw.js',
         // Configurações específicas para iOS
-        safari_web_id: appId,
-        notifyButton: {
-          enable: true,
-          size: 'medium',
-          theme: 'default',
-          position: 'bottom-right',
-          text: {
-            'tip.state.unsubscribed': 'Receber notificações',
-            'tip.state.subscribed': 'Você está inscrito',
-            'tip.state.blocked': 'Você bloqueou as notificações'
-          }
-        }
+        safari_web_id: appId
       }).then(() => {
         console.log('✅ OneSignal inicializado com sucesso!')
         // Para iOS, não mostrar prompt automático
