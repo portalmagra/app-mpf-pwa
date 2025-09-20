@@ -83,14 +83,6 @@ export default function NotificationManager({ appId }: NotificationManagerProps)
             }
           }
         }, 3000) // Aguardar 3 segundos para garantir inicialização completa
-      }).catch(error => {
-        console.error('❌ Erro ao inicializar OneSignal:', error)
-        // Tentar novamente após 5 segundos
-        setTimeout(() => {
-          console.log('🔄 Tentando reinicializar OneSignal...')
-          setIsInitialized(false)
-        }, 5000)
-      })
     } else if (isAdminArea) {
       console.log('🔧 Área administrativa detectada - OneSignal não inicializado para admin')
     } else if (!appId) {
