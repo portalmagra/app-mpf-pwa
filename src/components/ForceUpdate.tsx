@@ -5,8 +5,15 @@ import { useEffect, useState } from 'react'
 export default function ForceUpdate() {
   const [showUpdate, setShowUpdate] = useState(false)
   const [isUpdating, setIsUpdating] = useState(false)
+  const [hasUpdated, setHasUpdated] = useState(false)
 
   useEffect(() => {
+    // Verificar se já atualizou nesta sessão
+    const hasUpdatedThisSession = sessionStorage.getItem('hasUpdatedThisSession')
+    if (hasUpdatedThisSession === 'true') {
+      return // Não mostrar popup se já atualizou
+    }
+
     // Detectar se é iPhone
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent)
     
@@ -34,6 +41,10 @@ export default function ForceUpdate() {
   const handleForceUpdate = async () => {
     try {
       setIsUpdating(true)
+      setHasUpdated(true)
+      
+      // Marcar que já atualizou nesta sessão
+      sessionStorage.setItem('hasUpdatedThisSession', 'true')
 
       // Limpar Service Workers
       if ('serviceWorker' in navigator) {
