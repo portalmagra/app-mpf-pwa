@@ -184,7 +184,7 @@ export default function AmazonPage() {
           <Link href="/" className="flex items-center space-x-2">
             <Logo />
             <div>
-              <h1 className="text-lg font-bold text-brand-text">Portal Fit</h1>
+              <h1 className="text-lg font-bold text-brand-text">MeuPortalFit</h1>
               <p className="text-xs text-brand-textLight">Brasileiros nos EUA</p>
             </div>
           </Link>
@@ -236,7 +236,7 @@ export default function AmazonPage() {
             {curatedProducts.length === 0 && (
             <div className="bg-gradient-to-r from-green-50 to-green-100 border-2 border-green-200 text-green-800 p-6 rounded-xl mb-6">
               <h2 className="text-xl font-bold mb-3 text-green-900">
-                🛒 Por Que Comprar na Amazon Através do Portal Fit?
+                🛒 Por Que Comprar na Amazon Através do MeuPortalFit?
               </h2>
               <p className="text-green-700 mb-4">
                 Nossa seleção por Inteligência Artificial é <strong>100% gratuita</strong> para você!
