@@ -4,11 +4,13 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
 import AdminEbooks from '@/components/AdminEbooks'
+import NotificationPanel from '@/components/NotificationPanel'
 import { productService, categoryService, recipeService, ebookService } from '@/lib/supabase'
 
 export default function AdminPage() {
   const [activeTab, setActiveTab] = useState('dashboard')
   const [showEbooksModal, setShowEbooksModal] = useState(false)
+  const [showNotificationsModal, setShowNotificationsModal] = useState(false)
   const [stats, setStats] = useState({
     recipes: 0,
     products: 0,
@@ -60,6 +62,15 @@ export default function AdminPage() {
       color: 'bg-purple-500',
       stats: `${stats.ebooks} eBooks cadastrados`,
       onClick: () => setShowEbooksModal(true)
+    },
+    {
+      id: 'notifications',
+      title: '🔔 Notificações',
+      description: 'Envie notificações push para usuários',
+      href: '#',
+      color: 'bg-blue-500',
+      stats: 'Push notifications',
+      onClick: () => setShowNotificationsModal(true)
     },
     {
       id: 'produtos',
@@ -421,6 +432,11 @@ export default function AdminPage() {
       {/* Modal de Administração de eBooks */}
       {showEbooksModal && (
         <AdminEbooks onClose={() => setShowEbooksModal(false)} />
+      )}
+
+      {/* Modal de Notificações */}
+      {showNotificationsModal && (
+        <NotificationPanel onClose={() => setShowNotificationsModal(false)} />
       )}
     </div>
   )
