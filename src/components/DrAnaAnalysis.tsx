@@ -26,14 +26,52 @@ export default function DrAnaAnalysis({ analysis, userName }: DrAnaAnalysisProps
         <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-8 mb-6">
           <h3 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
             <span className="text-2xl mr-2">👋</span>
-            Sua Análise Personalizada
+            Resumo da Sua Análise, {userName}
           </h3>
-          <div className="text-gray-700 leading-loose text-base whitespace-pre-line space-y-4">
-            {analysis.split('\n\n').map((paragraph, index) => (
-              <p key={index} className="mb-4 last:mb-0">
-                {paragraph}
-              </p>
-            ))}
+          <div className="text-gray-700 leading-loose text-base space-y-6">
+            {analysis.split('\n\n').map((paragraph, index) => {
+              // Processar parágrafos que começam com emojis ou títulos
+              const isTitle = paragraph.match(/^[🌙✨💧🌿]/);
+              const isList = paragraph.includes('- ');
+              
+              if (isTitle) {
+                return (
+                  <div key={index} className="mb-6">
+                    <p className="font-semibold text-gray-800 text-lg mb-3">
+                      {paragraph}
+                    </p>
+                  </div>
+                );
+              }
+              
+              if (isList) {
+                return (
+                  <div key={index} className="mb-6">
+                    {paragraph.split('\n').map((line, lineIndex) => {
+                      if (line.trim().startsWith('- ')) {
+                        return (
+                          <div key={lineIndex} className="flex items-start mb-3">
+                            <span className="text-emerald-600 mr-3 mt-1">•</span>
+                            <span className="flex-1">{line.replace('- ', '')}</span>
+                          </div>
+                        );
+                      }
+                      return line.trim() && (
+                        <p key={lineIndex} className="font-medium text-gray-800 mb-3">
+                          {line}
+                        </p>
+                      );
+                    })}
+                  </div>
+                );
+              }
+              
+              return (
+                <p key={index} className="mb-6 last:mb-0 text-justify">
+                  {paragraph}
+                </p>
+              );
+            })}
           </div>
         </div>
 
