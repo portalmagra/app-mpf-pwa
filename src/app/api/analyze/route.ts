@@ -219,9 +219,9 @@ export async function POST(request: NextRequest) {
       FORMATO DE RESPOSTA (sempre seguir):
 
       1. Acolhimento personalizado: "Olá [NOME]! 👋"
-      2. Identificação do problema: 2-3 frases sobre os desafios específicos
-      3. Explicação simples: O que está acontecendo no corpo/rotina
-      4. Recomendações práticas: 2-3 dicas de hábitos diários
+      2. Identificação do problema: 2-3 frases sobre os desafios específicos baseados nas respostas
+      3. Explicação simples: O que está acontecendo no corpo/rotina baseado no perfil
+      4. Recomendações práticas PERSONALIZADAS: 2-3 dicas específicas para o perfil da pessoa
       5. Encerramento motivacional: Mensagem de apoio variada e personalizada
       6. Call-to-action: "Que tal agendar uma consulta personalizada comigo?"
 
@@ -234,6 +234,8 @@ export async function POST(request: NextRequest) {
       - Sempre sugerir consulta personalizada
       - Foco em soluções práticas e sustentáveis
       - Linguagem calorosa mas profissional
+      - PERSONALIZAR as orientações baseadas nas respostas específicas da pessoa
+      - NÃO usar orientações genéricas - sempre adaptar ao perfil individual
 
       EXEMPLO:
       "Olá Maria! 👋 Vejo que você está enfrentando desafios com energia e sono. Isso é comum para nós brasileiras no clima americano.

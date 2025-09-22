@@ -23,13 +23,17 @@ export default function DrAnaAnalysis({ analysis, userName }: DrAnaAnalysisProps
 
       {/* Analysis Content */}
       <div className="prose prose-lg max-w-none">
-        <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6 mb-6">
-          <h3 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+        <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-8 mb-6">
+          <h3 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
             <span className="text-2xl mr-2">👋</span>
             Sua Análise Personalizada
           </h3>
-          <div className="text-gray-700 leading-relaxed whitespace-pre-line">
-            {analysis}
+          <div className="text-gray-700 leading-loose text-base whitespace-pre-line space-y-4">
+            {analysis.split('\n\n').map((paragraph, index) => (
+              <p key={index} className="mb-4 last:mb-0">
+                {paragraph}
+              </p>
+            ))}
           </div>
         </div>
 
