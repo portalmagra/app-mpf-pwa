@@ -28,9 +28,12 @@ export default function AvaliacaoPersonalizada() {
         <div className="max-w-sm mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <Logo variant="horizontal" size="md" />
-            <Link href="/" className="text-sm text-gray-600 hover:text-brand-green transition-colors">
-              ← Voltar ao App
-            </Link>
+            <button 
+              onClick={() => handleWhatsApp('Olá! Gostaria de falar com vocês via WhatsApp.')}
+              className="text-xs text-gray-500 hover:text-brand-green transition-colors"
+            >
+              💬 Fale Conosco
+            </button>
           </div>
         </div>
       </header>
@@ -42,7 +45,7 @@ export default function AvaliacaoPersonalizada() {
             🎥 Veja Como Funciona
           </h2>
           
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[9/16] bg-white">
+          <div className="relative rounded-2xl overflow-hidden shadow-2xl aspect-[9/16] bg-gradient-to-br from-gray-100 to-gray-200">
             {/* Vídeo Player */}
             <video
               ref={videoRef}
@@ -55,29 +58,40 @@ export default function AvaliacaoPersonalizada() {
               Seu navegador não suporta vídeos HTML5.
             </video>
             
-            {/* Tela branca com Play Button quando não está tocando */}
+            {/* Thumbnail com Play Button quando não está tocando */}
             {!isPlaying && (
               <div 
-                className="absolute inset-0 w-full h-full cursor-pointer bg-white flex items-center justify-center"
+                className="absolute inset-0 w-full h-full cursor-pointer"
                 onClick={handlePlayVideo}
               >
-                {/* Botão de Play centralizado */}
-                <div className="bg-white/90 rounded-full p-6 shadow-2xl hover:bg-white transition-all">
-                  <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transition-all">
-                    <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z"/>
-                    </svg>
+                {/* Imagem de fundo do vídeo */}
+                <div 
+                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                  style={{
+                    backgroundImage: 'url(/images/video-thumbnail.jpg)'
+                  }}
+                >
+                  {/* Overlay escuro para melhorar contraste */}
+                  <div className="absolute inset-0 bg-black/30"></div>
+                  
+                  {/* Botão de Play centralizado */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-24 h-24 bg-white/95 rounded-full flex items-center justify-center shadow-2xl hover:bg-white transition-all transform hover:scale-110 border-4 border-white">
+                      <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center hover:bg-green-600 transition-all shadow-lg">
+                        <svg className="w-10 h-10 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            )}
-            
-            {/* Overlay de informações (condicional) */}
-            {!isPlaying && (
-              <div className="absolute top-4 left-4 right-4 bg-black/70 rounded-lg p-3 text-white text-sm text-center">
-                <p className="font-semibold">
-                  🎯 Aperte o play assista vídeo de 40 segundos e entenda como funciona
-                </p>
+                
+                {/* Overlay de informações */}
+                <div className="absolute top-4 left-4 right-4 bg-black/80 rounded-lg p-3 text-white text-sm text-center">
+                  <p className="font-semibold">
+                    🎯 Aperte o play assista vídeo de 40 segundos e entenda como funciona
+                  </p>
+                </div>
               </div>
             )}
           </div>
@@ -221,7 +235,8 @@ export default function AvaliacaoPersonalizada() {
             </p>
             <div className="bg-white rounded-lg p-4 mb-4">
               <p className="text-brand-green font-bold text-lg">
-                <strong>De $37 por apenas $10</strong><br/>
+                <span className="line-through text-gray-500 mr-2">$37</span>
+                <strong>por apenas $10</strong><br/>
                 <span className="text-sm">Oferta exclusiva por 24h</span>
               </p>
             </div>
@@ -233,21 +248,6 @@ export default function AvaliacaoPersonalizada() {
             </button>
           </div>
 
-          {/* Bônus Gratuito */}
-          <div className="bg-gradient-to-r from-yellow-100 to-yellow-200 rounded-xl p-6 shadow-lg border border-yellow-300">
-            <h3 className="text-xl font-bold text-brand-text mb-4 flex items-center justify-center">
-              <span className="text-2xl mr-3">🎁</span>
-              Bônus Gratuito
-            </h3>
-            <div className="bg-white rounded-lg p-4">
-              <h4 className="font-bold text-brand-text mb-2">
-                Guia "Jejum Intermitente para Brasileiros nos EUA"
-              </h4>
-              <p className="text-sm text-brand-text2">
-                Protocolos específicos, receitas e cronograma de 30 dias
-              </p>
-            </div>
-          </div>
 
           {/* Informações Importantes */}
           <div className="bg-white rounded-xl p-6 shadow-lg border border-brand-border text-center">
