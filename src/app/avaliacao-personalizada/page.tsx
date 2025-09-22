@@ -167,7 +167,7 @@ export default function AvaliacaoPersonalizada() {
             </p>
             <p className="text-brand-text2 leading-relaxed">
               Através de uma análise detalhada do seu estilo de vida, hábitos alimentares e objetivos, 
-              criamos um plano personalizado para sua jornada de bem-estar.
+              você recebe orientações personalizadas para sua jornada de bem-estar.
             </p>
           </div>
 
@@ -196,14 +196,14 @@ export default function AvaliacaoPersonalizada() {
                 <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-brand-green text-white rounded-full font-bold">3</span>
                 <div>
                   <h3 className="font-bold text-brand-text">Sessão Online</h3>
-                  <p className="text-sm text-brand-text2">Converse com a Coach por videochamada (Zoom, Google Meet, etc.).</p>
+                  <p className="text-sm text-brand-text2">Converse com a Coach por vídeo pelo WhatsApp ou FaceTime.</p>
                 </div>
               </div>
               <div className="flex items-start space-x-3">
                 <span className="flex-shrink-0 w-8 h-8 flex items-center justify-center bg-brand-green text-white rounded-full font-bold">4</span>
                 <div>
-                  <h3 className="font-bold text-brand-text">Plano de Ação</h3>
-                  <p className="text-sm text-brand-text2">Receba um resumo e os próximos passos para sua transformação.</p>
+                  <h3 className="font-bold text-brand-text">Orientação Personalizada</h3>
+                  <p className="text-sm text-brand-text2">Receba um resumo e orientações para sua jornada de bem-estar.</p>
                 </div>
               </div>
             </div>

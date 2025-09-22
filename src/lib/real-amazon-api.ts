@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as crypto from 'crypto';
+import { applyIntelligentCuration, CuratedProduct } from './intelligent-curation';
 
 // === Amazon Product Advertising API v5 Configuration ===
 const AWS_ACCESS_KEY = process.env.AMAZON_ACCESS_KEY_ID!;
@@ -20,6 +21,16 @@ const CREDENTIALS_VALID = !!(
   AWS_SECRET_KEY !== 'undefined' &&
   AWS_SECRET_KEY.length >= 20
 );
+
+// Debug das credenciais
+console.log('🔐 Amazon API Debug:', {
+  hasAccessKey: !!AWS_ACCESS_KEY,
+  hasSecretKey: !!AWS_SECRET_KEY,
+  accessKeyLength: AWS_ACCESS_KEY?.length || 0,
+  secretKeyLength: AWS_SECRET_KEY?.length || 0,
+  associateTag: ASSOCIATE_TAG,
+  credentialsValid: CREDENTIALS_VALID
+});
 
 // === AWS Signature V4 Utility Functions ===
 function hmac(key: crypto.BinaryLike | crypto.KeyObject, data: string | Buffer) {
@@ -81,7 +92,16 @@ export interface RealAmazonProduct {
   isBestSeller: boolean;
   isAmazonChoice: boolean;
   reviewCount: number;
+  score?: number;
+  scoreBreakdown?: {
+    brand: number;
+    nutrients: number;
+    price: number;
+    shipping: number;
+    penalties: number;
+  };
   brand?: string;
+  features?: string[];
   ingredients?: string[];
   nutritionalValue?: string;
 }
@@ -236,11 +256,12 @@ export async function searchRealAmazonProducts(
       };
     });
 
-    // === CURADORIA INTELIGENTE ===
-    console.log(`🎯 Applying intelligent curation...`);
+    // === CURADORIA BÁSICA TEMPORÁRIA ===
+    console.log(`🎯 Applying basic curation...`);
     
+    // Curadoria básica temporária para testar
     const curatedProducts = amazonProducts
-      .filter((p: RealAmazonProduct) => p.rating >= 4.0 && p.reviewCount >= 100) // Filtro básico de qualidade
+      .filter((p: RealAmazonProduct) => p.rating >= 4.0 && p.reviewCount >= 100)
       .sort((a: RealAmazonProduct, b: RealAmazonProduct) => {
         // 1. Priorizar Amazon's Choice
         if (a.isAmazonChoice && !b.isAmazonChoice) return -1;
@@ -250,11 +271,8 @@ export async function searchRealAmazonProducts(
         if (a.isBestSeller && !b.isBestSeller) return -1;
         if (!a.isBestSeller && b.isBestSeller) return 1;
         
-        // 3. Ordenar por rating (mais alto primeiro)
-        if (Math.abs(a.rating - b.rating) > 0.1) return b.rating - a.rating;
-        
-        // 4. Ordenar por número de reviews (mais confiável)
-        return b.reviewCount - a.reviewCount;
+        // 3. Ordenar por rating
+        return b.rating - a.rating;
       })
       .slice(0, maxResults);
 

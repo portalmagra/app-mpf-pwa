@@ -5,6 +5,8 @@ import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import BottomNavigation from '@/components/BottomNavigation'
+import DrAnaAnalysis from '@/components/DrAnaAnalysis'
+import RecommendedProducts from '@/components/RecommendedProducts'
 
 // Sistema de traduções
 const translations = {
@@ -685,18 +687,78 @@ function ResultadosContent() {
                   Sua Análise Personalizada
                 </h3>
                 
-                {/* Análise Principal da Dra. Ana Slim */}
+                {/* Análise Principal Melhorada */}
                 <div style={{
-                  fontSize: '1.1rem',
+                  fontSize: '1rem',
                   color: '#374151',
-                  lineHeight: '1.7',
+                  lineHeight: '1.8',
                   marginBottom: '1.5rem',
-                  padding: '1.5rem',
-                  backgroundColor: '#f8fafc',
-                  borderRadius: '12px',
-                  border: '1px solid #e0f2e9'
+                  padding: '2rem',
+                  backgroundColor: '#ffffff',
+                  borderRadius: '16px',
+                  border: '2px solid #e0f2e9',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.08)'
                 }}>
-                  {(analysisResults as any)?.analise || (analysisResults as any)?.analysis}
+                  <div style={{
+                    fontSize: '1.1rem',
+                    fontWeight: '500',
+                    color: '#1e293b',
+                    marginBottom: '1rem',
+                    paddingBottom: '0.5rem',
+                    borderBottom: '2px solid #e0f2e9'
+                  }}>
+                    📋 Resumo da Sua Análise
+                  </div>
+                  <div style={{
+                    fontSize: '0.95rem',
+                    color: '#4b5563',
+                    lineHeight: '1.7',
+                    marginBottom: '1.5rem'
+                  }}>
+                    {(analysisResults as any)?.analise || (analysisResults as any)?.analysis}
+                  </div>
+                  
+                  {/* Seção de Orientações Práticas */}
+                  <div style={{
+                    backgroundColor: '#f0fdf4',
+                    padding: '1.5rem',
+                    borderRadius: '12px',
+                    border: '2px solid #bbf7d0',
+                    marginTop: '1.5rem'
+                  }}>
+                    <h4 style={{
+                      fontSize: '1.1rem',
+                      color: '#059669',
+                      fontWeight: 'bold',
+                      marginBottom: '1rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem'
+                    }}>
+                      💡 Orientações Práticas para Você
+                    </h4>
+                    <div style={{
+                      fontSize: '0.9rem',
+                      color: '#374151',
+                      lineHeight: '1.6'
+                    }}>
+                      <p style={{ marginBottom: '0.8rem' }}>
+                        <strong>🎯 Foco Principal:</strong> Melhore sua qualidade de sono e reduza o estresse através de hábitos simples e sustentáveis.
+                      </p>
+                      <p style={{ marginBottom: '0.8rem' }}>
+                        <strong>⏰ Horário de Sono:</strong> Tente dormir mais cedo para ter pelo menos 7-8 horas de sono por noite.
+                      </p>
+                      <p style={{ marginBottom: '0.8rem' }}>
+                        <strong>🥗 Alimentação:</strong> Incorpore mais alimentos anti-inflamatórios como frutas, vegetais e peixes ricos em ômega-3.
+                      </p>
+                      <p style={{ marginBottom: '0.8rem' }}>
+                        <strong>🧘 Relaxamento:</strong> Reserve 10-15 minutos diários para meditação, leitura ou atividades relaxantes.
+                      </p>
+                      <p style={{ marginBottom: '0' }}>
+                        <strong>💧 Hidratação:</strong> Mantenha-se bem hidratado ao longo do dia para melhorar energia e concentração.
+                      </p>
+                    </div>
+                  </div>
                 </div>
 
 
@@ -809,21 +871,29 @@ function ResultadosContent() {
                           💡 {product.whyPerfect}
                         </p>
                         
-                        <button onClick={() => searchOnAmazon(product.searchTerms)} style={{
-                          background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                          color: 'white',
-                          padding: '0.8rem 1.5rem',
-                          border: 'none',
-                          borderRadius: '25px',
-                          fontSize: '0.9rem',
-                          fontWeight: '600',
-                          cursor: 'pointer',
-                          transition: 'all 0.3s ease',
-                          width: '100%',
-                          boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)'
-                        }}>
-                          🔍 Buscar na Amazon
-                        </button>
+                        <a 
+                          href={product.amazonUrl || `https://www.amazon.com/s?k=${encodeURIComponent(product.searchTerms || product.name)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            display: 'block',
+                            background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                            color: 'white',
+                            padding: '0.8rem 1.5rem',
+                            border: 'none',
+                            borderRadius: '25px',
+                            fontSize: '0.9rem',
+                            fontWeight: '600',
+                            cursor: 'pointer',
+                            transition: 'all 0.3s ease',
+                            width: '100%',
+                            boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)',
+                            textDecoration: 'none',
+                            textAlign: 'center'
+                          }}
+                        >
+                          🛒 Ver na Amazon
+                        </a>
                       </div>
                     ))}
                   </div>
@@ -946,7 +1016,7 @@ function ResultadosContent() {
                         fontSize: '0.9rem',
                         color: '#059669'
                       }}>
-                        <strong>De $37 por apenas $10</strong><br/>
+                        <strong><span style={{ textDecoration: 'line-through', color: '#9ca3af' }}>$37</span> por apenas $10</strong><br/>
                         <span style={{ fontSize: '0.8rem' }}>Oferta exclusiva por 24h</span>
                       </div>
                       <button onClick={() => openWhatsApp('Olá! Quero agendar minha avaliação personalizada de 30 minutos com a coach brasileira por $10.')} style={{
@@ -983,7 +1053,7 @@ function ResultadosContent() {
                         marginBottom: '0.5rem',
                         fontWeight: 'bold'
                       }}>
-                        Plano Completo por IA
+                        Plano Completo Detalhado
                       </h5>
                       <p style={{
                         fontSize: '0.9rem',
@@ -991,7 +1061,7 @@ function ResultadosContent() {
                         marginBottom: '1rem',
                         lineHeight: '1.5'
                       }}>
-                        Plano detalhado de 30 dias com dicas de alimentação baseadas em ciência e cronograma personalizado
+                        Plano detalhado de 30 dias com alimentação balanceada, exercícios e cronograma personalizado baseado em ciência
                       </p>
                       <div style={{
                         backgroundColor: '#eff6ff',
@@ -1001,10 +1071,10 @@ function ResultadosContent() {
                         fontSize: '0.9rem',
                         color: '#1d4ed8'
                       }}>
-                        <strong>De $37 por apenas $10</strong><br/>
+                        <strong><span style={{ textDecoration: 'line-through', color: '#9ca3af' }}>$47</span> por apenas $10</strong><br/>
                         <span style={{ fontSize: '0.8rem' }}>Oferta exclusiva por 24h</span>
                       </div>
-                      <button onClick={() => openWhatsApp('Olá! Quero receber meu plano completo de 30 dias personalizado por inteligência artificial por $10.')} style={{
+                      <button onClick={() => openWhatsApp('Olá! Quero receber meu plano completo detalhado de 30 dias com alimentação balanceada e exercícios por $10.')} style={{
                         width: '100%',
                         padding: '0.8rem',
                         background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
@@ -1016,7 +1086,7 @@ function ResultadosContent() {
                         cursor: 'pointer',
                         transition: 'all 0.3s ease'
                       }}>
-                        📋 Receber Plano IA
+                        📋 Receber Plano Completo
                       </button>
                     </div>
                   </div>
@@ -1027,7 +1097,7 @@ function ResultadosContent() {
                     color: '#64748b',
                     fontStyle: 'italic'
                   }}>
-                    💡 <strong>Escolha sua opção:</strong> Acompanhamento humano personalizado ou plano detalhado por IA
+                    💡 <strong>Escolha sua opção:</strong> Acompanhamento humano personalizado ou plano completo detalhado de 30 dias
                   </p>
                 </div>
 
