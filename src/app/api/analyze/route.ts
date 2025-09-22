@@ -223,33 +223,36 @@ export async function POST(request: NextRequest) {
       3. Explicação simples: O que está acontecendo no corpo/rotina baseado no perfil
       4. Recomendações práticas PERSONALIZADAS: 2-3 dicas específicas para o perfil da pessoa
       5. Encerramento motivacional: Mensagem de apoio variada e personalizada
-      6. Call-to-action: "Que tal agendar uma consulta personalizada comigo?"
+      6. Call-to-action: "Que tal agendar uma avaliação personalizada?"
 
       REGRAS IMPORTANTES:
-      - SEMPRE usar o nome da pessoa
+      - SEMPRE usar o nome da pessoa no "Olá [NOME]! 👋"
       - NUNCA ultrapassar 200 palavras
       - Usar emojis estratégicos (🌙, 💧, 🌿, ✨)
       - Explicar o porquê de cada sugestão
       - Encerramento variado e motivacional
-      - Sempre sugerir consulta personalizada
+      - Sempre sugerir avaliação personalizada
       - Foco em soluções práticas e sustentáveis
       - Linguagem calorosa mas profissional
       - PERSONALIZAR as orientações baseadas nas respostas específicas da pessoa
       - NÃO usar orientações genéricas - sempre adaptar ao perfil individual
+      - Para soluções práticas, use **texto em negrito** para os títulos (ex: **Inclua mais fibras**)
+      - Use **O problema:** em negrito para destacar a seção
+      - Use **Soluções práticas:** em negrito para destacar a seção
 
       EXEMPLO:
-      "Olá Maria! 👋 Vejo que você está enfrentando desafios com energia e sono. Isso é comum para nós brasileiras no clima americano.
+      "Olá [NOME]! 👋 Vejo que você está enfrentando desafios com energia e sono. Isso é comum para nós brasileiras no clima americano.
 
-      🌙 O problema: Seu corpo está desregulado pelo horário irregular e falta de nutrientes essenciais.
+      🌙 **O problema:** Seu corpo está desregulado pelo horário irregular e falta de nutrientes essenciais.
 
-      ✨ Soluções práticas:
-      - Tome sol 15 minutos por dia para regular o ciclo
-      - Inclua mais proteína no café da manhã
-      - Estabeleça um horário fixo para dormir
+      ✨ **Soluções práticas:**
+      - **Tome sol 15 minutos por dia** para regular o ciclo
+      - **Inclua mais proteína** no café da manhã
+      - **Estabeleça um horário fixo** para dormir
 
       Você merece se sentir renovada e cheia de energia! Estou aqui para te apoiar nessa jornada.
 
-      Que tal agendar uma consulta personalizada comigo?"
+      Que tal agendar uma avaliação personalizada?"
       `;
 
       // Detectar gênero baseado no nome (se fornecido)
@@ -267,7 +270,7 @@ export async function POST(request: NextRequest) {
       }
 
       const gender = detectGender(userName || '')
-      const greeting = gender === 'masculino' ? 'Olá!' : gender === 'feminino' ? 'Olá, querida!' : 'Olá!'
+      const greeting = `Olá, ${userName}!`
       const pronoun = gender === 'masculino' ? 'você' : gender === 'feminino' ? 'você' : 'você'
       const possessive = gender === 'masculino' ? 'seu' : gender === 'feminino' ? 'sua' : 'seu'
 
@@ -336,7 +339,7 @@ export async function POST(request: NextRequest) {
       }
       
       const genderFallback = detectGenderFallback(userName || '')
-      const greetingFallback = genderFallback === 'masculino' ? 'Olá!' : genderFallback === 'feminino' ? 'Querida,' : 'Olá,'
+      const greetingFallback = `Olá, ${userName}!`
       const pronounFallback = genderFallback === 'masculino' ? 'você' : genderFallback === 'feminino' ? 'você' : 'você'
       const groupFallback = genderFallback === 'masculino' ? 'brasileiros' : genderFallback === 'feminino' ? 'brasileiras' : 'brasileiros'
       

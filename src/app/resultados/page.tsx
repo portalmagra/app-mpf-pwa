@@ -125,6 +125,8 @@ function ResultadosContent() {
             body: JSON.stringify({
               answers: parsedAnswers,
               language: lang,
+              userName: userName,
+              userAge: userAge,
               detailed: parsedDetailed
             })
           })
@@ -709,14 +711,21 @@ function ResultadosContent() {
                   }}>
                     📋 Resumo da Sua Análise
                   </div>
-                  <div style={{
-                    fontSize: '0.95rem',
-                    color: '#4b5563',
-                    lineHeight: '1.7',
-                    marginBottom: '1.5rem'
-                  }}>
-                    {(analysisResults as any)?.analise || (analysisResults as any)?.analysis}
-                  </div>
+                  <div 
+                    style={{
+                      fontSize: '0.95rem',
+                      color: '#4b5563',
+                      lineHeight: '1.7',
+                      marginBottom: '1.5rem',
+                      whiteSpace: 'pre-line'
+                    }}
+                    dangerouslySetInnerHTML={{
+                      __html: ((analysisResults as any)?.analise || (analysisResults as any)?.analysis || '')
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                        .replace(/Que tal agendar uma avaliação personalizada\?/g, 
+                          '<a href="/avaliacao-personalizada" style="color: #059669; text-decoration: none; font-weight: bold; background: #f0fdf4; padding: 8px 16px; border-radius: 8px; display: inline-block; margin-top: 10px;">Que tal agendar uma avaliação personalizada?</a>')
+                    }}
+                  />
                   
                   {/* Seção de Orientações Práticas */}
                   <div style={{
