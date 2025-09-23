@@ -155,8 +155,11 @@ function ResultadosContent() {
             const convertedResults = {
               acolhimento: results.analysis || 'Análise personalizada gerada com sucesso!',
               analise: results.analysis || 'Análise personalizada baseada nas suas respostas.',
-              produtos: results.recommendations || []
+              produtos: results.recommendedProducts || []
             }
+            
+            console.log('🎯 Produtos recebidos da API:', results.recommendedProducts)
+            console.log('🎯 Produtos convertidos:', convertedResults.produtos)
             
             setAnalysisResults(convertedResults)
           } else {
@@ -894,7 +897,7 @@ function ResultadosContent() {
                                 textAlign: 'center'
                               }}
                             >
-                              📖 Ver Guia Completo
+                              📖 Ver Mais Produtos para {product.category === 'sono' ? 'Sono' : product.category === 'energia' ? 'Energia' : product.category === 'emagrecimento' ? 'Emagrecimento' : product.category === 'ansiedade' ? 'Ansiedade' : product.category === 'vitaminas' ? 'Vitaminas' : product.category === 'omega3' ? 'Ômega 3' : product.category}
                             </a>
                           )}
                           {product.amazonUrl && (
