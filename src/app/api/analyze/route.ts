@@ -174,8 +174,8 @@ Responda em português brasileiro, de forma acolhedora e profissional, com emoji
       const uniqueNeeds = [...new Set(needs)].slice(0, 4)
       
       uniqueNeeds.forEach((need, index) => {
-        if (productMap[need]) {
-          const product = productMap[need]
+        if (productMap[need as keyof typeof productMap]) {
+          const product = productMap[need as keyof typeof productMap]
           products.push({
             name: product.name,
             description: product.description,
