@@ -768,6 +768,26 @@ function ResultadosContent() {
                   Produtos Recomendados para Você
                 </h3>
                 
+                {/* Nota de Sugestão */}
+                <div style={{
+                  backgroundColor: '#fef3c7',
+                  padding: '1rem',
+                  borderRadius: '8px',
+                  border: '1px solid #f59e0b',
+                  marginBottom: '1.5rem',
+                  textAlign: 'center'
+                }}>
+                  <p style={{
+                    fontSize: '0.9rem',
+                    color: '#92400e',
+                    margin: 0,
+                    fontWeight: '500'
+                  }}>
+                    💡 <strong>Estas são apenas sugestões</strong> baseadas na sua análise personalizada. 
+                    Consulte sempre um profissional de saúde antes de iniciar qualquer suplementação.
+                  </p>
+                </div>
+
                 {/* Produtos da API */}
                 {(analysisResults as any)?.produtos && (analysisResults as any).produtos.length > 0 && (
                   <div style={{

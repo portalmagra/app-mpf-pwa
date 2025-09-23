@@ -17,28 +17,39 @@ async function getProductsByCategory(categoryName: string): Promise<any[]> {
   console.log(`🔍 Buscando produtos da categoria: ${categoryName}`)
   
   try {
+    // Primeiro buscar a categoria pelo nome para obter o ID
+    const categories = await categoryService.getAllCategories()
+    const category = categories.find(c => c.name.toLowerCase().includes(categoryName.toLowerCase()) || c.id === categoryName)
+    
+    if (!category) {
+      console.log(`❌ Categoria ${categoryName} não encontrada`)
+      return []
+    }
+    
+    console.log(`✅ Categoria encontrada: ${category.name} (ID: ${category.id})`)
+    
     // Buscar produtos da categoria específica no Supabase
-    const products = await productService.getProductsByCategory(categoryName, true)
+    const products = await productService.getProductsByCategory(category.id, true)
     
     if (products && products.length > 0) {
-      console.log(`✅ Encontrados ${products.length} produtos na categoria ${categoryName}`)
+      console.log(`✅ Encontrados ${products.length} produtos na categoria ${category.name}`)
       
       // Converter para o formato esperado
       return products.slice(0, 3).map(product => ({
         name: product.name,
-        description: product.description || `Produto ${categoryName} para sua saúde`,
+        description: product.description || `Produto ${category.name} para sua saúde`,
         asin: product.amazon_url?.split('/dp/')[1]?.split('?')[0] || product.id,
         price: product.current_price || '$29.99',
         rating: product.rating || 4.5,
-        category: categoryName,
-        benefits: product.benefits || [`Benefícios para ${categoryName}`],
+        category: category.name,
+        benefits: product.benefits || [`Benefícios para ${category.name}`],
         amazonUrl: product.amazon_url || `https://meuportalfit.com/link/${product.id}`,
-        detailPageURL: `/produtos/${categoryName}`, // Link para a categoria completa
+        detailPageURL: `/produtos/${category.id}`, // Link para a categoria completa
         source: 'supabase-category',
         savings: Math.floor(Math.random() * 20) + 15,
         imageUrl: product.image_url || '',
         featured: false,
-        shortUrl: `meuportalfit.com/produtos/${categoryName}`
+        shortUrl: `meuportalfit.com/produtos/${category.id}`
       }))
     }
   } catch (error) {
@@ -470,23 +481,57 @@ async function searchProductsSmart(
       }
     }
     
-    // Se ainda não tem produtos suficientes, buscar termos mais genéricos
+    // Se ainda não tem produtos suficientes, buscar por categoria específica
     if (allProducts.length < targetCount) {
-      console.log(`📦 Need more products (have ${allProducts.length}, want ${targetCount})`)
+      console.log(`🔄 Buscando produtos por categoria específica...`)
       
-      const genericTerms = [
-        'bestseller supplement women',
-        'vitamin women health',
-        'natural supplement wellness',
-        'daily vitamin pack women',
-        'health supplement amazon choice'
-      ]
+      // Extrair necessidades da análise
+      const needs = extractNeedsFromAnalysis(analysis)
+      console.log('🎯 Necessidades identificadas:', needs)
       
-      for (const term of genericTerms) {
-        if (allProducts.length >= targetCount || searchAttempts >= maxAttempts) break
+      // Mapear necessidades para categorias do Supabase
+      const categoryMap: Record<string, string> = {
+        'magnesium': 'sono',
+        'melatonin': 'sono', 
+        'vitamin-d3': 'energia',
+        'vitamin-b12': 'energia',
+        'ashwagandha': 'ansiedade',
+        'theanine': 'ansiedade',
+        'probiotics': 'intestino',
+        'digestive-enzymes': 'intestino',
+        'vitamin-c': 'imunidade',
+        'zinc': 'imunidade'
+      }
+      
+      // Buscar produtos por categoria
+      for (const need of needs) {
+        const category = categoryMap[need] || 'energia'
+        console.log(`🔍 Buscando produtos da categoria: ${category}`)
         
-        searchAttempts++
-        console.log(`🔄 Generic search [${searchAttempts}/${maxAttempts}]: "${term}"`)
+        const categoryProducts = await getProductsByCategory(category)
+        if (categoryProducts.length > 0) {
+          allProducts.push(...categoryProducts)
+          console.log(`✅ Adicionados ${categoryProducts.length} produtos da categoria ${category}`)
+        }
+      }
+      
+      // Se ainda não tem produtos suficientes, buscar termos mais genéricos
+      if (allProducts.length < targetCount) {
+        console.log(`📦 Need more products (have ${allProducts.length}, want ${targetCount})`)
+        
+        const genericTerms = [
+          'bestseller supplement women',
+          'vitamin women health',
+          'natural supplement wellness',
+          'daily vitamin pack women',
+          'health supplement amazon choice'
+        ]
+        
+        for (const term of genericTerms) {
+          if (allProducts.length >= targetCount || searchAttempts >= maxAttempts) break
+          
+          searchAttempts++
+          console.log(`🔄 Generic search [${searchAttempts}/${maxAttempts}]: "${term}"`)
         
         try {
           const results = await searchRealAmazonProducts(term, 2)
