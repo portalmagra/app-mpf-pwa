@@ -789,6 +789,8 @@ export async function POST(request: NextRequest) {
       category: identifyCategory(product.name),
       benefits: generateBenefits(product.name, language),
       amazonUrl: `https://meuportalfit.com/link/${product.asin}`,
+      detailPageURL: `https://meuportalfit.com/link/${product.asin}`, // Adicionar campo detailPageURL
+      source: 'amazon-dynamic', // Adicionar campo source
       savings: Math.floor(Math.random() * 20) + 15, // 15-35% economia
       imageUrl: product.imageUrl || '',
       featured: index === 0,
@@ -850,9 +852,9 @@ const extractPracticalGuidance = (analysis: string): string => {
     return boldLines.slice(0, 5).join('\n')
   }
   
-  // Se não encontrar orientações específicas, retornar análise geral truncada
-  console.log('⚠️ Usando análise geral como fallback')
-  return analysis.length > 500 ? analysis.substring(0, 500) + '...' : analysis
+  // CORREÇÃO: Se não encontrar orientações específicas, retornar a análise completa
+  console.log('⚠️ Usando análise completa como fallback')
+  return analysis
 }
 
 return NextResponse.json({
