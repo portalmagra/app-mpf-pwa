@@ -84,6 +84,7 @@ export interface Category {
   description?: string
   color?: string
   icon?: string
+  quiz_mapping?: string[]
   created_at: string
 }
 
@@ -104,6 +105,9 @@ export interface Product {
   created_at: string
   slug?: string
   is_mentoria?: boolean
+  is_curated?: boolean
+  quiz_keywords?: string[]
+  priority_score?: number
 }
 
 export interface Ebook {
@@ -510,27 +514,6 @@ export const productService = {
     return data || []
   },
 
-  // Buscar produtos por categoria
-  async getProductsByCategory(categoryId: string): Promise<Product[]> {
-    if (!isSupabaseConfigured()) {
-      console.warn('⚠️ Supabase não configurado, usando dados mock')
-      return getMockProducts().filter(product => product.category_id === categoryId)
-    }
-
-    const { data, error } = await supabase
-      .from('products')
-      .select('*')
-      .eq('category_id', categoryId)
-      .order('created_at', { ascending: false })
-    
-    if (error) {
-      console.error('❌ Erro ao buscar produtos por categoria:', error)
-      return []
-    }
-    
-    return data || []
-  },
-
   // Buscar produto por ID
   async getProductById(id: string): Promise<Product | null> {
     if (!isSupabaseConfigured()) {
@@ -554,6 +537,8 @@ export const productService = {
 
   // Criar novo produto
   async createProduct(product: Omit<Product, 'created_at'>): Promise<Product | null> {
+    console.log('🔄 Criando produto no Supabase:', product.name)
+    
     if (!isSupabaseConfigured()) {
       console.warn('⚠️ Supabase não configurado, simulando criação')
       return {
@@ -562,18 +547,26 @@ export const productService = {
       }
     }
 
-    const { data, error } = await supabase
-      .from('products')
-      .insert([product])
-      .select()
-      .single()
-    
-    if (error) {
-      console.error('❌ Erro ao criar produto:', error)
+    try {
+      const { data, error } = await supabase
+        .from('products')
+        .insert([product])
+        .select()
+        .single()
+      
+      if (error) {
+        console.error('❌ Erro ao criar produto:', error)
+        console.error('❌ Detalhes do erro:', error.message)
+        console.error('❌ Produto que falhou:', product)
+        return null
+      }
+      
+      console.log('✅ Produto criado com sucesso:', data)
+      return data
+    } catch (error) {
+      console.error('❌ Erro inesperado ao criar produto:', error)
       return null
     }
-    
-    return data
   },
 
   // Atualizar produto
@@ -627,6 +620,94 @@ export const productService = {
     
     console.log('✅ Produto deletado com sucesso:', id)
     return true
+  },
+
+  // Buscar produtos curados baseados na análise do quiz
+  async getCuratedProductsByQuiz(quizAnalysis: string, maxResults: number = 6): Promise<Product[]> {
+    console.log('🎯 Buscando produtos curados por análise do quiz:', quizAnalysis.substring(0, 100) + '...')
+    
+    if (!isSupabaseConfigured()) {
+      console.warn('⚠️ Supabase não configurado, usando produtos mock')
+      return getMockProducts().slice(0, maxResults)
+    }
+
+    try {
+      // Usar a função SQL personalizada para buscar produtos curados
+      const { data, error } = await supabase
+        .rpc('get_curated_products_by_quiz', {
+          quiz_analysis: quizAnalysis,
+          max_results: maxResults
+        })
+      
+      if (error) {
+        console.error('❌ Erro ao buscar produtos curados:', error)
+        return []
+      }
+      
+      console.log('✅ Produtos curados encontrados:', data?.length || 0)
+      return data || []
+    } catch (error) {
+      console.error('❌ Erro na busca de produtos curados:', error)
+      return []
+    }
+  },
+
+  // Buscar produtos por categoria com foco em produtos curados
+  async getProductsByCategory(categoryId: string, includeCurated: boolean = true): Promise<Product[]> {
+    console.log('🏷️ Buscando produtos por categoria:', categoryId, 'Incluir curados:', includeCurated)
+    
+    if (!isSupabaseConfigured()) {
+      console.warn('⚠️ Supabase não configurado, usando produtos mock')
+      return getMockProducts().filter(p => p.category_id === categoryId)
+    }
+
+    let query = supabase
+      .from('products')
+      .select('*')
+      .eq('category_id', categoryId)
+      .order('priority_score', { ascending: false })
+      .order('rating', { ascending: false })
+
+    if (includeCurated) {
+      query = query.eq('is_curated', true)
+    }
+
+    const { data, error } = await query
+    
+    if (error) {
+      console.error('❌ Erro ao buscar produtos por categoria:', error)
+      return []
+    }
+    
+    console.log('✅ Produtos encontrados:', data?.length || 0)
+    return data || []
+  },
+
+  // Marcar produto como curado
+  async markProductAsCurated(productId: string, quizKeywords: string[], priorityScore: number = 50): Promise<boolean> {
+    console.log('⭐ Marcando produto como curado:', productId)
+    
+    if (!isSupabaseConfigured()) {
+      console.warn('⚠️ Supabase não configurado, simulando marcação')
+      return true
+    }
+
+    const { error } = await supabase
+      .from('products')
+      .update({
+        is_curated: true,
+        quiz_keywords: quizKeywords,
+        priority_score: priorityScore
+      })
+      .eq('id', productId)
+    
+    if (error) {
+      console.error('❌ Erro ao marcar produto como curado:', error)
+      return false
+    }
+    
+    console.log('✅ Produto marcado como curado com sucesso')
+    return true
   }
 }
 
@@ -639,6 +720,7 @@ function getMockCategories(): Category[] {
       description: 'Produtos para perda de peso saudável',
       color: '#96CEB4',
       icon: '🔥',
+      quiz_mapping: ['emagrecimento', 'weight loss', 'perda de peso', 'queima de gordura'],
       created_at: '2024-01-15T10:00:00Z'
     },
     {
@@ -647,6 +729,7 @@ function getMockCategories(): Category[] {
       description: 'Suplementos para aumentar energia e disposição',
       color: '#45B7D1',
       icon: '⚡',
+      quiz_mapping: ['energia', 'energy', 'fadiga', 'cansaço', 'disposição'],
       created_at: '2024-01-15T10:00:00Z'
     },
     {
@@ -655,6 +738,34 @@ function getMockCategories(): Category[] {
       description: 'Fortalecimento do sistema imunológico',
       color: '#98D8C8',
       icon: '🛡️',
+      quiz_mapping: ['imunidade', 'immunity', 'gripe', 'resfriado', 'defesa'],
+      created_at: '2024-01-15T10:00:00Z'
+    },
+    {
+      id: 'sono',
+      name: 'Qualidade do Sono',
+      description: 'Produtos para melhorar o sono e descanso',
+      color: '#74B9FF',
+      icon: '😴',
+      quiz_mapping: ['sono', 'sleep', 'dormir', 'insonia', 'qualidade do sono'],
+      created_at: '2024-01-15T10:00:00Z'
+    },
+    {
+      id: 'ansiedade',
+      name: 'Ansiedade',
+      description: 'Produtos naturais para controle da ansiedade',
+      color: '#A29BFE',
+      icon: '🧘',
+      quiz_mapping: ['ansiedade', 'anxiety', 'estresse', 'stress', 'nervos'],
+      created_at: '2024-01-15T10:00:00Z'
+    },
+    {
+      id: 'intestino',
+      name: 'Intestino',
+      description: 'Produtos para saúde intestinal e digestão',
+      color: '#00B894',
+      icon: '♻️',
+      quiz_mapping: ['digestão', 'digestion', 'intestino', 'gut', 'digestivo'],
       created_at: '2024-01-15T10:00:00Z'
     }
   ]
@@ -672,7 +783,10 @@ function getMockProducts(): Product[] {
       current_price: '$29.99',
       image_url: 'https://example.com/whey.jpg',
       created_at: '2024-01-15T10:00:00Z',
-      is_mentoria: false
+      is_mentoria: false,
+      is_curated: true,
+      quiz_keywords: ['energia', 'proteína', 'musculação'],
+      priority_score: 80
     },
     {
       id: '2',
