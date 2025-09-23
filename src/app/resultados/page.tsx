@@ -496,8 +496,15 @@ function ResultadosContent() {
                   <div class="produto-desc">${produto.description}</div>
                   <div class="produto-preco">${produto.price} ⭐ ${produto.rating}</div>
                   <div class="produto-benefits">💡 ${produto.benefits}</div>
-                  ${produto.amazonUrl ? `
+                  ${produto.detailPageURL ? `
                     <div class="produto-link">
+                      <a href="${produto.detailPageURL}" style="color: #059669; text-decoration: none; font-weight: bold; background: #f0fdf4; padding: 8px 16px; border-radius: 8px;">
+                        📖 Ver Guia Completo
+                      </a>
+                    </div>
+                  ` : ''}
+                  ${produto.amazonUrl ? `
+                    <div class="produto-link" style="margin-top: 8px;">
                       <a href="${produto.amazonUrl}" target="_blank" style="color: #ff6b35; text-decoration: none; font-weight: bold;">
                         🛒 Ver na Amazon
                       </a>
@@ -891,29 +898,60 @@ function ResultadosContent() {
                           💡 {product.whyPerfect}
                         </p>
                         
-                        <a 
-                          href={product.amazonUrl || `https://www.amazon.com/s?k=${encodeURIComponent(product.searchTerms || product.name)}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{
-                            display: 'block',
-                            background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                            color: 'white',
-                            padding: '0.8rem 1.5rem',
-                            border: 'none',
-                            borderRadius: '25px',
-                            fontSize: '0.9rem',
-                            fontWeight: '600',
-                            cursor: 'pointer',
-                            transition: 'all 0.3s ease',
-                            width: '100%',
-                            boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)',
-                            textDecoration: 'none',
-                            textAlign: 'center'
-                          }}
-                        >
-                          🛒 Ver na Amazon
-                        </a>
+                        <div style={{
+                          display: 'flex',
+                          gap: '0.5rem',
+                          flexDirection: 'column'
+                        }}>
+                          {product.detailPageURL && (
+                            <a 
+                              href={product.detailPageURL}
+                              style={{
+                                display: 'block',
+                                background: 'linear-gradient(135deg, #059669, #047857)',
+                                color: 'white',
+                                padding: '0.8rem 1.5rem',
+                                border: 'none',
+                                borderRadius: '25px',
+                                fontSize: '0.9rem',
+                                fontWeight: '600',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s ease',
+                                width: '100%',
+                                boxShadow: '0 4px 12px rgba(5, 150, 105, 0.3)',
+                                textDecoration: 'none',
+                                textAlign: 'center'
+                              }}
+                            >
+                              📖 Ver Guia Completo
+                            </a>
+                          )}
+                          {product.amazonUrl && (
+                            <a 
+                              href={product.amazonUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{
+                                display: 'block',
+                                background: 'linear-gradient(135deg, #f59e0b, #d97706)',
+                                color: 'white',
+                                padding: '0.8rem 1.5rem',
+                                border: 'none',
+                                borderRadius: '25px',
+                                fontSize: '0.9rem',
+                                fontWeight: '600',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s ease',
+                                width: '100%',
+                                boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)',
+                                textDecoration: 'none',
+                                textAlign: 'center'
+                              }}
+                            >
+                              🛒 Ver na Amazon
+                            </a>
+                          )}
+                        </div>
                       </div>
                     ))}
                   </div>

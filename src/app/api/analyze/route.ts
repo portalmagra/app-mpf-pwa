@@ -352,29 +352,40 @@ async function searchProductsSmart(
     
     if (curatedProducts && curatedProducts.length > 0) {
       // Converter produtos do Supabase para o formato esperado
-      const formattedProducts = curatedProducts.map(product => ({
-        name: product.name,
-        asin: product.amazon_url?.split('/dp/')[1]?.split('?')[0] || `SUPABASE_${product.id}`,
-        price: product.current_price || '$29.99',
-        rating: product.rating || 4.5,
-        imageUrl: product.image_url || '',
-        detailPageURL: product.amazon_url || `https://meuportalfit.com/link/${product.id}`,
-        isValid: true,
-        isBestSeller: false,
-        isAmazonChoice: false,
-        reviewCount: product.review_count || 1000,
-        brand: product.name.split(' ')[0] || 'Premium',
-        features: product.features || [],
-        score: product.priority_score || 75,
-        scoreBreakdown: {
-          brand: 20,
-          nutrients: 15,
-          price: 10,
-          shipping: 10,
-          penalties: 0
-        },
-        source: 'supabase-curated'
-      }))
+      const formattedProducts = curatedProducts.map(product => {
+        // Extrair ASIN da URL do Amazon ou usar ID do produto
+        const asin = product.amazon_url?.split('/dp/')[1]?.split('?')[0] || product.id
+        
+        // Criar link interno para o guia de produtos
+        const internalLink = `/produtos/${product.category_id}/${product.slug || product.id}`
+        
+        return {
+          name: product.name,
+          asin: asin,
+          price: product.current_price || '$29.99',
+          rating: product.rating || 4.5,
+          imageUrl: product.image_url || '',
+          detailPageURL: internalLink, // Usar link interno em vez do Amazon
+          amazonUrl: product.amazon_url, // Manter URL do Amazon para referência
+          isValid: true,
+          isBestSeller: false,
+          isAmazonChoice: false,
+          reviewCount: product.review_count || 1000,
+          brand: product.name.split(' ')[0] || 'Premium',
+          features: product.features || [],
+          benefits: product.benefits || [],
+          description: product.description || '',
+          score: product.priority_score || 75,
+          scoreBreakdown: {
+            brand: 20,
+            nutrients: 15,
+            price: 10,
+            shipping: 10,
+            penalties: 0
+          },
+          source: 'supabase-curated'
+        }
+      })
       
       allProducts.push(...formattedProducts)
       console.log(`✅ Encontrados ${formattedProducts.length} produtos curados no Supabase`)
@@ -599,18 +610,19 @@ export async function POST(request: NextRequest) {
 
       ESTILO: Tom acolhedor usando o nome da pessoa, máximo 200 palavras, sempre explique o porquê, use emojis para deixar leve.
 
-      FORMATO DE RESPOSTA (sempre seguir):
+      FORMATO DE RESPOSTA OBRIGATÓRIO (sempre seguir exatamente):
 
       1. Acolhimento personalizado: "Olá [NOME]! 👋"
       2. Identificação do problema: 2-3 frases sobre os desafios específicos baseados nas respostas
       3. Explicação simples: O que está acontecendo no corpo/rotina baseado no perfil
-      4. Recomendações práticas PERSONALIZADAS: 2-3 dicas específicas para o perfil da pessoa
+      4. **Soluções práticas:** (SEMPRE incluir esta seção com 3-5 dicas específicas)
       5. Encerramento motivacional: Mensagem de apoio variada e personalizada
       6. Call-to-action: "Que tal agendar uma avaliação personalizada?"
 
-      REGRAS IMPORTANTES:
+      REGRAS CRÍTICAS:
       - SEMPRE usar o nome da pessoa no "Olá [NOME]! 👋"
       - NUNCA ultrapassar 200 palavras
+      - SEMPRE incluir a seção **Soluções práticas:** com 3-5 dicas específicas
       - Usar emojis estratégicos (🌙, 💧, 🌿, ✨)
       - Explicar o porquê de cada sugestão
       - Encerramento variado e motivacional
@@ -625,6 +637,7 @@ export async function POST(request: NextRequest) {
       - ANALISAR as respostas específicas para identificar necessidades únicas
       - CRIAR orientações específicas baseadas no que a pessoa respondeu
       - EVITAR orientações genéricas que servem para qualquer pessoa
+      - OBRIGATÓRIO: Sempre terminar com a seção **Soluções práticas:** seguida de 3-5 dicas específicas
 
       EXEMPLO DE PERSONALIZAÇÃO:
       Se a pessoa respondeu sobre problemas de sono → focar em melatonina, magnésio, rotina noturna
@@ -797,20 +810,49 @@ const budget = budgetMap[budgetAnswer] || 'moderate'
 
 // Extrair orientações práticas da análise da Dra. Ana Slim
 const extractPracticalGuidance = (analysis: string): string => {
+  console.log('🔍 Extraindo orientações práticas da análise...')
+  console.log('📝 Análise completa:', analysis.substring(0, 200) + '...')
+  
   // Procurar por seções de orientações práticas na análise
   const guidanceMatch = analysis.match(/\*\*Soluções práticas:\*\*([\s\S]*?)(?=\*\*|$)/i)
   if (guidanceMatch) {
+    console.log('✅ Encontrou seção "Soluções práticas"')
     return guidanceMatch[1].trim()
+  }
+  
+  // Procurar por outras variações de orientações práticas
+  const variations = [
+    /\*\*Orientações práticas:\*\*([\s\S]*?)(?=\*\*|$)/i,
+    /\*\*Dicas práticas:\*\*([\s\S]*?)(?=\*\*|$)/i,
+    /\*\*Recomendações:\*\*([\s\S]*?)(?=\*\*|$)/i,
+    /\*\*Ações práticas:\*\*([\s\S]*?)(?=\*\*|$)/i
+  ]
+  
+  for (const variation of variations) {
+    const match = analysis.match(variation)
+    if (match) {
+      console.log('✅ Encontrou orientações com variação')
+      return match[1].trim()
+    }
   }
   
   // Fallback: procurar por listas com bullet points
   const bulletMatch = analysis.match(/- \*\*(.*?)\*\*/g)
-  if (bulletMatch) {
+  if (bulletMatch && bulletMatch.length >= 2) {
+    console.log('✅ Encontrou lista com bullet points')
     return bulletMatch.map(bullet => bullet.replace(/^- \*\*(.*?)\*\*/, '**$1**')).join('\n')
   }
   
-  // Se não encontrar orientações específicas, retornar análise geral
-  return analysis
+  // Procurar por linhas que começam com ** (títulos em negrito)
+  const boldLines = analysis.match(/\*\*[^*]+\*\*/g)
+  if (boldLines && boldLines.length >= 3) {
+    console.log('✅ Encontrou linhas em negrito')
+    return boldLines.slice(0, 5).join('\n')
+  }
+  
+  // Se não encontrar orientações específicas, retornar análise geral truncada
+  console.log('⚠️ Usando análise geral como fallback')
+  return analysis.length > 500 ? analysis.substring(0, 500) + '...' : analysis
 }
 
 return NextResponse.json({
