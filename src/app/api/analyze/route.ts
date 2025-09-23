@@ -218,7 +218,7 @@ Responda em português brasileiro, de forma acolhedora e profissional, com emoji
           }
         ]
         
-        const defaultProduct = defaultProducts[products.length - uniqueNeeds.length]
+        const defaultProduct = defaultProducts[products.length - uniqueNeeds.length] as typeof defaultProducts[0] | undefined
         if (defaultProduct) {
           products.push({
             name: defaultProduct.name,
