@@ -66,7 +66,13 @@ export default function AdminCuratedProducts() {
     try {
       setOperationStatus('⏳ Criando produto...')
       
-      const success = await productService.createProduct(newProduct)
+      // Gerar ID único para o produto
+      const productWithId = {
+        ...newProduct,
+        id: `produto-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+      }
+      
+      const success = await productService.createProduct(productWithId)
       
       if (success) {
         setOperationStatus('✅ Produto criado com sucesso!')
