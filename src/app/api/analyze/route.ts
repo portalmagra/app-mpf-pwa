@@ -384,6 +384,7 @@ async function searchProductsSmart(
   }
   
   // === ETAPA 2: FALLBACK PARA BUSCA DINÂMICA DA AMAZON ===
+  // SÓ buscar na Amazon se não tivermos produtos curados suficientes
   if (allProducts.length < targetCount) {
     console.log(`🔄 Precisamos de mais produtos (temos ${allProducts.length}, queremos ${targetCount})`)
     console.log('🔍 Iniciando busca dinâmica na Amazon como fallback...')
@@ -794,9 +795,28 @@ const budgetAnswer = answers[3] || 1
 const budgetMap = ['budget', 'moderate', 'priority', 'premium', 'unlimited']
 const budget = budgetMap[budgetAnswer] || 'moderate'
 
+// Extrair orientações práticas da análise da Dra. Ana Slim
+const extractPracticalGuidance = (analysis: string): string => {
+  // Procurar por seções de orientações práticas na análise
+  const guidanceMatch = analysis.match(/\*\*Soluções práticas:\*\*([\s\S]*?)(?=\*\*|$)/i)
+  if (guidanceMatch) {
+    return guidanceMatch[1].trim()
+  }
+  
+  // Fallback: procurar por listas com bullet points
+  const bulletMatch = analysis.match(/- \*\*(.*?)\*\*/g)
+  if (bulletMatch) {
+    return bulletMatch.map(bullet => bullet.replace(/^- \*\*(.*?)\*\*/, '**$1**')).join('\n')
+  }
+  
+  // Se não encontrar orientações específicas, retornar análise geral
+  return analysis
+}
+
 return NextResponse.json({
   success: true,
   analysis,
+  orientacoes: extractPracticalGuidance(analysis), // Adicionar orientações práticas
   profile: {
     language,
     budget,

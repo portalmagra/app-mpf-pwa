@@ -751,21 +751,32 @@ function ResultadosContent() {
                       color: '#374151',
                       lineHeight: '1.6'
                     }}>
-                      <p style={{ marginBottom: '0.8rem' }}>
-                        <strong>🎯 Foco Principal:</strong> Melhore sua qualidade de sono e reduza o estresse através de hábitos simples e sustentáveis.
-                      </p>
-                      <p style={{ marginBottom: '0.8rem' }}>
-                        <strong>⏰ Horário de Sono:</strong> Tente dormir mais cedo para ter pelo menos 7-8 horas de sono por noite.
-                      </p>
-                      <p style={{ marginBottom: '0.8rem' }}>
-                        <strong>🥗 Alimentação:</strong> Incorpore mais alimentos anti-inflamatórios como frutas, vegetais e peixes ricos em ômega-3.
-                      </p>
-                      <p style={{ marginBottom: '0.8rem' }}>
-                        <strong>🧘 Relaxamento:</strong> Reserve 10-15 minutos diários para meditação, leitura ou atividades relaxantes.
-                      </p>
-                      <p style={{ marginBottom: '0' }}>
-                        <strong>💧 Hidratação:</strong> Mantenha-se bem hidratado ao longo do dia para melhorar energia e concentração.
-                      </p>
+                      {/* Usar orientações da API se disponível, senão mostrar mensagem padrão */}
+                      {(analysisResults as any)?.orientacoes ? (
+                        <div dangerouslySetInnerHTML={{
+                          __html: ((analysisResults as any).orientacoes || '')
+                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                            .replace(/\n/g, '<br/>')
+                        }} />
+                      ) : (
+                        <div>
+                          <p style={{ marginBottom: '0.8rem' }}>
+                            <strong>🎯 Foco Principal:</strong> Melhore sua qualidade de sono e reduza o estresse através de hábitos simples e sustentáveis.
+                          </p>
+                          <p style={{ marginBottom: '0.8rem' }}>
+                            <strong>⏰ Horário de Sono:</strong> Tente dormir mais cedo para ter pelo menos 7-8 horas de sono por noite.
+                          </p>
+                          <p style={{ marginBottom: '0.8rem' }}>
+                            <strong>🥗 Alimentação:</strong> Incorpore mais alimentos anti-inflamatórios como frutas, vegetais e peixes ricos em ômega-3.
+                          </p>
+                          <p style={{ marginBottom: '0.8rem' }}>
+                            <strong>🧘 Relaxamento:</strong> Reserve 10-15 minutos diários para meditação, leitura ou atividades relaxantes.
+                          </p>
+                          <p style={{ marginBottom: '0' }}>
+                            <strong>💧 Hidratação:</strong> Mantenha-se bem hidratado ao longo do dia para melhorar energia e concentração.
+                          </p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
