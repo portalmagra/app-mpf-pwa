@@ -34,7 +34,6 @@ export async function POST(request: NextRequest) {
         if (productData) {
           results.push({
             success: true,
-            asin,
             ...productData
           })
         } else {
