@@ -12,6 +12,42 @@ const openai = new OpenAI({
 
 // === FUNÇÕES PARA GERAR PRODUTOS BASEADOS NO DIAGNÓSTICO ===
 
+// Função para buscar produtos por categoria específica
+async function getProductsByCategory(categoryName: string): Promise<any[]> {
+  console.log(`🔍 Buscando produtos da categoria: ${categoryName}`)
+  
+  try {
+    // Buscar produtos da categoria específica no Supabase
+    const products = await productService.getProductsByCategory(categoryName, true)
+    
+    if (products && products.length > 0) {
+      console.log(`✅ Encontrados ${products.length} produtos na categoria ${categoryName}`)
+      
+      // Converter para o formato esperado
+      return products.slice(0, 3).map(product => ({
+        name: product.name,
+        description: product.description || `Produto ${categoryName} para sua saúde`,
+        asin: product.amazon_url?.split('/dp/')[1]?.split('?')[0] || product.id,
+        price: product.current_price || '$29.99',
+        rating: product.rating || 4.5,
+        category: categoryName,
+        benefits: product.benefits || [`Benefícios para ${categoryName}`],
+        amazonUrl: product.amazon_url || `https://meuportalfit.com/link/${product.id}`,
+        detailPageURL: `/produtos/${categoryName}`, // Link para a categoria completa
+        source: 'supabase-category',
+        savings: Math.floor(Math.random() * 20) + 15,
+        imageUrl: product.image_url || '',
+        featured: false,
+        shortUrl: `meuportalfit.com/produtos/${categoryName}`
+      }))
+    }
+  } catch (error) {
+    console.error(`❌ Erro ao buscar produtos da categoria ${categoryName}:`, error)
+  }
+  
+  return []
+}
+
 function extractNeedsFromAnalysis(analysis: string): string[] {
   const needs: string[] = [];
   const analysisLower = analysis.toLowerCase();

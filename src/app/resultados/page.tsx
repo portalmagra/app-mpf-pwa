@@ -735,57 +735,8 @@ function ResultadosContent() {
                   />
                   
                   {/* Seção de Orientações Práticas */}
-                  <div style={{
-                    backgroundColor: '#f0fdf4',
-                    padding: '1.5rem',
-                    borderRadius: '12px',
-                    border: '2px solid #bbf7d0',
-                    marginTop: '1.5rem'
-                  }}>
-                    <h4 style={{
-                      fontSize: '1.1rem',
-                      color: '#059669',
-                      fontWeight: 'bold',
-                      marginBottom: '1rem',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem'
-                    }}>
-                      💡 Orientações Práticas para Você
-                    </h4>
-                    <div style={{
-                      fontSize: '0.9rem',
-                      color: '#374151',
-                      lineHeight: '1.6'
-                    }}>
-                      {/* Usar orientações da API se disponível, senão mostrar mensagem padrão */}
-                      {(analysisResults as any)?.orientacoes ? (
-                        <div dangerouslySetInnerHTML={{
-                          __html: ((analysisResults as any).orientacoes || '')
-                            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-                            .replace(/\n/g, '<br/>')
-                        }} />
-                      ) : (
-                        <div>
-                          <p style={{ marginBottom: '0.8rem' }}>
-                            <strong>🎯 Foco Principal:</strong> Melhore sua qualidade de sono e reduza o estresse através de hábitos simples e sustentáveis.
-                          </p>
-                          <p style={{ marginBottom: '0.8rem' }}>
-                            <strong>⏰ Horário de Sono:</strong> Tente dormir mais cedo para ter pelo menos 7-8 horas de sono por noite.
-                          </p>
-                          <p style={{ marginBottom: '0.8rem' }}>
-                            <strong>🥗 Alimentação:</strong> Incorpore mais alimentos anti-inflamatórios como frutas, vegetais e peixes ricos em ômega-3.
-                          </p>
-                          <p style={{ marginBottom: '0.8rem' }}>
-                            <strong>🧘 Relaxamento:</strong> Reserve 10-15 minutos diários para meditação, leitura ou atividades relaxantes.
-                          </p>
-                          <p style={{ marginBottom: '0' }}>
-                            <strong>💧 Hidratação:</strong> Mantenha-se bem hidratado ao longo do dia para melhorar energia e concentração.
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
+                  {/* Seção de Orientações Práticas - REMOVIDA */}
+                  {/* As orientações agora vêm apenas da análise personalizada da Dra. Ana Slim */}
                 </div>
 
 
