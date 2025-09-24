@@ -24,22 +24,22 @@ export default function TodosProtocolos() {
 
   const getProtocolImageName = (protocolId: string) => {
     const imageMap: { [key: string]: string } = {
-      'suporte-canetas-emagrecedoras': 'PROTOCOLO SUPORTE COM AS CANETAS EMAGRECEDORAS',
-      'pre-caneta': 'PROTOCOLO-PRE-CANETA',
-      'pos-caneta-manutencao': 'PROTOCOLO-POS-CANETA-MANUTENCAO',
-      'proteina-massa-magra': 'PROTOCOLO-PROTEINA-and-MASSA-MAGRA',
-      'intestino-livre': 'PROTOCOLO-INTESTINO-LIVRE',
-      'nausea-refluxo': 'PROTOCOLO-NAUSEA-and-REFLUXO',
-      'energia-imunidade': 'PROTOCOLO-ENERGIA-E-IMUNIDADE',
-      'imunidade-avancada': 'PROTOCOLO-IMUNIDADE-AVANCADA',
-      'detox-leve': 'PROTOCOLO-DETOX-LEVE',
-      'anti-inflamatorio': 'PROTOCOLO-ANTI-INFLAMATORIO',
-      'mulheres-40': 'PROTOCOLO-MULHERES-40',
-      'pele-cabelo-unhas': 'PROTOCOLO-PELE-CABELO-and-UNHAS',
-      'sono-ansiedade': 'PROTOCOLO-SONO-and-ANSIEDADE',
-      'fitness-performance': 'PROTOCOLO-FITNESS-and-PERFORMANCE',
-      'alternativa-sem-caneta': 'PROTOCOLO ALTERNATIVA SEM CANETA',
-      'pacote-completo': 'Todos Protocolos'
+      'suporte-canetas-emagrecedoras': 'PROTOCOLO SUPORTE COM AS CANETAS EMAGRECEDORAS.jpeg',
+      'pre-caneta': 'PROTOCOLO-PRE-CANETA.jpeg',
+      'pos-caneta-manutencao': 'PROTOCOLO-POS-CANETA-MANUTENCAO.jpeg',
+      'proteina-massa-magra': 'PROTOCOLO-PROTEINA-and-MASSA-MAGRA.jpeg',
+      'intestino-livre': 'PROTOCOLO-INTESTINO-LIVRE.jpeg',
+      'nausea-refluxo': 'PROTOCOLO-NAUSEA-and-REFLUXO.jpeg',
+      'energia-imunidade': 'PROTOCOLO-ENERGIA-E-IMUNIDADE.jpeg',
+      'imunidade-avancada': 'PROTOCOLO-IMUNIDADE-AVANCADA.jpeg',
+      'detox-leve': 'PROTOCOLO-DETOX-LEVE.jpeg',
+      'anti-inflamatorio': 'PROTOCOLO-ANTI-INFLAMATORIO.jpeg',
+      'mulheres-40': 'PROTOCOLO-MULHERES-40.jpeg',
+      'pele-cabelo-unhas': 'PROTOCOLO-PELE-CABELO-and-UNHAS.jpg',
+      'sono-ansiedade': 'PROTOCOLO-SONO-and-ANSIEDADE.jpeg',
+      'fitness-performance': 'PROTOCOLO-FITNESS-and-PERFORMANCE.jpeg',
+      'alternativa-sem-caneta': 'PROTOCOLO ALTERNATIVA SEM CANETA.jpeg',
+      'pacote-completo': 'Todos Protocolos.jpg'
     }
     return imageMap[protocolId] || protocolId
   }
@@ -312,18 +312,18 @@ export default function TodosProtocolos() {
                 <div className="mb-4">
                   <div className="w-full h-32 rounded-lg overflow-hidden">
                     {!imageErrors.has(protocol.id) ? (
-                      <img 
-                        src={`/images/protocolos/${getProtocolImageName(protocol.id)}.jpg`}
-                        alt={protocol.name}
-                        className="w-full h-full object-cover"
-                        onLoad={() => {
-                          console.log('Imagem carregada com sucesso:', protocol.name)
-                        }}
-                        onError={(e) => {
-                          console.log('Erro ao carregar imagem:', protocol.name, 'URL:', e.currentTarget.src)
-                          setImageErrors(prev => new Set(prev).add(protocol.id))
-                        }}
-                      />
+                <img 
+                  src={`/images/protocolos/${getProtocolImageName(protocol.id)}`}
+                  alt={protocol.name}
+                  className="w-full h-full object-cover"
+                  onLoad={() => {
+                    console.log('Imagem carregada com sucesso:', protocol.name)
+                  }}
+                  onError={(e) => {
+                    console.log('Erro ao carregar imagem:', protocol.name, 'URL:', e.currentTarget.src)
+                    setImageErrors(prev => new Set(prev).add(protocol.id))
+                  }}
+                />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-r from-brand-green to-brand-greenDark flex items-center justify-center text-white text-2xl font-bold">
                         {protocol.icon}
