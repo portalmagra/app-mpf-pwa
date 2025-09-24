@@ -372,7 +372,7 @@ export default function QuizPage() {
             <div className="bg-gradient-to-r from-brand-green to-brand-greenDark rounded-lg p-8 text-white">
               <h3 className="text-2xl font-bold mb-4">Pacote Completo</h3>
               <p className="text-green-100 mb-6">
-                Obtenha todos os 16 protocolos por apenas $67 (58% de desconto!)
+                Obtenha todos os 15 protocolos por apenas $67 (55% de desconto!)
               </p>
               <div className="flex items-center justify-between">
                 <div>

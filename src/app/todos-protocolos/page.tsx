@@ -246,7 +246,7 @@ export default function TodosProtocolos() {
               Obtenha todos os {protocols.length} protocolos por apenas $67
             </p>
             <p className="text-xs text-green-100 mb-4">
-              Economia de ${(protocols.length * 10) - 67} (58% de desconto!)
+              Economia de ${(protocols.length * 10) - 67} (55% de desconto!)
             </p>
             <Link 
               href="/quiz" 
