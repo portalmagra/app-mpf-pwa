@@ -174,19 +174,13 @@ export default function Home() {
               </div>
             </Link>
 
-            {/* 2. Nossa Seleção */}
-            <Link href="/produtos" className="w-full bg-gradient-to-r from-blue-100 to-blue-200 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-blue-300 transform hover:scale-105 block">
+            {/* 2. Protocolos Nutricionais - Azul (cor da Amazon) */}
+            <Link href="/quiz" className="w-full bg-gradient-to-r from-blue-100 to-blue-200 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-blue-300 transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
-                <img 
-                  src="/icons/amazon-logo-official.png" 
-                  alt="Amazon" 
-                  width="40" 
-                  height="40"
-                  className="object-contain"
-                />
+                <span className="text-4xl">📋</span>
                 <div className="flex-1 text-left">
-                  <h3 className="font-bold text-xl">Nossa Seleção</h3>
-                  <p className="text-sm text-brand-text2">Produtos selecionados para você</p>
+                  <h3 className="font-bold text-xl">Protocolos Nutricionais</h3>
+                  <p className="text-sm text-brand-text2">Para usuárias de canetas</p>
                 </div>
                 <span className="text-xs bg-blue-500 text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
@@ -204,13 +198,19 @@ export default function Home() {
               </div>
             </Link>
 
-            {/* 4. Protocolos Nutricionais - Branco neutro */}
-            <Link href="/quiz" className="w-full bg-white rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-gray-200 transform hover:scale-105 block">
+            {/* 4. Nossa Seleção - Branco neutro */}
+            <Link href="/produtos" className="w-full bg-white rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-gray-200 transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
-                <span className="text-4xl">📋</span>
+                <img 
+                  src="/icons/amazon-logo-official.png" 
+                  alt="Amazon" 
+                  width="40" 
+                  height="40"
+                  className="object-contain"
+                />
                 <div className="flex-1 text-left">
-                  <h3 className="font-bold text-xl">Protocolos Nutricionais</h3>
-                  <p className="text-sm text-brand-text2">Para usuárias de canetas</p>
+                  <h3 className="font-bold text-xl">Nossa Seleção</h3>
+                  <p className="text-sm text-brand-text2">Produtos selecionados para você</p>
                 </div>
                 <span className="text-xs bg-gray-500 text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>

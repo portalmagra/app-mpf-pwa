@@ -84,7 +84,7 @@ export default function MeusProtocolosPage() {
         <div className="max-w-sm mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <Logo variant="horizontal" size="md" />
-            <Link href="/protocolos">
+            <Link href="/">
               <button className="bg-brand-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-greenDark transition-colors">
                 ← Voltar
               </button>
@@ -140,7 +140,7 @@ export default function MeusProtocolosPage() {
                   }
                 </p>
                 {!searchTerm && (
-                  <Link href="/protocolos">
+                  <Link href="/">
                     <button className="bg-brand-green text-white px-6 py-3 rounded-lg font-medium hover:bg-brand-greenDark transition-colors">
                       Explorar Protocolos
                     </button>
