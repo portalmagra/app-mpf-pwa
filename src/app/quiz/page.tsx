@@ -127,9 +127,18 @@ export default function QuizPage() {
       'pos-caneta-manutencao': 'price_1SAvLQEVE42ibKnX8xFO3fNk',
       'proteina-massa-magra': 'price_1SAvLQEVE42ibKnXvDuVnZrG',
       'intestino-livre': 'price_1SAvLREVE42ibKnXxB3PdkLq',
+      'nausea-refluxo': 'price_1SAvLREVE42ibKnXxB3PdkLq',
+      'energia-imunidade': 'price_1SAvLREVE42ibKnXxB3PdkLq',
+      'detox-leve': 'price_1SAvLREVE42ibKnXxB3PdkLq',
+      'anti-inflamatorio': 'price_1SAvLREVE42ibKnXxB3PdkLq',
+      'mulheres-40': 'price_1SAvLREVE42ibKnXxB3PdkLq',
+      'pele-cabelo-unhas': 'price_1SAvLREVE42ibKnXxB3PdkLq',
+      'sono-ansiedade': 'price_1SAvLREVE42ibKnXxB3PdkLq',
+      'fitness-performance': 'price_1SAvLREVE42ibKnXxB3PdkLq',
+      'alternativa-sem-caneta': 'price_1SAvLREVE42ibKnXxB3PdkLq',
       'pacote-completo': 'price_1SAvLSEVE42ibKnXseU0nD6V'
     }
-    return priceMap[protocolId] || `price_${protocolId}`
+    return priceMap[protocolId] || 'price_1SAvLREVE42ibKnXxB3PdkLq'
   }
 
   const handlePurchase = async (protocolId: string) => {
