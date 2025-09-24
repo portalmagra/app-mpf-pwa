@@ -148,7 +148,7 @@ export default function QuizPage() {
         id: 'muscle_protection',
         name: 'Protocolo de Proteção Muscular',
         description: 'Prevenir perda muscular durante o emagrecimento',
-        price: 9.90,
+        price: 10.00,
         features: ['Otimização de proteína', 'Guia de treino resistido', 'Protocolos de recuperação']
       })
     }
@@ -158,7 +158,7 @@ export default function QuizPage() {
         id: 'digestive_health',
         name: 'Protocolo de Saúde Digestiva',
         description: 'Suporte à digestão saudável e função intestinal',
-        price: 9.90,
+        price: 10.00,
         features: ['Otimização de fibras', 'Orientação probiótica', 'Enzimas digestivas']
       })
     }
@@ -168,7 +168,7 @@ export default function QuizPage() {
         id: 'energy_immunity',
         name: 'Protocolo de Energia e Imunidade',
         description: 'Aumentar energia e apoiar função imunológica',
-        price: 9.90,
+        price: 10.00,
         features: ['Otimização de vitaminas', 'Equilíbrio mineral', 'Protocolos de energia']
       })
     }
@@ -300,12 +300,12 @@ export default function QuizPage() {
             <div className="bg-gradient-to-r from-brand-green to-brand-greenDark rounded-lg p-8 text-white">
               <h3 className="text-2xl font-bold mb-4">Pacote Completo</h3>
               <p className="text-green-100 mb-6">
-                Obtenha todos os protocolos mais atualizações futuras por apenas R$ 39,90/mês
+                Obtenha todos os 16 protocolos por apenas $67 (58% de desconto!)
               </p>
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-3xl font-bold">R$ 39,90<span className="text-lg font-normal">/mês</span></p>
-                  <p className="text-green-100">Cancele a qualquer momento</p>
+                  <p className="text-3xl font-bold">$67<span className="text-lg font-normal"> (valor único)</span></p>
+                  <p className="text-green-100">Acesso vitalício</p>
                 </div>
                 <button className="px-6 py-3 bg-white text-brand-green rounded-lg font-semibold hover:bg-gray-100 transition-colors">
                   Obter Acesso Completo

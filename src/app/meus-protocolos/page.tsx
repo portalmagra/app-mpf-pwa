@@ -2,235 +2,357 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { Download, Eye, Lock, CheckCircle, Star, ArrowLeft } from 'lucide-react'
 import Logo from '@/components/Logo'
-import { useSavedProtocols } from '@/hooks/useSavedItems'
 import BottomNavigation from '@/components/BottomNavigation'
+import ProtocolPreview from '@/components/ProtocolPreview'
 
-interface ProtocoloSalvo {
-  id: number
-  nome: string
-  descricao: string
-  categoria: string
-  link_pdf: string
-  data_salvamento: string
-  emoji: string
+interface Protocol {
+  id: string
+  name: string
+  description: string
+  price: number
+  purchased: boolean
+  preview_url?: string
+  download_url?: string
+  category: string
 }
 
-// Função para gerar emoji baseado no nome do protocolo
-const getProtocoloEmoji = (nome: string, categoria: string): string => {
-  const nomeLower = nome.toLowerCase()
-  const categoriaLower = categoria.toLowerCase()
-  
-  if (categoriaLower.includes('emagrecimento') || categoriaLower.includes('perda')) return '🔥'
-  if (categoriaLower.includes('energia') || categoriaLower.includes('energético')) return '⚡'
-  if (categoriaLower.includes('imunidade') || categoriaLower.includes('imune')) return '🛡️'
-  if (categoriaLower.includes('ansiedade') || categoriaLower.includes('stress')) return '🧘'
-  if (categoriaLower.includes('sono') || categoriaLower.includes('sleep')) return '😴'
-  if (categoriaLower.includes('digestão') || categoriaLower.includes('digestivo')) return '🌿'
-  if (categoriaLower.includes('musculação') || categoriaLower.includes('muscular')) return '💪'
-  if (categoriaLower.includes('detox') || categoriaLower.includes('limpeza')) return '🧹'
-  
-  if (nomeLower.includes('emagrecimento') || nomeLower.includes('perda')) return '🔥'
-  if (nomeLower.includes('energia') || nomeLower.includes('energético')) return '⚡'
-  if (nomeLower.includes('imunidade') || nomeLower.includes('imune')) return '🛡️'
-  if (nomeLower.includes('ansiedade') || nomeLower.includes('stress')) return '🧘'
-  if (nomeLower.includes('sono') || nomeLower.includes('sleep')) return '😴'
-  if (nomeLower.includes('digestão') || nomeLower.includes('digestivo')) return '🌿'
-  if (nomeLower.includes('musculação') || nomeLower.includes('muscular')) return '💪'
-  if (nomeLower.includes('detox') || nomeLower.includes('limpeza')) return '🧹'
-  
-  return '📋'
-}
-
-export default function MeusProtocolosPage() {
-  const { protocolosSalvos, removerProtocolo } = useSavedProtocols()
+export default function MeusProtocolos() {
+  const [protocols, setProtocols] = useState<Protocol[]>([])
   const [loading, setLoading] = useState(true)
-  const [searchTerm, setSearchTerm] = useState('')
+  const [selectedProtocol, setSelectedProtocol] = useState<Protocol | null>(null)
+
+  // Lista dos 16 protocolos disponíveis
+  const availableProtocols: Protocol[] = [
+    {
+      id: 'alternativa-sem-caneta',
+      name: 'Protocolo Alternativa Sem Caneta',
+      description: 'Alternativas naturais para emagrecimento sem medicação',
+      price: 10,
+      purchased: false,
+      category: 'Emagrecimento'
+    },
+    {
+      id: 'suporte-canetas-emagrecedoras',
+      name: 'Protocolo Suporte com Canetas Emagrecedoras',
+      description: 'Suporte nutricional completo para usuárias de canetas',
+      price: 10,
+      purchased: false,
+      category: 'Canetas'
+    },
+    {
+      id: 'anti-inflamatorio',
+      name: 'Protocolo Anti-inflamatório',
+      description: 'Redução de inflamação e melhora da saúde geral',
+      price: 10,
+      purchased: false,
+      category: 'Saúde'
+    },
+    {
+      id: 'detox-leve',
+      name: 'Protocolo Detox Leve',
+      description: 'Desintoxicação suave e natural do organismo',
+      price: 10,
+      purchased: false,
+      category: 'Detox'
+    },
+    {
+      id: 'energia-imunidade',
+      name: 'Protocolo Energia e Imunidade',
+      description: 'Aumento de energia e fortalecimento do sistema imunológico',
+      price: 10,
+      purchased: false,
+      category: 'Energia'
+    },
+    {
+      id: 'fitness-performance',
+      name: 'Protocolo Fitness e Performance',
+      description: 'Otimização do desempenho físico e mental',
+      price: 10,
+      purchased: false,
+      category: 'Fitness'
+    },
+    {
+      id: 'imunidade-avancada',
+      name: 'Protocolo Imunidade Avançada',
+      description: 'Fortalecimento avançado do sistema imunológico',
+      price: 10,
+      purchased: false,
+      category: 'Imunidade'
+    },
+    {
+      id: 'intestino-livre',
+      name: 'Protocolo Intestino Livre',
+      description: 'Saúde intestinal e digestão otimizada',
+      price: 10,
+      purchased: false,
+      category: 'Digestão'
+    },
+    {
+      id: 'mulheres-40',
+      name: 'Protocolo Mulheres 40+',
+      description: 'Cuidados específicos para mulheres após os 40',
+      price: 10,
+      purchased: false,
+      category: 'Hormonal'
+    },
+    {
+      id: 'nausea-refluxo',
+      name: 'Protocolo Náusea e Refluxo',
+      description: 'Alívio de náuseas e problemas digestivos',
+      price: 10,
+      purchased: false,
+      category: 'Digestão'
+    },
+    {
+      id: 'pele-cabelo-unhas',
+      name: 'Protocolo Pele, Cabelo e Unhas',
+      description: 'Cuidados para beleza e saúde da pele, cabelo e unhas',
+      price: 10,
+      purchased: false,
+      category: 'Beleza'
+    },
+    {
+      id: 'pos-caneta-manutencao',
+      name: 'Protocolo Pós-Caneta Manutenção',
+      description: 'Manutenção dos resultados após uso de canetas',
+      price: 10,
+      purchased: false,
+      category: 'Canetas'
+    },
+    {
+      id: 'pre-caneta',
+      name: 'Protocolo Pré-Caneta',
+      description: 'Preparação antes de iniciar uso de canetas',
+      price: 10,
+      purchased: false,
+      category: 'Canetas'
+    },
+    {
+      id: 'proteina-massa-magra',
+      name: 'Protocolo Proteína e Massa Magra',
+      description: 'Preservação e ganho de massa muscular',
+      price: 10,
+      purchased: false,
+      category: 'Musculação'
+    },
+    {
+      id: 'sono-ansiedade',
+      name: 'Protocolo Sono e Ansiedade',
+      description: 'Melhora da qualidade do sono e redução da ansiedade',
+      price: 10,
+      purchased: false,
+      category: 'Bem-estar'
+    }
+  ]
 
   useEffect(() => {
-    // Simular loading para sincronizar com o hook
-    const timer = setTimeout(() => {
+    // Simular carregamento dos protocolos comprados
+    // Em produção, isso viria do Supabase
+    setTimeout(() => {
+      // Simular alguns protocolos comprados
+      const purchasedProtocols = availableProtocols.map(protocol => ({
+        ...protocol,
+        purchased: Math.random() > 0.7 // Simular 30% comprados
+      }))
+      setProtocols(purchasedProtocols)
       setLoading(false)
-    }, 500)
-    
-    return () => clearTimeout(timer)
-  }, [protocolosSalvos])
+    }, 1000)
+  }, [])
 
-  // Filtrar protocolos baseado no termo de busca
-  const filteredProtocolos = protocolosSalvos.filter(protocolo =>
-    protocolo.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    protocolo.descricao.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    protocolo.categoria.toLowerCase().includes(searchTerm.toLowerCase())
-  )
-
-  const handleRemoverProtocolo = (id: number) => {
-    removerProtocolo(id)
+  const handleDownload = async (protocol: Protocol) => {
+    try {
+      // Em produção, isso faria download do Supabase Storage
+      console.log('Downloading protocol:', protocol.id)
+      alert(`Download do protocolo "${protocol.name}" iniciado!`)
+    } catch (error) {
+      console.error('Error downloading protocol:', error)
+      alert('Erro ao fazer download. Tente novamente.')
+    }
   }
 
-  const handleCompartilharWhatsApp = (protocolo: ProtocoloSalvo) => {
-    const mensagem = `📋 *${protocolo.nome}*\n\n${protocolo.descricao}\n\n📖 Veja o protocolo completo: ${protocolo.link_pdf}\n\n✨ Protocolo salvo do MeuPortalFit`
-    const url = `https://wa.me/?text=${encodeURIComponent(mensagem)}`
-    window.open(url, '_blank')
+  const handlePreview = (protocol: Protocol) => {
+    setSelectedProtocol(protocol)
   }
 
-  const handleAcessarProtocolo = (protocolo: ProtocoloSalvo) => {
-    window.open(protocolo.link_pdf, '_blank')
+  const purchasedProtocols = protocols.filter(p => p.purchased)
+  const availableToPurchase = protocols.filter(p => !p.purchased)
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-brand-cream pb-16">
+        <div className="flex items-center justify-center h-screen">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-green mx-auto mb-4"></div>
+            <p className="text-brand-text2">Carregando seus protocolos...</p>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
-    <div className="min-h-screen bg-brand-cream">
+    <div className="min-h-screen bg-brand-cream pb-16">
       {/* Header */}
       <header className="bg-white shadow-soft sticky top-0 z-50">
         <div className="max-w-sm mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <Logo variant="horizontal" size="md" />
-            <Link href="/">
-              <button className="bg-brand-green text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-brand-greenDark transition-colors">
-                ← Voltar
-              </button>
+            <Link href="/" className="text-brand-green text-sm font-medium">
+              🏠 Início
             </Link>
           </div>
         </div>
       </header>
 
-      {/* Conteúdo Principal */}
-      <main className="max-w-sm mx-auto px-4 py-6">
-        {/* Título */}
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-brand-text">
-            📋 Meus Protocolos
+      {/* Hero */}
+      <section className="px-4 py-6 text-center">
+        <div className="max-w-sm mx-auto">
+          <h1 className="text-2xl font-bold text-brand-text mb-2">
+            📚 Meus Protocolos
           </h1>
-          <p className="text-brand-text2 mt-2">
-            Seus protocolos de bem-estar salvos
+          <p className="text-brand-text2 text-sm">
+            Acesse seus protocolos comprados e descubra novos
           </p>
         </div>
+      </section>
 
-        {/* Busca */}
-        <div className="mb-6">
-          <input
-            type="text"
-            placeholder="Buscar nos seus protocolos..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full px-4 py-3 border border-brand-border rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-green"
-          />
-        </div>
-
-        {/* Loading */}
-        {loading && (
-          <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand-green mx-auto mb-4"></div>
-            <p className="text-brand-text2">Carregando seus protocolos...</p>
-          </div>
-        )}
-
-        {/* Lista de Protocolos Salvos */}
-        {!loading && (
-          <div className="space-y-4">
-            {filteredProtocolos.length === 0 ? (
-              <div className="text-center py-12">
-                <div className="text-6xl mb-4">📋</div>
-                <h3 className="text-lg font-semibold text-brand-text mb-2">
-                  {searchTerm ? 'Nenhum protocolo encontrado' : 'Nenhum protocolo salvo ainda'}
-                </h3>
-                <p className="text-brand-text2 mb-6">
-                  {searchTerm 
-                    ? 'Tente buscar com outros termos'
-                    : 'Salve protocolos que você gostar para acessá-los facilmente aqui'
-                  }
-                </p>
-                {!searchTerm && (
-                  <Link href="/">
-                    <button className="bg-brand-green text-white px-6 py-3 rounded-lg font-medium hover:bg-brand-greenDark transition-colors">
-                      Explorar Protocolos
-                    </button>
-                  </Link>
-                )}
-              </div>
-            ) : (
-              filteredProtocolos.map((protocolo) => (
-                <div
-                  key={protocolo.id}
-                  className="bg-white rounded-xl p-4 shadow-soft border border-brand-border"
-                >
-                  <div className="flex items-start space-x-4">
-                    {/* Emoji do Protocolo */}
-                    <div className="text-3xl flex-shrink-0">
-                      {getProtocoloEmoji(protocolo.nome, protocolo.categoria)}
-                    </div>
-
-                    {/* Conteúdo do Protocolo */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-2">
-                        <h3 className="font-bold text-brand-text text-lg">
-                          {protocolo.nome}
-                        </h3>
-                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-brand-purple text-white">
-                          {protocolo.categoria}
-                        </span>
-                      </div>
-
-                      <p className="text-brand-text2 text-sm mb-3 line-clamp-2">
-                        {protocolo.descricao}
-                      </p>
-
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-xs text-brand-text2">
-                          Salvo em: {protocolo.data_salvamento}
-                        </span>
-                      </div>
-
-                      {/* Botões de Ação */}
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => handleAcessarProtocolo(protocolo)}
-                          className="flex-1 bg-brand-purple text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-brand-purpleDark transition-colors"
-                        >
-                          📖 Ver Protocolo
-                        </button>
-                        <button
-                          onClick={() => handleCompartilharWhatsApp(protocolo)}
-                          className="flex-1 bg-green-500 text-white px-3 py-2 rounded-lg text-sm font-medium hover:bg-green-600 transition-colors"
-                        >
-                          📱 WhatsApp
-                        </button>
-                        <button
-                          onClick={() => handleRemoverProtocolo(protocolo.id)}
-                          className="bg-red-100 text-red-600 px-3 py-2 rounded-lg text-sm font-medium hover:bg-red-200 transition-colors"
-                        >
-                          🗑️
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        )}
-
-        {/* Estatísticas */}
-        {!loading && protocolosSalvos.length > 0 && (
-          <div className="mt-8 p-4 bg-white rounded-xl shadow-soft border border-brand-border">
-            <h3 className="font-semibold text-brand-text mb-2">📊 Suas Estatísticas</h3>
+      {/* Stats */}
+      <section className="px-4 mb-6">
+        <div className="max-w-sm mx-auto">
+          <div className="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
             <div className="grid grid-cols-2 gap-4 text-center">
               <div>
-                <div className="text-2xl font-bold text-brand-purple">{protocolosSalvos.length}</div>
-                <div className="text-sm text-brand-text2">Protocolos Salvos</div>
+                <p className="text-2xl font-bold text-brand-green">{purchasedProtocols.length}</p>
+                <p className="text-xs text-brand-text2">Comprados</p>
               </div>
               <div>
-                <div className="text-2xl font-bold text-brand-green">
-                  {new Set(protocolosSalvos.map(p => p.categoria)).size}
-                </div>
-                <div className="text-sm text-brand-text2">Categorias</div>
+                <p className="text-2xl font-bold text-brand-text">{availableToPurchase.length}</p>
+                <p className="text-xs text-brand-text2">Disponíveis</p>
               </div>
             </div>
           </div>
-        )}
-      </main>
-      
+        </div>
+      </section>
+
+      {/* Protocolos Comprados */}
+      {purchasedProtocols.length > 0 && (
+        <section className="px-4 mb-6">
+          <div className="max-w-sm mx-auto">
+            <h2 className="text-lg font-bold text-brand-text mb-4 flex items-center">
+              <CheckCircle className="w-5 h-5 text-brand-green mr-2" />
+              Seus Protocolos
+            </h2>
+            <div className="space-y-3">
+              {purchasedProtocols.map((protocol) => (
+                <div key={protocol.id} className="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <h3 className="font-bold text-brand-text mb-1">{protocol.name}</h3>
+                      <p className="text-xs text-brand-text2 mb-2">{protocol.description}</p>
+                      <span className="inline-block bg-brand-greenSoft text-brand-green text-xs px-2 py-1 rounded-full">
+                        {protocol.category}
+                      </span>
+                    </div>
+                    <div className="flex space-x-2 ml-3">
+                      <button
+                        onClick={() => handlePreview(protocol)}
+                        className="p-2 bg-brand-greenSoft text-brand-green rounded-lg hover:bg-brand-green hover:text-white transition-colors"
+                        title="Visualizar"
+                      >
+                        <Eye className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => handleDownload(protocol)}
+                        className="p-2 bg-brand-green text-white rounded-lg hover:bg-brand-greenDark transition-colors"
+                        title="Download"
+                      >
+                        <Download className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Protocolos Disponíveis */}
+      <section className="px-4 mb-6">
+        <div className="max-w-sm mx-auto">
+          <h2 className="text-lg font-bold text-brand-text mb-4 flex items-center">
+            <Star className="w-5 h-5 text-brand-green mr-2" />
+            Protocolos Disponíveis
+          </h2>
+          <div className="space-y-3">
+            {availableToPurchase.slice(0, 6).map((protocol) => (
+              <div key={protocol.id} className="bg-white rounded-xl p-4 shadow-lg border border-gray-100 opacity-75">
+                <div className="flex items-start justify-between">
+                  <div className="flex-1">
+                    <h3 className="font-bold text-brand-text mb-1">{protocol.name}</h3>
+                    <p className="text-xs text-brand-text2 mb-2">{protocol.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className="inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">
+                        {protocol.category}
+                      </span>
+                      <span className="text-sm font-bold text-brand-green">${protocol.price}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center ml-3">
+                    <Lock className="w-4 h-4 text-gray-400" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          {availableToPurchase.length > 6 && (
+            <div className="text-center mt-4">
+              <Link 
+                href="/quiz" 
+                className="text-brand-green text-sm font-medium hover:underline"
+              >
+                Ver todos os {availableToPurchase.length} protocolos disponíveis
+              </Link>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Bundle Offer */}
+      <section className="px-4 mb-6">
+        <div className="max-w-sm mx-auto">
+          <div className="bg-gradient-to-r from-brand-green to-brand-greenDark rounded-xl p-6 text-white text-center shadow-lg">
+            <h3 className="text-xl font-bold mb-2">🎁 Oferta Especial</h3>
+            <p className="text-sm mb-4">
+              Obtenha todos os 16 protocolos por apenas $67
+            </p>
+            <p className="text-xs text-green-100 mb-4">
+              Economia de $93 (58% de desconto!)
+            </p>
+            <Link 
+              href="/quiz" 
+              className="bg-white text-brand-green px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors inline-block"
+            >
+              Obter Pacote Completo
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Bottom Navigation */}
       <BottomNavigation currentPage="/meus-protocolos" />
+
+      {/* Protocol Preview Modal */}
+      {selectedProtocol && (
+        <ProtocolPreview
+          protocol={selectedProtocol}
+          onClose={() => setSelectedProtocol(null)}
+          onDownload={() => handleDownload(selectedProtocol)}
+        />
+      )}
     </div>
   )
 }
