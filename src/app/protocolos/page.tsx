@@ -45,12 +45,21 @@ export default function Protocolos() {
               especialmente se você usa canetas de emagrecimento ou inibidores de apetite.
             </p>
             
-            <Link 
-              href="/quiz" 
-              className="bg-brand-green text-white px-6 py-3 rounded-xl font-bold hover:bg-brand-greenDark transition-colors inline-block mb-4"
-            >
-              🧠 Fazer Avaliação Personalizada
-            </Link>
+                    <Link 
+                      href="/quiz" 
+                      className="bg-brand-green text-white px-6 py-3 rounded-xl font-bold hover:bg-brand-greenDark transition-colors inline-block mb-4"
+                    >
+                      🧠 Fazer Avaliação Personalizada
+                    </Link>
+                    
+                    <div className="text-center mt-4">
+                      <Link 
+                        href="/todos-protocolos" 
+                        className="text-brand-green text-sm font-medium hover:underline"
+                      >
+                        Ver todos os protocolos disponíveis
+                      </Link>
+                    </div>
             
             <div className="text-xs text-brand-text2">
               <p>✅ Focado em brasileiros nos EUA</p>

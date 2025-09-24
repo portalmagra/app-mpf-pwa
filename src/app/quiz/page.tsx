@@ -140,36 +140,108 @@ export default function QuizPage() {
     // Calculate water needs (in ml)
     const waterNeedsMl = weightKg * 35 // ml per kg
     
-    // Determine recommended protocols
+    // Determine recommended protocols based on diagnosis
     const protocols = []
     
-    if (mainChallenge === 'muscle_loss' || medication === 'currently_using_injection' || medication === 'currently_using_pill' || medication === 'currently_using_other') {
+    // Protocolos para usuárias de canetas
+    if (medication === 'currently_using_injection' || medication === 'currently_using_pill' || medication === 'currently_using_other') {
       protocols.push({
-        id: 'muscle_protection',
-        name: 'Protocolo de Proteção Muscular',
-        description: 'Prevenir perda muscular durante o emagrecimento',
+        id: 'suporte-canetas-emagrecedoras',
+        name: 'Protocolo Suporte com Canetas Emagrecedoras',
+        description: 'Suporte nutricional completo para usuárias de canetas',
+        price: 10.00,
+        features: ['Otimização de proteína', 'Prevenção de perda muscular', 'Suporte digestivo']
+      })
+      
+      if (duration === 'less_than_1_month') {
+        protocols.push({
+          id: 'pre-caneta',
+          name: 'Protocolo Pré-Caneta',
+          description: 'Preparação antes de iniciar uso de canetas',
+          price: 10.00,
+          features: ['Preparação nutricional', 'Otimização metabólica', 'Suporte inicial']
+        })
+      }
+    }
+    
+    // Protocolos baseados no desafio principal
+    if (mainChallenge === 'muscle_loss') {
+      protocols.push({
+        id: 'proteina-massa-magra',
+        name: 'Protocolo Proteína e Massa Magra',
+        description: 'Preservação e ganho de massa muscular',
         price: 10.00,
         features: ['Otimização de proteína', 'Guia de treino resistido', 'Protocolos de recuperação']
       })
     }
     
-    if (mainChallenge === 'digestive_issues' || duration === 'less_than_1_month') {
+    if (mainChallenge === 'digestive_issues') {
       protocols.push({
-        id: 'digestive_health',
-        name: 'Protocolo de Saúde Digestiva',
-        description: 'Suporte à digestão saudável e função intestinal',
+        id: 'intestino-livre',
+        name: 'Protocolo Intestino Livre',
+        description: 'Saúde intestinal e digestão otimizada',
         price: 10.00,
         features: ['Otimização de fibras', 'Orientação probiótica', 'Enzimas digestivas']
       })
+      
+      protocols.push({
+        id: 'nausea-refluxo',
+        name: 'Protocolo Náusea e Refluxo',
+        description: 'Alívio de náuseas e problemas digestivos',
+        price: 10.00,
+        features: ['Alívio de náuseas', 'Controle de refluxo', 'Suporte digestivo']
+      })
     }
     
-    if (mainChallenge === 'low_energy' || mainChallenge === 'nutrient_deficiency') {
+    if (mainChallenge === 'low_energy') {
       protocols.push({
-        id: 'energy_immunity',
-        name: 'Protocolo de Energia e Imunidade',
+        id: 'energia-imunidade',
+        name: 'Protocolo Energia e Imunidade',
         description: 'Aumentar energia e apoiar função imunológica',
         price: 10.00,
         features: ['Otimização de vitaminas', 'Equilíbrio mineral', 'Protocolos de energia']
+      })
+    }
+    
+    if (mainChallenge === 'nutrient_deficiency') {
+      protocols.push({
+        id: 'energia-imunidade',
+        name: 'Protocolo Energia e Imunidade',
+        description: 'Aumentar energia e apoiar função imunológica',
+        price: 10.00,
+        features: ['Otimização de vitaminas', 'Equilíbrio mineral', 'Protocolos de energia']
+      })
+    }
+    
+    if (mainChallenge === 'weight_plateau') {
+      protocols.push({
+        id: 'detox-leve',
+        name: 'Protocolo Detox Leve',
+        description: 'Desintoxicação suave e natural do organismo',
+        price: 10.00,
+        features: ['Desintoxicação natural', 'Otimização metabólica', 'Quebra de platô']
+      })
+    }
+    
+    // Protocolos adicionais baseados no perfil
+    if (parseInt(age) >= 40) {
+      protocols.push({
+        id: 'mulheres-40',
+        name: 'Protocolo Mulheres 40+',
+        description: 'Cuidados específicos para mulheres após os 40',
+        price: 10.00,
+        features: ['Suporte hormonal', 'Otimização metabólica', 'Cuidados específicos']
+      })
+    }
+    
+    // Se não tem medicação, oferecer alternativa
+    if (medication === 'natural_alternative' || medication === 'considering') {
+      protocols.push({
+        id: 'alternativa-sem-caneta',
+        name: 'Protocolo Alternativa Sem Caneta',
+        description: 'Alternativas naturais para emagrecimento sem medicação',
+        price: 10.00,
+        features: ['Alternativas naturais', 'Otimização metabólica', 'Suporte nutricional']
       })
     }
     
@@ -284,7 +356,7 @@ export default function QuizPage() {
                   </div>
                   
                   <div className="flex items-center justify-between">
-                    <span className="text-2xl font-bold text-brand-green">R$ {protocol.price}</span>
+                    <span className="text-2xl font-bold text-brand-green">${protocol.price}</span>
                     <button 
                       onClick={() => handlePurchase(protocol.id)}
                       className="px-4 py-2 bg-brand-green text-white rounded-lg hover:bg-brand-greenDark transition-colors"
@@ -311,6 +383,16 @@ export default function QuizPage() {
                   Obter Acesso Completo
                 </button>
               </div>
+            </div>
+
+            {/* Link para ver todos os protocolos */}
+            <div className="text-center mt-6">
+              <Link 
+                href="/todos-protocolos" 
+                className="text-brand-green text-sm font-medium hover:underline"
+              >
+                Ver todos os protocolos disponíveis
+              </Link>
             </div>
           </div>
         </main>
