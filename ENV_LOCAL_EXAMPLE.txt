@@ -1,0 +1,21 @@
+# STRIPE CONFIGURATION - COPIE ESTE CONTEÚDO PARA .env.local
+
+# Stripe Configuration
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_SUA_CHAVE_PUBLICA_AQUI
+STRIPE_SECRET_KEY=sk_live_SUA_CHAVE_SECRETA_AQUI
+STRIPE_WEBHOOK_SECRET=whsec_SEU_WEBHOOK_SECRET_AQUI
+
+# Site URL
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+
+# Supabase Configuration (adicione suas chaves do Supabase aqui)
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+
+# INSTRUÇÕES:
+# 1. Crie um arquivo chamado .env.local na raiz do projeto
+# 2. Copie todo o conteúdo acima para o arquivo
+# 3. Substitua as chaves do Supabase pelas suas chaves reais
+# 4. Reinicie o servidor de desenvolvimento
+

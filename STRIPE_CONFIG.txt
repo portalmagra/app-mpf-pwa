@@ -1,0 +1,18 @@
+# STRIPE CONFIGURATION - COPIE ESTAS LINHAS PARA SEU .env.local
+
+# Chaves do Stripe (LIVE - PRODUÇÃO)
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_SUA_CHAVE_PUBLICA_AQUI
+STRIPE_SECRET_KEY=sk_live_SUA_CHAVE_SECRETA_AQUI
+
+# Chave do Webhook (AINDA PRECISA SER CONFIGURADA)
+STRIPE_WEBHOOK_SECRET=whsec_SUA_CHAVE_WEBHOOK_AQUI
+
+# URL do site (para redirecionamentos)
+NEXT_PUBLIC_SITE_URL=http://localhost:3000
+
+# INSTRUÇÕES:
+# 1. Crie um arquivo .env.local na raiz do projeto
+# 2. Copie as linhas acima para o arquivo
+# 3. Configure o webhook no Stripe Dashboard
+# 4. Substitua whsec_SUA_CHAVE_WEBHOOK_AQUI pela chave real do webhook
+
