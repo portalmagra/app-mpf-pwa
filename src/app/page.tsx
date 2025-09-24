@@ -186,7 +186,7 @@ export default function Home() {
                 />
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-xl">Nossa Seleção</h3>
-                  <p className="text-sm text-brand-text2">Produtos curados especialmente para você</p>
+                  <p className="text-sm text-brand-text2">Produtos selecionados para você</p>
                 </div>
                 <span className="text-xs bg-blue-500 text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>
@@ -205,12 +205,12 @@ export default function Home() {
             </Link>
 
             {/* 4. Protocolos Nutricionais - Branco neutro */}
-            <Link href="/protocolos" className="w-full bg-white rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-gray-200 transform hover:scale-105 block">
+            <Link href="/quiz" className="w-full bg-white rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-gray-200 transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
                 <span className="text-4xl">📋</span>
                 <div className="flex-1 text-left">
                   <h3 className="font-bold text-xl">Protocolos Nutricionais</h3>
-                  <p className="text-sm text-brand-text2">Protocolos de 7, 14 e 30 dias</p>
+                  <p className="text-sm text-brand-text2">Para usuárias de canetas</p>
                 </div>
                 <span className="text-xs bg-gray-500 text-white px-3 py-1 rounded-full font-semibold">Ver</span>
               </div>

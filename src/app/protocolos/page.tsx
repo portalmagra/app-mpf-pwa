@@ -32,13 +32,42 @@ export default function Protocolos() {
         </div>
       </section>
 
+      {/* Quiz Integration */}
+      <section className="px-4 py-8">
+        <div className="max-w-sm mx-auto text-center">
+          <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
+            <div className="text-6xl mb-4">🎯</div>
+            <h2 className="text-xl font-bold text-brand-text mb-3">
+              Descubra seus protocolos ideais!
+            </h2>
+            <p className="text-brand-text2 text-sm mb-6">
+              Faça nossa avaliação personalizada e descubra exatamente quais protocolos são ideais para você, 
+              especialmente se você usa canetas de emagrecimento ou inibidores de apetite.
+            </p>
+            
+            <Link 
+              href="/quiz" 
+              className="bg-brand-green text-white px-6 py-3 rounded-xl font-bold hover:bg-brand-greenDark transition-colors inline-block mb-4"
+            >
+              🧠 Fazer Avaliação Personalizada
+            </Link>
+            
+            <div className="text-xs text-brand-text2">
+              <p>✅ Focado em brasileiros nos EUA</p>
+              <p>✅ Protocolos para canetas de emagrecimento</p>
+              <p>✅ Recomendações personalizadas</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Mensagem de Em Breve */}
-      <section className="px-4 py-12">
+      <section className="px-4 py-8">
         <div className="max-w-sm mx-auto text-center">
           <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100">
             <div className="text-6xl mb-4">🚀</div>
             <h2 className="text-xl font-bold text-brand-text mb-3">
-              Em breve protocolos disponíveis para você!
+              Protocolos em desenvolvimento!
             </h2>
             <p className="text-brand-text2 text-sm mb-6">
               Estamos preparando protocolos nutricionais personalizados para brasileiros nos EUA. 
