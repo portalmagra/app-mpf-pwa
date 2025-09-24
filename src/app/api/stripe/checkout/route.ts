@@ -42,7 +42,13 @@ export async function POST(request: NextRequest) {
       cancel_url: `${process.env.NEXT_PUBLIC_SITE_URL}/todos-protocolos`,
       metadata: {
         protocolId: protocolId,
+        priceId: priceId,
+        quantity: quantity.toString(),
+        timestamp: new Date().toISOString(),
       },
+      allow_promotion_codes: true,
+      billing_address_collection: 'auto',
+      customer_creation: 'always',
     })
 
     return NextResponse.json({ url: session.url })
