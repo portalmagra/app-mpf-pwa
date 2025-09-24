@@ -18,6 +18,29 @@ export default function QuizPage() {
     activity: ''
   })
   const [showResults, setShowResults] = useState(false)
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
+
+  const getProtocolImageName = (protocolId: string) => {
+    const imageMap: { [key: string]: string } = {
+      'suporte-canetas-emagrecedoras': 'PROTOCOLO SUPORTE COM AS CANETAS EMAGRECEDORAS.jpeg',
+      'pre-caneta': 'PROTOCOLO-PRE-CANETA.jpeg',
+      'pos-caneta-manutencao': 'PROTOCOLO-POS-CANETA-MANUTENCAO.jpeg',
+      'proteina-massa-magra': 'PROTOCOLO-PROTEINA-and-MASSA-MAGRA.jpeg',
+      'intestino-livre': 'PROTOCOLO-INTESTINO-LIVRE.jpeg',
+      'nausea-refluxo': 'PROTOCOLO-NAUSEA-and-REFLUXO.jpeg',
+      'energia-imunidade': 'PROTOCOLO-ENERGIA-E-IMUNIDADE.jpeg',
+      'imunidade-avancada': 'PROTOCOLO-IMUNIDADE-AVANCADA.jpeg',
+      'detox-leve': 'PROTOCOLO-DETOX-LEVE.jpeg',
+      'anti-inflamatorio': 'PROTOCOLO-ANTI-INFLAMATORIO.jpeg',
+      'mulheres-40': 'PROTOCOLO-MULHERES-40.jpeg',
+      'pele-cabelo-unhas': 'PROTOCOLO-PELE-CABELO-and-UNHAS.jpg',
+      'sono-ansiedade': 'PROTOCOLO-SONO-and-ANSIEDADE.jpeg',
+      'fitness-performance': 'PROTOCOLO-FITNESS-and-PERFORMANCE.jpeg',
+      'alternativa-sem-caneta': 'PROTOCOLO ALTERNATIVA SEM CANETA.jpeg',
+      'pacote-completo': 'Todos Protocolos.jpg'
+    }
+    return imageMap[protocolId] || protocolId
+  }
 
   const steps = [
     {
@@ -97,6 +120,18 @@ export default function QuizPage() {
     setShowResults(true)
   }
 
+  const getPriceId = (protocolId: string) => {
+    const priceMap: { [key: string]: string } = {
+      'suporte-canetas-emagrecedoras': 'price_1SAvLOEVE42ibKnX0ePJB9Vd',
+      'pre-caneta': 'price_1SAvLPEVE42ibKnXr2zgyC3I',
+      'pos-caneta-manutencao': 'price_1SAvLQEVE42ibKnX8xFO3fNk',
+      'proteina-massa-magra': 'price_1SAvLQEVE42ibKnXvDuVnZrG',
+      'intestino-livre': 'price_1SAvLREVE42ibKnXxB3PdkLq',
+      'pacote-completo': 'price_1SAvLSEVE42ibKnXseU0nD6V'
+    }
+    return priceMap[protocolId] || `price_${protocolId}`
+  }
+
   const handlePurchase = async (protocolId: string) => {
     try {
       const response = await fetch('/api/stripe/checkout', {
@@ -106,7 +141,7 @@ export default function QuizPage() {
         },
         body: JSON.stringify({
           protocolId: protocolId,
-          priceId: protocolId === 'bundle-completo' ? 'price_bundle_completo' : `price_${protocolId}`,
+          priceId: getPriceId(protocolId),
           quantity: 1,
         }),
       })
@@ -163,7 +198,8 @@ export default function QuizPage() {
         name: 'Protocolo Suporte com Canetas Emagrecedoras',
         description: 'Suporte nutricional completo para usuárias de canetas',
         price: 10.00,
-        features: ['Otimização de proteína', 'Prevenção de perda muscular', 'Suporte digestivo']
+        features: ['Otimização de proteína', 'Prevenção de perda muscular', 'Suporte digestivo'],
+        icon: '💉'
       })
       
       if (duration === 'less_than_1_month') {
@@ -172,7 +208,8 @@ export default function QuizPage() {
           name: 'Protocolo Pré-Caneta',
           description: 'Preparação antes de iniciar uso de canetas',
           price: 10.00,
-          features: ['Preparação nutricional', 'Otimização metabólica', 'Suporte inicial']
+          features: ['Preparação nutricional', 'Otimização metabólica', 'Suporte inicial'],
+          icon: '🔄'
         })
       }
     }
@@ -184,7 +221,8 @@ export default function QuizPage() {
         name: 'Protocolo Proteína e Massa Magra',
         description: 'Preservação e ganho de massa muscular',
         price: 10.00,
-        features: ['Otimização de proteína', 'Guia de treino resistido', 'Protocolos de recuperação']
+        features: ['Otimização de proteína', 'Guia de treino resistido', 'Protocolos de recuperação'],
+        icon: '💪'
       })
     }
     
@@ -194,7 +232,8 @@ export default function QuizPage() {
         name: 'Protocolo Intestino Livre',
         description: 'Saúde intestinal e digestão otimizada',
         price: 10.00,
-        features: ['Otimização de fibras', 'Orientação probiótica', 'Enzimas digestivas']
+        features: ['Otimização de fibras', 'Orientação probiótica', 'Enzimas digestivas'],
+        icon: '🌿'
       })
       
       protocols.push({
@@ -202,7 +241,8 @@ export default function QuizPage() {
         name: 'Protocolo Náusea e Refluxo',
         description: 'Alívio de náuseas e problemas digestivos',
         price: 10.00,
-        features: ['Alívio de náuseas', 'Controle de refluxo', 'Suporte digestivo']
+        features: ['Alívio de náuseas', 'Controle de refluxo', 'Suporte digestivo'],
+        icon: '🤢'
       })
     }
     
@@ -212,7 +252,8 @@ export default function QuizPage() {
         name: 'Protocolo Energia e Imunidade',
         description: 'Aumentar energia e apoiar função imunológica',
         price: 10.00,
-        features: ['Otimização de vitaminas', 'Equilíbrio mineral', 'Protocolos de energia']
+        features: ['Otimização de vitaminas', 'Equilíbrio mineral', 'Protocolos de energia'],
+        icon: '⚡'
       })
     }
     
@@ -222,7 +263,8 @@ export default function QuizPage() {
         name: 'Protocolo Energia e Imunidade',
         description: 'Aumentar energia e apoiar função imunológica',
         price: 10.00,
-        features: ['Otimização de vitaminas', 'Equilíbrio mineral', 'Protocolos de energia']
+        features: ['Otimização de vitaminas', 'Equilíbrio mineral', 'Protocolos de energia'],
+        icon: '⚡'
       })
     }
     
@@ -232,7 +274,8 @@ export default function QuizPage() {
         name: 'Protocolo Detox Leve',
         description: 'Desintoxicação suave e natural do organismo',
         price: 10.00,
-        features: ['Desintoxicação natural', 'Otimização metabólica', 'Quebra de platô']
+        features: ['Desintoxicação natural', 'Otimização metabólica', 'Quebra de platô'],
+        icon: '🌿'
       })
     }
     
@@ -243,7 +286,8 @@ export default function QuizPage() {
         name: 'Protocolo Mulheres 40+',
         description: 'Cuidados específicos para mulheres após os 40',
         price: 10.00,
-        features: ['Suporte hormonal', 'Otimização metabólica', 'Cuidados específicos']
+        features: ['Suporte hormonal', 'Otimização metabólica', 'Cuidados específicos'],
+        icon: '👩'
       })
     }
     
@@ -254,7 +298,8 @@ export default function QuizPage() {
         name: 'Protocolo Alternativa Sem Caneta',
         description: 'Alternativas naturais para emagrecimento sem medicação',
         price: 10.00,
-        features: ['Alternativas naturais', 'Otimização metabólica', 'Suporte nutricional']
+        features: ['Alternativas naturais', 'Otimização metabólica', 'Suporte nutricional'],
+        icon: '🌱'
       })
     }
     
@@ -353,6 +398,26 @@ export default function QuizPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
               {results.protocols.map((protocol, index) => (
                 <div key={index} className="border border-brand-border rounded-lg p-6 hover:shadow-lg transition-shadow">
+                  <div className="mb-4">
+                    {!imageErrors.has(protocol.id) ? (
+                      <img 
+                        src={`/images/protocolos/${getProtocolImageName(protocol.id)}`}
+                        alt={protocol.name}
+                        className="w-full h-32 object-cover rounded-lg mb-3"
+                        onLoad={() => {
+                          console.log('Imagem carregada com sucesso:', protocol.name)
+                        }}
+                        onError={(e) => {
+                          console.log('Erro ao carregar imagem:', protocol.name, 'URL:', e.currentTarget.src)
+                          setImageErrors(prev => new Set(prev).add(protocol.id))
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-32 bg-gradient-to-r from-brand-green to-brand-greenDark flex items-center justify-center text-white text-2xl font-bold rounded-lg mb-3">
+                        {protocol.icon}
+                      </div>
+                    )}
+                  </div>
                   <h3 className="text-lg font-semibold text-brand-text mb-2">{protocol.name}</h3>
                   <p className="text-brand-text2 mb-4">{protocol.description}</p>
                   
@@ -383,8 +448,20 @@ export default function QuizPage() {
 
             {/* Bundle Offer */}
             <div className="bg-gradient-to-r from-brand-green to-brand-greenDark rounded-lg p-8 text-white">
-              <h3 className="text-2xl font-bold mb-4">Pacote Completo</h3>
-              <p className="text-green-100 mb-6">
+              <div className="flex items-center mb-4">
+                <img 
+                  src="/images/protocolos/Todos Protocolos.jpg"
+                  alt="Pacote Completo"
+                  className="w-20 h-20 object-cover rounded-lg mr-4"
+                />
+                <div>
+                  <h3 className="text-2xl font-bold">Pacote Completo</h3>
+                  <p className="text-green-100">
+                    Acesse todos os 15 protocolos para quem faz uso de canetas emagrecedoras
+                  </p>
+                </div>
+              </div>
+              <p className="text-green-100 mb-4">
                 Obtenha todos os 15 protocolos por apenas $67 (55% de desconto!)
               </p>
               <div className="flex items-center justify-between">
@@ -392,7 +469,10 @@ export default function QuizPage() {
                   <p className="text-3xl font-bold">$67<span className="text-lg font-normal"> (valor único)</span></p>
                   <p className="text-green-100">Acesso vitalício</p>
                 </div>
-                <button className="px-6 py-3 bg-white text-brand-green rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                <button 
+                  onClick={() => handlePurchase('pacote-completo')}
+                  className="px-6 py-3 bg-white text-brand-green rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+                >
                   Obter Acesso Completo
                 </button>
               </div>
