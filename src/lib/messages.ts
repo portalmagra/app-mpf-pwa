@@ -157,7 +157,7 @@ export const NOTIFICATION_MESSAGES = {
   newProtocol: (protocolName: string) => ({
     title: '📋 Novo Protocolo Nutricional!',
     body: `"${protocolName}" - Transforme sua alimentação em 30 dias!`,
-    url: '/protocolos'
+    url: '/todos-protocolos'
   })
 }
 

@@ -45,6 +45,15 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
           <span className={`text-xs font-semibold ${isActive('/minhas-receitas') ? 'text-brand-green' : 'text-brand-green'}`}>Favoritos</span>
         </Link>
 
+        {/* Protocolos */}
+        <Link 
+          href="/todos-protocolos" 
+          className={`flex flex-col items-center py-1 ${isActive('/todos-protocolos') ? 'text-brand-green' : 'text-brand-green'}`}
+        >
+          <span className="text-lg">📋</span>
+          <span className={`text-xs font-semibold ${isActive('/todos-protocolos') ? 'text-brand-green' : 'text-brand-green'}`}>Protocolos</span>
+        </Link>
+
         {/* Mercado */}
         <Link 
           href="/mercado" 
@@ -52,24 +61,6 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
         >
           <span className="text-lg">🛒</span>
           <span className={`text-xs font-semibold ${isActive('/mercado') ? 'text-brand-green' : 'text-brand-green'}`}>Mercado</span>
-        </Link>
-
-        {/* Amazon Search - Logotipo Oficial */}
-        <Link 
-          href="/amazon" 
-          className={`flex flex-col items-center py-1 ${isActive('/amazon') ? 'text-brand-green' : 'text-brand-green'}`}
-        >
-          {/* Logotipo Oficial da Amazon */}
-          <div className="relative flex items-center justify-center mb-1">
-            <img 
-              src="/icons/amazon-logo-official.png" 
-              alt="Amazon" 
-              width="36" 
-              height="36"
-              className="object-contain"
-            />
-          </div>
-          <span className={`text-xs font-semibold ${isActive('/amazon') ? 'text-brand-green' : 'text-brand-green'}`}>Amazon</span>
         </Link>
       </div>
     </div>
