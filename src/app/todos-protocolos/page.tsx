@@ -170,9 +170,30 @@ export default function TodosProtocolos() {
     return matchesSearch && matchesCategory
   })
 
-  const handlePurchase = (protocolId: string) => {
-    // Em produção, isso redirecionaria para o Stripe
-    alert(`Redirecionando para compra do protocolo: ${protocolId}`)
+  const handlePurchase = async (protocolId: string) => {
+    try {
+      const response = await fetch('/api/stripe/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          protocolId: protocolId,
+          priceId: protocolId === 'bundle-completo' ? 'price_bundle_completo' : `price_${protocolId}`,
+          quantity: 1,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Erro ao processar pagamento')
+      }
+
+      const { url } = await response.json()
+      window.location.href = url
+    } catch (error) {
+      console.error('Error processing purchase:', error)
+      alert('Erro no processamento. Tente novamente.')
+    }
   }
 
   return (

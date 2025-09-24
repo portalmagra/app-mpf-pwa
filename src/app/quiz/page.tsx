@@ -99,10 +99,24 @@ export default function QuizPage() {
 
   const handlePurchase = async (protocolId: string) => {
     try {
-      // Redirect to WhatsApp for Brazilian users in the US
-      const whatsappMessage = `Olá! Gostaria de adquirir o ${protocolId} baseado na minha avaliação personalizada.`
-      const whatsappUrl = `https://wa.me/15551234567?text=${encodeURIComponent(whatsappMessage)}`
-      window.open(whatsappUrl, '_blank')
+      const response = await fetch('/api/stripe/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          protocolId: protocolId,
+          priceId: protocolId === 'bundle-completo' ? 'price_bundle_completo' : `price_${protocolId}`,
+          quantity: 1,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Erro ao processar pagamento')
+      }
+
+      const { url } = await response.json()
+      window.location.href = url
     } catch (error) {
       console.error('Error processing purchase:', error)
       alert('Erro no processamento. Tente novamente.')
