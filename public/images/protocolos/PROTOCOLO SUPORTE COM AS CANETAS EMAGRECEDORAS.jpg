@@ -1,0 +1,17 @@
+<svg width="200" height="280" viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4ade80;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#22c55e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="280" fill="url(#grad1)" rx="8"/>
+  <text x="100" y="80" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Protocolo</text>
+  <text x="100" y="100" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Suporte com</text>
+  <text x="100" y="120" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Canetas</text>
+  <text x="100" y="140" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="16" font-weight="bold">Emagrecedoras</text>
+  <text x="100" y="180" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12">Suporte nutricional</text>
+  <text x="100" y="200" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12">completo para</text>
+  <text x="100" y="220" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12">usuárias de canetas</text>
+  <text x="100" y="260" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="12">Meu Portal Fit</text>
+</svg>

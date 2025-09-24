@@ -20,6 +20,29 @@ interface Protocol {
 export default function TodosProtocolos() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('all')
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
+
+  const getProtocolImageName = (protocolId: string) => {
+    const imageMap: { [key: string]: string } = {
+      'suporte-canetas-emagrecedoras': 'PROTOCOLO SUPORTE COM AS CANETAS EMAGRECEDORAS',
+      'pre-caneta': 'PROTOCOLO-PRE-CANETA',
+      'pos-caneta-manutencao': 'PROTOCOLO-POS-CANETA-MANUTENCAO',
+      'proteina-massa-magra': 'PROTOCOLO-PROTEINA-and-MASSA-MAGRA',
+      'intestino-livre': 'PROTOCOLO-INTESTINO-LIVRE',
+      'nausea-refluxo': 'PROTOCOLO-NAUSEA-and-REFLUXO',
+      'energia-imunidade': 'PROTOCOLO-ENERGIA-E-IMUNIDADE',
+      'imunidade-avancada': 'PROTOCOLO-IMUNIDADE-AVANCADA',
+      'detox-leve': 'PROTOCOLO-DETOX-LEVE',
+      'anti-inflamatorio': 'PROTOCOLO-ANTI-INFLAMATORIO',
+      'mulheres-40': 'PROTOCOLO-MULHERES-40',
+      'pele-cabelo-unhas': 'PROTOCOLO-PELE-CABELO-and-UNHAS',
+      'sono-ansiedade': 'PROTOCOLO-SONO-and-ANSIEDADE',
+      'fitness-performance': 'PROTOCOLO-FITNESS-and-PERFORMANCE',
+      'alternativa-sem-caneta': 'PROTOCOLO ALTERNATIVA SEM CANETA',
+      'pacote-completo': 'Todos Protocolos'
+    }
+    return imageMap[protocolId] || protocolId
+  }
 
   const protocols: Protocol[] = [
     {
@@ -285,6 +308,30 @@ export default function TodosProtocolos() {
           <div className="space-y-4">
             {filteredProtocols.map((protocol) => (
               <div key={protocol.id} className="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
+                {/* Protocol Image */}
+                <div className="mb-4">
+                  <div className="w-full h-32 rounded-lg overflow-hidden">
+                    {!imageErrors.has(protocol.id) ? (
+                      <img 
+                        src={`/images/protocolos/${getProtocolImageName(protocol.id)}.jpg`}
+                        alt={protocol.name}
+                        className="w-full h-full object-cover"
+                        onLoad={() => {
+                          console.log('Imagem carregada com sucesso:', protocol.name)
+                        }}
+                        onError={(e) => {
+                          console.log('Erro ao carregar imagem:', protocol.name, 'URL:', e.currentTarget.src)
+                          setImageErrors(prev => new Set(prev).add(protocol.id))
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-r from-brand-green to-brand-greenDark flex items-center justify-center text-white text-2xl font-bold">
+                        {protocol.icon}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center">
                     <span className="text-2xl mr-3">{protocol.icon}</span>
