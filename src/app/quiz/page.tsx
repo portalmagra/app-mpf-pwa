@@ -3,11 +3,10 @@
 import { useState } from 'react'
 import { ArrowLeft, ArrowRight, CheckCircle, AlertCircle, Zap, Heart, Brain, Shield } from 'lucide-react'
 import Link from 'next/link'
-import { unitConfigs, convertWeight, convertHeight, convertWater, formatHeightInches, parseHeightInches, type Language } from '@/lib/units'
+import { unitConfigs, convertWeight, convertHeight, convertWater, formatHeightInches, parseHeightInches } from '@/lib/units'
 
 export default function QuizPage() {
   const [currentStep, setCurrentStep] = useState(0)
-  const [language, setLanguage] = useState<Language>('pt')
   const [answers, setAnswers] = useState({
     medication: '',
     duration: '',
@@ -66,8 +65,8 @@ export default function QuizPage() {
       subtitle: 'Isso nos ajuda a calcular suas necessidades nutricionais específicas',
       fields: [
         { id: 'age', label: 'Idade', type: 'number', placeholder: 'ex: 35' },
-        { id: 'weight', label: `Peso (${unitConfigs[language].weight.unit})`, type: 'number', placeholder: unitConfigs[language].weight.placeholder },
-        { id: 'height', label: `Altura (${unitConfigs[language].height.unit})`, type: 'number', placeholder: unitConfigs[language].height.placeholder },
+        { id: 'weight', label: `Peso (${unitConfigs['pt'].weight.unit})`, type: 'number', placeholder: unitConfigs['pt'].weight.placeholder },
+        { id: 'height', label: `Altura (${unitConfigs['pt'].height.unit})`, type: 'number', placeholder: unitConfigs['pt'].height.placeholder },
         { id: 'gender', label: 'Sexo', type: 'select', options: ['Masculino', 'Feminino', 'Outro'] },
         { id: 'activity', label: 'Nível de Atividade', type: 'select', options: ['Sedentário', 'Leve', 'Moderado', 'Ativo', 'Muito Ativo'] }
       ]
@@ -118,8 +117,8 @@ export default function QuizPage() {
     const heightNum = parseFloat(height)
     
     // Convert to kg and cm for calculations
-    const weightKg = unitConfigs[language].weight.conversion.toKg(weightNum)
-    const heightCm = unitConfigs[language].height.conversion.toCm(heightNum)
+    const weightKg = unitConfigs['pt'].weight.conversion.toKg(weightNum)
+    const heightCm = unitConfigs['pt'].height.conversion.toCm(heightNum)
     
     // Calculate BMI
     const bmi = weightKg / ((heightCm / 100) * (heightCm / 100))
@@ -308,7 +307,7 @@ export default function QuizPage() {
               
               <div className="bg-brand-greenSoft rounded-lg p-6">
                 <h3 className="font-semibold text-brand-text mb-2">Necessidade de Água</h3>
-                <p className="text-3xl font-bold text-brand-green">{convertWater(parseFloat(results.waterNeeds), 'pt', language).toFixed(0)}{unitConfigs[language].water.unit}</p>
+                <p className="text-3xl font-bold text-brand-green">{convertWater(parseFloat(results.waterNeeds), 'pt', 'pt').toFixed(0)}{unitConfigs['pt'].water.unit}</p>
                 <p className="text-sm text-brand-text2">Necessidade diária</p>
               </div>
             </div>
@@ -424,18 +423,6 @@ export default function QuizPage() {
               </div>
             </div>
             
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-brand-text2">Idioma:</span>
-              <select 
-                value={language} 
-                onChange={(e) => setLanguage(e.target.value as Language)}
-                className="px-3 py-1 border border-brand-border rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-brand-green"
-              >
-                <option value="pt">Português</option>
-                <option value="en">English</option>
-                <option value="es">Español</option>
-              </select>
-            </div>
           </div>
         </div>
       </header>
