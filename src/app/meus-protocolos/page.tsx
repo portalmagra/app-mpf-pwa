@@ -176,10 +176,10 @@ export default function MeusProtocolos() {
       <section className="px-4 py-6 text-center">
         <div className="max-w-sm mx-auto">
           <h1 className="text-2xl font-bold text-brand-text mb-2">
-            📚 Meus Protocolos & eBooks
+            👤 Meus Conteúdos
           </h1>
           <p className="text-brand-text2 text-sm">
-            Acesse seus protocolos e eBooks comprados a qualquer momento
+            Tudo que você baixou, comprou ou favoritou em um só lugar
           </p>
         </div>
       </section>
@@ -211,9 +211,9 @@ export default function MeusProtocolos() {
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">📄</span>
               </div>
-              <h3 className="text-lg font-semibold text-brand-text mb-2">Nenhum item comprado</h3>
+              <h3 className="text-lg font-semibold text-brand-text mb-2">Nenhum conteúdo ainda</h3>
               <p className="text-brand-text2 mb-6">
-                Você ainda não comprou nenhum protocolo ou eBook. Explore nossa seleção!
+                Você ainda não baixou ou comprou nenhum conteúdo. Explore nossa seleção!
               </p>
               <div className="space-y-3">
                 <Link 
