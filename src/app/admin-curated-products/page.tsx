@@ -131,7 +131,7 @@ export default function AdminCuratedProducts() {
       const updatedProduct = {
         ...editingProduct,
         ...newProduct,
-        current_price: parseFloat(newProduct.current_price) || 0
+        current_price: newProduct.current_price
       }
       
       const success = await productService.updateProduct(editingProduct.id, updatedProduct)
