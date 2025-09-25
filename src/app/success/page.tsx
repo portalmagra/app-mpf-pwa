@@ -309,8 +309,8 @@ function SuccessContent() {
             <button 
               onClick={() => {
                 // Tentar adicionar aos favoritos
-                if (window.sidebar && window.sidebar.addPanel) {
-                  window.sidebar.addPanel(document.title, window.location.href, '')
+                if ((window as any).sidebar && (window as any).sidebar.addPanel) {
+                  (window as any).sidebar.addPanel(document.title, window.location.href, '')
                 } else {
                   alert('Use Ctrl+D (Windows) ou Cmd+D (Mac) para adicionar aos favoritos!')
                 }
