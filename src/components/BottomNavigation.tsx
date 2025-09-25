@@ -38,11 +38,15 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
 
         {/* Amazon */}
         <Link 
-          href="/mercado" 
-          className={`flex flex-col items-center py-1 ${isActive('/mercado') ? 'text-brand-green' : 'text-brand-green'}`}
+          href="/amazon" 
+          className={`flex flex-col items-center py-1 ${isActive('/amazon') ? 'text-brand-green' : 'text-brand-green'}`}
         >
-          <span className="text-lg">🛒</span>
-          <span className={`text-xs font-semibold ${isActive('/mercado') ? 'text-brand-green' : 'text-brand-green'}`}>Amazon</span>
+          <img 
+            src="/icons/amazon-logo-official.png" 
+            alt="Amazon" 
+            className="w-5 h-5"
+          />
+          <span className={`text-xs font-semibold ${isActive('/amazon') ? 'text-brand-green' : 'text-brand-green'}`}>Amazon</span>
         </Link>
 
         {/* Protocolos */}
