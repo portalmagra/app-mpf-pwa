@@ -134,7 +134,7 @@ export async function GET(request: NextRequest) {
     } catch (error) {
       console.error('❌ Erro ao fazer download do arquivo:', error)
       return NextResponse.json(
-        { error: `Erro ao baixar o arquivo: ${error.message}` },
+        { error: `Erro ao baixar o arquivo: ${error instanceof Error ? error.message : 'Erro desconhecido'}` },
         { status: 500 }
       )
     }
@@ -142,7 +142,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('❌ Erro ao processar download:', error)
     return NextResponse.json(
-      { error: `Erro interno do servidor: ${error.message}` },
+      { error: `Erro interno do servidor: ${error instanceof Error ? error.message : 'Erro desconhecido'}` },
       { status: 500 }
     )
   }

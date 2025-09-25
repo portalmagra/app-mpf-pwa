@@ -7,19 +7,23 @@ if (!process.env.STRIPE_SECRET_KEY) {
   console.error('STRIPE_SECRET_KEY não está configurada')
 }
 
-if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-  console.error('SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY não estão configuradas')
+// Usar as variáveis disponíveis
+const SUPABASE_URL = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL
+const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
+  console.error('❌ Variáveis Supabase não configuradas:', { 
+    SUPABASE_URL: !!SUPABASE_URL, 
+    SUPABASE_SERVICE_ROLE_KEY: !!SUPABASE_SERVICE_ROLE_KEY 
+  })
 }
 
 const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2025-08-27.basil',
 }) : null
 
-const supabase = process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY 
-  ? createClient(
-      process.env.SUPABASE_URL,
-      process.env.SUPABASE_SERVICE_ROLE_KEY
-    )
+const supabase = SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY 
+  ? createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
   : null
 
 export async function GET(request: NextRequest) {
@@ -106,43 +110,82 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    console.log(`📄 Arquivo: ${protocolData.fileName}`)
-    console.log(`🔗 URL: ${protocolData.pdfUrl}`)
+        console.log(`📄 Arquivo: ${protocolData.fileName}`)
+        console.log(`🔗 URL: ${protocolData.pdfUrl}`)
 
-    // Fazer download do arquivo do Supabase Storage
-    try {
-      console.log('📥 Fazendo download do arquivo...')
-      const response = await fetch(protocolData.pdfUrl)
-      
-      if (!response.ok) {
-        console.error(`❌ Erro HTTP ${response.status}: ${response.statusText}`)
-        throw new Error(`Erro ao buscar arquivo: ${response.status} ${response.statusText}`)
-      }
+        // Verificar se é combinação dinâmica
+        if (protocolData.isDynamic && protocolData.pdfUrl === 'DYNAMIC_COMBINE') {
+          console.log('🔄 Usando combinação dinâmica de protocolos...')
+          
+          try {
+            // Chamar API de combinação dinâmica
+            const combineResponse = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/protocols/combine-pdf`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              }
+            })
+            
+            if (!combineResponse.ok) {
+              console.error(`❌ Erro na combinação dinâmica: ${combineResponse.status}`)
+              throw new Error(`Erro na combinação dinâmica: ${combineResponse.status}`)
+            }
 
-      const buffer = await response.arrayBuffer()
-      console.log(`✅ Arquivo baixado com sucesso: ${buffer.byteLength} bytes`)
-      
-      // Retornar o arquivo como blob
-      return new NextResponse(buffer, {
-        headers: {
-          'Content-Type': 'application/pdf',
-          'Content-Disposition': `attachment; filename="${protocolData.fileName}"`,
-          'Content-Length': buffer.byteLength.toString(),
-        },
-      })
+            const combinedPdfBuffer = await combineResponse.arrayBuffer()
+            console.log(`✅ PDF combinado criado: ${combinedPdfBuffer.byteLength} bytes`)
+            
+            // Retornar o PDF combinado
+            return new NextResponse(combinedPdfBuffer, {
+              headers: {
+                'Content-Type': 'application/pdf',
+                'Content-Disposition': `attachment; filename="${protocolData.fileName}"`,
+                'Content-Length': combinedPdfBuffer.byteLength.toString(),
+              },
+            })
 
-    } catch (error) {
-      console.error('❌ Erro ao fazer download do arquivo:', error)
-      return NextResponse.json(
-        { error: `Erro ao baixar o arquivo: ${error.message}` },
-        { status: 500 }
-      )
-    }
+          } catch (error) {
+            console.error('❌ Erro na combinação dinâmica:', error)
+            return NextResponse.json(
+              { error: `Erro na combinação dinâmica: ${error instanceof Error ? error.message : 'Erro desconhecido'}` },
+              { status: 500 }
+            )
+          }
+        }
+
+        // Fazer download do arquivo do Supabase Storage (comportamento normal)
+        try {
+          console.log('📥 Fazendo download do arquivo...')
+          const response = await fetch(protocolData.pdfUrl)
+          
+          if (!response.ok) {
+            console.error(`❌ Erro HTTP ${response.status}: ${response.statusText}`)
+            throw new Error(`Erro ao buscar arquivo: ${response.status} ${response.statusText}`)
+          }
+
+          const buffer = await response.arrayBuffer()
+          console.log(`✅ Arquivo baixado com sucesso: ${buffer.byteLength} bytes`)
+          
+          // Retornar o arquivo como blob
+          return new NextResponse(buffer, {
+            headers: {
+              'Content-Type': 'application/pdf',
+              'Content-Disposition': `attachment; filename="${protocolData.fileName}"`,
+              'Content-Length': buffer.byteLength.toString(),
+            },
+          })
+
+        } catch (error) {
+          console.error('❌ Erro ao fazer download do arquivo:', error)
+          return NextResponse.json(
+            { error: `Erro ao baixar o arquivo: ${error instanceof Error ? error.message : 'Erro desconhecido'}` },
+            { status: 500 }
+          )
+        }
 
   } catch (error) {
     console.error('❌ Erro ao processar download:', error)
     return NextResponse.json(
-      { error: `Erro interno do servidor: ${error.message}` },
+      { error: `Erro interno do servidor: ${error instanceof Error ? error.message : 'Erro desconhecido'}` },
       { status: 500 }
     )
   }
@@ -229,8 +272,8 @@ function getProtocolData(protocolId: string) {
     'pacote-completo': {
       id: 'pacote-completo',
       fileName: 'PACOTE-COMPLETO-TODOS-PROTOCOLOS.pdf',
-      // Usando Google Drive para arquivo grande (>50MB)
-      pdfUrl: 'https://drive.google.com/uc?export=download&id=SEU_ID_DO_DRIVE_AQUI'
+      pdfUrl: 'DYNAMIC_COMBINE', // Indica que deve usar combinação dinâmica
+      isDynamic: true
     }
   }
 

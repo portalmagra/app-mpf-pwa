@@ -175,7 +175,7 @@ export default function Home() {
             </Link>
 
             {/* 2. Protocolos Nutricionais - Azul (cor da Amazon) */}
-            <Link href="/quiz" className="w-full bg-gradient-to-r from-blue-100 to-blue-200 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-blue-300 transform hover:scale-105 block">
+            <Link href="/todos-protocolos" className="w-full bg-gradient-to-r from-blue-100 to-blue-200 rounded-xl p-4 text-brand-text shadow-lg hover:shadow-xl transition-all border border-blue-300 transform hover:scale-105 block">
               <div className="flex items-center space-x-4">
                 <span className="text-4xl">📋</span>
                 <div className="flex-1 text-left">
@@ -204,8 +204,8 @@ export default function Home() {
                 <img 
                   src="/icons/amazon-logo-official.png" 
                   alt="Amazon" 
-                  width="40" 
-                  height="40"
+                  width="48" 
+                  height="48"
                   className="object-contain"
                 />
                 <div className="flex-1 text-left">

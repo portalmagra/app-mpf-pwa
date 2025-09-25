@@ -1,0 +1,1 @@
+STRIPE_WEBHOOK_SECRET=whsec_owVHnr41ivUAKlDzS72FIYDCTNUbybVISUPABASE_URL=https://ajuoqvpccdkpzkefjrsc.supabase.co

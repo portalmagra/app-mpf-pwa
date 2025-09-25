@@ -14,9 +14,18 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave_anonima_aqui
 SUPABASE_SERVICE_ROLE_KEY=sua_chave_service_role_aqui
 SUPABASE_URL=https://seu-projeto.supabase.co
 
+# RESEND EMAIL CONFIGURATION (OBRIGATÓRIO para e-mails)
+RESEND_API_KEY=re_SUA_CHAVE_RESEND_AQUI
+FROM_EMAIL=MeuPortalFit <noreply@meuportalfit.com>
+
 # INSTRUÇÕES:
 # 1. Crie um arquivo chamado .env.local na raiz do projeto
 # 2. Copie todo o conteúdo acima para o arquivo
 # 3. Substitua as chaves do Supabase pelas suas chaves reais
-# 4. Reinicie o servidor de desenvolvimento
+# 4. Configure o Resend:
+#    - Acesse https://resend.com
+#    - Crie uma conta gratuita (3.000 e-mails/mês)
+#    - Copie sua API key (começa com re_)
+#    - Substitua "re_SUA_CHAVE_RESEND_AQUI" pela sua chave real
+# 5. Reinicie o servidor de desenvolvimento
 

@@ -367,7 +367,7 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     query = body.query || '';
-    const { maxResults, specificProduct } = body
+    const { maxResults, specificProduct, useRealAmazon } = body
 
     if (!query || query.trim().length < 2) {
       return NextResponse.json(
@@ -376,7 +376,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    console.log(`🚀 REAL AMAZON SEARCH REQUEST: "${query}"${specificProduct ? ' (PRODUTO ESPECÍFICO)' : ''}`)
+    console.log(`🚀 REAL AMAZON SEARCH REQUEST: "${query}"${specificProduct ? ' (PRODUTO ESPECÍFICO)' : ''}${useRealAmazon ? ' (FORÇAR AMAZON REAL)' : ''}`)
 
     // Se é busca específica por ASIN, usar busca direta
     if (specificProduct && query.match(/^[A-Z0-9]{10}$/)) {
@@ -397,7 +397,36 @@ export async function POST(request: NextRequest) {
       })
     }
 
-    // Buscar produtos reais na Amazon
+    // Se useRealAmazon = true, forçar busca real na Amazon
+    if (useRealAmazon) {
+      console.log(`🔍 FORÇANDO busca real na Amazon para: "${query}"`)
+      
+      const products = await searchRealAmazonProducts(query, maxResults || 10)
+      
+      console.log(`✅ PRODUTOS REAIS ENCONTRADOS: ${products.length} products`)
+      
+      if (products.length > 0) {
+        return NextResponse.json({ 
+          success: true, 
+          products, 
+          query, 
+          totalFound: products.length,
+          source: 'real-amazon-api-forced'
+        })
+      }
+      
+      // Se não encontrou produtos reais mesmo forçando, retornar erro
+      return NextResponse.json({
+        success: false,
+        error: `Nenhum produto encontrado na Amazon para "${query}"`,
+        products: [],
+        query,
+        totalFound: 0,
+        source: 'real-amazon-api-forced'
+      })
+    }
+
+    // Buscar produtos reais na Amazon (comportamento padrão)
     console.log(`🔍 Buscando produtos reais na Amazon para: "${query}"`)
     
     const products = await searchRealAmazonProducts(query, maxResults || 10)
@@ -429,6 +458,18 @@ export async function POST(request: NextRequest) {
     
   } catch (error: any) {
     console.error('❌ Real Amazon API Error:', error)
+    
+    // Se useRealAmazon = true, não usar produtos mockados
+    if (useRealAmazon) {
+      return NextResponse.json({
+        success: false,
+        error: `Erro ao buscar produtos na Amazon: ${error.message}`,
+        products: [],
+        query: query || 'unknown',
+        totalFound: 0,
+        source: 'real-amazon-api-error'
+      }, { status: 500 })
+    }
     
     // Gerar produtos mockados específicos baseados na query
     const mockProducts = generateMockProductsByQuery(query);

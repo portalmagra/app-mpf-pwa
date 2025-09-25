@@ -123,11 +123,11 @@ export default function AmazonPage() {
     }
     
     setIsLoading(true)
-    setSearchMessage(`🤖 Nossa IA está selecionando os melhores produtos "${query}" para você...`)
+    setSearchMessage(`🤖 Buscando produtos curados para "${query}"...`)
     
     try {
-      // Buscar produtos através da API route (SEM redirecionar para Amazon)
-      const response = await fetch('/api/search-real-amazon', {
+      // PRIMEIRO: Buscar nos produtos curados/selecionados do app
+      const curatedResponse = await fetch('/api/search-curated-products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -138,26 +138,51 @@ export default function AmazonPage() {
         })
       })
       
-      const data = await response.json()
+      const curatedData = await curatedResponse.json()
       
-      if (data.success && data.products && data.products.length > 0) {
-        // Garantir que todos os produtos tenham a tag de afiliado
-        const productsWithAffiliateTag = data.products.map((product: CuratedProduct) => ({
+      if (curatedData.success && curatedData.products && curatedData.products.length > 0) {
+        // Encontrou produtos curados - usar estes
+        const productsWithAffiliateTag = curatedData.products.map((product: CuratedProduct) => ({
           ...product,
           detailPageURL: ensureAffiliateTag(product.detailPageURL)
         }))
         
         setCuratedProducts(productsWithAffiliateTag)
         setShowCuratedProducts(true)
-        setSearchMessage(`✅ Encontramos ${data.products.length} produtos selecionados especialmente para você!`)
-      } else if (data.error) {
-        setSearchMessage(`❌ ${data.error}`)
-        setCuratedProducts([])
-        setShowCuratedProducts(false)
+        setSearchMessage(`✅ ${curatedData.products.length} produtos selecionados especialmente para você!`)
       } else {
-        setSearchMessage(`❌ Não encontramos produtos para "${query}". Tente uma busca diferente.`)
-        setCuratedProducts([])
-        setShowCuratedProducts(false)
+        // SEGUNDO: Se não encontrou produtos curados, buscar na Amazon real
+        setSearchMessage(`🔍 Buscando na Amazon para "${query}"...`)
+        
+        const amazonResponse = await fetch('/api/search-real-amazon', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query: query.trim(),
+            maxResults: 3,
+            useRealAmazon: true // Forçar busca real
+          })
+        })
+        
+        const amazonData = await amazonResponse.json()
+        
+        if (amazonData.success && amazonData.products && amazonData.products.length > 0) {
+          // Garantir que todos os produtos tenham a tag de afiliado
+          const productsWithAffiliateTag = amazonData.products.map((product: CuratedProduct) => ({
+            ...product,
+            detailPageURL: ensureAffiliateTag(product.detailPageURL)
+          }))
+          
+          setCuratedProducts(productsWithAffiliateTag)
+          setShowCuratedProducts(true)
+          setSearchMessage(`🛒 Encontramos ${amazonData.products.length} produtos na Amazon para você!`)
+        } else {
+          setSearchMessage(`❌ Não encontramos produtos para "${query}". Tente uma busca diferente.`)
+          setCuratedProducts([])
+          setShowCuratedProducts(false)
+        }
       }
     } catch (error) {
       console.error('Erro na busca:', error)

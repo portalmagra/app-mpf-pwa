@@ -41,7 +41,7 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
           href="/amazon" 
           className={`flex flex-col items-center py-1 ${isActive('/amazon') ? 'text-brand-green' : 'text-brand-green'}`}
         >
-          <div className="w-6 h-6 flex items-center justify-center">
+          <div className="w-8 h-8 flex items-center justify-center">
             <img 
               src="/icons/amazon-logo-official.png" 
               alt="Amazon" 

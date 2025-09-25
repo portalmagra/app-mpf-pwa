@@ -43,11 +43,75 @@ function SuccessContent() {
 
       const data = await response.json()
       setPurchaseData(data)
+      
+      // Enviar e-mail de confirmação
+      try {
+        await fetch('/api/send-confirmation-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionId,
+            protocolId: data.protocolId,
+            protocolName: data.protocolName,
+            customerEmail: data.customerEmail
+          })
+        })
+        console.log('📧 E-mail de confirmação enviado!')
+      } catch (emailError) {
+        console.error('❌ Erro ao enviar e-mail:', emailError)
+      }
+      
+      // Solicitar permissão para notificações
+      requestNotificationPermission()
+      
+      // Iniciar download automático após 3 segundos
+      setTimeout(() => {
+        handleDownload(data.protocolId, sessionId)
+      }, 3000)
+      
     } catch (error) {
       console.error('Erro ao verificar compra:', error)
       setError('Erro ao verificar sua compra. Entre em contato conosco.')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const requestNotificationPermission = async () => {
+    try {
+      if ('Notification' in window) {
+        const permission = await Notification.requestPermission()
+        if (permission === 'granted') {
+          console.log('🔔 Permissão para notificações concedida!')
+          
+          // Mostrar notificação de boas-vindas
+          new Notification('🎉 Pagamento Aprovado!', {
+            body: 'Seu protocolo está sendo baixado automaticamente!',
+            icon: '/icons/logo-final-completo-192x192.png'
+          })
+        }
+      }
+    } catch (error) {
+      console.error('❌ Erro ao solicitar permissão:', error)
+    }
+  }
+
+  const handleDownload = async (protocolId: string, sessionId: string) => {
+    try {
+      console.log('🔄 Iniciando download automático...')
+      const downloadUrl = `/api/protocols/download?protocol=${protocolId}&session=${sessionId}`
+      
+      // Criar link temporário para download
+      const link = document.createElement('a')
+      link.href = downloadUrl
+      link.download = `${protocolId}.pdf`
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      
+      console.log('✅ Download iniciado automaticamente!')
+    } catch (error) {
+      console.error('❌ Erro no download automático:', error)
     }
   }
 
@@ -182,6 +246,79 @@ function SuccessContent() {
                 </span>
               </div>
             </div>
+          </div>
+
+          {/* Download Status */}
+          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center mb-2">
+              <Download className="w-5 h-5 text-green-600 mr-2" />
+              <h3 className="font-semibold text-green-800">Download Automático</h3>
+            </div>
+            <p className="text-green-700 text-sm mb-3">
+              Seu protocolo está sendo baixado automaticamente em alguns segundos...
+            </p>
+            <div className="flex items-center justify-between">
+              <span className="text-xs text-green-600">📧 E-mail de confirmação enviado</span>
+              <span className="text-xs text-green-600">🔔 Notificações ativadas</span>
+            </div>
+          </div>
+
+          {/* App Download Suggestion */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center mb-3">
+              <span className="text-2xl mr-2">📱</span>
+              <h3 className="font-semibold text-blue-800">Baixe Nosso App!</h3>
+            </div>
+            <p className="text-blue-700 text-sm mb-3">
+              Para uma experiência ainda melhor, baixe nosso app e receba notificações sobre novos protocolos!
+            </p>
+            <div className="flex space-x-2">
+              <button className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors">
+                📲 Baixar App
+              </button>
+              <button 
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({
+                      title: 'MeuPortalFit - Protocolos Nutricionais',
+                      text: 'Confira os melhores protocolos nutricionais para brasileiras nos EUA!',
+                      url: window.location.origin
+                    })
+                  } else {
+                    // Fallback para copiar link
+                    navigator.clipboard.writeText(window.location.origin)
+                    alert('Link copiado para a área de transferência!')
+                  }
+                }}
+                className="flex-1 bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors"
+              >
+                🔗 Compartilhar
+              </button>
+            </div>
+          </div>
+
+          {/* Bookmark Suggestion */}
+          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center mb-2">
+              <span className="text-xl mr-2">⭐</span>
+              <h3 className="font-semibold text-yellow-800">Salve Esta Página</h3>
+            </div>
+            <p className="text-yellow-700 text-sm mb-3">
+              Adicione aos favoritos para acessar facilmente seus protocolos!
+            </p>
+            <button 
+              onClick={() => {
+                // Tentar adicionar aos favoritos
+                if (window.sidebar && window.sidebar.addPanel) {
+                  window.sidebar.addPanel(document.title, window.location.href, '')
+                } else {
+                  alert('Use Ctrl+D (Windows) ou Cmd+D (Mac) para adicionar aos favoritos!')
+                }
+              }}
+              className="w-full bg-yellow-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-yellow-700 transition-colors"
+            >
+              ⭐ Adicionar aos Favoritos
+            </button>
           </div>
 
           {/* Download Section */}
