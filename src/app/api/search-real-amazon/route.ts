@@ -363,11 +363,13 @@ function generateMockProductsByQuery(query: string): any[] {
 
 export async function POST(request: NextRequest) {
   let query = '';
+  let useRealAmazon = false;
   
   try {
     const body = await request.json()
     query = body.query || '';
-    const { maxResults, specificProduct, useRealAmazon } = body
+    const { maxResults, specificProduct, useRealAmazon: useRealAmazonFlag } = body
+    useRealAmazon = useRealAmazonFlag || false;
 
     if (!query || query.trim().length < 2) {
       return NextResponse.json(
