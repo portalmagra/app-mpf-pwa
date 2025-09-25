@@ -1,14 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
+import { createClient } from '@supabase/supabase-js'
 
-// Verificar se a chave secreta está disponível
+// Verificar se as chaves estão disponíveis
 if (!process.env.STRIPE_SECRET_KEY) {
   console.error('STRIPE_SECRET_KEY não está configurada')
+}
+
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+  console.error('SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY não estão configuradas')
 }
 
 const stripe = process.env.STRIPE_SECRET_KEY ? new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: '2025-08-27.basil',
 }) : null
+
+const supabase = process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY 
+  ? createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    )
+  : null
 
 export async function GET(request: NextRequest) {
   try {
@@ -23,36 +35,47 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    if (!stripe) {
+    if (!stripe || !supabase) {
       return NextResponse.json(
-        { error: 'Stripe não está configurado' },
+        { error: 'Stripe ou Supabase não estão configurados' },
         { status: 500 }
       )
     }
 
-    // Verificar se a sessão existe e foi paga
-    const session = await stripe.checkout.sessions.retrieve(sessionId)
+    // Primeiro, verificar se a compra está registrada no Supabase
+    const { data: purchase, error: purchaseError } = await supabase
+      .from('user_purchases')
+      .select('*')
+      .eq('stripe_session_id', sessionId)
+      .eq('protocol_id', protocolId)
+      .eq('status', 'completed')
+      .single()
 
-    if (!session) {
-      return NextResponse.json(
-        { error: 'Sessão não encontrada' },
-        { status: 404 }
-      )
-    }
+    if (purchaseError || !purchase) {
+      // Se não encontrar no Supabase, verificar no Stripe como fallback
+      const session = await stripe.checkout.sessions.retrieve(sessionId)
 
-    if (session.payment_status !== 'paid') {
-      return NextResponse.json(
-        { error: 'Pagamento não foi processado' },
-        { status: 403 }
-      )
-    }
+      if (!session) {
+        return NextResponse.json(
+          { error: 'Sessão não encontrada' },
+          { status: 404 }
+        )
+      }
 
-    // Verificar se o protocolId corresponde ao da sessão
-    if (session.metadata?.protocolId !== protocolId) {
-      return NextResponse.json(
-        { error: 'Protocolo não corresponde à compra' },
-        { status: 403 }
-      )
+      if (session.payment_status !== 'paid') {
+        return NextResponse.json(
+          { error: 'Pagamento não foi processado' },
+          { status: 403 }
+        )
+      }
+
+      // Verificar se o protocolId corresponde ao da sessão
+      if (session.metadata?.protocolId !== protocolId) {
+        return NextResponse.json(
+          { error: 'Protocolo não corresponde à compra' },
+          { status: 403 }
+        )
+      }
     }
 
     // Obter URL do PDF

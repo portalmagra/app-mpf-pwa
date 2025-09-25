@@ -121,24 +121,25 @@ export default function QuizPage() {
   }
 
   const getPriceId = (protocolId: string) => {
+    // Usando price IDs CORRETOS dos PROTOCOLOS (não das dietas)
     const priceMap: { [key: string]: string } = {
-      'suporte-canetas-emagrecedoras': 'price_1SAvLOEVE42ibKnX0ePJB9Vd',
-      'pre-caneta': 'price_1SAvLPEVE42ibKnXr2zgyC3I',
-      'pos-caneta-manutencao': 'price_1SAvLQEVE42ibKnX8xFO3fNk',
-      'proteina-massa-magra': 'price_1SAvLQEVE42ibKnXvDuVnZrG',
-      'intestino-livre': 'price_1SAvLREVE42ibKnXxB3PdkLq',
-      'nausea-refluxo': 'price_1SAvLREVE42ibKnXxB3PdkLq',
-      'energia-imunidade': 'price_1SAvLREVE42ibKnXxB3PdkLq',
-      'detox-leve': 'price_1SAvLREVE42ibKnXxB3PdkLq',
-      'anti-inflamatorio': 'price_1SAvLREVE42ibKnXxB3PdkLq',
-      'mulheres-40': 'price_1SAvLREVE42ibKnXxB3PdkLq',
-      'pele-cabelo-unhas': 'price_1SAvLREVE42ibKnXxB3PdkLq',
-      'sono-ansiedade': 'price_1SAvLREVE42ibKnXxB3PdkLq',
-      'fitness-performance': 'price_1SAvLREVE42ibKnXxB3PdkLq',
-      'alternativa-sem-caneta': 'price_1SAvLREVE42ibKnXxB3PdkLq',
-      'pacote-completo': 'price_1SAvLSEVE42ibKnXseU0nD6V'
+      'suporte-canetas-emagrecedoras': 'price_1SAvLOEVE42ibKnX0ePJB9Vd', // $10.00 - Protocolo Suporte
+      'pre-caneta': 'price_1SAvLPEVE42ibKnXr2zgyC3I', // $10.00 - Protocolo Pré-Caneta
+      'pos-caneta-manutencao': 'price_1SAvLQEVE42ibKnX8xFO3fNk', // $10.00 - Protocolo Pós-Caneta
+      'proteina-massa-magra': 'price_1SAvLQEVE42ibKnXvDuVnZrG', // $10.00 - Protocolo Proteína
+      'intestino-livre': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Protocolo Intestino
+      'nausea-refluxo': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'energia-imunidade': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'detox-leve': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'anti-inflamatorio': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'mulheres-40': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'pele-cabelo-unhas': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'sono-ansiedade': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'fitness-performance': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'alternativa-sem-caneta': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'pacote-completo': 'price_1SAvLSEVE42ibKnXseU0nD6V' // $67.00 - Pacote Completo
     }
-    return priceMap[protocolId] || 'price_1SAvLREVE42ibKnXxB3PdkLq'
+    return priceMap[protocolId] || 'price_1SAvLREVE42ibKnXxB3PdkLq' // Default $10.00
   }
 
   const handlePurchase = async (protocolId: string) => {

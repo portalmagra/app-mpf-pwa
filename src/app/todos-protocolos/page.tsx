@@ -193,6 +193,28 @@ export default function TodosProtocolos() {
     return matchesSearch && matchesCategory
   })
 
+  const getPriceId = (protocolId: string) => {
+    // Usando price IDs CORRETOS dos PROTOCOLOS (não das dietas)
+    const priceMap: { [key: string]: string } = {
+      'suporte-canetas-emagrecedoras': 'price_1SAvLOEVE42ibKnX0ePJB9Vd', // $10.00 - Protocolo Suporte
+      'pre-caneta': 'price_1SAvLPEVE42ibKnXr2zgyC3I', // $10.00 - Protocolo Pré-Caneta
+      'pos-caneta-manutencao': 'price_1SAvLQEVE42ibKnX8xFO3fNk', // $10.00 - Protocolo Pós-Caneta
+      'proteina-massa-magra': 'price_1SAvLQEVE42ibKnXvDuVnZrG', // $10.00 - Protocolo Proteína
+      'intestino-livre': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Protocolo Intestino
+      'nausea-refluxo': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'energia-imunidade': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'detox-leve': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'anti-inflamatorio': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'mulheres-40': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'pele-cabelo-unhas': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'sono-ansiedade': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'fitness-performance': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'alternativa-sem-caneta': 'price_1SAvLREVE42ibKnXxB3PdkLq', // $10.00 - Usar mesmo preço
+      'pacote-completo': 'price_1SAvLSEVE42ibKnXseU0nD6V' // $67.00 - Pacote Completo
+    }
+    return priceMap[protocolId] || 'price_1SAvLREVE42ibKnXxB3PdkLq' // Default $10.00
+  }
+
   const handlePurchase = async (protocolId: string) => {
     try {
       const response = await fetch('/api/stripe/checkout', {
@@ -202,7 +224,7 @@ export default function TodosProtocolos() {
         },
         body: JSON.stringify({
           protocolId: protocolId,
-          priceId: protocolId === 'bundle-completo' ? 'price_bundle_completo' : `price_${protocolId}`,
+          priceId: getPriceId(protocolId),
           quantity: 1,
         }),
       })

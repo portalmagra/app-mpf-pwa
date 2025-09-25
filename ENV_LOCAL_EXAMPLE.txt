@@ -8,10 +8,11 @@ STRIPE_WEBHOOK_SECRET=whsec_SEU_WEBHOOK_SECRET_AQUI
 # Site URL
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 
-# Supabase Configuration (adicione suas chaves do Supabase aqui)
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+# Supabase Configuration (OBRIGATÓRIO para protocolos)
+NEXT_PUBLIC_SUPABASE_URL=https://seu-projeto.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave_anonima_aqui
+SUPABASE_SERVICE_ROLE_KEY=sua_chave_service_role_aqui
+SUPABASE_URL=https://seu-projeto.supabase.co
 
 # INSTRUÇÕES:
 # 1. Crie um arquivo chamado .env.local na raiz do projeto
