@@ -118,7 +118,7 @@ export async function POST(request: NextRequest) {
       console.log(`✅ PDF combinado criado: ${combinedPdfBytes.length} bytes`)
 
       // Retornar o PDF combinado
-      return new NextResponse(combinedPdfBytes, {
+      return new NextResponse(Buffer.from(combinedPdfBytes), {
         headers: {
           'Content-Type': 'application/pdf',
           'Content-Disposition': 'attachment; filename="PACOTE-COMPLETO-TODOS-PROTOCOLOS.pdf"',
