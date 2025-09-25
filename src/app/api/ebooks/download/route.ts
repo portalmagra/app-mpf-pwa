@@ -150,6 +150,12 @@ export async function GET(request: NextRequest) {
 
 async function getEbookData(ebookId: string) {
   try {
+    // Verificar se supabase está configurado
+    if (!supabase) {
+      console.error('❌ Supabase não configurado')
+      return null
+    }
+
     // Buscar dados do eBook no Supabase
     const { data: ebook, error } = await supabase
       .from('ebooks')
