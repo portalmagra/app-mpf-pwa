@@ -173,7 +173,8 @@ function getProtocolData(protocolId: string) {
     'intestino-livre': {
       id: 'intestino-livre',
       fileName: 'PROTOCOLO-INTESTINO-LIVRE.pdf',
-      pdfUrl: 'https://ajuoqvpccdkpzkefjrsc.supabase.co/storage/v1/object/public/PROTOCOLOS/PROTOCOLO-INTESTINO-LIVRE.pdf'
+      // Usando Google Drive para arquivo grande (>50MB)
+      pdfUrl: 'https://drive.google.com/uc?export=download&id=SEU_ID_DO_DRIVE_AQUI'
     },
     'nausea-refluxo': {
       id: 'nausea-refluxo',
@@ -228,7 +229,8 @@ function getProtocolData(protocolId: string) {
     'pacote-completo': {
       id: 'pacote-completo',
       fileName: 'PACOTE-COMPLETO-TODOS-PROTOCOLOS.pdf',
-      pdfUrl: 'https://ajuoqvpccdkpzkefjrsc.supabase.co/storage/v1/object/public/PROTOCOLOS/PACOTE-COMPLETO-TODOS-PROTOCOLOS.pdf'
+      // Usando Google Drive para arquivo grande (>50MB)
+      pdfUrl: 'https://drive.google.com/uc?export=download&id=SEU_ID_DO_DRIVE_AQUI'
     }
   }
 

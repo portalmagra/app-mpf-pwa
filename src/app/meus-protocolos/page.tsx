@@ -2,14 +2,15 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Download, CheckCircle, Calendar, FileText, ArrowLeft, RefreshCw } from 'lucide-react'
+import { Download, CheckCircle, Calendar, FileText, ArrowLeft, RefreshCw, BookOpen } from 'lucide-react'
 import Logo from '@/components/Logo'
 import BottomNavigation from '@/components/BottomNavigation'
 
-interface PurchasedProtocol {
+interface PurchasedItem {
   id: string
-  protocol_id: string
-  protocol_name: string
+  item_id: string
+  item_name: string
+  item_type: 'protocol' | 'ebook'
   purchase_date: string
   status: string
   amount: number
@@ -17,22 +18,23 @@ interface PurchasedProtocol {
 }
 
 export default function MeusProtocolos() {
-  const [protocols, setProtocols] = useState<PurchasedProtocol[]>([])
+  const [items, setItems] = useState<PurchasedItem[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  // Simular busca de protocolos comprados (em produção, viria do Supabase)
+  // Simular busca de itens comprados (protocolos + eBooks)
   useEffect(() => {
-    const fetchPurchasedProtocols = async () => {
+    const fetchPurchasedItems = async () => {
       try {
         setLoading(true)
         
         // Por enquanto, simular dados (em produção, buscar do Supabase)
-        const mockProtocols: PurchasedProtocol[] = [
+        const mockItems: PurchasedItem[] = [
           {
             id: '1',
-            protocol_id: 'nausea-refluxo',
-            protocol_name: 'Protocolo Náusea e Refluxo',
+            item_id: 'nausea-refluxo',
+            item_name: 'Protocolo Náusea e Refluxo',
+            item_type: 'protocol',
             purchase_date: '2025-01-25T10:30:00Z',
             status: 'completed',
             amount: 10.00,
@@ -40,34 +42,61 @@ export default function MeusProtocolos() {
           },
           {
             id: '2',
-            protocol_id: 'intestino-livre',
-            protocol_name: 'Protocolo Intestino Livre',
+            item_id: 'intestino-livre',
+            item_name: 'Protocolo Intestino Livre',
+            item_type: 'protocol',
             purchase_date: '2025-01-24T15:45:00Z',
             status: 'completed',
             amount: 10.00,
             customer_email: 'usuario@exemplo.com'
+          },
+          {
+            id: '3',
+            item_id: 'ebook-fit-doces',
+            item_name: 'eBook Fit Doces',
+            item_type: 'ebook',
+            purchase_date: '2025-01-23T09:15:00Z',
+            status: 'completed',
+            amount: 15.00,
+            customer_email: 'usuario@exemplo.com'
+          },
+          {
+            id: '4',
+            item_id: 'ebook-saladas-funcionais',
+            item_name: 'eBook Saladas Funcionais',
+            item_type: 'ebook',
+            purchase_date: '2025-01-22T14:20:00Z',
+            status: 'completed',
+            amount: 12.00,
+            customer_email: 'usuario@exemplo.com'
           }
         ]
         
-        setProtocols(mockProtocols)
+        setItems(mockItems)
         setError(null)
       } catch (err) {
-        setError('Erro ao carregar protocolos comprados')
+        setError('Erro ao carregar itens comprados')
         console.error('Erro:', err)
       } finally {
         setLoading(false)
       }
     }
 
-    fetchPurchasedProtocols()
+    fetchPurchasedItems()
   }, [])
 
-  const handleDownload = async (protocolId: string, protocolName: string) => {
+  const handleDownload = async (itemId: string, itemName: string, itemType: 'protocol' | 'ebook') => {
     try {
       // Simular session ID (em produção, usar session real)
       const sessionId = 'cs_live_b1vLq9yOkDV5lniwF0uoLCQafrXZM1H66AHW3YZyWgdIVPBX0fUYm'
       
-      const downloadUrl = `/api/protocols/download?protocol=${protocolId}&session=${sessionId}`
+      let downloadUrl: string
+      
+      if (itemType === 'protocol') {
+        downloadUrl = `/api/protocols/download?protocol=${itemId}&session=${sessionId}`
+      } else {
+        downloadUrl = `/api/ebooks/download?ebook=${itemId}&session=${sessionId}`
+      }
       
       // Abrir download em nova aba
       window.open(downloadUrl, '_blank')
@@ -88,7 +117,11 @@ export default function MeusProtocolos() {
     })
   }
 
-  const getProtocolIcon = (protocolId: string) => {
+  const getItemIcon = (itemId: string, itemType: 'protocol' | 'ebook') => {
+    if (itemType === 'ebook') {
+      return '📖'
+    }
+    
     const iconMap: { [key: string]: string } = {
       'suporte-canetas-emagrecedoras': '💉',
       'pre-caneta': '🎯',
@@ -106,7 +139,15 @@ export default function MeusProtocolos() {
       'alternativa-sem-caneta': '🌿',
       'pacote-completo': '📚'
     }
-    return iconMap[protocolId] || '📄'
+    return iconMap[itemId] || '📄'
+  }
+
+  const getItemTypeLabel = (itemType: 'protocol' | 'ebook') => {
+    return itemType === 'protocol' ? 'Protocolo' : 'eBook'
+  }
+
+  const getItemTypeColor = (itemType: 'protocol' | 'ebook') => {
+    return itemType === 'protocol' ? 'bg-blue-100 text-blue-800' : 'bg-purple-100 text-purple-800'
   }
 
   return (
@@ -135,10 +176,10 @@ export default function MeusProtocolos() {
       <section className="px-4 py-6 text-center">
         <div className="max-w-sm mx-auto">
           <h1 className="text-2xl font-bold text-brand-text mb-2">
-            📚 Meus Protocolos
+            📚 Meus Protocolos & eBooks
           </h1>
           <p className="text-brand-text2 text-sm">
-            Acesse seus protocolos comprados a qualquer momento
+            Acesse seus protocolos e eBooks comprados a qualquer momento
           </p>
         </div>
       </section>
@@ -149,7 +190,7 @@ export default function MeusProtocolos() {
           {loading ? (
             <div className="bg-white rounded-xl p-8 text-center shadow-lg">
               <RefreshCw className="w-8 h-8 text-brand-green mx-auto mb-4 animate-spin" />
-              <p className="text-brand-text2">Carregando seus protocolos...</p>
+              <p className="text-brand-text2">Carregando seus itens...</p>
             </div>
           ) : error ? (
             <div className="bg-white rounded-xl p-8 text-center shadow-lg">
@@ -165,39 +206,52 @@ export default function MeusProtocolos() {
                 Tentar Novamente
               </button>
             </div>
-          ) : protocols.length === 0 ? (
+          ) : items.length === 0 ? (
             <div className="bg-white rounded-xl p-8 text-center shadow-lg">
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl">📄</span>
               </div>
-              <h3 className="text-lg font-semibold text-brand-text mb-2">Nenhum protocolo comprado</h3>
+              <h3 className="text-lg font-semibold text-brand-text mb-2">Nenhum item comprado</h3>
               <p className="text-brand-text2 mb-6">
-                Você ainda não comprou nenhum protocolo. Explore nossa seleção!
+                Você ainda não comprou nenhum protocolo ou eBook. Explore nossa seleção!
               </p>
-              <Link 
-                href="/todos-protocolos"
-                className="px-6 py-3 bg-brand-green text-white rounded-lg font-semibold hover:bg-brand-greenDark transition-colors inline-block"
-              >
-                Ver Protocolos
-              </Link>
+              <div className="space-y-3">
+                <Link 
+                  href="/todos-protocolos"
+                  className="block px-6 py-3 bg-brand-green text-white rounded-lg font-semibold hover:bg-brand-greenDark transition-colors"
+                >
+                  Ver Protocolos
+                </Link>
+                <Link 
+                  href="/ebooks"
+                  className="block px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition-colors"
+                >
+                  Ver eBooks
+                </Link>
+              </div>
             </div>
           ) : (
             <div className="space-y-4">
-              {protocols.map((protocol) => (
-                <div key={protocol.id} className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+              {items.map((item) => (
+                <div key={item.id} className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center">
-                      <span className="text-3xl mr-3">{getProtocolIcon(protocol.protocol_id)}</span>
+                      <span className="text-3xl mr-3">{getItemIcon(item.item_id, item.item_type)}</span>
                       <div>
-                        <h3 className="font-bold text-brand-text text-lg">{protocol.protocol_name}</h3>
-                        <div className="flex items-center text-sm text-brand-text2 mt-1">
+                        <div className="flex items-center mb-1">
+                          <h3 className="font-bold text-brand-text text-lg mr-2">{item.item_name}</h3>
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${getItemTypeColor(item.item_type)}`}>
+                            {getItemTypeLabel(item.item_type)}
+                          </span>
+                        </div>
+                        <div className="flex items-center text-sm text-brand-text2">
                           <Calendar className="w-4 h-4 mr-1" />
-                          {formatDate(protocol.purchase_date)}
+                          {formatDate(item.purchase_date)}
                         </div>
                       </div>
                     </div>
                     <div className="text-right">
-                      <span className="text-lg font-bold text-brand-green">${protocol.amount}</span>
+                      <span className="text-lg font-bold text-brand-green">${item.amount}</span>
                       <div className="flex items-center text-sm text-green-600 mt-1">
                         <CheckCircle className="w-4 h-4 mr-1" />
                         Pago
@@ -205,33 +259,47 @@ export default function MeusProtocolos() {
                     </div>
                   </div>
 
-                  <div className="bg-brand-greenSoft rounded-lg p-4 mb-4">
+                  <div className={`rounded-lg p-4 mb-4 ${item.item_type === 'protocol' ? 'bg-brand-greenSoft' : 'bg-purple-50'}`}>
                     <div className="flex items-center text-sm text-brand-text">
-                      <FileText className="w-4 h-4 mr-2" />
+                      {item.item_type === 'protocol' ? (
+                        <FileText className="w-4 h-4 mr-2" />
+                      ) : (
+                        <BookOpen className="w-4 h-4 mr-2" />
+                      )}
                       <span className="font-medium">Arquivo disponível para download</span>
                     </div>
                   </div>
 
                   <button
-                    onClick={() => handleDownload(protocol.protocol_id, protocol.protocol_name)}
-                    className="w-full px-4 py-3 bg-brand-green text-white rounded-lg font-semibold hover:bg-brand-greenDark transition-colors flex items-center justify-center"
+                    onClick={() => handleDownload(item.item_id, item.item_name, item.item_type)}
+                    className={`w-full px-4 py-3 text-white rounded-lg font-semibold transition-colors flex items-center justify-center ${
+                      item.item_type === 'protocol' 
+                        ? 'bg-brand-green hover:bg-brand-greenDark' 
+                        : 'bg-purple-600 hover:bg-purple-700'
+                    }`}
                   >
                     <Download className="w-5 h-5 mr-2" />
-                    Baixar Protocolo
+                    Baixar {getItemTypeLabel(item.item_type)}
                   </button>
                 </div>
               ))}
             </div>
           )}
 
-          {/* Link para comprar mais */}
-          {protocols.length > 0 && (
-            <div className="mt-6 text-center">
+          {/* Links para comprar mais */}
+          {items.length > 0 && (
+            <div className="mt-6 text-center space-y-2">
               <Link 
                 href="/todos-protocolos"
-                className="text-brand-green text-sm font-medium hover:underline"
+                className="block text-brand-green text-sm font-medium hover:underline"
               >
                 Ver mais protocolos disponíveis
+              </Link>
+              <Link 
+                href="/ebooks"
+                className="block text-purple-600 text-sm font-medium hover:underline"
+              >
+                Ver mais eBooks disponíveis
               </Link>
             </div>
           )}
