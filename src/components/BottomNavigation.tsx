@@ -54,13 +54,13 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
           <span className={`text-xs font-semibold ${isActive('/todos-protocolos') ? 'text-brand-green' : 'text-brand-green'}`}>Protocolos</span>
         </Link>
 
-        {/* Mercado */}
+        {/* Meus Protocolos */}
         <Link 
-          href="/mercado" 
-          className={`flex flex-col items-center py-1 ${isActive('/mercado') ? 'text-brand-green' : 'text-brand-green'}`}
+          href="/meus-protocolos" 
+          className={`flex flex-col items-center py-1 ${isActive('/meus-protocolos') ? 'text-brand-green' : 'text-brand-green'}`}
         >
-          <span className="text-lg">🛒</span>
-          <span className={`text-xs font-semibold ${isActive('/mercado') ? 'text-brand-green' : 'text-brand-green'}`}>Mercado</span>
+          <span className="text-lg">📄</span>
+          <span className={`text-xs font-semibold ${isActive('/meus-protocolos') ? 'text-brand-green' : 'text-brand-green'}`}>Meus</span>
         </Link>
       </div>
     </div>

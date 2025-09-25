@@ -2,194 +2,111 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Download, Eye, Lock, CheckCircle, Star, ArrowLeft } from 'lucide-react'
+import { Download, CheckCircle, Calendar, FileText, ArrowLeft, RefreshCw } from 'lucide-react'
 import Logo from '@/components/Logo'
 import BottomNavigation from '@/components/BottomNavigation'
-import ProtocolPreview from '@/components/ProtocolPreview'
 
-interface Protocol {
+interface PurchasedProtocol {
   id: string
-  name: string
-  description: string
-  price: number
-  purchased: boolean
-  preview_url?: string
-  download_url?: string
-  category: string
+  protocol_id: string
+  protocol_name: string
+  purchase_date: string
+  status: string
+  amount: number
+  customer_email: string
 }
 
 export default function MeusProtocolos() {
-  const [protocols, setProtocols] = useState<Protocol[]>([])
+  const [protocols, setProtocols] = useState<PurchasedProtocol[]>([])
   const [loading, setLoading] = useState(true)
-  const [selectedProtocol, setSelectedProtocol] = useState<Protocol | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
-  // Lista dos 16 protocolos disponíveis
-  const availableProtocols: Protocol[] = [
-    {
-      id: 'alternativa-sem-caneta',
-      name: 'Protocolo Alternativa Sem Caneta',
-      description: 'Alternativas naturais para emagrecimento sem medicação',
-      price: 10,
-      purchased: false,
-      category: 'Emagrecimento'
-    },
-    {
-      id: 'suporte-canetas-emagrecedoras',
-      name: 'Protocolo Suporte com Canetas Emagrecedoras',
-      description: 'Suporte nutricional completo para usuárias de canetas',
-      price: 10,
-      purchased: false,
-      category: 'Canetas'
-    },
-    {
-      id: 'anti-inflamatorio',
-      name: 'Protocolo Anti-inflamatório',
-      description: 'Redução de inflamação e melhora da saúde geral',
-      price: 10,
-      purchased: false,
-      category: 'Saúde'
-    },
-    {
-      id: 'detox-leve',
-      name: 'Protocolo Detox Leve',
-      description: 'Desintoxicação suave e natural do organismo',
-      price: 10,
-      purchased: false,
-      category: 'Detox'
-    },
-    {
-      id: 'energia-imunidade',
-      name: 'Protocolo Energia e Imunidade',
-      description: 'Aumento de energia e fortalecimento do sistema imunológico',
-      price: 10,
-      purchased: false,
-      category: 'Energia'
-    },
-    {
-      id: 'fitness-performance',
-      name: 'Protocolo Fitness e Performance',
-      description: 'Otimização do desempenho físico e mental',
-      price: 10,
-      purchased: false,
-      category: 'Fitness'
-    },
-    {
-      id: 'imunidade-avancada',
-      name: 'Protocolo Imunidade Avançada',
-      description: 'Fortalecimento avançado do sistema imunológico',
-      price: 10,
-      purchased: false,
-      category: 'Imunidade'
-    },
-    {
-      id: 'intestino-livre',
-      name: 'Protocolo Intestino Livre',
-      description: 'Saúde intestinal e digestão otimizada',
-      price: 10,
-      purchased: false,
-      category: 'Digestão'
-    },
-    {
-      id: 'mulheres-40',
-      name: 'Protocolo Mulheres 40+',
-      description: 'Cuidados específicos para mulheres após os 40',
-      price: 10,
-      purchased: false,
-      category: 'Hormonal'
-    },
-    {
-      id: 'nausea-refluxo',
-      name: 'Protocolo Náusea e Refluxo',
-      description: 'Alívio de náuseas e problemas digestivos',
-      price: 10,
-      purchased: false,
-      category: 'Digestão'
-    },
-    {
-      id: 'pele-cabelo-unhas',
-      name: 'Protocolo Pele, Cabelo e Unhas',
-      description: 'Cuidados para beleza e saúde da pele, cabelo e unhas',
-      price: 10,
-      purchased: false,
-      category: 'Beleza'
-    },
-    {
-      id: 'pos-caneta-manutencao',
-      name: 'Protocolo Pós-Caneta Manutenção',
-      description: 'Manutenção dos resultados após uso de canetas',
-      price: 10,
-      purchased: false,
-      category: 'Canetas'
-    },
-    {
-      id: 'pre-caneta',
-      name: 'Protocolo Pré-Caneta',
-      description: 'Preparação antes de iniciar uso de canetas',
-      price: 10,
-      purchased: false,
-      category: 'Canetas'
-    },
-    {
-      id: 'proteina-massa-magra',
-      name: 'Protocolo Proteína e Massa Magra',
-      description: 'Preservação e ganho de massa muscular',
-      price: 10,
-      purchased: false,
-      category: 'Musculação'
-    },
-    {
-      id: 'sono-ansiedade',
-      name: 'Protocolo Sono e Ansiedade',
-      description: 'Melhora da qualidade do sono e redução da ansiedade',
-      price: 10,
-      purchased: false,
-      category: 'Bem-estar'
-    }
-  ]
-
+  // Simular busca de protocolos comprados (em produção, viria do Supabase)
   useEffect(() => {
-    // Simular carregamento dos protocolos comprados
-    // Em produção, isso viria do Supabase
-    setTimeout(() => {
-      // Simular alguns protocolos comprados
-      const purchasedProtocols = availableProtocols.map(protocol => ({
-        ...protocol,
-        purchased: Math.random() > 0.7 // Simular 30% comprados
-      }))
-      setProtocols(purchasedProtocols)
-      setLoading(false)
-    }, 1000)
+    const fetchPurchasedProtocols = async () => {
+      try {
+        setLoading(true)
+        
+        // Por enquanto, simular dados (em produção, buscar do Supabase)
+        const mockProtocols: PurchasedProtocol[] = [
+          {
+            id: '1',
+            protocol_id: 'nausea-refluxo',
+            protocol_name: 'Protocolo Náusea e Refluxo',
+            purchase_date: '2025-01-25T10:30:00Z',
+            status: 'completed',
+            amount: 10.00,
+            customer_email: 'usuario@exemplo.com'
+          },
+          {
+            id: '2',
+            protocol_id: 'intestino-livre',
+            protocol_name: 'Protocolo Intestino Livre',
+            purchase_date: '2025-01-24T15:45:00Z',
+            status: 'completed',
+            amount: 10.00,
+            customer_email: 'usuario@exemplo.com'
+          }
+        ]
+        
+        setProtocols(mockProtocols)
+        setError(null)
+      } catch (err) {
+        setError('Erro ao carregar protocolos comprados')
+        console.error('Erro:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPurchasedProtocols()
   }, [])
 
-  const handleDownload = async (protocol: Protocol) => {
+  const handleDownload = async (protocolId: string, protocolName: string) => {
     try {
-      // Em produção, isso faria download do Supabase Storage
-      console.log('Downloading protocol:', protocol.id)
-      alert(`Download do protocolo "${protocol.name}" iniciado!`)
+      // Simular session ID (em produção, usar session real)
+      const sessionId = 'cs_live_b1vLq9yOkDV5lniwF0uoLCQafrXZM1H66AHW3YZyWgdIVPBX0fUYm'
+      
+      const downloadUrl = `/api/protocols/download?protocol=${protocolId}&session=${sessionId}`
+      
+      // Abrir download em nova aba
+      window.open(downloadUrl, '_blank')
+      
     } catch (error) {
-      console.error('Error downloading protocol:', error)
+      console.error('Erro ao fazer download:', error)
       alert('Erro ao fazer download. Tente novamente.')
     }
   }
 
-  const handlePreview = (protocol: Protocol) => {
-    setSelectedProtocol(protocol)
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    })
   }
 
-  const purchasedProtocols = protocols.filter(p => p.purchased)
-  const availableToPurchase = protocols.filter(p => !p.purchased)
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-brand-cream pb-16">
-        <div className="flex items-center justify-center h-screen">
-          <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-green mx-auto mb-4"></div>
-            <p className="text-brand-text2">Carregando seus protocolos...</p>
-          </div>
-        </div>
-      </div>
-    )
+  const getProtocolIcon = (protocolId: string) => {
+    const iconMap: { [key: string]: string } = {
+      'suporte-canetas-emagrecedoras': '💉',
+      'pre-caneta': '🎯',
+      'pos-caneta-manutencao': '🔄',
+      'proteina-massa-magra': '💪',
+      'intestino-livre': '🌱',
+      'nausea-refluxo': '🤢',
+      'energia-imunidade': '⚡',
+      'detox-leve': '🧹',
+      'anti-inflamatorio': '🔥',
+      'mulheres-40': '🌸',
+      'pele-cabelo-unhas': '✨',
+      'sono-ansiedade': '😴',
+      'fitness-performance': '🏃‍♀️',
+      'alternativa-sem-caneta': '🌿',
+      'pacote-completo': '📚'
+    }
+    return iconMap[protocolId] || '📄'
   }
 
   return (
@@ -198,10 +115,18 @@ export default function MeusProtocolos() {
       <header className="bg-white shadow-soft sticky top-0 z-50">
         <div className="max-w-sm mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
-            <Logo variant="horizontal" size="md" />
-            <Link href="/" className="text-brand-green text-sm font-medium">
-              🏠 Início
-            </Link>
+            <div className="flex items-center">
+              <Link href="/" className="mr-3 p-1 hover:bg-gray-100 rounded-lg transition-colors">
+                <ArrowLeft className="w-5 h-5 text-gray-600" />
+              </Link>
+              <Logo variant="horizontal" size="md" />
+            </div>
+            <button 
+              onClick={() => window.location.reload()}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            >
+              <RefreshCw className="w-5 h-5 text-gray-600" />
+            </button>
           </div>
         </div>
       </header>
@@ -213,146 +138,108 @@ export default function MeusProtocolos() {
             📚 Meus Protocolos
           </h1>
           <p className="text-brand-text2 text-sm">
-            Acesse seus protocolos comprados e descubra novos
+            Acesse seus protocolos comprados a qualquer momento
           </p>
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="px-4 mb-6">
+      {/* Content */}
+      <main className="px-4">
         <div className="max-w-sm mx-auto">
-          <div className="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
-            <div className="grid grid-cols-2 gap-4 text-center">
-              <div>
-                <p className="text-2xl font-bold text-brand-green">{purchasedProtocols.length}</p>
-                <p className="text-xs text-brand-text2">Comprados</p>
-              </div>
-              <div>
-                <p className="text-2xl font-bold text-brand-text">{availableToPurchase.length}</p>
-                <p className="text-xs text-brand-text2">Disponíveis</p>
-              </div>
+          {loading ? (
+            <div className="bg-white rounded-xl p-8 text-center shadow-lg">
+              <RefreshCw className="w-8 h-8 text-brand-green mx-auto mb-4 animate-spin" />
+              <p className="text-brand-text2">Carregando seus protocolos...</p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Protocolos Comprados */}
-      {purchasedProtocols.length > 0 && (
-        <section className="px-4 mb-6">
-          <div className="max-w-sm mx-auto">
-            <h2 className="text-lg font-bold text-brand-text mb-4 flex items-center">
-              <CheckCircle className="w-5 h-5 text-brand-green mr-2" />
-              Seus Protocolos
-            </h2>
-            <div className="space-y-3">
-              {purchasedProtocols.map((protocol) => (
-                <div key={protocol.id} className="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="font-bold text-brand-text mb-1">{protocol.name}</h3>
-                      <p className="text-xs text-brand-text2 mb-2">{protocol.description}</p>
-                      <span className="inline-block bg-brand-greenSoft text-brand-green text-xs px-2 py-1 rounded-full">
-                        {protocol.category}
-                      </span>
+          ) : error ? (
+            <div className="bg-white rounded-xl p-8 text-center shadow-lg">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">❌</span>
+              </div>
+              <h3 className="text-lg font-semibold text-brand-text mb-2">Erro ao carregar</h3>
+              <p className="text-brand-text2 mb-4">{error}</p>
+              <button 
+                onClick={() => window.location.reload()}
+                className="px-4 py-2 bg-brand-green text-white rounded-lg hover:bg-brand-greenDark transition-colors"
+              >
+                Tentar Novamente
+              </button>
+            </div>
+          ) : protocols.length === 0 ? (
+            <div className="bg-white rounded-xl p-8 text-center shadow-lg">
+              <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-2xl">📄</span>
+              </div>
+              <h3 className="text-lg font-semibold text-brand-text mb-2">Nenhum protocolo comprado</h3>
+              <p className="text-brand-text2 mb-6">
+                Você ainda não comprou nenhum protocolo. Explore nossa seleção!
+              </p>
+              <Link 
+                href="/todos-protocolos"
+                className="px-6 py-3 bg-brand-green text-white rounded-lg font-semibold hover:bg-brand-greenDark transition-colors inline-block"
+              >
+                Ver Protocolos
+              </Link>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {protocols.map((protocol) => (
+                <div key={protocol.id} className="bg-white rounded-xl p-6 shadow-lg border border-gray-100">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex items-center">
+                      <span className="text-3xl mr-3">{getProtocolIcon(protocol.protocol_id)}</span>
+                      <div>
+                        <h3 className="font-bold text-brand-text text-lg">{protocol.protocol_name}</h3>
+                        <div className="flex items-center text-sm text-brand-text2 mt-1">
+                          <Calendar className="w-4 h-4 mr-1" />
+                          {formatDate(protocol.purchase_date)}
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex space-x-2 ml-3">
-                      <button
-                        onClick={() => handlePreview(protocol)}
-                        className="p-2 bg-brand-greenSoft text-brand-green rounded-lg hover:bg-brand-green hover:text-white transition-colors"
-                        title="Visualizar"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </button>
-                      <button
-                        onClick={() => handleDownload(protocol)}
-                        className="p-2 bg-brand-green text-white rounded-lg hover:bg-brand-greenDark transition-colors"
-                        title="Download"
-                      >
-                        <Download className="w-4 h-4" />
-                      </button>
+                    <div className="text-right">
+                      <span className="text-lg font-bold text-brand-green">${protocol.amount}</span>
+                      <div className="flex items-center text-sm text-green-600 mt-1">
+                        <CheckCircle className="w-4 h-4 mr-1" />
+                        Pago
+                      </div>
                     </div>
                   </div>
+
+                  <div className="bg-brand-greenSoft rounded-lg p-4 mb-4">
+                    <div className="flex items-center text-sm text-brand-text">
+                      <FileText className="w-4 h-4 mr-2" />
+                      <span className="font-medium">Arquivo disponível para download</span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => handleDownload(protocol.protocol_id, protocol.protocol_name)}
+                    className="w-full px-4 py-3 bg-brand-green text-white rounded-lg font-semibold hover:bg-brand-greenDark transition-colors flex items-center justify-center"
+                  >
+                    <Download className="w-5 h-5 mr-2" />
+                    Baixar Protocolo
+                  </button>
                 </div>
               ))}
             </div>
-          </div>
-        </section>
-      )}
+          )}
 
-      {/* Protocolos Disponíveis */}
-      <section className="px-4 mb-6">
-        <div className="max-w-sm mx-auto">
-          <h2 className="text-lg font-bold text-brand-text mb-4 flex items-center">
-            <Star className="w-5 h-5 text-brand-green mr-2" />
-            Protocolos Disponíveis
-          </h2>
-          <div className="space-y-3">
-            {availableToPurchase.slice(0, 6).map((protocol) => (
-              <div key={protocol.id} className="bg-white rounded-xl p-4 shadow-lg border border-gray-100 opacity-75">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h3 className="font-bold text-brand-text mb-1">{protocol.name}</h3>
-                    <p className="text-xs text-brand-text2 mb-2">{protocol.description}</p>
-                    <div className="flex items-center justify-between">
-                      <span className="inline-block bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full">
-                        {protocol.category}
-                      </span>
-                      <span className="text-sm font-bold text-brand-green">${protocol.price}</span>
-                    </div>
-                  </div>
-                  <div className="flex items-center ml-3">
-                    <Lock className="w-4 h-4 text-gray-400" />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          {availableToPurchase.length > 6 && (
-            <div className="text-center mt-4">
+          {/* Link para comprar mais */}
+          {protocols.length > 0 && (
+            <div className="mt-6 text-center">
               <Link 
-                href="/quiz" 
+                href="/todos-protocolos"
                 className="text-brand-green text-sm font-medium hover:underline"
               >
-                Ver todos os {availableToPurchase.length} protocolos disponíveis
+                Ver mais protocolos disponíveis
               </Link>
             </div>
           )}
         </div>
-      </section>
-
-      {/* Bundle Offer */}
-      <section className="px-4 mb-6">
-        <div className="max-w-sm mx-auto">
-          <div className="bg-gradient-to-r from-brand-green to-brand-greenDark rounded-xl p-6 text-white text-center shadow-lg">
-            <h3 className="text-xl font-bold mb-2">🎁 Oferta Especial</h3>
-            <p className="text-sm mb-4">
-              Obtenha todos os 16 protocolos por apenas $67
-            </p>
-            <p className="text-xs text-green-100 mb-4">
-              Economia de $93 (58% de desconto!)
-            </p>
-            <Link 
-              href="/quiz" 
-              className="bg-white text-brand-green px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors inline-block"
-            >
-              Obter Pacote Completo
-            </Link>
-          </div>
-        </div>
-      </section>
+      </main>
 
       {/* Bottom Navigation */}
       <BottomNavigation currentPage="/meus-protocolos" />
-
-      {/* Protocol Preview Modal */}
-      {selectedProtocol && (
-        <ProtocolPreview
-          protocol={selectedProtocol}
-          onClose={() => setSelectedProtocol(null)}
-          onDownload={() => handleDownload(selectedProtocol)}
-        />
-      )}
     </div>
   )
 }

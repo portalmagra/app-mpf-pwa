@@ -24,11 +24,16 @@ const supabase = process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_K
 
 export async function GET(request: NextRequest) {
   try {
+    console.log('🔍 Iniciando download de protocolo...')
+    
     const { searchParams } = new URL(request.url)
     const protocolId = searchParams.get('protocol')
     const sessionId = searchParams.get('session')
 
+    console.log(`📋 Protocolo: ${protocolId}, Sessão: ${sessionId}`)
+
     if (!protocolId || !sessionId) {
+      console.error('❌ Parâmetros obrigatórios não fornecidos')
       return NextResponse.json(
         { error: 'protocol e session são obrigatórios' },
         { status: 400 }
@@ -36,6 +41,7 @@ export async function GET(request: NextRequest) {
     }
 
     if (!stripe || !supabase) {
+      console.error('❌ Stripe ou Supabase não configurados')
       return NextResponse.json(
         { error: 'Stripe ou Supabase não estão configurados' },
         { status: 500 }
@@ -43,6 +49,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Primeiro, verificar se a compra está registrada no Supabase
+    console.log('🔍 Verificando compra no Supabase...')
     const { data: purchase, error: purchaseError } = await supabase
       .from('user_purchases')
       .select('*')
@@ -52,10 +59,13 @@ export async function GET(request: NextRequest) {
       .single()
 
     if (purchaseError || !purchase) {
+      console.log('⚠️ Compra não encontrada no Supabase, verificando no Stripe...')
+      
       // Se não encontrar no Supabase, verificar no Stripe como fallback
       const session = await stripe.checkout.sessions.retrieve(sessionId)
 
       if (!session) {
+        console.error('❌ Sessão não encontrada no Stripe')
         return NextResponse.json(
           { error: 'Sessão não encontrada' },
           { status: 404 }
@@ -63,6 +73,7 @@ export async function GET(request: NextRequest) {
       }
 
       if (session.payment_status !== 'paid') {
+        console.error('❌ Pagamento não foi processado')
         return NextResponse.json(
           { error: 'Pagamento não foi processado' },
           { status: 403 }
@@ -71,32 +82,45 @@ export async function GET(request: NextRequest) {
 
       // Verificar se o protocolId corresponde ao da sessão
       if (session.metadata?.protocolId !== protocolId) {
+        console.error('❌ Protocolo não corresponde à compra')
         return NextResponse.json(
           { error: 'Protocolo não corresponde à compra' },
           { status: 403 }
         )
       }
+      
+      console.log('✅ Compra verificada no Stripe')
+    } else {
+      console.log('✅ Compra verificada no Supabase')
     }
 
-    // Obter URL do PDF
+    // Obter dados do protocolo
+    console.log('🔍 Obtendo dados do protocolo...')
     const protocolData = getProtocolData(protocolId)
 
     if (!protocolData) {
+      console.error(`❌ Protocolo não encontrado: ${protocolId}`)
       return NextResponse.json(
         { error: 'Protocolo não encontrado' },
         { status: 404 }
       )
     }
 
+    console.log(`📄 Arquivo: ${protocolData.fileName}`)
+    console.log(`🔗 URL: ${protocolData.pdfUrl}`)
+
     // Fazer download do arquivo do Supabase Storage
     try {
+      console.log('📥 Fazendo download do arquivo...')
       const response = await fetch(protocolData.pdfUrl)
       
       if (!response.ok) {
-        throw new Error('Erro ao buscar arquivo')
+        console.error(`❌ Erro HTTP ${response.status}: ${response.statusText}`)
+        throw new Error(`Erro ao buscar arquivo: ${response.status} ${response.statusText}`)
       }
 
       const buffer = await response.arrayBuffer()
+      console.log(`✅ Arquivo baixado com sucesso: ${buffer.byteLength} bytes`)
       
       // Retornar o arquivo como blob
       return new NextResponse(buffer, {
@@ -108,17 +132,17 @@ export async function GET(request: NextRequest) {
       })
 
     } catch (error) {
-      console.error('Erro ao fazer download do arquivo:', error)
+      console.error('❌ Erro ao fazer download do arquivo:', error)
       return NextResponse.json(
-        { error: 'Erro ao baixar o arquivo' },
+        { error: `Erro ao baixar o arquivo: ${error.message}` },
         { status: 500 }
       )
     }
 
   } catch (error) {
-    console.error('Erro ao processar download:', error)
+    console.error('❌ Erro ao processar download:', error)
     return NextResponse.json(
-      { error: 'Erro interno do servidor' },
+      { error: `Erro interno do servidor: ${error.message}` },
       { status: 500 }
     )
   }
