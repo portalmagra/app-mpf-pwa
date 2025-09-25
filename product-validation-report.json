@@ -1,0 +1,2022 @@
+{
+  "total": 158,
+  "valid": 0,
+  "invalid": 158,
+  "noUrl": 0,
+  "noImage": 0,
+  "brokenUrl": 158,
+  "brokenImage": 115,
+  "details": [
+    {
+      "id": "bulk_1758643694243_nkvr4vfit",
+      "name": "Produto B00020HVAC",
+      "category_id": "intestino",
+      "amazon_url": "https://meuportalfit.com/link/B00020HVAC",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00020HVAC.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643694050_oc8607dnu",
+      "name": "Produto B00014CZ0K",
+      "category_id": "intestino",
+      "amazon_url": "https://meuportalfit.com/link/B00014CZ0K",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00014CZ0K.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643693864_jigmf6ig4",
+      "name": "Produto B01GQ6R8O8",
+      "category_id": "intestino",
+      "amazon_url": "https://meuportalfit.com/link/B01GQ6R8O8",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01GQ6R8O8.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643693271_5lmahaff1",
+      "name": "Produto B00NTR9B6A",
+      "category_id": "intestino",
+      "amazon_url": "https://meuportalfit.com/link/B00NTR9B6A",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00NTR9B6A.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643692900_avhj0ft5r",
+      "name": "Produto B00J9QF4M4",
+      "category_id": "intestino",
+      "amazon_url": "https://meuportalfit.com/link/B00J9QF4M4",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00J9QF4M4.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643692696_5fjg9qed8",
+      "name": "Produto B00J9QGJW0",
+      "category_id": "intestino",
+      "amazon_url": "https://meuportalfit.com/link/B00J9QGJW0",
+      "image_url": "https://via.placeholder.com/300x300/f0f0f0/666666?text=B00J9QGJW0",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: fetch failed"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643495232_tcoyns2hg",
+      "name": "Produto B07F62W3TQ",
+      "category_id": "cozinha",
+      "amazon_url": "https://meuportalfit.com/link/B07F62W3TQ",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07F62W3TQ.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643495052_sgypst36t",
+      "name": "Produto B01N5HVD9H",
+      "category_id": "cozinha",
+      "amazon_url": "https://meuportalfit.com/link/B01N5HVD9H",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01N5HVD9H.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643494567_c2mf2fu2d",
+      "name": "Produto B07YF9SGBW",
+      "category_id": "cozinha",
+      "amazon_url": "https://meuportalfit.com/link/B07YF9SGBW",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07YF9SGBW.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643494382_h0h6myxf2",
+      "name": "Produto B01E2E0K7M",
+      "category_id": "cozinha",
+      "amazon_url": "https://meuportalfit.com/link/B01E2E0K7M",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01E2E0K7M.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643494199_zb8v4t4ng",
+      "name": "Produto B0038JE07O",
+      "category_id": "cozinha",
+      "amazon_url": "https://meuportalfit.com/link/B0038JE07O",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B0038JE07O.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643494018_bsuieq9hl",
+      "name": "Produto B01MT0J7TB",
+      "category_id": "cozinha",
+      "amazon_url": "https://meuportalfit.com/link/B01MT0J7TB",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01MT0J7TB.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643493815_8mthqdtoi",
+      "name": "Produto B01FQ4LMVK",
+      "category_id": "cozinha",
+      "amazon_url": "https://meuportalfit.com/link/B01FQ4LMVK",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01FQ4LMVK.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643493610_zn425vjkf",
+      "name": "Produto B07H9XMZ3V",
+      "category_id": "cozinha",
+      "amazon_url": "https://meuportalfit.com/link/B07H9XMZ3V",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07H9XMZ3V.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643493033_7ihm5cdv8",
+      "name": "Produto B00JLIKAJI",
+      "category_id": "cozinha",
+      "amazon_url": "https://meuportalfit.com/link/B00JLIKAJI",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00JLIKAJI.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643492716_s9ukk3p96",
+      "name": "Produto B07X1VQ2XW",
+      "category_id": "cozinha",
+      "amazon_url": "https://meuportalfit.com/link/B07X1VQ2XW",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07X1VQ2XW.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643462041_5t1l214kv",
+      "name": "Produto B00GW2J1A0",
+      "category_id": "fadiga",
+      "amazon_url": "https://meuportalfit.com/link/B00GW2J1A0",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00GW2J1A0.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643461500_bjq4itcww",
+      "name": "Produto B01I4LAAJU",
+      "category_id": "fadiga",
+      "amazon_url": "https://meuportalfit.com/link/B01I4LAAJU",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01I4LAAJU.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643460937_24a65rgsa",
+      "name": "Produto B00GBCY3NC",
+      "category_id": "fadiga",
+      "amazon_url": "https://meuportalfit.com/link/B00GBCY3NC",
+      "image_url": "https://via.placeholder.com/300x300/f0f0f0/666666?text=B00GBCY3NC",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: fetch failed"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643460356_e2a6oj0pj",
+      "name": "Produto B002KKCN8K",
+      "category_id": "fadiga",
+      "amazon_url": "https://meuportalfit.com/link/B002KKCN8K",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B002KKCN8K.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643459759_687mzzwuh",
+      "name": "Produto B0019GW3G0",
+      "category_id": "fadiga",
+      "amazon_url": "https://meuportalfit.com/link/B0019GW3G0",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B0019GW3G0.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643459511_dt8124ix4",
+      "name": "Produto B01M8RDIKW",
+      "category_id": "fadiga",
+      "amazon_url": "https://meuportalfit.com/link/B01M8RDIKW",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01M8RDIKW.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643458934_49pop7n5w",
+      "name": "Produto B00R6EQJ3Q",
+      "category_id": "fadiga",
+      "amazon_url": "https://meuportalfit.com/link/B00R6EQJ3Q",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00R6EQJ3Q.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643458367_820ubeghc",
+      "name": "Produto B00R5IS3O8",
+      "category_id": "fadiga",
+      "amazon_url": "https://meuportalfit.com/link/B00R5IS3O8",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00R5IS3O8.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643457724_7t3gsgb8o",
+      "name": "Produto B07FYV7W8Z",
+      "category_id": "fadiga",
+      "amazon_url": "https://meuportalfit.com/link/B07FYV7W8Z",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07FYV7W8Z.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643456559_wg9ulwnbb",
+      "name": "Produto B00U6SH1BS",
+      "category_id": "fadiga",
+      "amazon_url": "https://meuportalfit.com/link/B00U6SH1BS",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00U6SH1BS.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643248144_7wxm3thoe",
+      "name": "Produto B08L5W7J9H",
+      "category_id": "snacks",
+      "amazon_url": "https://meuportalfit.com/link/B08L5W7J9H",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B08L5W7J9H.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643247960_ifdgtcsqj",
+      "name": "Produto B00V9JPJPI",
+      "category_id": "snacks",
+      "amazon_url": "https://meuportalfit.com/link/B00V9JPJPI",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00V9JPJPI.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643247770_pli7vzyjy",
+      "name": "Produto B00U6CC9RI",
+      "category_id": "snacks",
+      "amazon_url": "https://meuportalfit.com/link/B00U6CC9RI",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00U6CC9RI.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643247587_iik12mrkf",
+      "name": "Produto B00QZ67Q6Q",
+      "category_id": "snacks",
+      "amazon_url": "https://meuportalfit.com/link/B00QZ67Q6Q",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00QZ67Q6Q.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643247408_adrgfhljz",
+      "name": "Produto B000HDK0DC",
+      "category_id": "snacks",
+      "amazon_url": "https://meuportalfit.com/link/B000HDK0DC",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B000HDK0DC.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643247233_gbwr99pjs",
+      "name": "Produto B07DLR9KZP",
+      "category_id": "snacks",
+      "amazon_url": "https://meuportalfit.com/link/B07DLR9KZP",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07DLR9KZP.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643247038_adrdlkte1",
+      "name": "Produto B00V9JP8EE",
+      "category_id": "snacks",
+      "amazon_url": "https://meuportalfit.com/link/B00V9JP8EE",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00V9JP8EE.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643246787_akjuz8zbb",
+      "name": "Produto B00XQ2XGAA",
+      "category_id": "snacks",
+      "amazon_url": "https://meuportalfit.com/link/B00XQ2XGAA",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00XQ2XGAA.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643246584_bkhz1t6oc",
+      "name": "Produto B00U6CDQ2M",
+      "category_id": "snacks",
+      "amazon_url": "https://meuportalfit.com/link/B00U6CDQ2M",
+      "image_url": "https://via.placeholder.com/300x300/f0f0f0/666666?text=B00U6CDQ2M",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: fetch failed"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643246334_jtwzim75b",
+      "name": "Produto B07T4KRX5T",
+      "category_id": "snacks",
+      "amazon_url": "https://meuportalfit.com/link/B07T4KRX5T",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07T4KRX5T.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643199841_6flbwxyys",
+      "name": "Produto B07C2JC6TK",
+      "category_id": "homens",
+      "amazon_url": "https://meuportalfit.com/link/B07C2JC6TK",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07C2JC6TK.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643199645_cfj9c299w",
+      "name": "Produto B07L4NHX1J",
+      "category_id": "homens",
+      "amazon_url": "https://meuportalfit.com/link/B07L4NHX1J",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07L4NHX1J.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643199177_izibus4x3",
+      "name": "Produto B01N6J0H2M",
+      "category_id": "homens",
+      "amazon_url": "https://meuportalfit.com/link/B01N6J0H2M",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01N6J0H2M.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643198976_2jb0sk8bp",
+      "name": "Produto B000GG1OD2",
+      "category_id": "homens",
+      "amazon_url": "https://meuportalfit.com/link/B000GG1OD2",
+      "image_url": "https://via.placeholder.com/300x300/f0f0f0/666666?text=B000GG1OD2",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: fetch failed"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643198787_c0h8x1c6x",
+      "name": "Produto B0013OSN9S",
+      "category_id": "homens",
+      "amazon_url": "https://meuportalfit.com/link/B0013OSN9S",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B0013OSN9S.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643198279_w2183vuyl",
+      "name": "Produto B00U0GE3X0",
+      "category_id": "homens",
+      "amazon_url": "https://meuportalfit.com/link/B00U0GE3X0",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00U0GE3X0.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643198053_gnn9e05e4",
+      "name": "Produto B00NLR1PX0",
+      "category_id": "homens",
+      "amazon_url": "https://meuportalfit.com/link/B00NLR1PX0",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00NLR1PX0.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643177907_jn82v9cu7",
+      "name": "Produto B08LQYVGRV",
+      "category_id": "utensilios",
+      "amazon_url": "https://meuportalfit.com/link/B08LQYVGRV",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B08LQYVGRV.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643177728_n948se7cm",
+      "name": "Produto B01NCZJX2C",
+      "category_id": "utensilios",
+      "amazon_url": "https://meuportalfit.com/link/B01NCZJX2C",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01NCZJX2C.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643177499_bpbsxoaea",
+      "name": "Produto B01M1U2E9F",
+      "category_id": "utensilios",
+      "amazon_url": "https://meuportalfit.com/link/B01M1U2E9F",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01M1U2E9F.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643177304_adniojn1u",
+      "name": "Produto B01N5HB4U5",
+      "category_id": "utensilios",
+      "amazon_url": "https://meuportalfit.com/link/B01N5HB4U5",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01N5HB4U5.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643177099_avegtw5dt",
+      "name": "Produto B07R8Z3R71",
+      "category_id": "utensilios",
+      "amazon_url": "https://meuportalfit.com/link/B07R8Z3R71",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07R8Z3R71.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643176909_iw3y84d00",
+      "name": "Produto B0000AN3UB",
+      "category_id": "utensilios",
+      "amazon_url": "https://meuportalfit.com/link/B0000AN3UB",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B0000AN3UB.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643176702_9ama2dwk5",
+      "name": "Produto B07H2DD1W6",
+      "category_id": "utensilios",
+      "amazon_url": "https://meuportalfit.com/link/B07H2DD1W6",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07H2DD1W6.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643176488_prv1a9gmc",
+      "name": "Produto B00U6S4SHK",
+      "category_id": "utensilios",
+      "amazon_url": "https://meuportalfit.com/link/B00U6S4SHK",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00U6S4SHK.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643176268_awuxjieeb",
+      "name": "RENPHO Smart Scale for Body Weight, Digital Bathroom Scale BMI Weighing Bluetooth Body Fat Scale, Body Composition Monitor Health Analyzer with Smartphone App, 400 lbs - Elis 1",
+      "category_id": "utensilios",
+      "amazon_url": "https://meuportalfit.com/link/B01N1UX8RW",
+      "image_url": "https://m.media-amazon.com/images/I/61Ha1LIyO5L._SL1500_.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643175829_z3reuv7n1",
+      "name": "Produto B07Y32N6X7",
+      "category_id": "utensilios",
+      "amazon_url": "https://meuportalfit.com/link/B07Y32N6X7",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07Y32N6X7.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643110851_rrkqwfop8",
+      "name": "Produto B08P3WV4B6",
+      "category_id": "hormonal",
+      "amazon_url": "https://meuportalfit.com/link/B08P3WV4B6",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B08P3WV4B6.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643110368_txq9spktv",
+      "name": "Produto B00R42YKI0",
+      "category_id": "hormonal",
+      "amazon_url": "https://meuportalfit.com/link/B00R42YKI0",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00R42YKI0.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643110191_w3bzncfcu",
+      "name": "Produto B07NWBK73Q",
+      "category_id": "hormonal",
+      "amazon_url": "https://meuportalfit.com/link/B07NWBK73Q",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07NWBK73Q.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643109997_27swxuxwr",
+      "name": "Produto B01M0X4Y0X",
+      "category_id": "hormonal",
+      "amazon_url": "https://meuportalfit.com/link/B01M0X4Y0X",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01M0X4Y0X.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643109805_px6of0n4i",
+      "name": "Produto B00XWQX7AQ",
+      "category_id": "hormonal",
+      "amazon_url": "https://meuportalfit.com/link/B00XWQX7AQ",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00XWQX7AQ.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643109619_rnvcs4j5s",
+      "name": "Produto B07M8XJ6FL",
+      "category_id": "hormonal",
+      "amazon_url": "https://meuportalfit.com/link/B07M8XJ6FL",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07M8XJ6FL.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643109401_pz9w5dgd6",
+      "name": "Produto B07CZ4ZLFW",
+      "category_id": "hormonal",
+      "amazon_url": "https://meuportalfit.com/link/B07CZ4ZLFW",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07CZ4ZLFW.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643109167_1up5jo72p",
+      "name": "Produto B01N6Q0N4I",
+      "category_id": "hormonal",
+      "amazon_url": "https://meuportalfit.com/link/B01N6Q0N4I",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01N6Q0N4I.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643108669_m6si0b2cz",
+      "name": "Produto B08F2K8K7M",
+      "category_id": "hormonal",
+      "amazon_url": "https://meuportalfit.com/link/B08F2K8K7M",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B08F2K8K7M.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643108430_thn27xa7j",
+      "name": "Produto B00U0FHS4M",
+      "category_id": "hormonal",
+      "amazon_url": "https://meuportalfit.com/link/B00U0FHS4M",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00U0FHS4M.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643067244_q3ty5xsb1",
+      "name": "Produto B00U0Z7WCW",
+      "category_id": "imunidade",
+      "amazon_url": "https://meuportalfit.com/link/B00U0Z7WCW",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00U0Z7WCW.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643066737_aoah9c8s7",
+      "name": "Produto B07G96Z9HZ",
+      "category_id": "imunidade",
+      "amazon_url": "https://meuportalfit.com/link/B07G96Z9HZ",
+      "image_url": "https://via.placeholder.com/300x300/f0f0f0/666666?text=B07G96Z9HZ",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: fetch failed"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643066539_ealib56ju",
+      "name": "Produto B00WZ3NQ3I",
+      "category_id": "imunidade",
+      "amazon_url": "https://meuportalfit.com/link/B00WZ3NQ3I",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00WZ3NQ3I.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643066356_j9gtww3vw",
+      "name": "Produto B07F461BFQ",
+      "category_id": "imunidade",
+      "amazon_url": "https://meuportalfit.com/link/B07F461BFQ",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07F461BFQ.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643066163_ej8ykyd4e",
+      "name": "Produto B08B5VZ7SD",
+      "category_id": "imunidade",
+      "amazon_url": "https://meuportalfit.com/link/B08B5VZ7SD",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B08B5VZ7SD.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643065981_o9kvb4ipx",
+      "name": "Produto B072JQ9XZH",
+      "category_id": "imunidade",
+      "amazon_url": "https://meuportalfit.com/link/B072JQ9XZH",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B072JQ9XZH.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643065504_dj3lgta8g",
+      "name": "Produto B08HZF9WJ7",
+      "category_id": "imunidade",
+      "amazon_url": "https://meuportalfit.com/link/B08HZF9WJ7",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B08HZF9WJ7.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643065298_2h6o8xejg",
+      "name": "Produto B07LGF6XZD",
+      "category_id": "imunidade",
+      "amazon_url": "https://meuportalfit.com/link/B07LGF6XZD",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07LGF6XZD.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643065088_872zewx5q",
+      "name": "Produto B003B3P2CY",
+      "category_id": "imunidade",
+      "amazon_url": "https://meuportalfit.com/link/B003B3P2CY",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B003B3P2CY.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643064862_98fsxadd5",
+      "name": "Produto B00014D5L2",
+      "category_id": "imunidade",
+      "amazon_url": "https://meuportalfit.com/link/B00014D5L2",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00014D5L2.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643026645_2gf23n7qt",
+      "name": "Produto B08RBLY2G6",
+      "category_id": "flacidez",
+      "amazon_url": "https://meuportalfit.com/link/B08RBLY2G6",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B08RBLY2G6.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643026462_mx4638vl3",
+      "name": "Produto B09H5Q6Y6Y",
+      "category_id": "flacidez",
+      "amazon_url": "https://meuportalfit.com/link/B09H5Q6Y6Y",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B09H5Q6Y6Y.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643025986_z7orggen7",
+      "name": "Produto B09XH9CNXN",
+      "category_id": "flacidez",
+      "amazon_url": "https://meuportalfit.com/link/B09XH9CNXN",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B09XH9CNXN.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643025797_mn5yl8rhm",
+      "name": "Produto B07BL3M98P",
+      "category_id": "flacidez",
+      "amazon_url": "https://meuportalfit.com/link/B07BL3M98P",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07BL3M98P.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643025604_fhaq6bi1a",
+      "name": "Produto B08TMYPCW7",
+      "category_id": "flacidez",
+      "amazon_url": "https://meuportalfit.com/link/B08TMYPCW7",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B08TMYPCW7.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643025428_zmtowfh6b",
+      "name": "Produto B079H53D2F",
+      "category_id": "flacidez",
+      "amazon_url": "https://meuportalfit.com/link/B079H53D2F",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B079H53D2F.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643025228_coumpk2t9",
+      "name": "Produto B01IU8RQYE",
+      "category_id": "flacidez",
+      "amazon_url": "https://meuportalfit.com/link/B01IU8RQYE",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01IU8RQYE.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643025017_f37vypgzb",
+      "name": "Produto B08H7Y9VRH",
+      "category_id": "flacidez",
+      "amazon_url": "https://meuportalfit.com/link/B08H7Y9VRH",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B08H7Y9VRH.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643024820_ndytd8dju",
+      "name": "Produto B07NTV9F4M",
+      "category_id": "flacidez",
+      "amazon_url": "https://meuportalfit.com/link/B07NTV9F4M",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07NTV9F4M.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758643024407_feblcy2xc",
+      "name": "Produto B01M8G7N5L",
+      "category_id": "flacidez",
+      "amazon_url": "https://meuportalfit.com/link/B01M8G7N5L",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01M8G7N5L.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642984110_yy9mung2q",
+      "name": "Produto B07J5M5K9R",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://meuportalfit.com/link/B07J5M5K9R",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07J5M5K9R.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642983917_vn7689npk",
+      "name": "Produto B01N4N8C5T",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://meuportalfit.com/link/B01N4N8C5T",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01N4N8C5T.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642983720_47wsqhjk4",
+      "name": "Produto B00A9UH1Y8",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://meuportalfit.com/link/B00A9UH1Y8",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00A9UH1Y8.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642983524_uj2fqsr6r",
+      "name": "Produto B07B9QN8VY",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://meuportalfit.com/link/B07B9QN8VY",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07B9QN8VY.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642983059_odhn6vi0s",
+      "name": "Produto B01N0XDRYO",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://meuportalfit.com/link/B01N0XDRYO",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01N0XDRYO.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642982873_gafziejsm",
+      "name": "Produto B07Q33S9B2",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://meuportalfit.com/link/B07Q33S9B2",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07Q33S9B2.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642982661_fmfv50uot",
+      "name": "Produto B07CZBCQG3",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://meuportalfit.com/link/B07CZBCQG3",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07CZBCQG3.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642982145_fjlpguriy",
+      "name": "Produto B07C7V7VLP",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://meuportalfit.com/link/B07C7V7VLP",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07C7V7VLP.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642981942_0nsvfewku",
+      "name": "Produto B07N6LRF5G",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://meuportalfit.com/link/B07N6LRF5G",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07N6LRF5G.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642981437_1u7q8q0tn",
+      "name": "Produto B00I4BUBNQ",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://meuportalfit.com/link/B00I4BUBNQ",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00I4BUBNQ.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642942175_5k8d20tgl",
+      "name": "Produto B07BPG7Z5Q",
+      "category_id": "sono",
+      "amazon_url": "https://meuportalfit.com/link/B07BPG7Z5Q",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07BPG7Z5Q.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642941996_fn3beqpgw",
+      "name": "Produto B07NPMDLGX",
+      "category_id": "sono",
+      "amazon_url": "https://meuportalfit.com/link/B07NPMDLGX",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07NPMDLGX.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642941802_kl4n0iuam",
+      "name": "Produto B01N4I8FOY",
+      "category_id": "sono",
+      "amazon_url": "https://meuportalfit.com/link/B01N4I8FOY",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01N4I8FOY.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642941340_ef7ow0qqn",
+      "name": "Produto B01N7KUMAZ",
+      "category_id": "sono",
+      "amazon_url": "https://meuportalfit.com/link/B01N7KUMAZ",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01N7KUMAZ.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642941144_lm3lzpz2j",
+      "name": "Produto B07QH35P7V",
+      "category_id": "sono",
+      "amazon_url": "https://meuportalfit.com/link/B07QH35P7V",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07QH35P7V.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642940650_aqnen3ftd",
+      "name": "Produto B00J9R09EM",
+      "category_id": "sono",
+      "amazon_url": "https://meuportalfit.com/link/B00J9R09EM",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00J9R09EM.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642940452_t3z3al778",
+      "name": "Produto B07H8ZC2Y3",
+      "category_id": "sono",
+      "amazon_url": "https://meuportalfit.com/link/B07H8ZC2Y3",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B07H8ZC2Y3.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642939971_tlskkwyiv",
+      "name": "Produto B00XWQSDM0",
+      "category_id": "sono",
+      "amazon_url": "https://meuportalfit.com/link/B00XWQSDM0",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00XWQSDM0.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642939777_6n97yqyk3",
+      "name": "BIOptimizers Magnesium Breakthrough Complex Supplement with 7 Forms of Mg: Glycinate, Malate, Citrate, and More - Natural Support for Sleep and Cognitive Function - 30 Capsules- Calming Vitamins",
+      "category_id": "sono",
+      "amazon_url": "https://meuportalfit.com/link/B09R2DCRMY",
+      "image_url": "https://m.media-amazon.com/images/I/61ysvhTp+oL._AC_SL1500_.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642939240_lue2pp9q5",
+      "name": "Produto B00NJ1BQZA",
+      "category_id": "sono",
+      "amazon_url": "https://meuportalfit.com/link/B00NJ1BQZA",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00NJ1BQZA.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642890887_illvkq2z6",
+      "name": "EBOOST Energy Drink Powder, Super Fuel - Blue Raspberry, 14 Packets - Pre-Workout Powder Energy Drink Mix - Natural Energy, L-Tyrosine, L-Theanine &amp; Vitamins - Preworkout for Women &amp; Men to Go",
+      "category_id": "energia",
+      "amazon_url": "https://meuportalfit.com/link/B0C4B17CCH",
+      "image_url": "https://m.media-amazon.com/images/I/81w1MG9mukL._AC_SL1500_.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642890713_07vvv331k",
+      "name": "Produto B09FV7NDP1",
+      "category_id": "energia",
+      "amazon_url": "https://meuportalfit.com/link/B09FV7NDP1",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B09FV7NDP1.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642890529_fxnb7jq6y",
+      "name": "Produto B079PZ7V5B",
+      "category_id": "energia",
+      "amazon_url": "https://meuportalfit.com/link/B079PZ7V5B",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B079PZ7V5B.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642890356_vh6gnxaga",
+      "name": "Produto B0DWQYWG22",
+      "category_id": "energia",
+      "amazon_url": "https://meuportalfit.com/link/B0DWQYWG22",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B0DWQYWG22.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642890171_uemxwy0cl",
+      "name": "Produto B09ZHRV92K",
+      "category_id": "energia",
+      "amazon_url": "https://meuportalfit.com/link/B09ZHRV92K",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B09ZHRV92K.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642889669_c479wleah",
+      "name": "Natural Energy Pills – Caffeine Free – Metabolism, Mental Booster – with Rhodiola Rosea, Dandelion Root, Bacopa, Ginseng Extract – 7 Herbs &amp; Absorption Enhancing Piperine – Vegan, Non-GMO, 60 Ct",
+      "category_id": "energia",
+      "amazon_url": "https://meuportalfit.com/link/B084WMW58W",
+      "image_url": "https://m.media-amazon.com/images/I/71t8jL+ejEL._AC_SL1500_.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642889133_swo4srlo0",
+      "name": "Produto B01LXX5Z8Q",
+      "category_id": "energia",
+      "amazon_url": "https://meuportalfit.com/link/B01LXX5Z8Q",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B01LXX5Z8Q.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642888939_vm5mu08cz",
+      "name": "Produto B09NXH96W7",
+      "category_id": "energia",
+      "amazon_url": "https://meuportalfit.com/link/B09NXH96W7",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B09NXH96W7.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642888464_7q9x168qm",
+      "name": "Produto B0BNNSQZCP",
+      "category_id": "energia",
+      "amazon_url": "https://meuportalfit.com/link/B0BNNSQZCP",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B0BNNSQZCP.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642719053_3yeip3raq",
+      "name": "Adesivos naturais para alívio da menopausa",
+      "category_id": "menopausa",
+      "amazon_url": "https://meuportalfit.com/link/B0FFXQB4PQ",
+      "image_url": "https://m.media-amazon.com/images/I/71vnQh+JiyL._AC_SL1500_.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642718859_g1eheilb3",
+      "name": "Creme de alívio da menopausa com folha de framboesa",
+      "category_id": "menopausa",
+      "amazon_url": "https://meuportalfit.com/link/B079Q58FX1",
+      "image_url": "https://m.media-amazon.com/images/I/41iHpOJek+L._AC_.jpg",
+      "current_price": "29,95",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642718362_udv0dszsw",
+      "name": "Produto B009Q5G1XA",
+      "category_id": "menopausa",
+      "amazon_url": "https://meuportalfit.com/link/B009Q5G1XA",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B009Q5G1XA.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642718173_ca8b2bdn7",
+      "name": "Produto B0DR5GXSTQ",
+      "category_id": "menopausa",
+      "amazon_url": "https://meuportalfit.com/link/B0DR5GXSTQ",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B0DR5GXSTQ.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642717972_se0zwihp6",
+      "name": "Produto B08FMT8R64",
+      "category_id": "menopausa",
+      "amazon_url": "https://meuportalfit.com/link/B08FMT8R64",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B08FMT8R64.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642717471_nul0laeh8",
+      "name": "Complete Herbal Menopause Supplement for Women - Female Hormone Balance Capsules for Night Sweats Hot Flashes &amp; Mood Swings with Dong Quai, Chaste Berry &amp; Black Cohosh Root - 60 Count Pack",
+      "category_id": "menopausa",
+      "amazon_url": "https://meuportalfit.com/link/B089V9WXYL",
+      "image_url": "https://m.media-amazon.com/images/I/71PbKncbtTL._AC_SL1500_.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642717262_i9rw5eixi",
+      "name": "Produto B08KRWM9QY",
+      "category_id": "menopausa",
+      "amazon_url": "https://meuportalfit.com/link/B08KRWM9QY",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B08KRWM9QY.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642716774_s6jk4cx9d",
+      "name": "Produto B0CYWK9HVN",
+      "category_id": "menopausa",
+      "amazon_url": "https://meuportalfit.com/link/B0CYWK9HVN",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B0CYWK9HVN.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642716507_0ysp1q61n",
+      "name": "Produto B0D6S94T77",
+      "category_id": "menopausa",
+      "amazon_url": "https://meuportalfit.com/link/B0D6S94T77",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B0D6S94T77.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758642715868_e8qlz8a2j",
+      "name": "Produto B00KFA94FC",
+      "category_id": "menopausa",
+      "amazon_url": "https://meuportalfit.com/link/B00KFA94FC",
+      "image_url": "https://images-na.ssl-images-amazon.com/images/I/B00KFA94FC.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon",
+        "Imagem: Erro HTTP 400"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758638423951_5dayt70k9",
+      "name": "Suplemento Carlyle Ultra Libido para Homens",
+      "category_id": "shot-afrodisiaco",
+      "amazon_url": "https://meuportalfit.com/link/B0BVNRTSXN",
+      "image_url": "https://m.media-amazon.com/images/I/71cg+1QnRFL._AC_SL1500_.jpg",
+      "current_price": "9,99",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758638423442_ngakedp09",
+      "name": "Gaia Herbs Libido Masculina",
+      "category_id": "shot-afrodisiaco",
+      "amazon_url": "https://meuportalfit.com/link/B0036THNM0",
+      "image_url": "https://m.media-amazon.com/images/I/71NvQ2KeIXL._AC_SL1500_.jpg",
+      "current_price": "31,49",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758638423203_rbgz0frxu",
+      "name": "Suplemento para aumentar a libido",
+      "category_id": "shot-afrodisiaco",
+      "amazon_url": "https://meuportalfit.com/link/B0CTKW7C6L",
+      "image_url": "https://m.media-amazon.com/images/I/71QT-KRBSzL._AC_SL1500_.jpg",
+      "current_price": "18,99",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758638422884_8w1732xxr",
+      "name": "Estimulante da Libido para mulheres KSM-66 Ashwagandha",
+      "category_id": "shot-afrodisiaco",
+      "amazon_url": "https://meuportalfit.com/link/B0D6SQFKY8",
+      "image_url": "https://m.media-amazon.com/images/I/81oDBWr6HRL._AC_SL1500_.jpg",
+      "current_price": "Preço não disponível",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "bulk_1758638421960_rq1z3feq3",
+      "name": "OLLY Lovin Libido",
+      "category_id": "shot-afrodisiaco",
+      "amazon_url": "https://meuportalfit.com/link/B08YH3VYCB",
+      "image_url": "https://m.media-amazon.com/images/I/7173GzPZedL._AC_SL1500_.jpg",
+      "current_price": "14,78",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "imported_B0013OUL14",
+      "name": "NOW Foods Melatonin 5mg Time Release",
+      "category_id": "sono",
+      "amazon_url": "https://meuportalfit.com/link/B07VPPYHF9",
+      "image_url": "https://m.media-amazon.com/images/I/71336ySOH-L._AC_SL1500_.jpg",
+      "current_price": "$9.99",
+      "issues": [
+        "URL Amazon: Não é uma URL da Amazon"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757954416405",
+      "name": "ATUM",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/Wild-Planet-Albacore-Wildly-Delicious/dp/B083R1P4WT?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/81sqtq7-j-L._SL1500_.jpg",
+      "current_price": "$15,76",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757708453805",
+      "name": "Picolinato de Cromo",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/NOW-Chromium-Picolinate-200-Capsules/dp/B0019LPNLK?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/71JisdudVvL._AC_SX679_.jpg",
+      "current_price": "$11,00",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757708272090",
+      "name": "Morosil",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/Anew-Vita-Antioxidant-Cholesterol-Regulation/dp/B0B8LQMP4R?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/61si8lInwvL._AC_SX679_.jpg",
+      "current_price": "$29,50",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757707917442",
+      "name": " Ashwagandha",
+      "category_id": "ansiedade",
+      "amazon_url": "https://www.amazon.com/NOW-Supplements-Ashwagandha-somnifera-Standardized/dp/B0013OQIJY?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/718TaPAvL+L._AC_SX679_.jpg",
+      "current_price": "$8,99",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757534237490",
+      "name": "Grão de bico cozido",
+      "category_id": "snacks",
+      "amazon_url": "https://www.amazon.com/365-Everyday-Value-Organic-Garbanzo/dp/B074H5SRPW?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/51whmeisINL._SX679_.jpg",
+      "current_price": "$1,39",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1756752650573",
+      "name": "Chia Organica",
+      "category_id": "menopausa",
+      "amazon_url": "https://www.amazon.com/365-Everyday-Value-Organic-Black/dp/B074HJF6KM?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/51omsKzExeL._SL1000_.jpg",
+      "current_price": "$0.00",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757364688481",
+      "name": "Colheres Medidoras",
+      "category_id": "utensilios",
+      "amazon_url": "https://www.amazon.com/Measuring-Stainless-Tablespoon-Measurements-Ingredients/dp/B07H3QRCZD?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/71Cf0Dc+NpL._AC_SX679_.jpg",
+      "current_price": "$6,99",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757185970193",
+      "name": "Psyllium em Pó Orgânico",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/-/pt/Viva-Naturals-Organic-Psyllium-Husk/dp/B011QGTRG4?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/7164QV8GCZL._AC_SL1500_.jpg",
+      "current_price": "$17.99",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757174375638",
+      "name": "Raspador de língua",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/MasterMedi-Scraper-Scrubber-Cleaner-Hygiene/dp/B0CHMMDNVV?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/71KaykR2lTL._SX522_.jpg",
+      "current_price": "$6.49",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757174274808",
+      "name": "Iogurte grego natural",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/Chobani-Non-fat-Greek-Yogurt-Plain/dp/B008U5OSTQ?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/71ubMxdKpYL._SX679_.jpg",
+      "current_price": "$6,49",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757173869600",
+      "name": "Wraps de clara de ovo Egglife",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/egglife-white-wraps-Southwest-White/dp/B09ZPY6C68?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/51xykGKp4cL._SL1000_.jpg",
+      "current_price": "$27.99",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757173641435",
+      "name": "Queijo ricota orgânico",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/Organic-Valley-Ricotta-Cheese-Ounces/dp/B000VHT1HU?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/714sjBfXeJL._SL1500_.jpg",
+      "current_price": "$8.99",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757173342774",
+      "name": "Pão de Grãos Orgânicos Germinados",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/Food-Life-Organic-Sprouted-Grain/dp/B000REY4MO?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/81kLfzfE4ML._SL1500_.jpg",
+      "current_price": "$6.58",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757173095363",
+      "name": "Leite de coco orgânico",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/Native-Forest-Organic-Unsweetened-Coconut/dp/B011LVDECM?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/71FlcNBRd3L._SL1500_.jpg",
+      "current_price": "$47.83",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757173009800",
+      "name": "Bolinhos de arroz",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/Lundberg-Gluten-Free-Brown-Organic-Cakes/dp/B004SIASZM?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/71mwIJcQ-JL._SL1500_.jpg",
+      "current_price": "$4.99",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757172915136",
+      "name": "Tortilhas Low Carb ",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/Mission-Balance-Flour-Tortillas-Count/dp/B0FKHLZK24?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/61Qzg4UoJ9L.jpg",
+      "current_price": "$11.99",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757172767872",
+      "name": "Queijo Cottage",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/Nancys-Cultured-Cottage-Cheese-Low/dp/B000QJAH8U?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/81cvjWsUO+L._SL1500_.jpg",
+      "current_price": "$6.49",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757172494928",
+      "name": "Iogurte Islandês desnatado",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/siggis-Icelandic-Strained-Multiserving-Container/dp/B00LMC4XVW?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/71MHCUT-dhL._SL1500_.jpg",
+      "current_price": "$6.29",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757172379793",
+      "name": "Iogurte Organico Coconut Cult",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/Coconut-Cult-Yogurt-Probiotic-Original/dp/B07TV8BS49?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/81khmxgUeAL._SL1500_.jpg",
+      "current_price": "$9.99",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757172182179",
+      "name": "Iogurte grego Fage",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/FAGE-TOTAL-Plain-Greek-Yogurt/dp/B000VTWD64?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/71QMP0ahDVL._SL1500_.jpg",
+      "current_price": "$1.69",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757171923531",
+      "name": "Iorgute Organico",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/Stonyfield-Organic-Fat-Free-Plain/dp/B00B03ZH6S?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/719bzX62dbL._SL1500_.jpg",
+      "current_price": "$5.59",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757095432690",
+      "name": "Pão Integral",
+      "category_id": "emagrecimento",
+      "amazon_url": "https://www.amazon.com/dp/B0DDWDP59L?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/81A1Dkh7mSL._SX679_.jpg",
+      "current_price": "$19,92",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757095183422",
+      "name": "Leite de Amêndoas",
+      "category_id": "cozinha",
+      "amazon_url": "https://www.amazon.com/dp/B07HFJJ49P?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/718qO6cnQqL._SY741_.jpg",
+      "current_price": "$13,99",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1757095097970",
+      "name": "Leite de Coco em pó",
+      "category_id": "cozinha",
+      "amazon_url": "https://www.amazon.com/dp/B011LVDECM?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/71FlcNBRd3L._SX679_PIbundle-12,TopRight,0,0_AA679SH20_.jpg",
+      "current_price": "$47,83",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1756929617695",
+      "name": "Vitamina D3+K2",
+      "category_id": "energia",
+      "amazon_url": "https://www.amazon.com/Now-Supplements-Cardiovascular-Supports-Vegetarian/dp/B0CKY26DQQ?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/61xcEqQJ8PL._AC_SX679_PIbundle-180,TopRight,0,0_SH20_.jpg",
+      "current_price": "$17,15",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1756841020101",
+      "name": "Glutamina",
+      "category_id": "imunidade",
+      "amazon_url": "https://www.amazon.com/Essential-Stacks-L-Glutamine-Powder-Hypoallergenic/dp/B07Q6X2R1P?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/71MgPE0rM-L._AC_SX679_.jpg",
+      "current_price": "$29,95",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1756839884078",
+      "name": "Probiótico",
+      "category_id": "intestino",
+      "amazon_url": "https://www.amazon.com/Biocodex-Florastor-Capsules-250-Count/dp/B074PY8734?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/71Edxz5GWuL._AC_SY879_.jpg",
+      "current_price": "$18,02",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1756838214386",
+      "name": "Chá Folha de Amora",
+      "category_id": "menopausa",
+      "amazon_url": "https://www.amazon.com/Organic-Way-Blackberry-Sifted-fruticosus/dp/B08MDBFKS9?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/717BdhEuseL._SX679_.jpg",
+      "current_price": "$12,99",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1756835020368",
+      "name": "Magnésio de Glicinato",
+      "category_id": "sono",
+      "amazon_url": "https://www.amazon.com/Supplements-Magnesium-Glycinate-Absorbable-Tablets/dp/B07NWMVMT1?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/717mZ0CmDkL._AC_SX679_.jpg",
+      "current_price": "$16,99",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    },
+    {
+      "id": "1756809888735",
+      "name": "Chia Organica",
+      "category_id": "intestino",
+      "amazon_url": "https://www.amazon.com/365-Everyday-Value-Organic-Black/dp/B074HJF6KM?tag=portalsolutio-20",
+      "image_url": "https://m.media-amazon.com/images/I/51omsKzExeL._SL1000_.jpg",
+      "current_price": "$8,99",
+      "issues": [
+        "URL Amazon: Erro HTTP 405"
+      ],
+      "status": "invalid"
+    }
+  ]
+}

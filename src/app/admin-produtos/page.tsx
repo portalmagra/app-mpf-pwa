@@ -9,7 +9,7 @@ export default function AdminProdutos() {
   const [products, setProducts] = useState<Product[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [showForm, setShowForm] = useState(false)
-  const [editingProduct, setEditingProduct] = useState<string | null>(null)
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null)
   const [operationStatus, setOperationStatus] = useState('')
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
@@ -107,13 +107,13 @@ export default function AdminProdutos() {
         setOperationStatus('Atualizando produto...')
         console.log('🔄 Atualizando produto:', editingProduct)
 
-        const updatedProduct = await productService.updateProduct(editingProduct, newProduct)
+        const updatedProduct = await productService.updateProduct(editingProduct.id, newProduct)
 
         if (updatedProduct) {
           console.log('✅ Produto atualizado:', updatedProduct)
           setProducts(prev =>
             prev.map(product =>
-              product.id === editingProduct ? updatedProduct : product
+              product.id === editingProduct.id ? updatedProduct : product
             )
           )
 
@@ -143,6 +143,22 @@ export default function AdminProdutos() {
     }
   }
 
+  const handleCancelEdit = () => {
+    setEditingProduct(null)
+    setShowForm(false)
+    setNewProduct({
+      name: '',
+      description: '',
+      category_id: '',
+      amazon_url: '',
+      current_price: '',
+      image_url: '',
+      benefits: [],
+      features: [],
+      is_mentoria: false
+    })
+  }
+
   const handleDeleteProduct = async (id: string) => {
     if (confirm('Tem certeza que deseja excluir este produto?')) {
       try {
@@ -167,7 +183,7 @@ export default function AdminProdutos() {
   }
 
   const handleEditProduct = (product: Product) => {
-    setEditingProduct(product.id)
+    setEditingProduct(product)
     setNewProduct({
       name: product.name,
       description: product.description || '',
@@ -179,7 +195,6 @@ export default function AdminProdutos() {
       features: product.features || [],
       is_mentoria: product.is_mentoria || false
     })
-    setShowForm(true)
   }
 
   const handleToggleMercado = async (productId: string, currentStatus: boolean) => {
@@ -287,136 +302,136 @@ export default function AdminProdutos() {
           </button>
         </div>
 
-        {showForm && (
-          <div className="bg-white rounded-xl shadow-lg p-6 mb-8">
-            <h2 className="text-xl font-bold text-gray-800 mb-6">
-              {editingProduct ? 'Editar Produto' : 'Novo Produto'}
-            </h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Nome do Produto *
-                </label>
-                <input
-                  type="text"
-                  value={newProduct.name}
-                  onChange={(e) => setNewProduct(prev => ({ ...prev, name: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
-                  placeholder="Ex: Whey Protein"
-                />
-              </div>
+        {/* Modal de Edição/Criação */}
+        {(showForm || editingProduct) && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-semibold">
+                    {editingProduct ? 'Editar Produto' : 'Novo Produto'}
+                  </h3>
+                  <button
+                    onClick={handleCancelEdit}
+                    className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
+                  >
+                    ×
+                  </button>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Nome do Produto *
+                    </label>
+                    <input
+                      type="text"
+                      value={newProduct.name}
+                      onChange={(e) => setNewProduct(prev => ({ ...prev, name: e.target.value }))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+                      placeholder="Ex: Whey Protein"
+                    />
+                  </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Categoria *
-                </label>
-                <select
-                  value={newProduct.category_id}
-                  onChange={(e) => setNewProduct(prev => ({ ...prev, category_id: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
-                >
-                  <option value="">Selecione uma categoria</option>
-                  {categories.map(category => (
-                    <option key={category.id} value={category.id}>
-                      {category.icon} {category.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Categoria *
+                    </label>
+                    <select
+                      value={newProduct.category_id}
+                      onChange={(e) => setNewProduct(prev => ({ ...prev, category_id: e.target.value }))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+                    >
+                      <option value="">Selecione uma categoria</option>
+                      {categories.map(category => (
+                        <option key={category.id} value={category.id}>
+                          {category.icon} {category.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
 
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Descrição
-                </label>
-                <textarea
-                  value={newProduct.description}
-                  onChange={(e) => setNewProduct(prev => ({ ...prev, description: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
-                  rows={3}
-                  placeholder="Descrição detalhada do produto..."
-                />
-              </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      URL da Amazon
+                    </label>
+                    <input
+                      type="url"
+                      value={newProduct.amazon_url}
+                      onChange={(e) => setNewProduct(prev => ({ ...prev, amazon_url: e.target.value }))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+                      placeholder="https://amazon.com/..."
+                    />
+                  </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  URL da Amazon
-                </label>
-                <input
-                  type="url"
-                  value={newProduct.amazon_url}
-                  onChange={(e) => setNewProduct(prev => ({ ...prev, amazon_url: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
-                  placeholder="https://amazon.com/produto"
-                />
-              </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Preço Atual ($)
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      value={newProduct.current_price}
+                      onChange={(e) => setNewProduct(prev => ({ ...prev, current_price: e.target.value }))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+                      placeholder="19.99"
+                    />
+                  </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Preço Atual
-                </label>
-                <input
-                  type="text"
-                  value={newProduct.current_price}
-                  onChange={(e) => setNewProduct(prev => ({ ...prev, current_price: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
-                  placeholder="Ex: $29.99"
-                />
-              </div>
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      URL da Imagem
+                    </label>
+                    <input
+                      type="url"
+                      value={newProduct.image_url}
+                      onChange={(e) => setNewProduct(prev => ({ ...prev, image_url: e.target.value }))}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+                      placeholder="https://images.amazon.com/..."
+                    />
+                  </div>
 
-              <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  URL da Imagem
-                </label>
-                <input
-                  type="url"
-                  value={newProduct.image_url}
-                  onChange={(e) => setNewProduct(prev => ({ ...prev, image_url: e.target.value }))}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
-                  placeholder="https://example.com/imagem.jpg"
-                />
-              </div>
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Descrição
+                    </label>
+                    <textarea
+                      value={newProduct.description}
+                      onChange={(e) => setNewProduct(prev => ({ ...prev, description: e.target.value }))}
+                      rows={3}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand-green"
+                      placeholder="Descrição detalhada do produto..."
+                    />
+                  </div>
 
-              <div className="md:col-span-2">
-                <label className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={newProduct.is_mentoria}
-                    onChange={(e) => setNewProduct(prev => ({ ...prev, is_mentoria: e.target.checked }))}
-                    className="mr-2"
-                  />
-                  <span className="text-sm font-medium text-gray-700">Produto de Mentoria</span>
-                </label>
-              </div>
-            </div>
+                  <div className="flex items-center space-x-4">
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={newProduct.is_mentoria}
+                        onChange={(e) => setNewProduct(prev => ({ ...prev, is_mentoria: e.target.checked }))}
+                        className="rounded"
+                      />
+                      <span className="text-sm text-gray-700">Produto de Mentoria</span>
+                    </label>
+                  </div>
+                </div>
 
-            <div className="flex justify-end space-x-4 mt-6">
-              <button
-                onClick={() => {
-                  setShowForm(false)
-                  setEditingProduct(null)
-                  setNewProduct({
-                    name: '',
-                    description: '',
-                    category_id: '',
-                    amazon_url: '',
-                    current_price: '',
-                    image_url: '',
-                    benefits: [],
-                    features: [],
-                    is_mentoria: false
-                  })
-                }}
-                className="px-6 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={editingProduct ? handleUpdateProduct : handleCreateProduct}
-                className="px-6 py-2 bg-brand-green text-white rounded-md hover:bg-brand-greenDark transition-colors"
-              >
-                {editingProduct ? 'Atualizar' : 'Criar'} Produto
-              </button>
+                <div className="mt-6 flex justify-end space-x-3">
+                  <button
+                    onClick={handleCancelEdit}
+                    className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    onClick={editingProduct ? handleUpdateProduct : handleCreateProduct}
+                    className="px-4 py-2 bg-brand-green text-white rounded-md hover:bg-brand-greenDark focus:outline-none focus:ring-2 focus:ring-brand-green"
+                  >
+                    {editingProduct ? 'Atualizar' : 'Criar'} Produto
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}

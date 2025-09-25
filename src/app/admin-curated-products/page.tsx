@@ -9,7 +9,7 @@ export default function AdminCuratedProducts() {
   const [products, setProducts] = useState<Product[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [showForm, setShowForm] = useState(false)
-  const [editingProduct, setEditingProduct] = useState<string | null>(null)
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null)
   const [operationStatus, setOperationStatus] = useState('')
   const [loading, setLoading] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
@@ -99,6 +99,86 @@ export default function AdminCuratedProducts() {
       console.error('Erro ao criar produto:', error)
       setOperationStatus('❌ Erro ao criar produto')
     }
+  }
+
+  const handleEditProduct = (product: Product) => {
+    setEditingProduct(product)
+    setNewProduct({
+      name: product.name || '',
+      description: product.description || '',
+      category_id: product.category_id || '',
+      amazon_url: product.amazon_url || '',
+      current_price: product.current_price?.toString() || '',
+      image_url: product.image_url || '',
+      benefits: product.benefits || [],
+      features: product.features || [],
+      is_mentoria: product.is_mentoria || false,
+      is_curated: product.is_curated || false,
+      quiz_keywords: product.quiz_keywords || [],
+      priority_score: product.priority_score || 50
+    })
+  }
+
+  const handleUpdateProduct = async () => {
+    if (!editingProduct || !newProduct.name || !newProduct.category_id) {
+      setOperationStatus('❌ Nome e categoria são obrigatórios')
+      return
+    }
+
+    try {
+      setOperationStatus('⏳ Atualizando produto...')
+      
+      const updatedProduct = {
+        ...editingProduct,
+        ...newProduct,
+        current_price: parseFloat(newProduct.current_price) || 0
+      }
+      
+      const success = await productService.updateProduct(editingProduct.id, updatedProduct)
+      
+      if (success) {
+        setOperationStatus('✅ Produto atualizado com sucesso!')
+        setEditingProduct(null)
+        setNewProduct({
+          name: '',
+          description: '',
+          category_id: '',
+          amazon_url: '',
+          current_price: '',
+          image_url: '',
+          benefits: [],
+          features: [],
+          is_mentoria: false,
+          is_curated: true,
+          quiz_keywords: [],
+          priority_score: 50
+        })
+        loadData()
+      } else {
+        setOperationStatus('❌ Erro ao atualizar produto')
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar produto:', error)
+      setOperationStatus('❌ Erro ao atualizar produto')
+    }
+  }
+
+  const handleCancelEdit = () => {
+    setEditingProduct(null)
+    setNewProduct({
+      name: '',
+      description: '',
+      category_id: '',
+      amazon_url: '',
+      current_price: '',
+      image_url: '',
+      benefits: [],
+      features: [],
+      is_mentoria: false,
+      is_curated: true,
+      quiz_keywords: [],
+      priority_score: 50
+    })
   }
 
   const handleMarkAsCurated = async (productId: string, quizKeywords: string[], priorityScore: number) => {
@@ -406,12 +486,12 @@ export default function AdminCuratedProducts() {
                       </button>
                     )}
                     
-                    <Link
-                      href={`/admin-produtos?edit=${product.id}`}
+                    <button
+                      onClick={() => handleEditProduct(product)}
                       className="px-3 py-1 text-sm bg-blue-600 text-white rounded-md hover:bg-blue-700"
                     >
                       Editar
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -430,6 +510,162 @@ export default function AdminCuratedProducts() {
           )}
         </div>
       </div>
+
+      {/* Modal de Edição */}
+      {editingProduct && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-semibold">Editar Produto</h3>
+                <button
+                  onClick={handleCancelEdit}
+                  className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
+                >
+                  ×
+                </button>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Nome do Produto *
+                  </label>
+                  <input
+                    type="text"
+                    value={newProduct.name}
+                    onChange={(e) => setNewProduct({...newProduct, name: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Ex: NOW Foods Vitamin D3 5000 IU"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Categoria *
+                  </label>
+                  <select
+                    value={newProduct.category_id}
+                    onChange={(e) => setNewProduct({...newProduct, category_id: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="">Selecione uma categoria</option>
+                    {categories.map((category) => (
+                      <option key={category.id} value={category.id}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    URL da Amazon
+                  </label>
+                  <input
+                    type="url"
+                    value={newProduct.amazon_url}
+                    onChange={(e) => setNewProduct({...newProduct, amazon_url: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="https://amazon.com/..."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Preço Atual ($)
+                  </label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={newProduct.current_price}
+                    onChange={(e) => setNewProduct({...newProduct, current_price: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="19.99"
+                  />
+                </div>
+
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    URL da Imagem
+                  </label>
+                  <input
+                    type="url"
+                    value={newProduct.image_url}
+                    onChange={(e) => setNewProduct({...newProduct, image_url: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="https://images.amazon.com/..."
+                  />
+                </div>
+
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Descrição
+                  </label>
+                  <textarea
+                    value={newProduct.description}
+                    onChange={(e) => setNewProduct({...newProduct, description: e.target.value})}
+                    rows={3}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="Descrição detalhada do produto..."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Score de Prioridade
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    value={newProduct.priority_score}
+                    onChange={(e) => setNewProduct({...newProduct, priority_score: parseInt(e.target.value) || 50})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                <div className="flex items-center space-x-4">
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={newProduct.is_curated}
+                      onChange={(e) => setNewProduct({...newProduct, is_curated: e.target.checked})}
+                      className="rounded"
+                    />
+                    <span className="text-sm text-gray-700">Produto Curado</span>
+                  </label>
+
+                  <label className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={newProduct.is_mentoria}
+                      onChange={(e) => setNewProduct({...newProduct, is_mentoria: e.target.checked})}
+                      className="rounded"
+                    />
+                    <span className="text-sm text-gray-700">É Mentoria</span>
+                  </label>
+                </div>
+              </div>
+
+              <div className="mt-6 flex justify-end space-x-3">
+                <button
+                  onClick={handleCancelEdit}
+                  className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                >
+                  Cancelar
+                </button>
+                <button
+                  onClick={handleUpdateProduct}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  Salvar Alterações
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
