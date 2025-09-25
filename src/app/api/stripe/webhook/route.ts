@@ -82,32 +82,9 @@ export async function POST(request: NextRequest) {
       let userId: string | null = null
 
       if (customerEmail) {
-        // Buscar usuário existente por email
-        const { data: existingUser } = await supabase.auth.admin.getUserByEmail(customerEmail)
-        
-        if (existingUser.user) {
-          userId = existingUser.user.id
-        } else {
-          // Criar novo usuário
-          const { data: newUser, error: createError } = await supabase.auth.admin.createUser({
-            email: customerEmail,
-            email_confirm: true,
-            user_metadata: {
-              source: 'stripe_checkout',
-              first_purchase: true
-            }
-          })
-
-          if (createError) {
-            console.error('Erro ao criar usuário:', createError)
-            return NextResponse.json(
-              { error: 'Erro ao criar usuário' },
-              { status: 500 }
-            )
-          }
-
-          userId = newUser.user?.id || null
-        }
+        // Para simplificar, usar email como identificador
+        // Em um sistema mais robusto, você criaria usuários no Supabase Auth
+        userId = customerEmail
       }
 
       if (!userId) {
