@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Download, ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react'
@@ -13,7 +13,7 @@ interface ProtocolData {
   size: string
 }
 
-export default function ProtocolDownloadPage() {
+function ProtocolDownloadContent() {
   const searchParams = useSearchParams()
   const [protocolData, setProtocolData] = useState<ProtocolData | null>(null)
   const [loading, setLoading] = useState(true)
@@ -303,5 +303,20 @@ export default function ProtocolDownloadPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function ProtocolDownloadPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-brand-cream flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-green mx-auto mb-4"></div>
+          <p className="text-brand-text">Carregando...</p>
+        </div>
+      </div>
+    }>
+      <ProtocolDownloadContent />
+    </Suspense>
   )
 }
