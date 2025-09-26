@@ -121,26 +121,26 @@ export default function QuizPage() {
   }
 
   const getPriceId = (protocolId: string) => {
-    // Price IDs de TESTE para cada protocolo - compatíveis com chaves de teste
+    // Price IDs de PRODUÇÃO para cada protocolo - compatíveis com chaves Live
     const priceMap: { [key: string]: string } = {
-      'suporte-canetas-emagrecedoras': 'price_1SBICPEVE42ibKnXwZFKpf4Y', // $10.00 - Protocolo Suporte
-      'pre-caneta': 'price_1SBICQEVE42ibKnXBzBO15S3', // $10.00 - Protocolo Pré-Caneta
-      'pos-caneta-manutencao': 'price_1SBICREVE42ibKnXxJ5AUlcl', // $10.00 - Protocolo Pós-Caneta
-      'proteina-massa-magra': 'price_1SBICREVE42ibKnXIR1OGLRi', // $10.00 - Protocolo Proteína
-      'intestino-livre': 'price_1SBICSEVE42ibKnX7p7HMpcn', // $10.00 - Protocolo Intestino
-      'nausea-refluxo': 'price_1SBICTEVE42ibKnX1vKVHowV', // $10.00 - Protocolo Náusea
-      'energia-imunidade': 'price_1SBICTEVE42ibKnXZPdB7ZIw', // $10.00 - Protocolo Energia
-      'imunidade-avancada': 'price_1SBICUEVE42ibKnXSYe0WXbB', // $10.00 - Protocolo Imunidade Avançada
-      'detox-leve': 'price_1SBICVEVE42ibKnX7BDCCjAc', // $10.00 - Protocolo Detox
-      'anti-inflamatorio': 'price_1SBICVEVE42ibKnXphgIW8Ic', // $10.00 - Protocolo Anti-inflamatório
-      'mulheres-40': 'price_1SBICWEVE42ibKnXJfgygNev', // $10.00 - Protocolo Mulheres 40+
-      'pele-cabelo-unhas': 'price_1SBICXEVE42ibKnXl9Bs39rA', // $10.00 - Protocolo Pele/Cabelo
-      'sono-ansiedade': 'price_1SBICYEVE42ibKnXK52I9iqq', // $10.00 - Protocolo Sono
-      'fitness-performance': 'price_1SBICYEVE42ibKnXQgHoS6sK', // $10.00 - Protocolo Fitness
-      'alternativa-sem-caneta': 'price_1SBICZEVE42ibKnXWZYcPlKj', // $10.00 - Protocolo Alternativa
-      'pacote-completo': 'price_1SBICaEVE42ibKnXT3xArxV2' // $67.00 - Pacote Completo
+      'suporte-canetas-emagrecedoras': 'price_1SBE63EVE42ibKnXtcfzXnVB', // $10.00 - Protocolo Suporte
+      'pre-caneta': 'price_1SBE63EVE42ibKnXldmfGtVs', // $10.00 - Protocolo Pré-Caneta
+      'pos-caneta-manutencao': 'price_1SBE63EVE42ibKnX1XPtQNwx', // $10.00 - Protocolo Pós-Caneta
+      'proteina-massa-magra': 'price_1SBE64EVE42ibKnXJDz09OjU', // $10.00 - Protocolo Proteína
+      'intestino-livre': 'price_1SBE64EVE42ibKnXVmLnSTzL', // $10.00 - Protocolo Intestino
+      'nausea-refluxo': 'price_1SBE64EVE42ibKnXivMrP8OX', // $10.00 - Protocolo Náusea
+      'energia-imunidade': 'price_1SBE65EVE42ibKnXfc5aa4Xc', // $10.00 - Protocolo Energia
+      'imunidade-avancada': 'price_1SBdfCEVE42ibKnXv0ylbGZK', // $10.00 - Protocolo Imunidade Avançada
+      'detox-leve': 'price_1SBE65EVE42ibKnXZUi4WGSm', // $10.00 - Protocolo Detox
+      'anti-inflamatorio': 'price_1SBE65EVE42ibKnXzy5HvJHz', // $10.00 - Protocolo Anti-inflamatório
+      'mulheres-40': 'price_1SBE66EVE42ibKnXZj2xLerV', // $10.00 - Protocolo Mulheres 40+
+      'pele-cabelo-unhas': 'price_1SBE66EVE42ibKnXJxm4ft2g', // $10.00 - Protocolo Pele/Cabelo
+      'sono-ansiedade': 'price_1SBE66EVE42ibKnXQqRAf2nt', // $10.00 - Protocolo Sono
+      'fitness-performance': 'price_1SBE67EVE42ibKnXOK0ECkaE', // $10.00 - Protocolo Fitness
+      'alternativa-sem-caneta': 'price_1SBE67EVE42ibKnXj6hrH2cF', // $10.00 - Protocolo Alternativa
+      'pacote-completo': 'price_1SBE67EVE42ibKnX8ddjXvxk' // $67.00 - Pacote Completo
     }
-    return priceMap[protocolId] || 'price_1SBICSEVE42ibKnX7p7HMpcn' // Default Protocolo Intestino
+    return priceMap[protocolId] || 'price_1SBE64EVE42ibKnXVmLnSTzL' // Default Protocolo Intestino
   }
 
   const handlePurchase = async (protocolId: string) => {
