@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Logo from '@/components/Logo'
 import BottomNavigation from '@/components/BottomNavigation'
-import { openWhatsApp, openWhatsAppSimple, openWhatsAppIOS } from '@/utils/whatsapp'
+import { openWhatsApp, openWhatsAppSimple, openWhatsAppIOS, openWhatsAppRobust } from '@/utils/whatsapp'
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[]
@@ -86,14 +86,9 @@ export default function Home() {
       // Se já está instalado, abrir WhatsApp com mensagem específica
       console.log('📱 PWA instalada, abrindo WhatsApp...');
       const message = "Olá! Gostaria de saber mais sobre o MeuPortalFit e fazer uma avaliação personalizada.";
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-      console.log('📱 Dispositivo iOS?', isIOS);
       
-      if (isIOS) {
-        openWhatsAppIOS('17862535032', message);
-      } else {
-        openWhatsAppSimple('17862535032', message);
-      }
+      // Usar função robusta com múltiplos fallbacks
+      openWhatsAppRobust('17862535032', message);
       return
     }
 
@@ -149,7 +144,7 @@ export default function Home() {
             </div>
           </div>
           <button 
-            onClick={() => openWhatsApp()}
+            onClick={() => openWhatsAppRobust('17862535032', 'Olá! Quero agendar minha avaliação personalizada de 30 minutos com a coach brasileira por $10.')}
             className="inline-block bg-white text-orange-600 px-6 py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105"
           >
             📅 QUERO AGENDAR
@@ -236,7 +231,7 @@ export default function Home() {
       <section className="px-4 py-4">
         <div className="max-w-sm mx-auto text-center">
           <button 
-            onClick={() => openWhatsApp()}
+            onClick={() => openWhatsAppRobust('17862535032', 'Olá! Preciso de ajuda com o MeuPortalFit.')}
             className="bg-green-500 text-white px-6 py-3 rounded-xl font-semibold text-sm shadow-lg hover:shadow-xl transition-all transform hover:scale-105 flex items-center justify-center space-x-2 mx-auto"
           >
             <span>💬</span>
