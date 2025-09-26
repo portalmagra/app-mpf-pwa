@@ -9,7 +9,7 @@ export const BRAND_INFO = {
   phone: '+17862535032',
   website: 'https://meuportalfit.com',
   whatsapp: 'https://wa.me/17862535032',
-  logo: 'https://meuportalfit.com/logo-final-completo.svg',
+  logo: 'https://meuportalfit.com/logo-variante-5.svg',
   logoIcon: 'https://meuportalfit.com/logo-final-solo-m.svg'
 }
 

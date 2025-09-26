@@ -1,3 +1,5 @@
+import Image from 'next/image'
+
 interface LogoProps {
   size?: 'sm' | 'md' | 'lg' | 'xl'
   variant?: 'icon' | 'horizontal' | 'full'
@@ -12,24 +14,36 @@ export default function Logo({ size = 'md', variant = 'icon', className = '' }: 
     xl: 'w-16 h-16'
   }
 
-  // const iconSizes = {
-  //   sm: 16,
-  //   md: 20,
-  //   lg: 32,
-  //   xl: 40
-  // }
+  const textSizes = {
+    sm: 'text-sm',
+    md: 'text-lg',
+    lg: 'text-xl',
+    xl: 'text-2xl'
+  }
 
-  // const iconSize = iconSizes[size] // Not used in current implementation
+  const subtextSizes = {
+    sm: 'text-xs',
+    md: 'text-xs',
+    lg: 'text-sm',
+    xl: 'text-sm'
+  }
 
   if (variant === 'horizontal') {
     return (
       <div className={`flex items-center space-x-3 ${className}`}>
-        <div className={`${sizeClasses[size]} bg-gradient-to-br from-blue-500 via-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center`}>
-          <span className="text-white font-bold text-sm">M</span>
+        <div className={`${sizeClasses[size]} relative`}>
+          <Image
+            src="/logo-final-solo-m.svg"
+            alt="MeuPortalFit"
+            width={64}
+            height={64}
+            className="w-full h-full object-contain"
+            priority
+          />
         </div>
         <div>
-          <h1 className="text-lg font-bold text-brand-text">MeuPortalFit</h1>
-          <p className="text-xs text-brand-text2">Brasileiros nos EUA</p>
+          <h1 className={`${textSizes[size]} font-bold text-brand-text`}>MeuPortalFit</h1>
+          <p className={`${subtextSizes[size]} text-brand-text2`}>Brasileiros nos EUA</p>
         </div>
       </div>
     )
@@ -38,12 +52,19 @@ export default function Logo({ size = 'md', variant = 'icon', className = '' }: 
   if (variant === 'full') {
     return (
       <div className={`flex flex-col items-center space-y-2 ${className}`}>
-        <div className={`${sizeClasses[size]} bg-gradient-to-br from-blue-500 via-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center`}>
-          <span className="text-white font-bold text-sm">M</span>
+        <div className={`${sizeClasses[size]} relative`}>
+          <Image
+            src="/logo-variante-5.svg"
+            alt="MeuPortalFit"
+            width={64}
+            height={64}
+            className="w-full h-full object-contain"
+            priority
+          />
         </div>
         <div className="text-center">
-          <h1 className="text-lg font-bold text-brand-text">MeuPortalFit</h1>
-          <p className="text-xs text-brand-text2">Brasileiros nos EUA</p>
+          <h1 className={`${textSizes[size]} font-bold text-brand-text`}>MeuPortalFit</h1>
+          <p className={`${subtextSizes[size]} text-brand-text2`}>Brasileiros nos EUA</p>
         </div>
       </div>
     )
@@ -51,8 +72,15 @@ export default function Logo({ size = 'md', variant = 'icon', className = '' }: 
 
   // Default icon variant
   return (
-    <div className={`${sizeClasses[size]} bg-gradient-to-br from-blue-500 via-emerald-500 to-emerald-600 rounded-lg flex items-center justify-center ${className}`}>
-      <span className="text-white font-bold text-sm">M</span>
+    <div className={`${sizeClasses[size]} relative ${className}`}>
+      <Image
+        src="/logo-final-solo-m.svg"
+        alt="MeuPortalFit"
+        width={64}
+        height={64}
+        className="w-full h-full object-contain"
+        priority
+      />
     </div>
   )
 }
