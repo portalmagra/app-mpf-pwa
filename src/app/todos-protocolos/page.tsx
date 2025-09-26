@@ -211,7 +211,7 @@ export default function TodosProtocolos() {
       'sono-ansiedade': 'price_1SBE66EVE42ibKnXQqRAf2nt', // $10.00 - Protocolo Sono
       'fitness-performance': 'price_1SBE67EVE42ibKnXOK0ECkaE', // $10.00 - Protocolo Fitness
       'alternativa-sem-caneta': 'price_1SBE67EVE42ibKnXj6hrH2cF', // $10.00 - Protocolo Alternativa
-      'pacote-completo': 'price_1SBeDNEVE42ibKnXKh3SZbxU' // $1.00 - Pacote Completo (TESTE)
+      'pacote-completo': 'price_1SBE67EVE42ibKnX8ddjXvxk' // $67.00 - Pacote Completo
     }
     return priceMap[protocolId] || 'price_1SBE64EVE42ibKnXVmLnSTzL' // Default Protocolo Intestino
   }
