@@ -119,8 +119,51 @@ export async function POST(request: NextRequest) {
 
       console.log('Compra registrada com sucesso:', purchase)
 
-      // Enviar email de confirmação (opcional)
-      // Aqui você pode integrar com SendGrid, Resend, etc.
+      // Enviar email de confirmação automaticamente
+      if (customerEmail && protocolId) {
+        try {
+          const protocolNames: { [key: string]: string } = {
+            'suporte-canetas-emagrecedoras': 'Protocolo Suporte com Canetas Emagrecedoras',
+            'pre-caneta': 'Protocolo Pré-Caneta',
+            'pos-caneta-manutencao': 'Protocolo Pós-Caneta Manutenção',
+            'proteina-massa-magra': 'Protocolo Proteína e Massa Magra',
+            'intestino-livre': 'Protocolo Intestino Livre',
+            'nausea-refluxo': 'Protocolo Náusea e Refluxo',
+            'energia-imunidade': 'Protocolo Energia e Imunidade',
+            'imunidade-avancada': 'Protocolo Imunidade Avançada',
+            'detox-leve': 'Protocolo Detox Leve',
+            'anti-inflamatorio': 'Protocolo Anti-inflamatório',
+            'mulheres-40': 'Protocolo Mulheres 40+',
+            'pele-cabelo-unhas': 'Protocolo Pele, Cabelo e Unhas',
+            'sono-ansiedade': 'Protocolo Sono e Ansiedade',
+            'fitness-performance': 'Protocolo Fitness e Performance',
+            'alternativa-sem-caneta': 'Protocolo Alternativa Sem Caneta',
+            'pacote-completo': 'Pacote Completo - Todos os Protocolos'
+          }
+
+          const protocolName = protocolNames[protocolId] || protocolId
+
+          // Chamar API de envio de e-mail
+          const emailResponse = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/send-confirmation-email`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              sessionId: session.id,
+              protocolId: protocolId,
+              protocolName: protocolName,
+              customerEmail: customerEmail
+            })
+          })
+
+          if (emailResponse.ok) {
+            console.log('📧 E-mail de confirmação enviado automaticamente para:', customerEmail)
+          } else {
+            console.error('❌ Erro ao enviar e-mail de confirmação:', await emailResponse.text())
+          }
+        } catch (emailError) {
+          console.error('❌ Erro ao enviar e-mail:', emailError)
+        }
+      }
 
       return NextResponse.json({ 
         success: true, 
