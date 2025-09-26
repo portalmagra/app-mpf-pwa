@@ -138,7 +138,7 @@ export default function QuizPage() {
       'sono-ansiedade': 'price_1SBE66EVE42ibKnXQqRAf2nt', // $10.00 - Protocolo Sono
       'fitness-performance': 'price_1SBE67EVE42ibKnXOK0ECkaE', // $10.00 - Protocolo Fitness
       'alternativa-sem-caneta': 'price_1SBE67EVE42ibKnXj6hrH2cF', // $10.00 - Protocolo Alternativa
-      'pacote-completo': 'price_1SBE67EVE42ibKnX8ddjXvxk' // $67.00 - Pacote Completo
+      'pacote-completo': 'price_1SBdlmEVE42ibKnXWJuMhh6f' // $1.00 - Pacote Completo (TESTE)
     }
     return priceMap[protocolId] || 'price_1SBE64EVE42ibKnXVmLnSTzL' // Default Protocolo Intestino
   }
