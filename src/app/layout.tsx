@@ -20,8 +20,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "MeuPortalFit - Wellness para Brasileiros",
-  description: "Wellness para Brasileiros - eBooks, receitas, dietas e produtos exclusivos para sua saúde e bem-estar!",
+  title: "MeuPortalFit - Wellness para Brasileiros nos EUA",
+  description: "🇧🇷 App brasileiro para sua saúde e bem-estar nos Estados Unidos! ✨ Avaliação gratuita por IA • 📚 eBooks exclusivos • 🍽️ Receitas brasileiras • 👩‍⚕️ Coach especializada • 💬 WhatsApp: (786) 253-5032",
   manifest: "/manifest.json",
   themeColor: "#3B82F6",
   viewport: "width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no",
@@ -29,6 +29,11 @@ export const metadata: Metadata = {
     capable: true,
     statusBarStyle: "default",
     title: "MeuPortalFit",
+  },
+  // Meta tags específicas para WhatsApp
+  other: {
+    "whatsapp:phone": "+17862535032",
+    "whatsapp:message": "Olá! Encontrei o MeuPortalFit - app brasileiro para saúde e bem-estar nos EUA! 🇧🇷✨",
   },
   icons: {
     icon: [
@@ -42,26 +47,26 @@ export const metadata: Metadata = {
     ]
   },
   openGraph: {
-    title: "MeuPortalFit - Wellness para Brasileiros",
-    description: "Wellness para Brasileiros - eBooks, receitas, dietas e produtos exclusivos para sua saúde e bem-estar!",
+    title: "MeuPortalFit - Wellness para Brasileiros nos EUA",
+    description: "🇧🇷 App brasileiro para sua saúde e bem-estar nos Estados Unidos! ✨ Avaliação gratuita por IA • 📚 eBooks exclusivos • 🍽️ Receitas brasileiras • 👩‍⚕️ Coach especializada • 💬 WhatsApp: (786) 253-5032",
     type: "website",
     locale: "pt_BR",
-    url: "https://meuportalfit.com",
+    url: "https://app.meuportalfit.com",
     siteName: "MeuPortalFit",
     images: [
       {
-        url: "/logo-variante-5.svg",
+        url: "https://app.meuportalfit.com/whatsapp-preview.svg",
         width: 400,
-        height: 400,
+        height: 300,
         alt: "MeuPortalFit - Brasileiros nos EUA",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "MeuPortalFit - Wellness para Brasileiros",
-    description: "Wellness para Brasileiros - eBooks, receitas, dietas e produtos exclusivos!",
-    images: ["/logo-variante-5.svg"],
+    title: "MeuPortalFit - Wellness para Brasileiros nos EUA",
+    description: "🇧🇷 App brasileiro para sua saúde e bem-estar nos Estados Unidos! ✨ Avaliação gratuita por IA • 📚 eBooks exclusivos • 🍽️ Receitas brasileiras • 👩‍⚕️ Coach especializada • 💬 WhatsApp: (786) 253-5032",
+    images: ["https://app.meuportalfit.com/whatsapp-preview.svg"],
   },
 };
 
