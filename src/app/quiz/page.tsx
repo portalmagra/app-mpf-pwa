@@ -466,15 +466,36 @@ export default function QuizPage() {
                   className="w-20 h-20 object-cover rounded-lg mr-4"
                 />
                 <div>
-                  <h3 className="text-2xl font-bold">Pacote Completo</h3>
+                  <h3 className="text-2xl font-bold">🎁 Pacote Completo</h3>
                   <p className="text-green-100">
-                    Acesse todos os 15 protocolos para quem faz uso de canetas emagrecedoras
+                    Todos os 15 protocolos para quem faz uso de canetas emagrecedoras
                   </p>
                 </div>
               </div>
-              <p className="text-green-100 mb-4">
-                Obtenha todos os 15 protocolos por apenas $67 (55% de desconto!)
-              </p>
+
+              {/* Argumentos de Venda */}
+              <div className="mb-4">
+                <h4 className="font-bold text-sm mb-2">✨ Por que escolher o pacote completo?</h4>
+                <ul className="text-xs text-green-100 space-y-1">
+                  <li className="flex items-center">
+                    <CheckCircle className="w-3 h-3 text-green-200 mr-2" />
+                    <strong>15 protocolos</strong> para diferentes necessidades com canetas
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-3 h-3 text-green-200 mr-2" />
+                    <strong>Prevenção e manutenção</strong> completa
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-3 h-3 text-green-200 mr-2" />
+                    <strong>Um único download</strong> - máxima conveniência
+                  </li>
+                  <li className="flex items-center">
+                    <CheckCircle className="w-3 h-3 text-green-200 mr-2" />
+                    <strong>55% de desconto</strong> - Economia de $83
+                  </li>
+                </ul>
+              </div>
+
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-3xl font-bold">$67<span className="text-lg font-normal"> (valor único)</span></p>
@@ -484,7 +505,7 @@ export default function QuizPage() {
                   onClick={() => handlePurchase('pacote-completo')}
                   className="px-6 py-3 bg-white text-brand-green rounded-lg font-semibold hover:bg-gray-100 transition-colors"
                 >
-                  Obter Acesso Completo
+                  🛒 Obter Acesso Completo
                 </button>
               </div>
             </div>

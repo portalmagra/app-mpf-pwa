@@ -307,20 +307,56 @@ export default function TodosProtocolos() {
       {/* Bundle Offer */}
       <section className="px-4 mb-6">
         <div className="max-w-sm mx-auto">
-          <div className="bg-gradient-to-r from-brand-green to-brand-greenDark rounded-xl p-6 text-white text-center shadow-lg">
-            <h3 className="text-xl font-bold mb-2">🎁 Oferta Especial</h3>
-            <p className="text-sm mb-2">
-              Obtenha todos os {protocols.length} protocolos por apenas $67
-            </p>
-            <p className="text-xs text-green-100 mb-4">
-              Economia de ${(protocols.length * 10) - 67} (55% de desconto!)
-            </p>
-            <button 
-              onClick={() => handlePurchase('pacote-completo')}
-              className="bg-white text-brand-green px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors inline-block"
-            >
-              Obter Pacote Completo
-            </button>
+          <div className="bg-gradient-to-r from-brand-green to-brand-greenDark rounded-xl p-6 text-white shadow-lg">
+            {/* Imagem do Pacote */}
+            <div className="flex items-center mb-4">
+              <img 
+                src="/images/protocolos/Todos Protocolos.jpg"
+                alt="Pacote Completo - Todos os Protocolos"
+                className="w-20 h-20 object-cover rounded-lg mr-4"
+              />
+              <div>
+                <h3 className="text-xl font-bold">🎁 Pacote Completo</h3>
+                <p className="text-sm text-green-100">Todos os {protocols.length} Protocolos</p>
+              </div>
+            </div>
+
+            {/* Argumentos de Venda */}
+            <div className="mb-4">
+              <h4 className="font-bold text-sm mb-2">✨ Por que escolher o pacote completo?</h4>
+              <ul className="text-xs text-green-100 space-y-1">
+                <li className="flex items-center">
+                  <CheckCircle className="w-3 h-3 text-green-200 mr-2" />
+                  <strong>15 protocolos</strong> para diferentes necessidades com canetas
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-3 h-3 text-green-200 mr-2" />
+                  <strong>Prevenção e manutenção</strong> completa
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-3 h-3 text-green-200 mr-2" />
+                  <strong>Um único download</strong> - máxima conveniência
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-3 h-3 text-green-200 mr-2" />
+                  <strong>55% de desconto</strong> - Economia de ${(protocols.length * 10) - 67}
+                </li>
+              </ul>
+            </div>
+
+            {/* Preço e Botão */}
+            <div className="text-center">
+              <div className="mb-3">
+                <span className="text-2xl font-bold">$67</span>
+                <span className="text-sm text-green-100 ml-2">(valor único)</span>
+              </div>
+              <button 
+                onClick={() => handlePurchase('pacote-completo')}
+                className="bg-white text-brand-green px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors inline-block w-full"
+              >
+                🛒 Obter Pacote Completo
+              </button>
+            </div>
           </div>
         </div>
       </section>
