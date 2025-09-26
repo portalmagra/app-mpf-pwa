@@ -1,8 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+import { createClient } from '@supabase/supabase-js'
 
 // Configuração Resend
 const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
+
+// Configuração Supabase
+const supabase = process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY 
+  ? createClient(
+      process.env.SUPABASE_URL,
+      process.env.SUPABASE_SERVICE_ROLE_KEY
+    )
+  : null
 
 export async function POST(request: NextRequest) {
   try {
@@ -85,6 +94,31 @@ Equipe MeuPortalFit`
         console.log('📧 E-mail enviado com Resend para:', customerEmail)
         console.log('📧 ID do e-mail:', result.data?.id)
         
+        // Registrar log no Supabase
+        if (supabase && result.data?.id) {
+          try {
+            const { error: logError } = await supabase
+              .from('email_logs')
+              .insert({
+                resend_email_id: result.data.id,
+                customer_email: customerEmail,
+                subject: subject,
+                protocol_id: protocolId,
+                session_id: sessionId,
+                status: 'sent',
+                sent_at: new Date().toISOString()
+              })
+            
+            if (logError) {
+              console.error('❌ Erro ao registrar log no Supabase:', logError)
+            } else {
+              console.log('✅ Log de e-mail registrado no Supabase')
+            }
+          } catch (supabaseError) {
+            console.error('❌ Erro ao conectar com Supabase:', supabaseError)
+          }
+        }
+        
         return NextResponse.json({ 
           success: true, 
           message: 'E-mail enviado com Resend',
@@ -92,6 +126,32 @@ Equipe MeuPortalFit`
         }, { status: 200 })
       } catch (resendError) {
         console.error('❌ Erro ao enviar e-mail com Resend:', resendError)
+        
+        // Registrar erro no Supabase
+        if (supabase) {
+          try {
+            const { error: logError } = await supabase
+              .from('email_logs')
+              .insert({
+                customer_email: customerEmail,
+                subject: subject,
+                protocol_id: protocolId,
+                session_id: sessionId,
+                status: 'failed',
+                error_message: resendError instanceof Error ? resendError.message : 'Erro desconhecido',
+                sent_at: new Date().toISOString()
+              })
+            
+            if (logError) {
+              console.error('❌ Erro ao registrar log de erro no Supabase:', logError)
+            } else {
+              console.log('✅ Log de erro registrado no Supabase')
+            }
+          } catch (supabaseError) {
+            console.error('❌ Erro ao conectar com Supabase:', supabaseError)
+          }
+        }
+        
         return NextResponse.json({ 
           error: 'Erro ao enviar e-mail com Resend',
           details: resendError instanceof Error ? resendError.message : 'Erro desconhecido'

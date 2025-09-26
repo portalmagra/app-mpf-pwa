@@ -23,19 +23,26 @@ const supabase = process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_K
   : null
 
 export async function POST(request: NextRequest) {
+  console.log('🔔 Webhook recebido:', new Date().toISOString())
+  
   try {
     if (!stripe || !supabase) {
-      console.error('Stripe ou Supabase não estão configurados')
+      console.error('❌ Stripe ou Supabase não estão configurados')
       return NextResponse.json(
         { error: 'Serviços não configurados' },
         { status: 500 }
       )
     }
 
+    console.log('📝 Lendo body da requisição...')
     const body = await request.text()
+    console.log('📝 Body lido, tamanho:', body.length)
+    
     const signature = request.headers.get('stripe-signature')
+    console.log('🔑 Signature recebida:', signature ? 'Sim' : 'Não')
 
     if (!signature) {
+      console.error('❌ Assinatura do Stripe não encontrada')
       return NextResponse.json(
         { error: 'Assinatura do Stripe não encontrada' },
         { status: 400 }
@@ -45,13 +52,15 @@ export async function POST(request: NextRequest) {
     let event: Stripe.Event
 
     try {
+      console.log('🔍 Verificando assinatura do webhook...')
       event = stripe.webhooks.constructEvent(
         body,
         signature,
         process.env.STRIPE_WEBHOOK_SECRET!
       )
+      console.log('✅ Assinatura válida, evento:', event.type)
     } catch (err) {
-      console.error('Erro ao verificar assinatura do webhook:', err)
+      console.error('❌ Erro ao verificar assinatura do webhook:', err)
       return NextResponse.json(
         { error: 'Assinatura inválida' },
         { status: 400 }
@@ -62,7 +71,7 @@ export async function POST(request: NextRequest) {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object as Stripe.Checkout.Session
 
-      console.log('Processando pagamento:', session.id)
+      console.log('💳 Processando pagamento:', session.id)
 
       // Extrair dados da sessão
       const protocolId = session.metadata?.protocolId
@@ -70,31 +79,27 @@ export async function POST(request: NextRequest) {
       const amount = session.amount_total ? session.amount_total / 100 : 0
       const paymentIntentId = session.payment_intent as string
 
+      console.log('📋 Dados extraídos:', {
+        protocolId,
+        customerEmail,
+        amount,
+        paymentIntentId
+      })
+
       if (!protocolId) {
-        console.error('ProtocolId não encontrado na sessão:', session.id)
+        console.error('❌ ProtocolId não encontrado na sessão:', session.id)
         return NextResponse.json(
           { error: 'ProtocolId não encontrado' },
           { status: 400 }
         )
       }
 
-      // Buscar ou criar usuário no Supabase
-      let userId: string | null = null
+      // Para compras sem autenticação, usar null como user_id
+      // O e-mail será armazenado em customer_email para identificação
+      const userId = null
 
-      if (customerEmail) {
-        // Para simplificar, usar email como identificador
-        // Em um sistema mais robusto, você criaria usuários no Supabase Auth
-        userId = customerEmail
-      }
-
-      if (!userId) {
-        console.error('Não foi possível obter userId para:', customerEmail)
-        return NextResponse.json(
-          { error: 'Usuário não encontrado' },
-          { status: 400 }
-        )
-      }
-
+      console.log('💾 Registrando compra no Supabase...')
+      
       // Registrar compra no Supabase
       const { data: purchase, error: insertError } = await supabase
         .from('user_purchases')
@@ -110,17 +115,19 @@ export async function POST(request: NextRequest) {
         .select()
 
       if (insertError) {
-        console.error('Erro ao inserir compra:', insertError)
+        console.error('❌ Erro ao inserir compra:', insertError)
         return NextResponse.json(
           { error: 'Erro ao registrar compra' },
           { status: 500 }
         )
       }
 
-      console.log('Compra registrada com sucesso:', purchase)
+      console.log('✅ Compra registrada com sucesso:', purchase)
 
       // Enviar email de confirmação automaticamente
       if (customerEmail && protocolId) {
+        console.log('📧 Iniciando envio de e-mail para:', customerEmail)
+        
         try {
           const protocolNames: { [key: string]: string } = {
             'suporte-canetas-emagrecedoras': 'Protocolo Suporte com Canetas Emagrecedoras',
@@ -142,8 +149,10 @@ export async function POST(request: NextRequest) {
           }
 
           const protocolName = protocolNames[protocolId] || protocolId
+          console.log('📧 Nome do protocolo:', protocolName)
 
           // Chamar API de envio de e-mail
+          console.log('📧 Chamando API de envio de e-mail...')
           const emailResponse = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/send-confirmation-email`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -155,16 +164,27 @@ export async function POST(request: NextRequest) {
             })
           })
 
+          console.log('📧 Resposta da API de e-mail:', emailResponse.status)
+
           if (emailResponse.ok) {
-            console.log('📧 E-mail de confirmação enviado automaticamente para:', customerEmail)
+            const emailResult = await emailResponse.json()
+            console.log('✅ E-mail de confirmação enviado automaticamente para:', customerEmail)
+            console.log('📧 Resultado:', emailResult)
           } else {
-            console.error('❌ Erro ao enviar e-mail de confirmação:', await emailResponse.text())
+            const errorText = await emailResponse.text()
+            console.error('❌ Erro ao enviar e-mail de confirmação:', errorText)
           }
         } catch (emailError) {
           console.error('❌ Erro ao enviar e-mail:', emailError)
         }
+      } else {
+        console.log('⚠️ E-mail não enviado - dados faltando:', {
+          customerEmail: !!customerEmail,
+          protocolId: !!protocolId
+        })
       }
 
+      console.log('🎉 Webhook processado com sucesso!')
       return NextResponse.json({ 
         success: true, 
         message: 'Compra processada com sucesso',
@@ -173,7 +193,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Outros tipos de eventos podem ser processados aqui
-    console.log('Evento não processado:', event.type)
+    console.log('ℹ️ Evento não processado:', event.type)
 
     return NextResponse.json({ 
       success: true, 
@@ -181,7 +201,7 @@ export async function POST(request: NextRequest) {
     })
 
   } catch (error) {
-    console.error('Erro no webhook:', error)
+    console.error('❌ Erro no webhook:', error)
     return NextResponse.json(
       { error: 'Erro interno do servidor' },
       { status: 500 }
