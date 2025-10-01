@@ -146,7 +146,7 @@ export default function RootLayout({
         <meta httpEquiv="Expires" content="0" />
         
         {/* Facebook Domain Verification */}
-        <meta name="facebook-domain-verification" content="kkwbjlh5u10y630mw7ztynylnhb70l" />
+        <meta name="facebook-domain-verification" content="utmx4ftq89rl4cgjzkhyahr7ejxzrs" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
