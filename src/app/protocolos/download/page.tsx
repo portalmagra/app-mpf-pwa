@@ -132,7 +132,7 @@ function ProtocolDownloadContent() {
             <p className="text-red-600 mb-4">{error}</p>
             <div className="space-y-3">
               <Link 
-                href="/todos-protocolos"
+                href="/protocolos"
                 className="block w-full bg-brand-green text-white py-3 px-4 rounded-lg font-semibold hover:bg-brand-greenDark transition-colors"
               >
                 Ver Protocolos Disponíveis

@@ -42,6 +42,27 @@ export default function QuizPage() {
     return imageMap[protocolId] || protocolId
   }
 
+  const getProtocolArgument = (protocolId: string) => {
+    const argumentMap: { [key: string]: string } = {
+      'suporte-canetas-emagrecedoras': 'Evita perda muscular e mantém energia durante o tratamento com canetas',
+      'pre-caneta': 'Otimiza metabolismo e reduz efeitos colaterais das canetas',
+      'pos-caneta-manutencao': 'Previne reganho e mantém resultados a longo prazo',
+      'proteina-massa-magra': 'Preserva músculos durante emagrecimento, evitando flacidez e mantendo força',
+      'intestino-livre': 'Melhora absorção de nutrientes e resultados eficazes',
+      'nausea-refluxo': 'Reduz desconforto digestivo durante o tratamento',
+      'energia-imunidade': 'Mantém energia e previne doenças durante emagrecimento',
+      'imunidade-avancada': 'Proteção extra para brasileiras com sistema imunológico sensível',
+      'detox-leve': 'Elimina toxinas e acelera resultados das canetas',
+      'anti-inflamatorio': 'Diminui inchaço e melhora resposta ao tratamento',
+      'mulheres-40': 'Adaptado para mudanças hormonais e metabolismo feminino',
+      'pele-cabelo-unhas': 'Mantém pele, cabelo e unhas saudáveis durante emagrecimento',
+      'sono-ansiedade': 'Qualidade do sono acelera resultados e reduz ansiedade',
+      'fitness-performance': 'Maximiza resultados e preserva massa muscular',
+      'alternativa-sem-caneta': 'Para quem prefere métodos naturais de emagrecimento'
+    }
+    return argumentMap[protocolId] || 'Protocolo desenvolvido para suas necessidades específicas'
+  }
+
   const steps = [
     {
       id: 'medication',
@@ -432,6 +453,17 @@ export default function QuizPage() {
                   <h3 className="text-lg font-semibold text-brand-text mb-2">{protocol.name}</h3>
                   <p className="text-brand-text2 mb-4">{protocol.description}</p>
                   
+                  {/* Argumento Específico */}
+                  <div className="bg-blue-50 rounded-lg p-3 mb-4">
+                    <div className="flex items-center mb-1">
+                      <span className="text-sm mr-1">🏥</span>
+                      <span className="text-xs font-medium text-blue-800">Por que este protocolo?</span>
+                    </div>
+                    <p className="text-xs text-blue-700">
+                      {getProtocolArgument(protocol.id)}
+                    </p>
+                  </div>
+                  
                   <div className="mb-4">
                     <h4 className="font-medium text-brand-text mb-2">Inclui:</h4>
                     <ul className="text-sm text-brand-text2 space-y-1">
@@ -513,7 +545,7 @@ export default function QuizPage() {
             {/* Link para ver todos os protocolos */}
             <div className="text-center mt-6">
               <Link 
-                href="/todos-protocolos" 
+                href="/protocolos" 
                 className="text-brand-green text-sm font-medium hover:underline"
               >
                 Ver todos os protocolos disponíveis

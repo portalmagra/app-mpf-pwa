@@ -53,11 +53,11 @@ export default function BottomNavigation({ currentPage }: BottomNavigationProps)
 
         {/* Protocolos */}
         <Link 
-          href="/todos-protocolos" 
-          className={`flex flex-col items-center py-1 ${isActive('/todos-protocolos') ? 'text-brand-green' : 'text-brand-green'}`}
+          href="/protocolos" 
+          className={`flex flex-col items-center py-1 ${isActive('/protocolos') ? 'text-brand-green' : 'text-brand-green'}`}
         >
           <span className="text-lg">📋</span>
-          <span className={`text-xs font-semibold ${isActive('/todos-protocolos') ? 'text-brand-green' : 'text-brand-green'}`}>Protocolos</span>
+          <span className={`text-xs font-semibold ${isActive('/protocolos') ? 'text-brand-green' : 'text-brand-green'}`}>Protocolos</span>
         </Link>
 
         {/* Meus */}

@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Download, Eye, Lock, CheckCircle, Star, Filter, Search } from 'lucide-react'
+import { Download, Eye, Lock, CheckCircle, Star } from 'lucide-react'
 import Logo from '@/components/Logo'
 import BottomNavigation from '@/components/BottomNavigation'
 
@@ -18,8 +18,6 @@ interface Protocol {
 }
 
 export default function TodosProtocolos() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('all')
   const [imageErrors, setImageErrors] = useState<Set<string>>(new Set())
 
   const getProtocolImageName = (protocolId: string) => {
@@ -184,14 +182,71 @@ export default function TodosProtocolos() {
     }
   ]
 
-  const categories = ['all', 'Canetas', 'Digestão', 'Energia', 'Musculação', 'Saúde', 'Hormonal', 'Beleza', 'Bem-estar', 'Fitness', 'Emagrecimento', 'Detox']
-
-  const filteredProtocols = protocols.filter(protocol => {
-    const matchesSearch = protocol.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         protocol.description.toLowerCase().includes(searchTerm.toLowerCase())
-    const matchesCategory = selectedCategory === 'all' || protocol.category === selectedCategory
-    return matchesSearch && matchesCategory
-  })
+  const getProtocolArgument = (protocolId: string) => {
+    const argumentMap: { [key: string]: { title: string, description: string } } = {
+      'suporte-canetas-emagrecedoras': {
+        title: 'Por que usar durante as canetas?',
+        description: 'Evita perda muscular e mantém energia durante o tratamento'
+      },
+      'pre-caneta': {
+        title: 'Por que preparar antes?',
+        description: 'Otimiza metabolismo e reduz efeitos colaterais das canetas'
+      },
+      'pos-caneta-manutencao': {
+        title: 'Por que manter depois?',
+        description: 'Previne reganho e mantém resultados a longo prazo'
+      },
+      'proteina-massa-magra': {
+        title: 'Por que preservar músculos?',
+        description: 'Evita flacidez e mantém força durante emagrecimento'
+      },
+      'intestino-livre': {
+        title: 'Por que cuidar do intestino?',
+        description: 'Melhora absorção de nutrientes e resultados eficazes'
+      },
+      'nausea-refluxo': {
+        title: 'Por que aliviar náuseas?',
+        description: 'Reduz desconforto digestivo durante o tratamento'
+      },
+      'energia-imunidade': {
+        title: 'Por que fortalecer imunidade?',
+        description: 'Mantém energia e previne doenças durante emagrecimento'
+      },
+      'imunidade-avancada': {
+        title: 'Por que imunidade avançada?',
+        description: 'Proteção extra para brasileiras com sistema imunológico sensível'
+      },
+      'detox-leve': {
+        title: 'Por que fazer detox?',
+        description: 'Elimina toxinas e acelera resultados das canetas'
+      },
+      'anti-inflamatorio': {
+        title: 'Por que reduzir inflamação?',
+        description: 'Diminui inchaço e melhora resposta ao tratamento'
+      },
+      'mulheres-40': {
+        title: 'Por que protocolo 40+?',
+        description: 'Adaptado para mudanças hormonais e metabolismo feminino'
+      },
+      'pele-cabelo-unhas': {
+        title: 'Por que cuidar da beleza?',
+        description: 'Mantém pele, cabelo e unhas saudáveis durante emagrecimento'
+      },
+      'sono-ansiedade': {
+        title: 'Por que melhorar o sono?',
+        description: 'Qualidade do sono acelera resultados e reduz ansiedade'
+      },
+      'fitness-performance': {
+        title: 'Por que combinar com exercícios?',
+        description: 'Maximiza resultados e preserva massa muscular'
+      },
+      'alternativa-sem-caneta': {
+        title: 'Por que alternativa natural?',
+        description: 'Para quem prefere métodos naturais de emagrecimento'
+      }
+    }
+    return argumentMap[protocolId] || { title: 'Protocolo Especializado', description: 'Desenvolvido para suas necessidades específicas' }
+  }
 
   const getPriceId = (protocolId: string) => {
     // Price IDs de PRODUÇÃO para cada protocolo - compatíveis com chaves Live
@@ -260,45 +315,68 @@ export default function TodosProtocolos() {
       <section className="px-4 py-6 text-center">
         <div className="max-w-sm mx-auto">
           <h1 className="text-2xl font-bold text-brand-text mb-2">
-            📚 Todos os Protocolos
+            📚 Protocolos Especializados
           </h1>
-          <p className="text-brand-text2 text-sm">
-            Protocolos especializados para brasileiras que usam canetas de emagrecimento
+          <p className="text-brand-text2 text-sm mb-4">
+            Desenvolvidos por especialistas brasileiros para brasileiras que usam canetas de emagrecimento
           </p>
         </div>
       </section>
 
-      {/* Search and Filter */}
+      {/* Argumentos dos Protocolos */}
       <section className="px-4 mb-6">
         <div className="max-w-sm mx-auto">
-          <div className="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
-            {/* Search */}
-            <div className="relative mb-4">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <input
-                type="text"
-                placeholder="Buscar protocolos..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-brand-green focus:border-transparent"
-              />
+          <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-xl p-4">
+            <div className="flex items-center justify-center mb-3">
+              <span className="text-2xl mr-2">🏥</span>
+              <h3 className="font-bold text-brand-text text-sm">Por que cada protocolo é essencial?</h3>
             </div>
-
-            {/* Category Filter */}
-            <div className="flex flex-wrap gap-2">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
-                    selectedCategory === category
-                      ? 'bg-brand-green text-white'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
-                >
-                  {category === 'all' ? 'Todos' : category}
-                </button>
-              ))}
+            <div className="space-y-3">
+              <div className="bg-white rounded-lg p-3">
+                <div className="flex items-center mb-2">
+                  <span className="text-lg mr-2">🎯</span>
+                  <h4 className="font-bold text-xs text-brand-text">Pré-Caneta</h4>
+                </div>
+                <p className="text-xs text-brand-text2">
+                  <strong>Por quê?</strong> Prepara seu corpo para receber a caneta, otimizando metabolismo e reduzindo efeitos colaterais
+                </p>
+              </div>
+              <div className="bg-white rounded-lg p-3">
+                <div className="flex items-center mb-2">
+                  <span className="text-lg mr-2">💉</span>
+                  <h4 className="font-bold text-xs text-brand-text">Suporte com Canetas</h4>
+                </div>
+                <p className="text-xs text-brand-text2">
+                  <strong>Por quê?</strong> Evita perda muscular e mantém energia durante o tratamento com canetas
+                </p>
+              </div>
+              <div className="bg-white rounded-lg p-3">
+                <div className="flex items-center mb-2">
+                  <span className="text-lg mr-2">🔄</span>
+                  <h4 className="font-bold text-xs text-brand-text">Pós-Caneta</h4>
+                </div>
+                <p className="text-xs text-brand-text2">
+                  <strong>Por quê?</strong> Mantém os resultados e previne reganho de peso após parar as canetas
+                </p>
+              </div>
+              <div className="bg-white rounded-lg p-3">
+                <div className="flex items-center mb-2">
+                  <span className="text-lg mr-2">💪</span>
+                  <h4 className="font-bold text-xs text-brand-text">Proteína e Massa Magra</h4>
+                </div>
+                <p className="text-xs text-brand-text2">
+                  <strong>Por quê?</strong> Preserva músculos durante emagrecimento, evitando flacidez e mantendo força
+                </p>
+              </div>
+              <div className="bg-white rounded-lg p-3">
+                <div className="flex items-center mb-2">
+                  <span className="text-lg mr-2">🌱</span>
+                  <h4 className="font-bold text-xs text-brand-text">Intestino Livre</h4>
+                </div>
+                <p className="text-xs text-brand-text2">
+                  <strong>Por quê?</strong> Melhora digestão e absorção de nutrientes, essencial para resultados eficazes
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -321,6 +399,17 @@ export default function TodosProtocolos() {
               </div>
             </div>
 
+            {/* Credibilidade Médica */}
+            <div className="bg-white bg-opacity-20 rounded-lg p-3 mb-4">
+              <div className="flex items-center mb-2">
+                <span className="text-lg mr-2">🏥</span>
+                <h4 className="font-bold text-sm">Desenvolvido por Especialistas Brasileiros</h4>
+              </div>
+              <p className="text-xs text-green-100">
+                Protocolos personalizados para brasileiras
+              </p>
+            </div>
+
             {/* Argumentos de Venda */}
             <div className="mb-4">
               <h4 className="font-bold text-sm mb-2">✨ Por que escolher o pacote completo?</h4>
@@ -335,13 +424,28 @@ export default function TodosProtocolos() {
                 </li>
                 <li className="flex items-center">
                   <CheckCircle className="w-3 h-3 text-green-200 mr-2" />
-                  <strong>Um único download</strong> - máxima conveniência
+                  <strong>Acesso imediato</strong> após o pagamento
+                </li>
+                <li className="flex items-center">
+                  <CheckCircle className="w-3 h-3 text-green-200 mr-2" />
+                  <strong>Economia de tempo e dinheiro</strong>
                 </li>
                 <li className="flex items-center">
                   <CheckCircle className="w-3 h-3 text-green-200 mr-2" />
                   <strong>55% de desconto</strong> - Economia de ${(protocols.length * 10) - 67}
                 </li>
               </ul>
+            </div>
+
+            {/* Social Proof */}
+            <div className="bg-white bg-opacity-20 rounded-lg p-3 mb-4">
+              <div className="flex items-center mb-2">
+                <span className="text-lg mr-2">👥</span>
+                <h4 className="font-bold text-sm">Depoimentos de Brasileiras Reais</h4>
+              </div>
+              <p className="text-xs text-green-100 italic">
+                "Finalmente encontrei protocolos feitos especificamente para brasileiras nos EUA!" - Maria, FL
+              </p>
             </div>
 
             {/* Preço e Botão */}
@@ -354,7 +458,7 @@ export default function TodosProtocolos() {
                 onClick={() => handlePurchase('pacote-completo')}
                 className="bg-white text-brand-green px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition-colors inline-block w-full"
               >
-                🛒 Obter Pacote Completo
+                🛒 Investir na Minha Saúde
               </button>
             </div>
           </div>
@@ -365,7 +469,7 @@ export default function TodosProtocolos() {
       <section className="px-4 mb-6">
         <div className="max-w-sm mx-auto">
           <div className="space-y-4">
-            {filteredProtocols.map((protocol) => (
+            {protocols.map((protocol) => (
               <div key={protocol.id} className="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
                 {/* Protocol Image */}
                 <div className="mb-4">
@@ -410,6 +514,17 @@ export default function TodosProtocolos() {
 
                 <p className="text-xs text-brand-text2 mb-3">{protocol.description}</p>
 
+                {/* Argumento Específico */}
+                <div className="bg-blue-50 rounded-lg p-2 mb-3">
+                  <div className="flex items-center mb-1">
+                    <span className="text-sm mr-1">🏥</span>
+                    <span className="text-xs font-medium text-blue-800">{getProtocolArgument(protocol.id).title}</span>
+                  </div>
+                  <p className="text-xs text-blue-700">
+                    {getProtocolArgument(protocol.id).description}
+                  </p>
+                </div>
+
                 <div className="mb-3">
                   <h4 className="text-xs font-medium text-brand-text mb-1">Inclui:</h4>
                   <ul className="text-xs text-brand-text2 space-y-1">
@@ -427,30 +542,89 @@ export default function TodosProtocolos() {
                   </ul>
                 </div>
 
+                {/* Benefícios */}
+                <div className="bg-green-50 rounded-lg p-2 mb-3">
+                  <div className="flex items-center mb-1">
+                    <span className="text-sm mr-1">⚡</span>
+                    <span className="text-xs font-medium text-green-800">Acesso Imediato</span>
+                  </div>
+                  <p className="text-xs text-green-700">
+                    Disponível após o pagamento
+                  </p>
+                </div>
+
                 <div className="flex items-center justify-between">
-                  <span className="text-lg font-bold text-brand-green">${protocol.price}</span>
+                  <div>
+                    <span className="text-lg font-bold text-brand-green">${protocol.price}</span>
+                  </div>
                   <button
                     onClick={() => handlePurchase(protocol.id)}
                     className="px-4 py-2 bg-brand-green text-white rounded-lg text-sm font-bold hover:bg-brand-greenDark transition-colors"
                   >
-                    Comprar
+                    Investir na Saúde
                   </button>
                 </div>
               </div>
             ))}
           </div>
+        </div>
+      </section>
 
-          {filteredProtocols.length === 0 && (
-            <div className="text-center py-8">
-              <p className="text-brand-text2">Nenhum protocolo encontrado</p>
-              <p className="text-xs text-brand-text2 mt-1">Tente ajustar os filtros</p>
+      {/* Depoimentos */}
+      <section className="px-4 mb-6">
+        <div className="max-w-sm mx-auto">
+          <div className="bg-white rounded-xl p-4 shadow-lg border border-gray-100">
+            <h3 className="text-lg font-bold text-brand-text mb-4 text-center">
+              📊 Resultados Reais de Brasileiras
+            </h3>
+            
+            <div className="space-y-4">
+              <div className="bg-green-50 rounded-lg p-3">
+                <div className="flex items-center mb-2">
+                  <span className="text-sm mr-2">📈</span>
+                  <span className="text-sm font-medium text-green-800">Maria, Florida</span>
+                </div>
+                <p className="text-xs text-green-700 italic">
+                  "O protocolo de proteína me ajudou a manter minha massa muscular durante o emagrecimento. Aprendi muito sobre quando comer proteína!"
+                </p>
+              </div>
+              
+              <div className="bg-blue-50 rounded-lg p-3">
+                <div className="flex items-center mb-2">
+                  <span className="text-sm mr-2">🔬</span>
+                  <span className="text-sm font-medium text-blue-800">Ana, California</span>
+                </div>
+                <p className="text-xs text-blue-700 italic">
+                  "O protocolo pré-caneta me ajudou muito com os efeitos colaterais. Aprendi sobre magnésio e minha digestão melhorou bastante."
+                </p>
+              </div>
+              
+              <div className="bg-purple-50 rounded-lg p-3">
+                <div className="flex items-center mb-2">
+                  <span className="text-sm mr-2">⚡</span>
+                  <span className="text-sm font-medium text-purple-800">Carla, Texas</span>
+                </div>
+                <p className="text-xs text-purple-700 italic">
+                  "O protocolo de intestino melhorou muito minha energia. Perdi peso sem me sentir fraca. Os probióticos fizeram diferença!"
+                </p>
+              </div>
+              
+              <div className="bg-orange-50 rounded-lg p-3">
+                <div className="flex items-center mb-2">
+                  <span className="text-sm mr-2">🏥</span>
+                  <span className="text-sm font-medium text-orange-800">Patricia, New York</span>
+                </div>
+                <p className="text-xs text-orange-700 italic">
+                  "O protocolo de suporte com canetas me ensinou muito! Aprendi sobre nutrientes que eu nem sabia que existiam. Melhorei minha energia!"
+                </p>
+              </div>
             </div>
-          )}
+          </div>
         </div>
       </section>
 
       {/* Bottom Navigation */}
-      <BottomNavigation currentPage="/todos-protocolos" />
+      <BottomNavigation currentPage="/protocolos" />
     </div>
   )
 }

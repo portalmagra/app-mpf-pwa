@@ -204,7 +204,7 @@ function SuccessContent() {
             <h1 className="text-xl font-bold text-red-800 mb-2">Erro na Verificação</h1>
             <p className="text-red-600 mb-4">{error}</p>
             <Link 
-              href="/todos-protocolos"
+              href="/protocolos"
               className="inline-flex items-center px-4 py-2 bg-brand-green text-white rounded-lg hover:bg-brand-greenDark transition-colors"
             >
               Voltar aos Protocolos
@@ -224,7 +224,7 @@ function SuccessContent() {
             <h1 className="text-xl font-bold text-yellow-800 mb-2">Compra não encontrada</h1>
             <p className="text-yellow-600 mb-4">Não foi possível encontrar os dados da sua compra.</p>
             <Link 
-              href="/todos-protocolos"
+              href="/protocolos"
               className="inline-flex items-center px-4 py-2 bg-brand-green text-white rounded-lg hover:bg-brand-greenDark transition-colors"
             >
               Voltar aos Protocolos
@@ -413,7 +413,7 @@ function SuccessContent() {
           {/* Action Buttons */}
           <div className="space-y-3">
             <Link
-              href="/todos-protocolos"
+              href="/protocolos"
               className="w-full bg-white border border-brand-green text-brand-green py-3 px-4 rounded-lg font-semibold hover:bg-brand-green/5 transition-colors flex items-center justify-center"
             >
               Ver Outros Protocolos

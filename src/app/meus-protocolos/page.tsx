@@ -217,7 +217,7 @@ export default function MeusProtocolos() {
               </p>
               <div className="space-y-3">
                 <Link 
-                  href="/todos-protocolos"
+                  href="/protocolos"
                   className="block px-6 py-3 bg-brand-green text-white rounded-lg font-semibold hover:bg-brand-greenDark transition-colors"
                 >
                   Ver Protocolos
