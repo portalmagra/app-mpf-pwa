@@ -144,6 +144,9 @@ export default function RootLayout({
         <meta httpEquiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
         <meta httpEquiv="Pragma" content="no-cache" />
         <meta httpEquiv="Expires" content="0" />
+        
+        {/* Facebook Domain Verification */}
+        <meta name="facebook-domain-verification" content="kkwbjlh5u10y630mw7ztynylnhb70l" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
