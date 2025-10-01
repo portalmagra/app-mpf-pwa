@@ -44,6 +44,53 @@ function SuccessContent() {
       const data = await response.json()
       setPurchaseData(data)
       
+      // Enviar eventos para Analytics
+      console.log('📊 Enviando eventos de compra para Analytics...')
+      
+      // Google Analytics 4 - Evento de compra
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'purchase', {
+          transaction_id: sessionId,
+          value: data.amount,
+          currency: 'USD',
+          items: [{
+            item_id: data.protocolId,
+            item_name: data.protocolName,
+            category: 'Protocol',
+            quantity: 1,
+            price: data.amount
+          }]
+        })
+      }
+      
+      // Facebook Pixel - Evento de compra
+      if (typeof window !== 'undefined' && (window as any).fbq) {
+        (window as any).fbq('track', 'Purchase', {
+          value: data.amount,
+          currency: 'USD',
+          content_ids: [data.protocolId],
+          content_type: 'product',
+          content_name: data.protocolName
+        })
+      }
+      
+      // Google Tag Manager - Evento personalizado
+      if (typeof window !== 'undefined' && (window as any).dataLayer) {
+        (window as any).dataLayer.push({
+          event: 'purchase',
+          transaction_id: sessionId,
+          value: data.amount,
+          currency: 'USD',
+          items: [{
+            item_id: data.protocolId,
+            item_name: data.protocolName,
+            category: 'Protocol',
+            quantity: 1,
+            price: data.amount
+          }]
+        })
+      }
+      
       // Enviar e-mail de confirmação
       try {
         await fetch('/api/send-confirmation-email', {

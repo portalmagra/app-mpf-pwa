@@ -122,7 +122,56 @@ export async function POST(request: NextRequest) {
         )
       }
 
-      console.log('✅ Compra registrada com sucesso:', purchase)
+             console.log('✅ Compra registrada com sucesso:', purchase)
+
+             // Enviar eventos para Analytics
+             console.log('📊 Enviando eventos para Analytics...')
+             
+             // Google Analytics 4 - Evento de compra
+             if (typeof window !== 'undefined' && (window as any).gtag) {
+               (window as any).gtag('event', 'purchase', {
+                 transaction_id: session.id,
+                 value: amount,
+                 currency: 'USD',
+                 items: [{
+                   item_id: protocolId,
+                   item_name: protocolName,
+                   category: 'Protocol',
+                   quantity: 1,
+                   price: amount
+                 }]
+               })
+             }
+             
+             // Facebook Pixel - Evento de compra
+             if (typeof window !== 'undefined' && (window as any).fbq) {
+               (window as any).fbq('track', 'Purchase', {
+                 value: amount,
+                 currency: 'USD',
+                 content_ids: [protocolId],
+                 content_type: 'product',
+                 content_name: protocolName
+               })
+             }
+             
+             // Google Tag Manager - Evento personalizado
+             if (typeof window !== 'undefined' && (window as any).dataLayer) {
+               (window as any).dataLayer.push({
+                 event: 'purchase',
+                 transaction_id: session.id,
+                 value: amount,
+                 currency: 'USD',
+                 items: [{
+                   item_id: protocolId,
+                   item_name: protocolName,
+                   category: 'Protocol',
+                   quantity: 1,
+                   price: amount
+                 }]
+               })
+             }
+
+             console.log('✅ Compra registrada com sucesso:', purchase)
 
       // Enviar email de confirmação automaticamente
       if (customerEmail && protocolId) {

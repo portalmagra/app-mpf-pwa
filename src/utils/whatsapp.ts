@@ -13,6 +13,38 @@ export const openWhatsApp = (phoneNumber: string = '17862535032', message?: stri
 
   console.log('📱 Tentando abrir WhatsApp:', { phoneNumber, formattedNumber, whatsappUrl });
 
+  // Enviar evento para Analytics
+  console.log('📊 Enviando evento de clique no WhatsApp...')
+  
+  // Google Analytics 4 - Evento de clique
+  if (typeof window !== 'undefined' && (window as any).gtag) {
+    (window as any).gtag('event', 'click', {
+      event_category: 'WhatsApp',
+      event_label: 'Contact',
+      value: 1
+    })
+  }
+  
+  // Facebook Pixel - Evento de clique
+  if (typeof window !== 'undefined' && (window as any).fbq) {
+    (window as any).fbq('track', 'Contact', {
+      content_name: 'WhatsApp Contact',
+      content_category: 'Contact'
+    })
+  }
+  
+  // Google Tag Manager - Evento personalizado
+  if (typeof window !== 'undefined' && (window as any).dataLayer) {
+    (window as any).dataLayer.push({
+      event: 'whatsapp_click',
+      event_category: 'WhatsApp',
+      event_label: 'Contact',
+      value: 1
+    })
+  }
+
+  console.log('📱 Tentando abrir WhatsApp:', { phoneNumber, formattedNumber, whatsappUrl });
+
   // Detectar dispositivos móveis
   const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
   const isAndroid = /Android/.test(navigator.userAgent);
