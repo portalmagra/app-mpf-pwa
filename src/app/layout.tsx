@@ -51,11 +51,11 @@ export const metadata: Metadata = {
     description: "🇧🇷 App brasileiro para sua saúde e bem-estar nos Estados Unidos! ✨ Avaliação gratuita por IA • 📚 eBooks exclusivos • 🍽️ Receitas brasileiras • 👩‍⚕️ Coach especializada • 💬 WhatsApp: (786) 253-5032",
     type: "website",
     locale: "pt_BR",
-    url: "https://app.meuportalfit.com",
+    url: "https://meuportalfit.com",
     siteName: "MeuPortalFit",
     images: [
       {
-        url: "https://app.meuportalfit.com/whatsapp-preview.png",
+        url: "https://meuportalfit.com/whatsapp-preview.png",
         width: 400,
         height: 300,
         alt: "MeuPortalFit - Brasileiros nos EUA",
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MeuPortalFit - Wellness para Brasileiros nos EUA",
     description: "🇧🇷 App brasileiro para sua saúde e bem-estar nos Estados Unidos! ✨ Avaliação gratuita por IA • 📚 eBooks exclusivos • 🍽️ Receitas brasileiras • 👩‍⚕️ Coach especializada • 💬 WhatsApp: (786) 253-5032",
-    images: ["https://app.meuportalfit.com/whatsapp-preview.png"],
+    images: ["https://meuportalfit.com/whatsapp-preview.png"],
   },
 };
 

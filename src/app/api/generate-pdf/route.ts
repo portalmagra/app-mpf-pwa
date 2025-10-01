@@ -272,7 +272,7 @@ export async function POST(request: NextRequest) {
     doc.setFontSize(8);
     doc.setTextColor(colors.green[0], colors.green[1], colors.green[2]);
     doc.text('📱 Instalar App', pageWidth / 2, 140, { align: 'center' });
-    doc.text('app.meuportalfit.com', pageWidth / 2, 145, { align: 'center' });
+    doc.text('meuportalfit.com', pageWidth / 2, 145, { align: 'center' });
     
     // VALOR IMEDIATO - Recomendações prioritárias
     yPosition = 160;
@@ -463,7 +463,7 @@ export async function POST(request: NextRequest) {
     addSectionTitle('🚀 Como Instalar o App', '');
     
     const installSteps = [
-      '1. Acesse: app.meuportalfit.com',
+      '1. Acesse: meuportalfit.com',
       '2. Clique em "Instalar App" no seu celular',
       '3. Adicione à tela inicial',
       '4. Acesse receitas, produtos e Coach 24/7'
@@ -476,7 +476,7 @@ export async function POST(request: NextRequest) {
     
     const contacts = [
       'WhatsApp: (786) 253-5032',
-      'Website: app.meuportalfit.com'
+      'Website: meuportalfit.com'
     ];
     
     addStyledList(contacts, '📞', colors.green);
@@ -502,7 +502,7 @@ export async function POST(request: NextRequest) {
     doc.setFontSize(10);
     doc.setTextColor(colors.white[0], colors.white[1], colors.white[2]);
     doc.setFont('helvetica', 'normal');
-    doc.text('app.meuportalfit.com | WhatsApp: (786) 253-5032', pageWidth / 2, yPosition + 25, { align: 'center' });
+    doc.text('meuportalfit.com | WhatsApp: (786) 253-5032', pageWidth / 2, yPosition + 25, { align: 'center' });
 
     // Gerar PDF
     const pdfBuffer = doc.output('arraybuffer');

@@ -299,7 +299,7 @@ function getMockRecipes(): Recipe[] {
       pdf_link: 'https://drive.google.com/file/d/curcuma-shot/view',
       image_url: '',
       status: 'active',
-      access_link: 'https://app.meuportalfit.com/receita/1',
+      access_link: 'https://meuportalfit.com/receita/1',
       created_at: '2024-01-15T10:00:00Z',
       updated_at: '2024-01-15T10:00:00Z',
       category: 'shots'
@@ -313,7 +313,7 @@ function getMockRecipes(): Recipe[] {
       pdf_link: 'https://drive.google.com/file/d/smoothie-verde/view',
       image_url: '',
       status: 'active',
-      access_link: 'https://app.meuportalfit.com/receita/2',
+      access_link: 'https://meuportalfit.com/receita/2',
       created_at: '2024-01-16T10:00:00Z',
       updated_at: '2024-01-16T10:00:00Z',
       category: 'sucos'
@@ -327,7 +327,7 @@ function getMockRecipes(): Recipe[] {
       pdf_link: 'https://drive.google.com/file/d/bowl-quinoa/view',
       image_url: '',
       status: 'active',
-      access_link: 'https://app.meuportalfit.com/receita/3',
+      access_link: 'https://meuportalfit.com/receita/3',
       created_at: '2024-01-17T10:00:00Z',
       updated_at: '2024-01-17T10:00:00Z',
       category: 'saladas'
@@ -341,7 +341,7 @@ function getMockRecipes(): Recipe[] {
       pdf_link: 'https://drive.google.com/file/d/sopa-anti/view',
       image_url: '',
       status: 'active',
-      access_link: 'https://app.meuportalfit.com/receita/4',
+      access_link: 'https://meuportalfit.com/receita/4',
       created_at: '2024-01-18T10:00:00Z',
       updated_at: '2024-01-18T10:00:00Z',
       category: 'sopas'
@@ -355,7 +355,7 @@ function getMockRecipes(): Recipe[] {
       pdf_link: 'https://drive.google.com/file/d/brownie-fit/view',
       image_url: '',
       status: 'active',
-      access_link: 'https://app.meuportalfit.com/receita/5',
+      access_link: 'https://meuportalfit.com/receita/5',
       created_at: '2024-01-19T10:00:00Z',
       updated_at: '2024-01-19T10:00:00Z',
       category: 'doces'

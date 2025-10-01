@@ -88,7 +88,7 @@ ${receita.descricao}
 
 ✨ Receita dos Favoritos - MeuPortalFit
 📱 WhatsApp: (786) 253-5032
-🌐 app.meuportalfit.com
+🌐 meuportalfit.com
     `.trim()
     
     // Criar e baixar o PDF

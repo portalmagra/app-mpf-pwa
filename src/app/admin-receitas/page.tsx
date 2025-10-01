@@ -116,7 +116,7 @@ export default function AdminReceitasPage() {
 
       const receitaData = {
         ...newReceita,
-        access_link: `https://app.meuportalfit.com/receita/${Date.now()}`
+        access_link: `https://meuportalfit.com/receita/${Date.now()}`
       }
 
       console.log('🔄 Salvando receita no Supabase:', receitaData)

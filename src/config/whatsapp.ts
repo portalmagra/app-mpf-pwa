@@ -8,7 +8,7 @@ export const WHATSAPP_CONFIG = {
   MESSAGES: {
     COACH: 'Olá! Quero conversar sobre meu plano personalizado do MeuPortalFit.',
     PLAN: 'Olá! Quero receber meu plano personalizado do MeuPortalFit.',
-    SHARE: 'Olha que legal! Encontrei um app brasileiro incrível para quem vive nos Estados Unidos 🇧🇷🇺🇸\n\n✨ Você pode fazer sua avaliação gratuita por inteligência artificial - avaliação de bem-estar por inteligência artificial gratuita\n🍽️ Receitas brasileiras\n🛒 Produtos para comprar direto na Amazon - produtos já selecionados que compra direto na Amazon\n👩‍💻 E se quiser tem uma Coach brasileira especializada para ajudar\n\nBaixe agora: https://app.meuportalfit.com\n\n#BrasileirasNosEUA #MeuPortalFit'
+    SHARE: 'Olha que legal! Encontrei um app brasileiro incrível para quem vive nos Estados Unidos 🇧🇷🇺🇸\n\n✨ Você pode fazer sua avaliação gratuita por inteligência artificial - avaliação de bem-estar por inteligência artificial gratuita\n🍽️ Receitas brasileiras\n🛒 Produtos para comprar direto na Amazon - produtos já selecionados que compra direto na Amazon\n👩‍💻 E se quiser tem uma Coach brasileira especializada para ajudar\n\nBaixe agora: https://meuportalfit.com\n\n#BrasileirasNosEUA #MeuPortalFit'
   }
 };
 

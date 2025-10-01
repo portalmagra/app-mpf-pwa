@@ -14,7 +14,7 @@ export default function AdminProtocolos() {
       price: 0,
       pdfLink: 'https://drive.google.com/file/d/1detox123/view',
       status: 'active',
-      accessLink: 'https://app.meuportalfit.com/protocolo/1'
+      accessLink: 'https://meuportalfit.com/protocolo/1'
     },
     {
       id: 2,
@@ -24,7 +24,7 @@ export default function AdminProtocolos() {
       price: 47,
       pdfLink: 'https://drive.google.com/file/d/1energia456/view',
       status: 'active',
-      accessLink: 'https://app.meuportalfit.com/protocolo/2'
+      accessLink: 'https://meuportalfit.com/protocolo/2'
     },
     {
       id: 3,
@@ -34,7 +34,7 @@ export default function AdminProtocolos() {
       price: 97,
       pdfLink: 'https://drive.google.com/file/d/1emagrecer789/view',
       status: 'active',
-      accessLink: 'https://app.meuportalfit.com/protocolo/3'
+      accessLink: 'https://meuportalfit.com/protocolo/3'
     }
   ])
 
@@ -52,7 +52,7 @@ export default function AdminProtocolos() {
   const handleAddProtocol = () => {
     if (newProtocol.name && newProtocol.description && newProtocol.pdfLink) {
       const id = Math.max(...protocols.map(p => p.id)) + 1
-      const accessLink = `https://app.meuportalfit.com/protocolo/${id}`
+      const accessLink = `https://meuportalfit.com/protocolo/${id}`
       
       const protocol = {
         id,

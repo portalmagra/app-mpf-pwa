@@ -723,7 +723,7 @@ export async function POST(request: NextRequest) {
                 <div class="cta-section" style="background: linear-gradient(135deg, #10b981, #059669);">
                     <h3 class="cta-title">🍽️ Receitas Brasileiras Exclusivas</h3>
                     <p class="cta-description">Feijoada light • Pão de açúcar saudável • Brigadeiro fit • Ingredientes adaptados para os EUA</p>
-                    <a href="https://app.meuportalfit.com" class="cta-button" style="color: #10b981;">Ver Receitas</a>
+                    <a href="https://meuportalfit.com" class="cta-button" style="color: #10b981;">Ver Receitas</a>
                 </div>
                 
                 
@@ -755,7 +755,7 @@ export async function POST(request: NextRequest) {
         
         <div class="footer">
             <div class="footer-title">MeuPortalFit - Saúde dos Brasileiros nos EUA</div>
-            <div class="footer-subtitle">app.meuportalfit.com | WhatsApp: (786) 253-5032</div>
+            <div class="footer-subtitle">meuportalfit.com | WhatsApp: (786) 253-5032</div>
         </div>
     </div>
 </body>

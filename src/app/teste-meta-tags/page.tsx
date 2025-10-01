@@ -8,11 +8,11 @@ export const metadata: Metadata = {
     description: '🇧🇷 App brasileiro para sua saúde e bem-estar nos Estados Unidos! ✨ Avaliação gratuita por IA • 📚 eBooks exclusivos • 🍽️ Receitas brasileiras • 👩‍⚕️ Coach especializada • 💬 WhatsApp: (786) 253-5032',
     type: 'website',
     locale: 'pt_BR',
-    url: 'https://app.meuportalfit.com',
+    url: 'https://meuportalfit.com',
     siteName: 'MeuPortalFit',
     images: [
       {
-        url: 'https://app.meuportalfit.com/whatsapp-preview.svg',
+        url: 'https://meuportalfit.com/whatsapp-preview.svg',
         width: 400,
         height: 300,
         alt: 'MeuPortalFit - Brasileiros nos EUA',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'MeuPortalFit - Wellness para Brasileiros nos EUA',
     description: '🇧🇷 App brasileiro para sua saúde e bem-estar nos Estados Unidos! ✨ Avaliação gratuita por IA • 📚 eBooks exclusivos • 🍽️ Receitas brasileiras • 👩‍⚕️ Coach especializada • 💬 WhatsApp: (786) 253-5032',
-    images: ['https://app.meuportalfit.com/whatsapp-preview.svg'],
+    images: ['https://meuportalfit.com/whatsapp-preview.svg'],
   },
 }
 
@@ -42,7 +42,7 @@ export default function TesteMetaTags() {
                 📱 Como Testar no WhatsApp
               </h2>
               <ol className="list-decimal list-inside space-y-2 text-gray-700">
-                <li>Copie esta URL: <code className="bg-gray-200 px-2 py-1 rounded">https://app.meuportalfit.com/teste-meta-tags</code></li>
+                <li>Copie esta URL: <code className="bg-gray-200 px-2 py-1 rounded">https://meuportalfit.com/teste-meta-tags</code></li>
                 <li>Abra o WhatsApp no seu celular</li>
                 <li>Cole a URL em qualquer conversa</li>
                 <li>Verifique se aparece a prévia com:</li>
@@ -67,10 +67,10 @@ export default function TesteMetaTags() {
                   <strong>og:description:</strong> 🇧🇷 App brasileiro para sua saúde e bem-estar nos Estados Unidos! ✨ Avaliação gratuita por IA • 📚 eBooks exclusivos • 🍽️ Receitas brasileiras • 👩‍⚕️ Coach especializada • 💬 WhatsApp: (786) 253-5032
                 </div>
                 <div>
-                  <strong>og:image:</strong> https://app.meuportalfit.com/whatsapp-preview.svg
+                  <strong>og:image:</strong> https://meuportalfit.com/whatsapp-preview.svg
                 </div>
                 <div>
-                  <strong>og:url:</strong> https://app.meuportalfit.com
+                  <strong>og:url:</strong> https://meuportalfit.com
                 </div>
                 <div>
                   <strong>og:type:</strong> website
@@ -100,20 +100,20 @@ export default function TesteMetaTags() {
               <div className="space-y-2">
                 <div>
                   <strong>Página Principal:</strong> 
-                  <a href="https://app.meuportalfit.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline ml-2">
-                    https://app.meuportalfit.com
+                  <a href="https://meuportalfit.com" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline ml-2">
+                    https://meuportalfit.com
                   </a>
                 </div>
                 <div>
                   <strong>Esta Página:</strong> 
-                  <a href="https://app.meuportalfit.com/teste-meta-tags" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline ml-2">
-                    https://app.meuportalfit.com/teste-meta-tags
+                  <a href="https://meuportalfit.com/teste-meta-tags" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline ml-2">
+                    https://meuportalfit.com/teste-meta-tags
                   </a>
                 </div>
                 <div>
                   <strong>Imagem:</strong> 
-                  <a href="https://app.meuportalfit.com/whatsapp-preview.svg" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline ml-2">
-                    https://app.meuportalfit.com/whatsapp-preview.svg
+                  <a href="https://meuportalfit.com/whatsapp-preview.svg" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline ml-2">
+                    https://meuportalfit.com/whatsapp-preview.svg
                   </a>
                 </div>
               </div>

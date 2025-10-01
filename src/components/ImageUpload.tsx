@@ -57,10 +57,10 @@ export default function ImageUpload({ onImageUpload, currentImage, className = '
           value={imageUrl}
           onChange={(e) => handleUrlChange(e.target.value)}
           className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:border-brand-green focus:outline-none"
-          placeholder="https://app.meuportalfit.com/images/recipes/receita-1.jpg"
+          placeholder="https://meuportalfit.com/images/recipes/receita-1.jpg"
         />
         <p className="text-xs text-gray-500 mt-1">
-          Cole aqui a URL da imagem. Exemplo: https://app.meuportalfit.com/images/recipes/receita-1.jpg
+          Cole aqui a URL da imagem. Exemplo: https://meuportalfit.com/images/recipes/receita-1.jpg
         </p>
       </div>
 
@@ -70,7 +70,7 @@ export default function ImageUpload({ onImageUpload, currentImage, className = '
         <ol className="text-sm text-blue-800 space-y-1">
           <li>1. Salve a imagem JPG na pasta <code className="bg-blue-100 px-1 rounded">public/images/recipes/</code></li>
           <li>2. Use o nome: <code className="bg-blue-100 px-1 rounded">receita-{`{id}`}.jpg</code></li>
-          <li>3. Cole a URL: <code className="bg-blue-100 px-1 rounded">https://app.meuportalfit.com/images/recipes/receita-{`{id}`}.jpg</code></li>
+          <li>3. Cole a URL: <code className="bg-blue-100 px-1 rounded">https://meuportalfit.com/images/recipes/receita-{`{id}`}.jpg</code></li>
         </ol>
       </div>
     </div>

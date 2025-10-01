@@ -767,7 +767,7 @@ export default function AvaliacaoPage() {
 🛒 Produtos para comprar direto na Amazon - produtos já selecionados que compra direto na Amazon
 👩‍💻 E se quiser tem uma Coach brasileira especializada para ajudar
 
-Baixe agora: https://app.meuportalfit.com
+Baixe agora: https://meuportalfit.com
 
 #BrasileirasNosEUA #MeuPortalFit`;
                   
