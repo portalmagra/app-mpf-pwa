@@ -35,7 +35,7 @@ interface QuizResult {
 const quizQuestions: QuizQuestion[] = [
   {
     id: 1,
-    question: "Antes de começarmos, me conte um pouco sobre você:",
+    question: "Qual sua idade?",
     options: [
       "18-25 anos",
       "26-35 anos", 
