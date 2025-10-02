@@ -1089,7 +1089,7 @@ export const ebookService = {
       id: id,
       title: fileName,
       description: `E-book ${fileName}`,
-      category: isDieta ? 'dietas' : 'receitas',
+      category: (isDieta ? 'dietas' : 'receitas') as 'receitas' | 'dietas',
       price: getPrice(fileName),
       pdf_link: supabase.storage.from('ebooks-pdfs').getPublicUrl(file.name).data.publicUrl,
       cover_image_url: '',
