@@ -768,9 +768,121 @@ function ResultadosContent() {
                   gap: '0.5rem'
                 }}>
                   <span style={{ fontSize: '2rem' }}>🎯</span>
-                  Próximo Passo: Acompanhamento Personalizado
+                  Sugestão de Próximo Passo: Agende uma Avaliação Personalizada
                 </h3>
-                
+
+                {/* Coach Brasileira Especializada */}
+                <div style={{
+                  backgroundColor: '#f8fafc',
+                  padding: '2rem',
+                  borderRadius: '16px',
+                  border: '3px solid #bbf7d0',
+                  textAlign: 'center',
+                  position: 'relative',
+                  overflow: 'hidden',
+                  maxWidth: '500px',
+                  margin: '0 auto'
+                }}>
+                  {/* Badge de Destaque */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '-10px',
+                    right: '-10px',
+                    backgroundColor: '#ef4444',
+                    color: 'white',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '20px',
+                    fontSize: '0.8rem',
+                    fontWeight: 'bold',
+                    transform: 'rotate(15deg)'
+                  }}>
+                    MAIS POPULAR
+                  </div>
+                  
+                  <div style={{
+                    fontSize: '3rem',
+                    marginBottom: '1rem'
+                  }}>👩‍⚕️</div>
+                  
+                  <h4 style={{
+                    fontSize: '1.4rem',
+                    color: '#1e293b',
+                    marginBottom: '1rem',
+                    fontWeight: 'bold'
+                  }}>
+                    Coach Brasileira Especializada
+                  </h4>
+                  
+                  <p style={{
+                    fontSize: '1rem',
+                    color: '#64748b',
+                    marginBottom: '1.5rem',
+                    lineHeight: '1.6'
+                  }}>
+                    Sessão individual de 30 minutos com coach especializada em bem-estar.
+                  </p>
+                  
+                  {/* O que será entregue na avaliação */}
+                  <div style={{
+                    backgroundColor: '#f0fdf4',
+                    padding: '1rem',
+                    borderRadius: '8px',
+                    marginBottom: '1.5rem',
+                    textAlign: 'left'
+                  }}>
+                    <p style={{
+                      fontSize: '0.9rem',
+                      color: '#059669',
+                      margin: '0.5rem 0',
+                      fontWeight: '500'
+                    }}>
+                      👉 Na avaliação nós vamos:<br/><br/>
+                      ✅ Analisar sua rotina alimentar, identificando possíveis áreas de melhoria.<br/><br/>
+                      ✅ Investigar seus hábitos de sono e estresse, ambos essenciais para o sucesso na desinflamação do corpo.<br/><br/>
+                      ✅ Identificar quaisquer outros fatores que possam estar impactando os resultados que vc busca.
+                    </p>
+                  </div>
+                  
+                  {/* Preço com Gatilho */}
+                  <div style={{
+                    backgroundColor: '#fef3c7',
+                    padding: '1rem',
+                    borderRadius: '8px',
+                    marginBottom: '1.5rem',
+                    fontSize: '1.1rem',
+                    color: '#92400e'
+                  }}>
+                    <div style={{ textDecoration: 'line-through', color: '#9ca3af', fontSize: '0.9rem' }}>
+                      Valor normal: $37
+                    </div>
+                    <div style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>
+                      HOJE: Apenas $10
+                    </div>
+                    <div style={{ fontSize: '0.8rem', color: '#d97706' }}>
+                      ⏰ Oferta válida por 24h
+                    </div>
+                  </div>
+                  
+                  <button 
+                    onClick={() => openWhatsApp('Olá! Quero agendar minha avaliação personalizada de 30 minutos com a coach brasileira especializada por $10. Vi a oferta limitada de 24h!')} 
+                    style={{
+                      width: '100%',
+                      padding: '1rem',
+                      background: 'linear-gradient(135deg, #059669, #047857)',
+                      color: 'white',
+                      border: 'none',
+                      borderRadius: '12px',
+                      fontSize: '1rem',
+                      fontWeight: 'bold',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease',
+                      boxShadow: '0 4px 16px rgba(5, 150, 105, 0.4)'
+                    }}
+                  >
+                    🚀 GARANTIR MINHA VAGA AGORA
+                  </button>
+                </div>
+
                 {/* Gatilho Mental 1: Urgência e Escassez */}
                 <div style={{
                   backgroundColor: '#fef3c7',
@@ -778,7 +890,8 @@ function ResultadosContent() {
                   borderRadius: '12px',
                   border: '2px solid #f59e0b',
                   marginBottom: '2rem',
-                  textAlign: 'center'
+                  textAlign: 'center',
+                  marginTop: '2rem'
                 }}>
                   <p style={{
                     fontSize: '1.1rem',
@@ -808,219 +921,6 @@ function ResultadosContent() {
                     👥 <strong>Mais de 500 brasileiros</strong> já transformaram suas vidas com nosso acompanhamento personalizado. 
                     <br/>Você será o próximo a conquistar seus objetivos de saúde e bem-estar!
                   </p>
-                </div>
-
-                {/* Opções de Acompanhamento */}
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-                  gap: '1.5rem',
-                  marginBottom: '2rem'
-                }}>
-                  {/* Opção 1: Coach Brasileira */}
-                  <div style={{
-                    backgroundColor: '#f8fafc',
-                    padding: '2rem',
-                    borderRadius: '16px',
-                    border: '3px solid #bbf7d0',
-                    textAlign: 'center',
-                    position: 'relative',
-                    overflow: 'hidden'
-                  }}>
-                    {/* Badge de Destaque */}
-                    <div style={{
-                      position: 'absolute',
-                      top: '-10px',
-                      right: '-10px',
-                      backgroundColor: '#ef4444',
-                      color: 'white',
-                      padding: '0.5rem 1rem',
-                      borderRadius: '20px',
-                      fontSize: '0.8rem',
-                      fontWeight: 'bold',
-                      transform: 'rotate(15deg)'
-                    }}>
-                      MAIS POPULAR
-                    </div>
-                    
-                    <div style={{
-                      fontSize: '3rem',
-                      marginBottom: '1rem'
-                    }}>👩‍⚕️</div>
-                    
-                    <h4 style={{
-                      fontSize: '1.4rem',
-                      color: '#1e293b',
-                      marginBottom: '1rem',
-                      fontWeight: 'bold'
-                    }}>
-                      Coach Brasileira Especializada
-                    </h4>
-                    
-                    <p style={{
-                      fontSize: '1rem',
-                      color: '#64748b',
-                      marginBottom: '1.5rem',
-                      lineHeight: '1.6'
-                    }}>
-                      Sessão individual de 45 minutos com coach brasileira especializada em bem-estar feminino. 
-                      <strong>Plano personalizado</strong> baseado na sua análise + acompanhamento por 30 dias.
-                    </p>
-                    
-                    {/* Benefícios */}
-                    <div style={{
-                      backgroundColor: '#f0fdf4',
-                      padding: '1rem',
-                      borderRadius: '8px',
-                      marginBottom: '1.5rem',
-                      textAlign: 'left'
-                    }}>
-                      <p style={{
-                        fontSize: '0.9rem',
-                        color: '#059669',
-                        margin: '0.5rem 0',
-                        fontWeight: '500'
-                      }}>
-                        ✅ Plano personalizado de 30 dias<br/>
-                        ✅ Acompanhamento semanal por WhatsApp<br/>
-                        ✅ Ajustes baseados no seu progresso<br/>
-                        ✅ Suporte emocional e motivacional
-                      </p>
-                    </div>
-                    
-                    {/* Preço com Gatilho */}
-                    <div style={{
-                      backgroundColor: '#fef3c7',
-                      padding: '1rem',
-                      borderRadius: '8px',
-                      marginBottom: '1.5rem',
-                      fontSize: '1.1rem',
-                      color: '#92400e'
-                    }}>
-                      <div style={{ textDecoration: 'line-through', color: '#9ca3af', fontSize: '0.9rem' }}>
-                        Valor normal: $97
-                      </div>
-                      <div style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>
-                        HOJE: Apenas $27
-                      </div>
-                      <div style={{ fontSize: '0.8rem', color: '#d97706' }}>
-                        ⏰ Oferta válida por 24h
-                      </div>
-                    </div>
-                    
-                    <button 
-                      onClick={() => openWhatsApp('Olá! Quero agendar minha sessão de 45 minutos com a coach brasileira especializada por $27. Vi a oferta limitada de 24h!')} 
-                      style={{
-                        width: '100%',
-                        padding: '1rem',
-                        background: 'linear-gradient(135deg, #059669, #047857)',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '12px',
-                        fontSize: '1rem',
-                        fontWeight: 'bold',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        boxShadow: '0 4px 16px rgba(5, 150, 105, 0.4)'
-                      }}
-                    >
-                      🚀 GARANTIR MINHA VAGA AGORA
-                    </button>
-                  </div>
-                  
-                  {/* Opção 2: Plano Completo */}
-                  <div style={{
-                    backgroundColor: '#f8fafc',
-                    padding: '2rem',
-                    borderRadius: '16px',
-                    border: '3px solid #3b82f6',
-                    textAlign: 'center',
-                    position: 'relative'
-                  }}>
-                    <div style={{
-                      fontSize: '3rem',
-                      marginBottom: '1rem'
-                    }}>📋</div>
-                    
-                    <h4 style={{
-                      fontSize: '1.4rem',
-                      color: '#1e293b',
-                      marginBottom: '1rem',
-                      fontWeight: 'bold'
-                    }}>
-                      Plano Completo Detalhado
-                    </h4>
-                    
-                    <p style={{
-                      fontSize: '1rem',
-                      color: '#64748b',
-                      marginBottom: '1.5rem',
-                      lineHeight: '1.6'
-                    }}>
-                      Plano detalhado de 30 dias com alimentação balanceada, exercícios personalizados, 
-                      cronograma de suplementação e <strong>acompanhamento por IA</strong>.
-                    </p>
-                    
-                    {/* Benefícios */}
-                    <div style={{
-                      backgroundColor: '#eff6ff',
-                      padding: '1rem',
-                      borderRadius: '8px',
-                      marginBottom: '1.5rem',
-                      textAlign: 'left'
-                    }}>
-                      <p style={{
-                        fontSize: '0.9rem',
-                        color: '#1d4ed8',
-                        margin: '0.5rem 0',
-                        fontWeight: '500'
-                      }}>
-                        ✅ Plano alimentar de 30 dias<br/>
-                        ✅ Rotina de exercícios personalizada<br/>
-                        ✅ Cronograma de suplementação<br/>
-                        ✅ Acompanhamento por IA 24/7
-                      </p>
-                    </div>
-                    
-                    {/* Preço */}
-                    <div style={{
-                      backgroundColor: '#fef3c7',
-                      padding: '1rem',
-                      borderRadius: '8px',
-                      marginBottom: '1.5rem',
-                      fontSize: '1.1rem',
-                      color: '#92400e'
-                    }}>
-                      <div style={{ textDecoration: 'line-through', color: '#9ca3af', fontSize: '0.9rem' }}>
-                        Valor normal: $47
-                      </div>
-                      <div style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>
-                        HOJE: Apenas $17
-                      </div>
-                      <div style={{ fontSize: '0.8rem', color: '#d97706' }}>
-                        ⏰ Oferta válida por 24h
-                      </div>
-                    </div>
-                    
-                    <button 
-                      onClick={() => openWhatsApp('Olá! Quero receber meu plano completo detalhado de 30 dias por $17. Vi a oferta limitada de 24h!')} 
-                      style={{
-                        width: '100%',
-                        padding: '1rem',
-                        background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '12px',
-                        fontSize: '1rem',
-                        fontWeight: 'bold',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        boxShadow: '0 4px 16px rgba(59, 130, 246, 0.4)'
-                      }}
-                    >
-                      📋 RECEBER MEU PLANO AGORA
-                    </button>
-                  </div>
                 </div>
 
                 {/* Gatilho Mental 3: Garantia */}
