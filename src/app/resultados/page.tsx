@@ -747,7 +747,324 @@ function ResultadosContent() {
                   
 
 
-              {/* Produtos Recomendados - Simplificada */}
+              {/* Próximo Passo: Acompanhamento Personalizado */}
+              <div style={{
+                backgroundColor: 'white',
+                padding: '2rem',
+                borderRadius: '16px',
+                marginBottom: '2rem',
+                boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
+                border: '3px solid #bbf7d0'
+              }}>
+                <h3 style={{
+                  fontSize: '1.8rem',
+                  color: '#059669',
+                  marginBottom: '1.5rem',
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem'
+                }}>
+                  <span style={{ fontSize: '2rem' }}>🎯</span>
+                  Próximo Passo: Acompanhamento Personalizado
+                </h3>
+                
+                {/* Gatilho Mental 1: Urgência e Escassez */}
+                <div style={{
+                  backgroundColor: '#fef3c7',
+                  padding: '1.5rem',
+                  borderRadius: '12px',
+                  border: '2px solid #f59e0b',
+                  marginBottom: '2rem',
+                  textAlign: 'center'
+                }}>
+                  <p style={{
+                    fontSize: '1.1rem',
+                    color: '#92400e',
+                    margin: 0,
+                    fontWeight: '600'
+                  }}>
+                    ⚡ <strong>OFERTA LIMITADA:</strong> Apenas para os próximos 24h, você tem acesso exclusivo ao acompanhamento personalizado por um preço especial!
+                  </p>
+                </div>
+
+                {/* Gatilho Mental 2: Prova Social */}
+                <div style={{
+                  backgroundColor: '#f0fdf4',
+                  padding: '1.5rem',
+                  borderRadius: '12px',
+                  border: '2px solid #bbf7d0',
+                  marginBottom: '2rem',
+                  textAlign: 'center'
+                }}>
+                  <p style={{
+                    fontSize: '1rem',
+                    color: '#059669',
+                    margin: 0,
+                    fontWeight: '500'
+                  }}>
+                    👥 <strong>Mais de 500 brasileiros</strong> já transformaram suas vidas com nosso acompanhamento personalizado. 
+                    <br/>Você será o próximo a conquistar seus objetivos de saúde e bem-estar!
+                  </p>
+                </div>
+
+                {/* Opções de Acompanhamento */}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                  gap: '1.5rem',
+                  marginBottom: '2rem'
+                }}>
+                  {/* Opção 1: Coach Brasileira */}
+                  <div style={{
+                    backgroundColor: '#f8fafc',
+                    padding: '2rem',
+                    borderRadius: '16px',
+                    border: '3px solid #bbf7d0',
+                    textAlign: 'center',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}>
+                    {/* Badge de Destaque */}
+                    <div style={{
+                      position: 'absolute',
+                      top: '-10px',
+                      right: '-10px',
+                      backgroundColor: '#ef4444',
+                      color: 'white',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '20px',
+                      fontSize: '0.8rem',
+                      fontWeight: 'bold',
+                      transform: 'rotate(15deg)'
+                    }}>
+                      MAIS POPULAR
+                    </div>
+                    
+                    <div style={{
+                      fontSize: '3rem',
+                      marginBottom: '1rem'
+                    }}>👩‍⚕️</div>
+                    
+                    <h4 style={{
+                      fontSize: '1.4rem',
+                      color: '#1e293b',
+                      marginBottom: '1rem',
+                      fontWeight: 'bold'
+                    }}>
+                      Coach Brasileira Especializada
+                    </h4>
+                    
+                    <p style={{
+                      fontSize: '1rem',
+                      color: '#64748b',
+                      marginBottom: '1.5rem',
+                      lineHeight: '1.6'
+                    }}>
+                      Sessão individual de 45 minutos com coach brasileira especializada em bem-estar feminino. 
+                      <strong>Plano personalizado</strong> baseado na sua análise + acompanhamento por 30 dias.
+                    </p>
+                    
+                    {/* Benefícios */}
+                    <div style={{
+                      backgroundColor: '#f0fdf4',
+                      padding: '1rem',
+                      borderRadius: '8px',
+                      marginBottom: '1.5rem',
+                      textAlign: 'left'
+                    }}>
+                      <p style={{
+                        fontSize: '0.9rem',
+                        color: '#059669',
+                        margin: '0.5rem 0',
+                        fontWeight: '500'
+                      }}>
+                        ✅ Plano personalizado de 30 dias<br/>
+                        ✅ Acompanhamento semanal por WhatsApp<br/>
+                        ✅ Ajustes baseados no seu progresso<br/>
+                        ✅ Suporte emocional e motivacional
+                      </p>
+                    </div>
+                    
+                    {/* Preço com Gatilho */}
+                    <div style={{
+                      backgroundColor: '#fef3c7',
+                      padding: '1rem',
+                      borderRadius: '8px',
+                      marginBottom: '1.5rem',
+                      fontSize: '1.1rem',
+                      color: '#92400e'
+                    }}>
+                      <div style={{ textDecoration: 'line-through', color: '#9ca3af', fontSize: '0.9rem' }}>
+                        Valor normal: $97
+                      </div>
+                      <div style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>
+                        HOJE: Apenas $27
+                      </div>
+                      <div style={{ fontSize: '0.8rem', color: '#d97706' }}>
+                        ⏰ Oferta válida por 24h
+                      </div>
+                    </div>
+                    
+                    <button 
+                      onClick={() => openWhatsApp('Olá! Quero agendar minha sessão de 45 minutos com a coach brasileira especializada por $27. Vi a oferta limitada de 24h!')} 
+                      style={{
+                        width: '100%',
+                        padding: '1rem',
+                        background: 'linear-gradient(135deg, #059669, #047857)',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '12px',
+                        fontSize: '1rem',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        boxShadow: '0 4px 16px rgba(5, 150, 105, 0.4)'
+                      }}
+                    >
+                      🚀 GARANTIR MINHA VAGA AGORA
+                    </button>
+                  </div>
+                  
+                  {/* Opção 2: Plano Completo */}
+                  <div style={{
+                    backgroundColor: '#f8fafc',
+                    padding: '2rem',
+                    borderRadius: '16px',
+                    border: '3px solid #3b82f6',
+                    textAlign: 'center',
+                    position: 'relative'
+                  }}>
+                    <div style={{
+                      fontSize: '3rem',
+                      marginBottom: '1rem'
+                    }}>📋</div>
+                    
+                    <h4 style={{
+                      fontSize: '1.4rem',
+                      color: '#1e293b',
+                      marginBottom: '1rem',
+                      fontWeight: 'bold'
+                    }}>
+                      Plano Completo Detalhado
+                    </h4>
+                    
+                    <p style={{
+                      fontSize: '1rem',
+                      color: '#64748b',
+                      marginBottom: '1.5rem',
+                      lineHeight: '1.6'
+                    }}>
+                      Plano detalhado de 30 dias com alimentação balanceada, exercícios personalizados, 
+                      cronograma de suplementação e <strong>acompanhamento por IA</strong>.
+                    </p>
+                    
+                    {/* Benefícios */}
+                    <div style={{
+                      backgroundColor: '#eff6ff',
+                      padding: '1rem',
+                      borderRadius: '8px',
+                      marginBottom: '1.5rem',
+                      textAlign: 'left'
+                    }}>
+                      <p style={{
+                        fontSize: '0.9rem',
+                        color: '#1d4ed8',
+                        margin: '0.5rem 0',
+                        fontWeight: '500'
+                      }}>
+                        ✅ Plano alimentar de 30 dias<br/>
+                        ✅ Rotina de exercícios personalizada<br/>
+                        ✅ Cronograma de suplementação<br/>
+                        ✅ Acompanhamento por IA 24/7
+                      </p>
+                    </div>
+                    
+                    {/* Preço */}
+                    <div style={{
+                      backgroundColor: '#fef3c7',
+                      padding: '1rem',
+                      borderRadius: '8px',
+                      marginBottom: '1.5rem',
+                      fontSize: '1.1rem',
+                      color: '#92400e'
+                    }}>
+                      <div style={{ textDecoration: 'line-through', color: '#9ca3af', fontSize: '0.9rem' }}>
+                        Valor normal: $47
+                      </div>
+                      <div style={{ fontWeight: 'bold', fontSize: '1.3rem' }}>
+                        HOJE: Apenas $17
+                      </div>
+                      <div style={{ fontSize: '0.8rem', color: '#d97706' }}>
+                        ⏰ Oferta válida por 24h
+                      </div>
+                    </div>
+                    
+                    <button 
+                      onClick={() => openWhatsApp('Olá! Quero receber meu plano completo detalhado de 30 dias por $17. Vi a oferta limitada de 24h!')} 
+                      style={{
+                        width: '100%',
+                        padding: '1rem',
+                        background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '12px',
+                        fontSize: '1rem',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease',
+                        boxShadow: '0 4px 16px rgba(59, 130, 246, 0.4)'
+                      }}
+                    >
+                      📋 RECEBER MEU PLANO AGORA
+                    </button>
+                  </div>
+                </div>
+
+                {/* Gatilho Mental 3: Garantia */}
+                <div style={{
+                  backgroundColor: '#f0fdf4',
+                  padding: '1.5rem',
+                  borderRadius: '12px',
+                  border: '2px solid #bbf7d0',
+                  marginBottom: '1.5rem',
+                  textAlign: 'center'
+                }}>
+                  <p style={{
+                    fontSize: '1rem',
+                    color: '#059669',
+                    margin: 0,
+                    fontWeight: '600'
+                  }}>
+                    🛡️ <strong>GARANTIA DE 7 DIAS:</strong> Se você não ficar 100% satisfeita, devolvemos seu dinheiro. 
+                    Sem perguntas, sem complicações!
+                  </p>
+                </div>
+
+                {/* Gatilho Mental 4: Urgência Final */}
+                <div style={{
+                  backgroundColor: '#fef2f2',
+                  padding: '1.5rem',
+                  borderRadius: '12px',
+                  border: '2px solid #ef4444',
+                  textAlign: 'center'
+                }}>
+                  <p style={{
+                    fontSize: '1.1rem',
+                    color: '#dc2626',
+                    margin: 0,
+                    fontWeight: 'bold'
+                  }}>
+                    ⚠️ <strong>ATENÇÃO:</strong> Esta oferta expira em 24 horas. 
+                    Não perca esta oportunidade única de transformar sua saúde com acompanhamento especializado!
+                  </p>
+                </div>
+
+              </div>
+
+              {/* Produtos Recomendados - Movido para depois do acompanhamento */}
               <div style={{
                 backgroundColor: 'white',
                 padding: '2rem',
@@ -933,282 +1250,83 @@ function ResultadosContent() {
 
               </div>
 
-              {/* Timeline e Próximos Passos */}
+              {/* Botões de Ação */}
               <div style={{
-                backgroundColor: 'white',
-                padding: '1.5rem',
-                borderRadius: '12px',
-                marginBottom: '1.5rem',
-                boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
-                textAlign: 'center'
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.8rem',
+                alignItems: 'center',
+                marginTop: '2rem'
               }}>
-                <h3 style={{
-                  fontSize: '1.4rem',
-                  color: '#1e293b',
-                  marginBottom: '1rem',
-                  fontWeight: 'bold'
-                }}>
-                  🚀 Próximos Passos
-                </h3>
-                
-                {(analysisResults as any)?.timeline && (
-                  <div style={{
-                    fontSize: '1rem',
-                    color: '#374151',
-                    lineHeight: '1.6',
-                    marginBottom: '1.5rem',
-                    backgroundColor: '#f8fafc',
-                    padding: '1rem',
-                    borderRadius: '8px',
-                    border: '1px solid #e0f2e9'
-                  }}>
-                    {(analysisResults as any).timeline}
-                  </div>
-                )}
-
-                {(analysisResults as any)?.proximo_passo && (
-                  <div style={{
-                    fontSize: '1.1rem',
-                    color: '#059669',
-                    fontStyle: 'italic',
-                    marginBottom: '1.5rem',
-                    backgroundColor: '#f0fdf4',
-                    padding: '1.5rem',
-                    borderRadius: '12px',
-                    border: '3px solid #bbf7d0',
-                    textAlign: 'center',
-                    fontWeight: '500'
-                  }}>
-                    💝 <strong style={{ fontSize: '1.2rem' }}>{(analysisResults as any).proximo_passo}</strong>
-                  </div>
-                )}
-
-                {/* Próximo Passo - Ofertas de Coaching */}
-                <div style={{
-                  backgroundColor: '#f0fdf4',
-                  padding: '2rem',
-                  borderRadius: '16px',
-                  border: '3px solid #bbf7d0',
-                  marginBottom: '1.5rem',
-                  textAlign: 'center'
-                }}>
-                  <h4 style={{
-                    fontSize: '1.4rem',
-                    color: '#059669',
-                    marginBottom: '1.5rem',
-                    fontWeight: 'bold',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.5rem'
-                  }}>
-                    <span style={{ fontSize: '1.6rem' }}>🎯</span>
-                    Próximo Passo: Acompanhamento Personalizado
-                  </h4>
-                  
-                  <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                    gap: '1.5rem',
-                    marginBottom: '2rem'
-                  }}>
-                    {/* Opção 1: Coach Brasileira */}
-                    <div style={{
-                      backgroundColor: 'white',
-                      padding: '1.5rem',
-                      borderRadius: '12px',
-                      border: '2px solid #bbf7d0',
-                      textAlign: 'center'
-                    }}>
-                      <div style={{
-                        fontSize: '2rem',
-                        marginBottom: '1rem'
-                      }}>👩‍⚕️</div>
-                      <h5 style={{
-                        fontSize: '1.2rem',
-                        color: '#1e293b',
-                        marginBottom: '0.5rem',
-                        fontWeight: 'bold'
-                      }}>
-                        Coach Brasileira de Bem-estar
-                      </h5>
-                      <p style={{
-                        fontSize: '0.9rem',
-                        color: '#64748b',
-                        marginBottom: '1rem',
-                        lineHeight: '1.5'
-                      }}>
-                        Avaliação personalizada de 30 minutos por vídeo com coach brasileira especializada em qualidade de vida
-                      </p>
-                      <div style={{
-                        backgroundColor: '#f0fdf4',
-                        padding: '0.8rem',
-                        borderRadius: '8px',
-                        marginBottom: '1rem',
-                        fontSize: '0.9rem',
-                        color: '#059669'
-                      }}>
-                        <strong><span style={{ textDecoration: 'line-through', color: '#9ca3af' }}>$37</span> por apenas $10</strong><br/>
-                        <span style={{ fontSize: '0.8rem' }}>Oferta exclusiva por 24h</span>
-                      </div>
-                      <button onClick={() => openWhatsApp('Olá! Quero agendar minha avaliação personalizada de 30 minutos com a coach brasileira por $10.')} style={{
-                        width: '100%',
-                        padding: '0.8rem',
-                        background: '#059669',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '8px',
-                        fontSize: '0.9rem',
-                        fontWeight: '600',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease'
-                      }}>
-                        💬 Agendar com Coach
-                      </button>
-                    </div>
-                    
-                    {/* Opção 2: Plano Completo IA */}
-                    <div style={{
-                      backgroundColor: 'white',
-                      padding: '1.5rem',
-                      borderRadius: '12px',
-                      border: '2px solid #3b82f6',
-                      textAlign: 'center'
-                    }}>
-                      <div style={{
-                        fontSize: '2rem',
-                        marginBottom: '1rem'
-                      }}>🤖</div>
-                      <h5 style={{
-                        fontSize: '1.2rem',
-                        color: '#1e293b',
-                        marginBottom: '0.5rem',
-                        fontWeight: 'bold'
-                      }}>
-                        Plano Completo Detalhado
-                      </h5>
-                      <p style={{
-                        fontSize: '0.9rem',
-                        color: '#64748b',
-                        marginBottom: '1rem',
-                        lineHeight: '1.5'
-                      }}>
-                        Plano detalhado de 30 dias com alimentação balanceada, exercícios e cronograma personalizado baseado em ciência
-                      </p>
-                      <div style={{
-                        backgroundColor: '#eff6ff',
-                        padding: '0.8rem',
-                        borderRadius: '8px',
-                        marginBottom: '1rem',
-                        fontSize: '0.9rem',
-                        color: '#1d4ed8'
-                      }}>
-                        <strong><span style={{ textDecoration: 'line-through', color: '#9ca3af' }}>$47</span> por apenas $10</strong><br/>
-                        <span style={{ fontSize: '0.8rem' }}>Oferta exclusiva por 24h</span>
-                      </div>
-                      <button onClick={() => openWhatsApp('Olá! Quero receber meu plano completo detalhado de 30 dias com alimentação balanceada e exercícios por $10.')} style={{
-                        width: '100%',
-                        padding: '0.8rem',
-                        background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '8px',
-                        fontSize: '0.9rem',
-                        fontWeight: '600',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease'
-                      }}>
-                        📋 Receber Plano Completo
-                      </button>
-                    </div>
-                  </div>
-                  
-                  
-                  <p style={{
-                    fontSize: '0.9rem',
-                    color: '#64748b',
-                    fontStyle: 'italic'
-                  }}>
-                    💡 <strong>Escolha sua opção:</strong> Acompanhamento humano personalizado ou plano completo detalhado de 30 dias
-                  </p>
-                </div>
-
-                <div style={{
+                <button onClick={() => openWhatsApp('Olá! Gostaria de falar sobre minha avaliação personalizada do MeuPortalFit.')} style={{
                   display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.8rem',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.8rem 1.5rem',
+                  background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '25px',
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
                 }}>
-                  <button onClick={() => openWhatsApp('Olá! Gostaria de falar sobre minha avaliação personalizada do MeuPortalFit.')} style={{
+                  💬 {t('whatsappButton')} via WhatsApp
+                </button>
+
+                <button onClick={shareResults} style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.8rem 1.5rem',
+                  background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '25px',
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}>
+                  🇧🇷 Ajude Outros Brasileiros
+                </button>
+
+                <button onClick={printResults} style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  padding: '0.8rem 1.5rem',
+                  background: '#059669',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '25px',
+                  fontSize: '0.9rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease'
+                }}>
+                  🖨️ Salvar/Imprimir
+                </button>
+
+                <Link href="/" style={{ textDecoration: 'none' }}>
+                  <button style={{
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.5rem',
                     padding: '0.8rem 1.5rem',
-                    background: 'linear-gradient(135deg, #3b82f6, #1d4ed8)',
-                    color: 'white',
-                    border: 'none',
+                    background: 'transparent',
+                    color: '#6b7280',
+                    border: '1px solid #e5e7eb',
                     borderRadius: '25px',
                     fontSize: '0.9rem',
-                    fontWeight: '600',
+                    fontWeight: '500',
                     cursor: 'pointer',
                     transition: 'all 0.3s ease'
                   }}>
-                    💬 {t('whatsappButton')} via WhatsApp
+                    🏠 Voltar ao Início
                   </button>
-
-                  <button onClick={shareResults} style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    padding: '0.8rem 1.5rem',
-                    background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '25px',
-                    fontSize: '0.9rem',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease'
-                  }}>
-                    🇧🇷 Ajude Outros Brasileiros
-                  </button>
-
-                  <button onClick={printResults} style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    padding: '0.8rem 1.5rem',
-                    background: '#059669',
-                    color: 'white',
-                    border: 'none',
-                    borderRadius: '25px',
-                    fontSize: '0.9rem',
-                    fontWeight: '600',
-                    cursor: 'pointer',
-                    transition: 'all 0.3s ease'
-                  }}>
-                    🖨️ Salvar/Imprimir
-                  </button>
-
-                  <Link href="/" style={{ textDecoration: 'none' }}>
-                    <button style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.5rem',
-                      padding: '0.8rem 1.5rem',
-                      background: 'transparent',
-                      color: '#6b7280',
-                      border: '1px solid #e5e7eb',
-                      borderRadius: '25px',
-                      fontSize: '0.9rem',
-                      fontWeight: '500',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease'
-                    }}>
-                      🏠 Voltar ao Início
-                    </button>
-                  </Link>
-                </div>
+                </Link>
               </div>
             </>
           )}
