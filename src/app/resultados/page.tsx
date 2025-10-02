@@ -923,25 +923,6 @@ function ResultadosContent() {
                   </p>
                 </div>
 
-                {/* Gatilho Mental 3: Garantia */}
-                <div style={{
-                  backgroundColor: '#f0fdf4',
-                  padding: '1.5rem',
-                  borderRadius: '12px',
-                  border: '2px solid #bbf7d0',
-                  marginBottom: '1.5rem',
-                  textAlign: 'center'
-                }}>
-                  <p style={{
-                    fontSize: '1rem',
-                    color: '#059669',
-                    margin: 0,
-                    fontWeight: '600'
-                  }}>
-                    🛡️ <strong>GARANTIA DE 7 DIAS:</strong> Se você não ficar 100% satisfeita, devolvemos seu dinheiro. 
-                    Sem perguntas, sem complicações!
-                  </p>
-                </div>
 
                 {/* Gatilho Mental 4: Urgência Final */}
                 <div style={{
