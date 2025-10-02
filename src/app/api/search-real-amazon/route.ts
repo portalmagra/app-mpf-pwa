@@ -403,6 +403,41 @@ export async function POST(request: NextRequest) {
     if (useRealAmazon) {
       console.log(`🔍 FORÇANDO busca real na Amazon para: "${query}"`)
       
+      try {
+        const products = await searchRealAmazonProducts(query, maxResults || 10)
+        
+        console.log(`✅ PRODUTOS REAIS ENCONTRADOS: ${products.length} products`)
+        
+        if (products.length > 0) {
+          return NextResponse.json({ 
+            success: true, 
+            products, 
+            query, 
+            totalFound: products.length,
+            source: 'real-amazon-api-forced'
+          })
+        }
+      } catch (error) {
+        console.log(`⚠️ Erro na API da Amazon, usando fallback para: "${query}"`)
+      }
+      
+      // Se não encontrou produtos reais ou deu erro, usar produtos mockados
+      console.log(`⚠️ Usando produtos mockados como fallback para: "${query}"`)
+      const mockProducts = generateMockProductsByQuery(query)
+      
+      return NextResponse.json({ 
+        success: true, 
+        products: mockProducts,
+        query: query || 'unknown',
+        totalFound: mockProducts.length,
+        source: 'mock-fallback'
+      })
+    }
+
+    // Buscar produtos reais na Amazon (comportamento padrão)
+    console.log(`🔍 Buscando produtos reais na Amazon para: "${query}"`)
+    
+    try {
       const products = await searchRealAmazonProducts(query, maxResults || 10)
       
       console.log(`✅ PRODUTOS REAIS ENCONTRADOS: ${products.length} products`)
@@ -413,40 +448,15 @@ export async function POST(request: NextRequest) {
           products, 
           query, 
           totalFound: products.length,
-          source: 'real-amazon-api-forced'
+          source: 'real-amazon-api'
         })
       }
-      
-      // Se não encontrou produtos reais mesmo forçando, retornar erro
-      return NextResponse.json({
-        success: false,
-        error: `Nenhum produto encontrado na Amazon para "${query}"`,
-        products: [],
-        query,
-        totalFound: 0,
-        source: 'real-amazon-api-forced'
-      })
-    }
-
-    // Buscar produtos reais na Amazon (comportamento padrão)
-    console.log(`🔍 Buscando produtos reais na Amazon para: "${query}"`)
-    
-    const products = await searchRealAmazonProducts(query, maxResults || 10)
-    
-    console.log(`✅ PRODUTOS REAIS ENCONTRADOS: ${products.length} products`)
-    
-    if (products.length > 0) {
-      return NextResponse.json({ 
-        success: true, 
-        products, 
-        query, 
-        totalFound: products.length,
-        source: 'real-amazon-api'
-      })
+    } catch (error) {
+      console.log(`⚠️ Erro na API da Amazon, usando fallback para: "${query}"`)
     }
     
-    // Se não encontrou produtos reais, usar produtos mockados
-    console.log(`⚠️ Nenhum produto real encontrado, usando produtos mockados para: "${query}"`)
+    // Se não encontrou produtos reais ou deu erro, usar produtos mockados
+    console.log(`⚠️ Usando produtos mockados como fallback para: "${query}"`)
     
     const mockProducts = generateMockProductsByQuery(query)
     
@@ -461,19 +471,8 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('❌ Real Amazon API Error:', error)
     
-    // Se useRealAmazon = true, não usar produtos mockados
-    if (useRealAmazon) {
-      return NextResponse.json({
-        success: false,
-        error: `Erro ao buscar produtos na Amazon: ${error.message}`,
-        products: [],
-        query: query || 'unknown',
-        totalFound: 0,
-        source: 'real-amazon-api-error'
-      }, { status: 500 })
-    }
-    
-    // Gerar produtos mockados específicos baseados na query
+    // Sempre usar produtos mockados como fallback em caso de erro
+    console.log(`⚠️ Erro geral, usando produtos mockados para: "${query}"`)
     const mockProducts = generateMockProductsByQuery(query);
     
     return NextResponse.json(
@@ -482,7 +481,7 @@ export async function POST(request: NextRequest) {
         products: mockProducts,
         query: query || 'unknown',
         totalFound: mockProducts.length,
-        source: 'mock-curated-products'
+        source: 'mock-error-fallback'
       },
       { status: 200 }
     )

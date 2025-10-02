@@ -116,77 +116,32 @@ export default function AmazonPage() {
     }
   }, [])
 
-  // Função para buscar produtos com curadoria inteligente
+  // Função para redirecionar diretamente para Amazon
   const searchWithCuration = async (query: string) => {
     if (!query || query.trim().length < 2) {
       return;
     }
     
     setIsLoading(true)
-    setSearchMessage(`🤖 Buscando produtos curados para "${query}"...`)
+    setSearchMessage(`🔍 Redirecionando para Amazon...`)
     
     try {
-      // PRIMEIRO: Buscar nos produtos curados/selecionados do app
-      const curatedResponse = await fetch('/api/search-curated-products', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: query.trim(),
-          maxResults: 3
-        })
-      })
+      // Construir URL da Amazon com termo de busca e nossa tag de afiliado
+      const searchQuery = encodeURIComponent(query.trim())
+      const amazonSearchUrl = `https://www.amazon.com/s?k=${searchQuery}&tag=portalsolutio-20`
       
-      const curatedData = await curatedResponse.json()
+      // Redirecionar diretamente para Amazon
+      window.open(amazonSearchUrl, '_blank')
       
-      if (curatedData.success && curatedData.products && curatedData.products.length > 0) {
-        // Encontrou produtos curados - usar estes
-        const productsWithAffiliateTag = curatedData.products.map((product: CuratedProduct) => ({
-          ...product,
-          detailPageURL: ensureAffiliateTag(product.detailPageURL)
-        }))
-        
-        setCuratedProducts(productsWithAffiliateTag)
-        setShowCuratedProducts(true)
-        setSearchMessage(`✅ ${curatedData.products.length} produtos selecionados especialmente para você!`)
-      } else {
-        // SEGUNDO: Se não encontrou produtos curados, buscar na Amazon real
-        setSearchMessage(`🔍 Buscando na Amazon para "${query}"...`)
-        
-        const amazonResponse = await fetch('/api/search-real-amazon', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            query: query.trim(),
-            maxResults: 3,
-            useRealAmazon: true // Forçar busca real
-          })
-        })
-        
-        const amazonData = await amazonResponse.json()
-        
-        if (amazonData.success && amazonData.products && amazonData.products.length > 0) {
-          // Garantir que todos os produtos tenham a tag de afiliado
-          const productsWithAffiliateTag = amazonData.products.map((product: CuratedProduct) => ({
-            ...product,
-            detailPageURL: ensureAffiliateTag(product.detailPageURL)
-          }))
-          
-          setCuratedProducts(productsWithAffiliateTag)
-          setShowCuratedProducts(true)
-          setSearchMessage(`🛒 Encontramos ${amazonData.products.length} produtos na Amazon para você!`)
-        } else {
-          setSearchMessage(`❌ Não encontramos produtos para "${query}". Tente uma busca diferente.`)
-          setCuratedProducts([])
-          setShowCuratedProducts(false)
-        }
-      }
+      setSearchMessage(`✅ Redirecionado para Amazon com "${query}"`)
+      
+      // Limpar produtos e mostrar mensagem de sucesso
+      setCuratedProducts([])
+      setShowCuratedProducts(false)
+      
     } catch (error) {
-      console.error('Erro na busca:', error)
-      setSearchMessage(`❌ Erro ao buscar produtos. Tente novamente.`)
+      console.error('Erro no redirecionamento:', error)
+      setSearchMessage(`❌ Erro ao redirecionar. Tente novamente.`)
     } finally {
       setIsLoading(false)
     }
@@ -220,7 +175,7 @@ export default function AmazonPage() {
       </header>
 
       <main className="pb-20">
-        {/* Hero Section Simplificado */}
+            {/* Hero Section Simplificado */}
         <section className="px-4 py-8">
           <div className="max-w-sm mx-auto text-center">
             {/* Amazon Logo Header */}
@@ -235,7 +190,7 @@ export default function AmazonPage() {
                 />
                 <h2 className="text-2xl font-bold text-green-800">Busca Amazon</h2>
               </div>
-              <p className="text-green-600 text-sm">Seleção Amazon por Inteligência Artificial conforme sua necessidade</p>
+              <p className="text-green-600 text-sm">Digite o produto e seja redirecionado para Amazon</p>
             </div>
 
             {/* Search Bar */}
@@ -264,17 +219,17 @@ export default function AmazonPage() {
                 🛒 Por Que Comprar na Amazon Através do MeuPortalFit?
               </h2>
               <p className="text-green-700 mb-4">
-                Nossa seleção por Inteligência Artificial é <strong>100% gratuita</strong> para você!
+                Digite qualquer produto e seja redirecionado diretamente para Amazon - <strong>100% gratuito</strong> para você!
               </p>
               
               {/* Benefícios */}
               <div className="space-y-4">
                 <div className="flex items-start space-x-3">
-                  <span className="text-2xl">🎯</span>
+                  <span className="text-2xl">🔍</span>
                   <div>
-                    <h3 className="font-semibold text-green-900">Seleção por IA</h3>
+                    <h3 className="font-semibold text-green-900">Redirecionamento Direto</h3>
                     <p className="text-sm text-green-700">
-                      Nossa Inteligência Artificial seleciona apenas produtos de qualidade comprovada, testados por brasileiros nos EUA
+                      Digite qualquer produto e seja redirecionado diretamente para a página de busca da Amazon
                     </p>
                   </div>
                 </div>
@@ -294,7 +249,7 @@ export default function AmazonPage() {
                   <div>
                     <h3 className="font-semibold text-green-900">Feito para Brasileiros</h3>
                     <p className="text-sm text-green-700">
-                      Produtos que funcionam no clima americano e atendem necessidades específicas de brasileiros
+                      Interface em português e suporte para brasileiros nos EUA
                     </p>
                   </div>
                 </div>
@@ -306,10 +261,10 @@ export default function AmazonPage() {
             {curatedProducts.length === 0 && (
             <div className="bg-gradient-to-r from-green-100 to-green-200 border-2 border-green-300 text-green-800 p-6 rounded-xl">
               <h3 className="text-lg font-bold mb-2 text-green-900">
-                🚀 Pronto para Encontrar os Melhores Produtos?
+                🚀 Pronto para Ir para Amazon?
               </h3>
               <p className="text-green-700 mb-4">
-                Digite o que você procura e deixe nossa IA selecionar os melhores produtos para você!
+                Digite o que você procura e seja redirecionado diretamente para Amazon!
               </p>
               <button
                 onClick={() => {
@@ -318,63 +273,11 @@ export default function AmazonPage() {
                 }}
                 className="bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700 transition-colors"
               >
-                🔍 Fazer Nova Busca
+                🔍 Nova Busca
               </button>
             </div>
             )}
 
-            {/* Produtos Selecionados pela IA */}
-            {curatedProducts.length > 0 && (
-              <div className="mt-8">
-                <h3 className="text-xl font-bold text-green-900 mb-4 text-center">
-                  🤖 Produtos Selecionados pela Nossa IA
-                </h3>
-                <div className="space-y-4">
-                  {curatedProducts.map((product, index) => (
-                    <div key={product.asin} className="bg-white border-2 border-green-200 rounded-xl p-4 shadow-sm">
-                      <div className="flex items-start space-x-4">
-                        <img 
-                          src={product.imageUrl || '/icons/amazon-logo-official.png'} 
-                          alt={product.name}
-                          className="w-16 h-16 object-cover rounded-lg"
-                        />
-                        <div className="flex-1">
-                          <h4 className="font-semibold text-green-900 text-sm mb-1">
-                            {product.name}
-                          </h4>
-                          <div className="flex items-center space-x-2 mb-2">
-                            <span className="text-yellow-500">⭐ {product.rating}</span>
-                            <span className="text-green-600 font-bold">{product.price}</span>
-                          </div>
-                          <div className="flex flex-wrap gap-1 mb-3">
-                            {product.benefits?.slice(0, 2).map((benefit, i) => (
-                              <span key={i} className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">
-                                {benefit}
-                              </span>
-                            ))}
-                          </div>
-                          <a
-                            href={ensureAffiliateTag(product.detailPageURL)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-green-700 transition-colors"
-                          >
-                            <span>🛒</span>
-                            <span>Comprar na Amazon</span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="mt-4 text-center">
-                  <p className="text-green-700 text-sm">
-                    ✨ Estes produtos foram selecionados pela nossa IA baseado em qualidade, marca e preço
-                  </p>
-                </div>
-              </div>
-            )}
 
             {/* Mensagem de busca */}
             {searchMessage && (
