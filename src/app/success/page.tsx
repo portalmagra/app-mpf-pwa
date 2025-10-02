@@ -7,8 +7,11 @@ import { CheckCircle, Download, ArrowRight } from 'lucide-react'
 
 interface PurchaseData {
   sessionId: string
-  protocolId: string
-  protocolName: string
+  protocolId?: string
+  ebookId?: string
+  protocolName?: string
+  productName?: string
+  productType?: string
   customerEmail: string
   amount: number
   status: string
@@ -113,7 +116,11 @@ function SuccessContent() {
       
       // Iniciar download automático após 3 segundos
       setTimeout(() => {
-        handleDownload(data.protocolId, sessionId)
+        if (data.protocolId) {
+          handleDownload(data.protocolId, sessionId)
+        } else if (data.ebookId) {
+          handleEbookDownload(data.ebookId, sessionId)
+        }
       }, 3000)
       
     } catch (error) {
@@ -140,6 +147,15 @@ function SuccessContent() {
       }
     } catch (error) {
       console.error('❌ Erro ao solicitar permissão:', error)
+    }
+  }
+
+  const handleEbookDownload = async (ebookId: string, sessionId: string) => {
+    try {
+      console.log('📚 Redirecionando para download do eBook...')
+      window.location.href = `/ebooks/download?ebook=${ebookId}&session=${sessionId}`
+    } catch (error) {
+      console.error('❌ Erro ao redirecionar para download do eBook:', error)
     }
   }
 
@@ -271,7 +287,7 @@ function SuccessContent() {
               <div className="flex justify-between">
                 <span className="text-brand-text2">Produto:</span>
                 <span className="font-medium text-brand-text">
-                  {getProtocolName(purchaseData.protocolId)}
+                  {purchaseData.protocolId ? getProtocolName(purchaseData.protocolId) : purchaseData.productName}
                 </span>
               </div>
               <div className="flex justify-between">
@@ -302,7 +318,10 @@ function SuccessContent() {
               <h3 className="font-semibold text-green-800">Download Automático</h3>
             </div>
             <p className="text-green-700 text-sm mb-3">
-              Seu protocolo está sendo baixado automaticamente em alguns segundos...
+              {purchaseData.protocolId 
+                ? 'Seu protocolo está sendo baixado automaticamente em alguns segundos...'
+                : 'Seu eBook está sendo preparado para download em alguns segundos...'
+              }
             </p>
             <div className="flex items-center justify-between">
               <span className="text-xs text-green-600">📧 E-mail de confirmação enviado</span>
@@ -372,18 +391,23 @@ function SuccessContent() {
           <div className="bg-brand-green/10 rounded-lg p-4 mb-6">
             <h3 className="font-semibold text-brand-text mb-3 flex items-center">
               <Download className="w-5 h-5 mr-2" />
-              Acesso aos Protocolos
+              {purchaseData.protocolId ? 'Acesso aos Protocolos' : 'Acesso aos eBooks'}
             </h3>
             <p className="text-brand-text2 text-sm mb-4">
-              Agora você tem acesso completo ao protocolo que comprou. 
-              Clique no botão abaixo para baixar o PDF.
+              {purchaseData.protocolId 
+                ? 'Agora você tem acesso completo ao protocolo que comprou. Clique no botão abaixo para baixar o PDF.'
+                : 'Agora você tem acesso completo ao eBook que comprou. Clique no botão abaixo para baixar o PDF.'
+              }
             </p>
             <Link
-              href={`/protocolos/download?protocol=${purchaseData.protocolId}&session=${purchaseData.sessionId}`}
+              href={purchaseData.protocolId 
+                ? `/protocolos/download?protocol=${purchaseData.protocolId}&session=${purchaseData.sessionId}`
+                : `/ebooks/download?ebook=${purchaseData.ebookId}&session=${purchaseData.sessionId}`
+              }
               className="w-full bg-brand-green text-white py-3 px-4 rounded-lg font-semibold hover:bg-brand-greenDark transition-colors flex items-center justify-center"
             >
               <Download className="w-5 h-5 mr-2" />
-              Baixar Protocolo
+              {purchaseData.protocolId ? 'Baixar Protocolo' : 'Baixar eBook'}
             </Link>
           </div>
 
@@ -393,7 +417,10 @@ function SuccessContent() {
             <ul className="text-sm text-blue-700 space-y-2">
               <li className="flex items-start">
                 <span className="text-blue-500 mr-2">1.</span>
-                Baixe o protocolo PDF usando o botão acima
+                {purchaseData.protocolId 
+                  ? 'Baixe o protocolo PDF usando o botão acima'
+                  : 'Baixe o eBook PDF usando o botão acima'
+                }
               </li>
               <li className="flex items-start">
                 <span className="text-blue-500 mr-2">2.</span>
@@ -401,7 +428,10 @@ function SuccessContent() {
               </li>
               <li className="flex items-start">
                 <span className="text-blue-500 mr-2">3.</span>
-                Siga as recomendações nutricionais
+                {purchaseData.protocolId 
+                  ? 'Siga as recomendações nutricionais'
+                  : 'Aplique as receitas e dicas do eBook'
+                }
               </li>
               <li className="flex items-start">
                 <span className="text-blue-500 mr-2">4.</span>

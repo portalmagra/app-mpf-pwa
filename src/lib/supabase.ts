@@ -807,25 +807,61 @@ export const ebookService = {
   // Buscar todos os eBooks
   async getAllEbooks(): Promise<Ebook[]> {
     console.log('🔄 getAllEbooks chamado')
-    
+
     if (!isSupabaseConfigured()) {
       console.warn('⚠️ Supabase não configurado, usando dados mock')
       return getMockEbooks()
     }
 
-    console.log('📡 Fazendo consulta ao Supabase...')
-    const { data, error } = await supabase
-      .from('ebooks')
-      .select('*')
-      .order('created_at', { ascending: false })
-    
-    if (error) {
-      console.error('❌ Erro ao buscar eBooks:', error)
+    // Buscar arquivos no Storage ebooks-pdfs
+    const { data: storageData, error: storageError } = await supabase.storage
+      .from('ebooks-pdfs')
+      .list('', { limit: 1000 })
+
+    if (storageError) {
+      console.error('❌ Erro ao buscar eBooks no Storage:', storageError)
       return getMockEbooks()
     }
-    
-    console.log('✅ eBooks carregados:', data?.length || 0)
-    return data || []
+
+    console.log('📊 Arquivos encontrados no Storage para admin:', storageData?.length || 0)
+
+    if (!storageData || storageData.length === 0) {
+      console.warn('⚠️ Nenhum arquivo encontrado no Storage para admin, usando dados mock')
+      return getMockEbooks()
+    }
+
+    // Converter arquivos do Storage para formato Ebook
+    const ebooks = storageData
+      .filter(file => file.name.endsWith('.pdf'))
+      .map((file, index) => {
+        const fileName = file.name.replace('.pdf', '')
+        const isDieta = fileName.includes('DIETA') || fileName.includes('JEJUM') || fileName.includes('SAUDE')
+
+        // Todos os eBooks custam $10.00
+        const getPrice = (name: string) => {
+          return 10.00
+        }
+
+        return {
+          id: index + 1,
+          title: fileName,
+          description: `E-book ${fileName}`,
+          category: isDieta ? 'dietas' : 'receitas',
+          price: getPrice(fileName),
+          pdf_link: supabase.storage.from('ebooks-pdfs').getPublicUrl(file.name).data.publicUrl,
+          cover_image_url: '',
+          preview_images: [],
+          author: 'Meu Portal Fit',
+          pages: 0,
+          language: 'pt-BR',
+          status: 'active' as const,
+          featured: index < 3,
+          created_at: file.created_at || new Date().toISOString(),
+          updated_at: file.updated_at || new Date().toISOString()
+        }
+      })
+
+    return ebooks
   },
 
   // Buscar eBooks ativos
@@ -835,20 +871,55 @@ export const ebookService = {
       return getMockEbooks().filter(ebook => ebook.status === 'active')
     }
 
-    const { data, error } = await supabase
-      .from('ebooks')
-      .select('*')
-      .eq('status', 'active')
-      .order('created_at', { ascending: false })
-      .limit(1000)
-    
-    if (error) {
-      console.error('Erro ao buscar eBooks ativos:', error)
+    // Buscar arquivos no Storage ebooks-pdfs
+    const { data: storageData, error: storageError } = await supabase.storage
+      .from('ebooks-pdfs')
+      .list('', { limit: 1000 })
+
+    if (storageError) {
+      console.error('❌ Erro ao buscar eBooks no Storage:', storageError)
       return getMockEbooks().filter(ebook => ebook.status === 'active')
     }
-    
-    console.log('📊 eBooks ativos encontrados:', data?.length || 0)
-    return data || []
+
+    console.log('📊 Arquivos encontrados no Storage:', storageData?.length || 0)
+
+    if (!storageData || storageData.length === 0) {
+      console.warn('⚠️ Nenhum arquivo encontrado no Storage, usando dados mock')
+      return getMockEbooks().filter(ebook => ebook.status === 'active')
+    }
+
+    // Converter arquivos do Storage para formato Ebook
+    const ebooks = storageData
+      .filter(file => file.name.endsWith('.pdf'))
+      .map((file, index) => {
+        const fileName = file.name.replace('.pdf', '')
+        const isDieta = fileName.includes('DIETA') || fileName.includes('JEJUM') || fileName.includes('SAUDE')
+
+        // Todos os eBooks custam $10.00
+        const getPrice = (name: string) => {
+          return 10.00
+        }
+
+        return {
+          id: index + 1,
+          title: fileName,
+          description: `E-book ${fileName}`,
+          category: isDieta ? 'dietas' : 'receitas',
+          price: getPrice(fileName),
+          pdf_link: supabase.storage.from('ebooks-pdfs').getPublicUrl(file.name).data.publicUrl,
+          cover_image_url: '',
+          preview_images: [],
+          author: 'Meu Portal Fit',
+          pages: 0,
+          language: 'pt-BR',
+          status: 'active' as const,
+          featured: index < 3,
+          created_at: file.created_at || new Date().toISOString(),
+          updated_at: file.updated_at || new Date().toISOString()
+        }
+      })
+
+    return ebooks
   },
 
   // Buscar eBooks por categoria
@@ -858,19 +929,54 @@ export const ebookService = {
       return getMockEbooks().filter(ebook => ebook.category === category && ebook.status === 'active')
     }
 
-    const { data, error } = await supabase
-      .from('ebooks')
-      .select('*')
-      .eq('category', category)
-      .eq('status', 'active')
-      .order('created_at', { ascending: false })
-    
-    if (error) {
-      console.error('❌ Erro ao buscar eBooks por categoria:', error)
-      return []
+    // Buscar arquivos no Storage ebooks-pdfs
+    const { data: storageData, error: storageError } = await supabase.storage
+      .from('ebooks-pdfs')
+      .list('', { limit: 1000 })
+
+    if (storageError) {
+      console.error('❌ Erro ao buscar eBooks no Storage:', storageError)
+      return getMockEbooks().filter(ebook => ebook.category === category && ebook.status === 'active')
     }
-    
-    return data || []
+
+    if (!storageData || storageData.length === 0) {
+      console.warn('⚠️ Nenhum arquivo encontrado no Storage, usando dados mock')
+      return getMockEbooks().filter(ebook => ebook.category === category && ebook.status === 'active')
+    }
+
+    // Converter arquivos do Storage para formato Ebook e filtrar por categoria
+    const ebooks = storageData
+      .filter(file => file.name.endsWith('.pdf'))
+      .map((file, index) => {
+        const fileName = file.name.replace('.pdf', '')
+        const isDieta = fileName.includes('DIETA') || fileName.includes('JEJUM') || fileName.includes('SAUDE')
+
+        // Todos os eBooks custam $10.00
+        const getPrice = (name: string) => {
+          return 10.00
+        }
+
+        return {
+          id: index + 1,
+          title: fileName,
+          description: `E-book ${fileName}`,
+          category: isDieta ? 'dietas' : 'receitas',
+          price: getPrice(fileName),
+          pdf_link: supabase.storage.from('ebooks-pdfs').getPublicUrl(file.name).data.publicUrl,
+          cover_image_url: '',
+          preview_images: [],
+          author: 'Meu Portal Fit',
+          pages: 0,
+          language: 'pt-BR',
+          status: 'active' as const,
+          featured: index < 3,
+          created_at: file.created_at || new Date().toISOString(),
+          updated_at: file.updated_at || new Date().toISOString()
+        }
+      })
+      .filter(ebook => ebook.category === category)
+
+    return ebooks
   },
 
   // Buscar eBooks em destaque
@@ -880,40 +986,125 @@ export const ebookService = {
       return getMockEbooks().filter(ebook => ebook.featured && ebook.status === 'active')
     }
 
-    const { data, error } = await supabase
-      .from('ebooks')
-      .select('*')
-      .eq('featured', true)
-      .eq('status', 'active')
-      .order('created_at', { ascending: false })
-    
-    if (error) {
-      console.error('❌ Erro ao buscar eBooks em destaque:', error)
-      return []
+    // Buscar arquivos no Storage ebooks-pdfs
+    const { data: storageData, error: storageError } = await supabase.storage
+      .from('ebooks-pdfs')
+      .list('', { limit: 1000 })
+
+    if (storageError) {
+      console.error('❌ Erro ao buscar eBooks no Storage:', storageError)
+      return getMockEbooks().filter(ebook => ebook.featured && ebook.status === 'active')
     }
-    
-    return data || []
+
+    if (!storageData || storageData.length === 0) {
+      console.warn('⚠️ Nenhum arquivo encontrado no Storage, usando dados mock')
+      return getMockEbooks().filter(ebook => ebook.featured && ebook.status === 'active')
+    }
+
+    // Converter arquivos do Storage para formato Ebook e filtrar em destaque
+    const ebooks = storageData
+      .filter(file => file.name.endsWith('.pdf'))
+      .map((file, index) => {
+        const fileName = file.name.replace('.pdf', '')
+        const isDieta = fileName.includes('DIETA') || fileName.includes('JEJUM') || fileName.includes('SAUDE')
+
+        // Todos os eBooks custam $10.00
+        const getPrice = (name: string) => {
+          return 10.00
+        }
+
+        return {
+          id: index + 1,
+          title: fileName,
+          description: `E-book ${fileName}`,
+          category: isDieta ? 'dietas' : 'receitas',
+          price: getPrice(fileName),
+          pdf_link: supabase.storage.from('ebooks-pdfs').getPublicUrl(file.name).data.publicUrl,
+          cover_image_url: '',
+          preview_images: [],
+          author: 'Meu Portal Fit',
+          pages: 0,
+          language: 'pt-BR',
+          status: 'active' as const,
+          featured: index < 3,
+          created_at: file.created_at || new Date().toISOString(),
+          updated_at: file.updated_at || new Date().toISOString()
+        }
+      })
+      .filter(ebook => ebook.featured)
+
+    return ebooks
   },
 
   // Buscar eBook por ID
   async getEbookById(id: number): Promise<Ebook | null> {
+    console.log(`🔄 getEbookById chamado para ID: ${id}`)
+    
     if (!isSupabaseConfigured()) {
       console.warn('⚠️ Supabase não configurado, usando dados mock')
-      return getMockEbooks().find(ebook => ebook.id === id) || null
+      const mockEbooks = getMockEbooks()
+      const ebook = mockEbooks.find(ebook => ebook.id === id) || null
+      console.log(`📚 eBook encontrado nos mocks:`, ebook ? ebook.title : 'não encontrado')
+      return ebook
     }
 
-    const { data, error } = await supabase
-      .from('ebooks')
-      .select('*')
-      .eq('id', id)
-      .single()
+    // Buscar arquivos no Storage ebooks-pdfs
+    const { data: storageData, error: storageError } = await supabase.storage
+      .from('ebooks-pdfs')
+      .list('', { limit: 1000 })
     
-    if (error) {
-      console.error('❌ Erro ao buscar eBook:', error)
-      return null
+    if (storageError) {
+      console.error('❌ Erro ao buscar eBook no Storage:', storageError)
+      // Fallback para dados mock
+      const mockEbooks = getMockEbooks()
+      return mockEbooks.find(ebook => ebook.id === id) || null
     }
     
-    return data
+    if (!storageData || storageData.length === 0) {
+      console.warn('⚠️ Nenhum arquivo encontrado no Storage, usando dados mock')
+      const mockEbooks = getMockEbooks()
+      return mockEbooks.find(ebook => ebook.id === id) || null
+    }
+    
+    // Encontrar arquivo pelo ID (índice)
+    const pdfFiles = storageData.filter(f => f.name.endsWith('.pdf'))
+    const file = pdfFiles[id - 1]
+    
+    if (!file) {
+      console.warn(`⚠️ Arquivo não encontrado para ID ${id}, usando dados mock`)
+      const mockEbooks = getMockEbooks()
+      return mockEbooks.find(ebook => ebook.id === id) || null
+    }
+    
+    const fileName = file.name.replace('.pdf', '')
+    const isDieta = fileName.includes('DIETA') || fileName.includes('JEJUM') || fileName.includes('SAUDE')
+    
+    // Todos os eBooks custam $10.00
+    const getPrice = (name: string) => {
+      return 10.00
+    }
+    
+    // Converter arquivo do Storage para formato Ebook
+    const ebook = {
+      id: id,
+      title: fileName,
+      description: `E-book ${fileName}`,
+      category: isDieta ? 'dietas' : 'receitas',
+      price: getPrice(fileName),
+      pdf_link: supabase.storage.from('ebooks-pdfs').getPublicUrl(file.name).data.publicUrl,
+      cover_image_url: '',
+      preview_images: [],
+      author: 'Meu Portal Fit',
+      pages: 0,
+      language: 'pt-BR',
+      status: 'active' as const,
+      featured: id <= 3,
+      created_at: file.created_at || new Date().toISOString(),
+      updated_at: file.updated_at || new Date().toISOString()
+    }
+    
+    console.log(`✅ eBook encontrado no Storage:`, ebook.title)
+    return ebook
   },
 
   // Criar novo eBook
@@ -1029,12 +1220,13 @@ export const ebookService = {
 // Função para dados mock de eBooks
 function getMockEbooks(): Ebook[] {
   return [
+    // EBOOKS DE RECEITAS
     {
       id: 1,
       title: 'Doces Fit',
       description: 'Receitas de doces saudáveis e deliciosos',
       category: 'receitas',
-      price: 19.90,
+      price: 10.00,
       pdf_link: 'https://drive.google.com/file/d/ebook-doces-fit/view',
       cover_image_url: '/images/ebooks/Capa E- Book Doces-Fit.jpg',
       author: 'Meu Portal Fit',
@@ -1050,7 +1242,7 @@ function getMockEbooks(): Ebook[] {
       title: 'Doces Fit 2',
       description: 'Mais receitas de doces saudáveis',
       category: 'receitas',
-      price: 19.90,
+      price: 10.00,
       pdf_link: 'https://drive.google.com/file/d/ebook-doces-fit-2/view',
       cover_image_url: '/images/ebooks/Capa E- BOOK Doces-Fit-2.jpg',
       author: 'Meu Portal Fit',
@@ -1066,7 +1258,7 @@ function getMockEbooks(): Ebook[] {
       title: 'Receitas Salgadas',
       description: 'Receitas salgadas saudáveis e práticas',
       category: 'receitas',
-      price: 24.90,
+      price: 10.00,
       pdf_link: 'https://drive.google.com/file/d/ebook-receitas-salgadas/view',
       cover_image_url: '/images/ebooks/CAPA E- book Receitas-Salgadas.jpg',
       author: 'Meu Portal Fit',
@@ -1079,30 +1271,30 @@ function getMockEbooks(): Ebook[] {
     },
     {
       id: 4,
-      title: 'Saladas Funcionais',
-      description: 'Saladas nutritivas e saborosas',
+      title: 'Receitas Low Carb',
+      description: 'Receitas deliciosas e saudáveis com baixo teor de carboidratos',
       category: 'receitas',
-      price: 15.90,
-      pdf_link: 'https://drive.google.com/file/d/ebook-saladas/view',
-      cover_image_url: '/images/ebooks/CAPA E-book Saladas.jpg',
+      price: 10.00,
+      pdf_link: 'https://drive.google.com/file/d/ebook-receitas-low-carb/view',
+      cover_image_url: '/images/ebooks/Capa RECEITAS LOW-CARB.pdf',
       author: 'Meu Portal Fit',
-      pages: 30,
+      pages: 45,
       language: 'pt-BR',
       status: 'active',
-      featured: false,
+      featured: true,
       created_at: '2024-01-18T10:00:00Z',
       updated_at: '2024-01-18T10:00:00Z'
     },
     {
       id: 5,
-      title: 'Sopas Funcionais',
-      description: 'Sopas nutritivas para todos os momentos',
+      title: 'Saladas Funcionais',
+      description: 'Saladas nutritivas e saborosas',
       category: 'receitas',
-      price: 19.90,
-      pdf_link: 'https://drive.google.com/file/d/ebook-sopas-funcionais/view',
-      cover_image_url: '/images/ebooks/CAPA E-book Sopas Funcionais.jpg',
+      price: 10.00,
+      pdf_link: 'https://drive.google.com/file/d/ebook-saladas/view',
+      cover_image_url: '/images/ebooks/CAPA E-book Saladas.jpg',
       author: 'Meu Portal Fit',
-      pages: 35,
+      pages: 30,
       language: 'pt-BR',
       status: 'active',
       featured: false,
@@ -1111,14 +1303,14 @@ function getMockEbooks(): Ebook[] {
     },
     {
       id: 6,
-      title: '5 Shots Detox',
-      description: 'Receitas de shots detox para limpeza',
+      title: 'Sopas Funcionais',
+      description: 'Sopas nutritivas para todos os momentos',
       category: 'receitas',
-      price: 12.90,
-      pdf_link: 'https://drive.google.com/file/d/ebook-shots-detox/view',
-      cover_image_url: '/images/ebooks/CAPA 5- SHOTS DETOX.jpg',
+      price: 10.00,
+      pdf_link: 'https://drive.google.com/file/d/ebook-sopas-funcionais/view',
+      cover_image_url: '/images/ebooks/CAPA E-book Sopas Funcionais.jpg',
       author: 'Meu Portal Fit',
-      pages: 25,
+      pages: 35,
       language: 'pt-BR',
       status: 'active',
       featured: false,
@@ -1127,14 +1319,14 @@ function getMockEbooks(): Ebook[] {
     },
     {
       id: 7,
-      title: 'Sucos Detox',
-      description: 'Sucos detox para desintoxicação',
+      title: '5 Shots Detox',
+      description: 'Receitas de shots detox para limpeza',
       category: 'receitas',
-      price: 14.90,
-      pdf_link: 'https://drive.google.com/file/d/ebook-sucos-detox/view',
-      cover_image_url: '/images/ebooks/CAPA SUCOS-DETOX.jpg',
+      price: 10.00,
+      pdf_link: 'https://drive.google.com/file/d/ebook-shots-detox/view',
+      cover_image_url: '/images/ebooks/CAPA 5- SHOTS DETOX.jpg',
       author: 'Meu Portal Fit',
-      pages: 28,
+      pages: 25,
       language: 'pt-BR',
       status: 'active',
       featured: false,
@@ -1143,30 +1335,32 @@ function getMockEbooks(): Ebook[] {
     },
     {
       id: 8,
+      title: 'Sucos Detox',
+      description: 'Sucos detox para desintoxicação',
+      category: 'receitas',
+      price: 10.00,
+      pdf_link: 'https://drive.google.com/file/d/ebook-sucos-detox/view',
+      cover_image_url: '/images/ebooks/CAPA SUCOS-DETOX.jpg',
+      author: 'Meu Portal Fit',
+      pages: 28,
+      language: 'pt-BR',
+      status: 'active',
+      featured: false,
+      created_at: '2024-01-22T10:00:00Z',
+      updated_at: '2024-01-22T10:00:00Z'
+    },
+    
+    // EBOOKS DE DIETAS
+    {
+      id: 9,
       title: 'Dieta da Família',
       description: 'Guia completo para alimentação saudável da família',
       category: 'dietas',
-      price: 29.90,
+      price: 10.00,
       pdf_link: 'https://drive.google.com/file/d/ebook-dieta-familia/view',
       cover_image_url: '/images/ebooks/Capa DIETA DA FAMILIA.pdf',
       author: 'Meu Portal Fit',
       pages: 60,
-      language: 'pt-BR',
-      status: 'active',
-      featured: true,
-      created_at: '2024-01-22T10:00:00Z',
-      updated_at: '2024-01-22T10:00:00Z'
-    },
-    {
-      id: 9,
-      title: 'Dieta Low Carb',
-      description: 'Guia completo da dieta low carb',
-      category: 'dietas',
-      price: 24.90,
-      pdf_link: 'https://drive.google.com/file/d/ebook-dieta-low-carb/view',
-      cover_image_url: '/images/ebooks/Capa DIETA LOW CARB.pdf',
-      author: 'Meu Portal Fit',
-      pages: 45,
       language: 'pt-BR',
       status: 'active',
       featured: true,
@@ -1175,30 +1369,30 @@ function getMockEbooks(): Ebook[] {
     },
     {
       id: 10,
-      title: 'Dieta Cetogênica',
-      description: 'Guia completo da dieta cetogênica',
+      title: 'Dieta Low Carb',
+      description: 'Guia completo da dieta low carb',
       category: 'dietas',
-      price: 27.90,
-      pdf_link: 'https://drive.google.com/file/d/ebook-dieta-cetogenica/view',
-      cover_image_url: '/images/ebooks/Capa Dieta-Cetogenica.pdf',
+      price: 10.00,
+      pdf_link: 'https://drive.google.com/file/d/ebook-dieta-low-carb/view',
+      cover_image_url: '/images/ebooks/Capa DIETA LOW CARB.pdf',
       author: 'Meu Portal Fit',
-      pages: 50,
+      pages: 45,
       language: 'pt-BR',
       status: 'active',
-      featured: false,
+      featured: true,
       created_at: '2024-01-24T10:00:00Z',
       updated_at: '2024-01-24T10:00:00Z'
     },
     {
       id: 11,
-      title: 'Jejum Intermitente',
-      description: 'Guia completo do jejum intermitente',
+      title: 'Dieta Cetogênica',
+      description: 'Guia completo da dieta cetogênica',
       category: 'dietas',
-      price: 22.90,
-      pdf_link: 'https://drive.google.com/file/d/ebook-jejum-intermitente/view',
-      cover_image_url: '/images/ebooks/Capa JEJUM INTERMITENTE.pdf',
+      price: 10.00,
+      pdf_link: 'https://drive.google.com/file/d/ebook-dieta-cetogenica/view',
+      cover_image_url: '/images/ebooks/Capa Dieta-Cetogenica.pdf',
       author: 'Meu Portal Fit',
-      pages: 40,
+      pages: 50,
       language: 'pt-BR',
       status: 'active',
       featured: false,
@@ -1207,14 +1401,14 @@ function getMockEbooks(): Ebook[] {
     },
     {
       id: 12,
-      title: 'Saúde Intestinal',
-      description: 'Guia para saúde intestinal e digestão',
+      title: 'Jejum Intermitente',
+      description: 'Guia completo do jejum intermitente',
       category: 'dietas',
-      price: 19.90,
-      pdf_link: 'https://drive.google.com/file/d/ebook-saude-intestinal/view',
-      cover_image_url: '/images/ebooks/Capa SAUDE INTESTINAL.pdf',
+      price: 10.00,
+      pdf_link: 'https://drive.google.com/file/d/ebook-jejum-intermitente/view',
+      cover_image_url: '/images/ebooks/Capa JEJUM INTERMITENTE.pdf',
       author: 'Meu Portal Fit',
-      pages: 35,
+      pages: 40,
       language: 'pt-BR',
       status: 'active',
       featured: false,
@@ -1223,10 +1417,26 @@ function getMockEbooks(): Ebook[] {
     },
     {
       id: 13,
+      title: 'Saúde Intestinal',
+      description: 'Guia para saúde intestinal e digestão',
+      category: 'dietas',
+      price: 10.00,
+      pdf_link: 'https://drive.google.com/file/d/ebook-saude-intestinal/view',
+      cover_image_url: '/images/ebooks/Capa SAUDE INTESTINAL.pdf',
+      author: 'Meu Portal Fit',
+      pages: 35,
+      language: 'pt-BR',
+      status: 'active',
+      featured: false,
+      created_at: '2024-01-27T10:00:00Z',
+      updated_at: '2024-01-27T10:00:00Z'
+    },
+    {
+      id: 14,
       title: 'Dieta Mediterrânea',
       description: 'Guia completo da dieta mediterrânea',
       category: 'dietas',
-      price: 24.90,
+      price: 10.00,
       pdf_link: 'https://drive.google.com/file/d/ebook-dieta-mediterranea/view',
       cover_image_url: '/images/ebooks/CapaDIETA MEDITERRANEA.pdf',
       author: 'Meu Portal Fit',
@@ -1234,8 +1444,8 @@ function getMockEbooks(): Ebook[] {
       language: 'pt-BR',
       status: 'active',
       featured: false,
-      created_at: '2024-01-27T10:00:00Z',
-      updated_at: '2024-01-27T10:00:00Z'
+      created_at: '2024-01-28T10:00:00Z',
+      updated_at: '2024-01-28T10:00:00Z'
     }
   ]
 }

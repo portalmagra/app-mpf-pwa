@@ -59,19 +59,19 @@ export default function EbookDetailPage() {
     return category === 'receitas' ? 'Receitas' : 'Dietas'
   }
 
-  const handlePurchase = () => {
-    if (ebook) {
-      if (ebook.price === 0) {
-        // eBook gratuito - redirecionar para PDF
-        window.open(ebook.pdf_link, '_blank')
-      } else {
-        // eBook pago - redirecionar para WhatsApp
-        const phoneNumber = '+17862535032'
-        const message = `Olá! Gostaria de comprar o eBook "${ebook.title}" por $${ebook.price.toFixed(2)}. Como posso proceder com o pagamento?`
-        const whatsappUrl = `https://wa.me/${phoneNumber.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(message)}`
-        window.open(whatsappUrl, '_blank')
-      }
+  const handlePurchase = async () => {
+    if (!ebook) return
+
+    if (ebook.price === 0) {
+      // eBook gratuito - redirecionar para PDF
+      window.open(ebook.pdf_link, '_blank')
+      return
     }
+
+    // eBook pago - redirecionar para WhatsApp
+    const message = `Olá! Gostaria de comprar o eBook "${ebook.title}" por $${ebook.price.toFixed(2)}.`
+    const whatsappUrl = `https://wa.me/17862535032?text=${encodeURIComponent(message)}`
+    window.open(whatsappUrl, '_blank')
   }
 
   if (loading) {
@@ -208,7 +208,7 @@ export default function EbookDetailPage() {
                 : 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600'
             }`}
           >
-            {ebook.price === 0 ? '📖 Baixar Gratuitamente' : '💳 Comprar Agora'}
+            {ebook.price === 0 ? '📖 Baixar Gratuitamente' : '💬 Comprar via WhatsApp'}
           </button>
         </div>
 

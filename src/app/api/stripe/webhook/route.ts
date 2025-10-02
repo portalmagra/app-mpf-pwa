@@ -75,21 +75,24 @@ export async function POST(request: NextRequest) {
 
       // Extrair dados da sessão
       const protocolId = session.metadata?.protocolId
+      const ebookId = session.metadata?.ebookId
       const customerEmail = session.customer_details?.email || session.customer_email
       const amount = session.amount_total ? session.amount_total / 100 : 0
       const paymentIntentId = session.payment_intent as string
 
       console.log('📋 Dados extraídos:', {
         protocolId,
+        ebookId,
         customerEmail,
         amount,
         paymentIntentId
       })
 
-      if (!protocolId) {
-        console.error('❌ ProtocolId não encontrado na sessão:', session.id)
+      // Verificar se é um protocolo ou eBook
+      if (!protocolId && !ebookId) {
+        console.error('❌ ProtocolId ou eBookId não encontrado na sessão:', session.id)
         return NextResponse.json(
-          { error: 'ProtocolId não encontrado' },
+          { error: 'ProtocolId ou eBookId não encontrado' },
           { status: 400 }
         )
       }
@@ -100,12 +103,18 @@ export async function POST(request: NextRequest) {
 
       console.log('💾 Registrando compra no Supabase...')
       
+      // Determinar o tipo de produto e ID
+      const productType = protocolId ? 'protocol' : 'ebook'
+      const productId = protocolId || `ebook-${ebookId}`
+      
       // Registrar compra no Supabase
       const { data: purchase, error: insertError } = await supabase
         .from('user_purchases')
         .insert({
           user_id: userId,
           protocol_id: protocolId,
+          product_id: productId,
+          product_type: productType,
           stripe_payment_intent_id: paymentIntentId,
           stripe_session_id: session.id,
           customer_email: customerEmail,
@@ -130,31 +139,56 @@ export async function POST(request: NextRequest) {
              console.log('✅ Compra registrada com sucesso:', purchase)
 
       // Enviar email de confirmação automaticamente
-      if (customerEmail && protocolId) {
+      if (customerEmail && (protocolId || ebookId)) {
         console.log('📧 Iniciando envio de e-mail para:', customerEmail)
         
         try {
-          const protocolNames: { [key: string]: string } = {
-            'suporte-canetas-emagrecedoras': 'Protocolo Suporte com Canetas Emagrecedoras',
-            'pre-caneta': 'Protocolo Pré-Caneta',
-            'pos-caneta-manutencao': 'Protocolo Pós-Caneta Manutenção',
-            'proteina-massa-magra': 'Protocolo Proteína e Massa Magra',
-            'intestino-livre': 'Protocolo Intestino Livre',
-            'nausea-refluxo': 'Protocolo Náusea e Refluxo',
-            'energia-imunidade': 'Protocolo Energia e Imunidade',
-            'imunidade-avancada': 'Protocolo Imunidade Avançada',
-            'detox-leve': 'Protocolo Detox Leve',
-            'anti-inflamatorio': 'Protocolo Anti-inflamatório',
-            'mulheres-40': 'Protocolo Mulheres 40+',
-            'pele-cabelo-unhas': 'Protocolo Pele, Cabelo e Unhas',
-            'sono-ansiedade': 'Protocolo Sono e Ansiedade',
-            'fitness-performance': 'Protocolo Fitness e Performance',
-            'alternativa-sem-caneta': 'Protocolo Alternativa Sem Caneta',
-            'pacote-completo': 'Pacote Completo - Todos os Protocolos'
+          let productName = ''
+          let productType = ''
+          
+          if (protocolId) {
+            const protocolNames: { [key: string]: string } = {
+              'suporte-canetas-emagrecedoras': 'Protocolo Suporte com Canetas Emagrecedoras',
+              'pre-caneta': 'Protocolo Pré-Caneta',
+              'pos-caneta-manutencao': 'Protocolo Pós-Caneta Manutenção',
+              'proteina-massa-magra': 'Protocolo Proteína e Massa Magra',
+              'intestino-livre': 'Protocolo Intestino Livre',
+              'nausea-refluxo': 'Protocolo Náusea e Refluxo',
+              'energia-imunidade': 'Protocolo Energia e Imunidade',
+              'imunidade-avancada': 'Protocolo Imunidade Avançada',
+              'detox-leve': 'Protocolo Detox Leve',
+              'anti-inflamatorio': 'Protocolo Anti-inflamatório',
+              'mulheres-40': 'Protocolo Mulheres 40+',
+              'pele-cabelo-unhas': 'Protocolo Pele, Cabelo e Unhas',
+              'sono-ansiedade': 'Protocolo Sono e Ansiedade',
+              'fitness-performance': 'Protocolo Fitness e Performance',
+              'alternativa-sem-caneta': 'Protocolo Alternativa Sem Caneta',
+              'pacote-completo': 'Pacote Completo - Todos os Protocolos'
+            }
+            productName = protocolNames[protocolId] || protocolId
+            productType = 'protocol'
+          } else if (ebookId) {
+            const ebookNames: { [key: number]: string } = {
+              1: 'Doces Fit',
+              2: 'Doces Fit 2',
+              3: 'Receitas Salgadas',
+              4: 'Receitas Low Carb',
+              5: 'Saladas Funcionais',
+              6: 'Sopas Funcionais',
+              7: '5 Shots Detox',
+              8: 'Sucos Detox',
+              9: 'Dieta da Família',
+              10: 'Dieta Low Carb',
+              11: 'Dieta Cetogênica',
+              12: 'Jejum Intermitente',
+              13: 'Saúde Intestinal',
+              14: 'Dieta Mediterrânea',
+            }
+            productName = ebookNames[parseInt(ebookId)] || `eBook ID ${ebookId}`
+            productType = 'ebook'
           }
 
-          const protocolName = protocolNames[protocolId] || protocolId
-          console.log('📧 Nome do protocolo:', protocolName)
+          console.log('📧 Nome do produto:', productName)
 
           // Chamar API de envio de e-mail
           console.log('📧 Chamando API de envio de e-mail...')
@@ -164,7 +198,9 @@ export async function POST(request: NextRequest) {
             body: JSON.stringify({
               sessionId: session.id,
               protocolId: protocolId,
-              protocolName: protocolName,
+              ebookId: ebookId,
+              productName: productName,
+              productType: productType,
               customerEmail: customerEmail
             })
           })
@@ -185,7 +221,8 @@ export async function POST(request: NextRequest) {
       } else {
         console.log('⚠️ E-mail não enviado - dados faltando:', {
           customerEmail: !!customerEmail,
-          protocolId: !!protocolId
+          protocolId: !!protocolId,
+          ebookId: !!ebookId
         })
       }
 

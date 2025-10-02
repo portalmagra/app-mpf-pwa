@@ -27,15 +27,15 @@ export async function GET(request: NextRequest) {
     console.log('🔍 Iniciando download de eBook...')
     
     const { searchParams } = new URL(request.url)
-    const ebookId = searchParams.get('ebook')
-    const sessionId = searchParams.get('session')
+    const ebookId = searchParams.get('ebook_id')
+    const sessionId = searchParams.get('session_id')
 
     console.log(`📋 eBook: ${ebookId}, Sessão: ${sessionId}`)
 
     if (!ebookId || !sessionId) {
       console.error('❌ Parâmetros obrigatórios não fornecidos')
       return NextResponse.json(
-        { error: 'ebook e session são obrigatórios' },
+        { error: 'ebook_id e session_id são obrigatórios' },
         { status: 400 }
       )
     }
@@ -54,7 +54,7 @@ export async function GET(request: NextRequest) {
       .from('user_purchases')
       .select('*')
       .eq('stripe_session_id', sessionId)
-      .eq('protocol_id', ebookId) // Usando protocol_id para eBooks também
+      .eq('product_id', `ebook-${ebookId}`) // Formato ebook-{id}
       .eq('status', 'completed')
       .single()
 
@@ -81,7 +81,7 @@ export async function GET(request: NextRequest) {
       }
 
       // Verificar se o ebookId corresponde ao da sessão
-      if (session.metadata?.ebookId !== ebookId && session.metadata?.protocolId !== ebookId) {
+      if (session.metadata?.ebookId !== ebookId) {
         console.error('❌ eBook não corresponde à compra')
         return NextResponse.json(
           { error: 'eBook não corresponde à compra' },
@@ -156,27 +156,41 @@ async function getEbookData(ebookId: string) {
       return null
     }
 
-    // Buscar dados do eBook no Supabase
-    const { data: ebook, error } = await supabase
-      .from('ebooks')
-      .select('*')
-      .eq('id', ebookId)
-      .eq('status', 'active')
-      .single()
+    // Buscar arquivos no Storage ebooks-pdfs
+    const { data: storageData, error: storageError } = await supabase.storage
+      .from('ebooks-pdfs')
+      .list('', { limit: 1000 })
 
-    if (error || !ebook) {
-      console.error('❌ eBook não encontrado no Supabase:', error)
+    if (storageError) {
+      console.error('❌ Erro ao buscar eBooks no Storage:', storageError)
       return null
     }
 
+    if (!storageData || storageData.length === 0) {
+      console.error('❌ Nenhum arquivo encontrado no Storage')
+      return null
+    }
+
+    // Encontrar arquivo pelo ID (índice)
+    const pdfFiles = storageData.filter(f => f.name.endsWith('.pdf'))
+    const file = pdfFiles[parseInt(ebookId) - 1]
+
+    if (!file) {
+      console.error(`❌ Arquivo não encontrado para ID ${ebookId}`)
+      return null
+    }
+
+    const fileName = file.name.replace('.pdf', '')
+    const pdfUrl = supabase.storage.from('ebooks-pdfs').getPublicUrl(file.name).data.publicUrl
+
     return {
-      id: ebook.id,
-      fileName: `${ebook.title}.pdf`,
-      pdfUrl: ebook.pdf_link
+      id: ebookId,
+      fileName: `${fileName}.pdf`,
+      pdfUrl: pdfUrl
     }
 
   } catch (error) {
-    console.error('❌ Erro ao buscar eBook no Supabase:', error)
+    console.error('❌ Erro ao buscar eBook no Storage:', error)
     return null
   }
 }
